@@ -10,18 +10,11 @@
 <body>
 <div class="scanlines" aria-hidden="true"></div>
 <div class="desktop-bg" aria-hidden="true"></div>
-
-<div id="boot">
-  <div class="boot-mark">FM.OS</div>
-  <div class="boot-sub">operator shell</div>
-</div>
-
+<div id="boot"><div class="boot-mark">FM.OS</div><div class="boot-sub">codec link · operator shell</div></div>
 <div id="shell">
   <header class="topbar">
-    <button type="button" class="brand" data-view="home" aria-label="Home">
-      <span class="dot"></span> FM.OS
-    </button>
-    <nav class="top-nav" id="topNav" aria-label="Sections">
+    <button type="button" class="brand" data-view="home" aria-label="Home"><span class="dot"></span> FM.OS</button>
+    <nav class="top-nav" aria-label="Sections">
       <button type="button" class="on" data-view="home">About</button>
       <button type="button" data-view="projects">Projects</button>
       <button type="button" data-view="skills">Skills</button>
@@ -35,14 +28,29 @@
       <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">≡</button>
     </div>
   </header>
-
   <div class="main">
+    <aside class="codec-col">
+      <div class="codec-head"><span>CODEC</span><span class="ptt">PTT</span></div>
+      <div class="codec-frame">
+        <div class="codec-media" id="codecMedia">
+          <div class="codec-placeholder"><b>FM</b>HOLO · FEED<br/>drop video / gif</div>
+        </div>
+        <div class="codec-cross" aria-hidden="true"></div>
+      </div>
+      <div class="codec-status">
+        <div class="freq-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="freq-readout"><span class="freq-num" id="freqNum">140.85</span><span class="freq-label">MEMORY</span></div>
+      </div>
+      <div class="codec-dialogue">
+        <div class="who">// FEDERICO</div>
+        <div class="line" id="codecLine" aria-live="polite">Linking what people <em>think and do</em> to design that ships.</div>
+      </div>
+    </aside>
     <section class="center" id="center">
       <div class="center-body" id="centerBody"></div>
     </section>
   </div>
 </div>
-
 <div class="m-drawer" id="mDrawer" hidden>
   <button type="button" data-view="home">About</button>
   <button type="button" data-view="projects">Projects</button>
@@ -51,7 +59,6 @@
   <button type="button" data-view="contact">Contact</button>
   <button type="button" data-view="ds">System</button>
 </div>
-
 <div class="lightbox" id="lightbox" hidden>
   <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
   <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">←</button>
@@ -59,7 +66,6 @@
   <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next">→</button>
   <div class="lb-cap" id="lbCap"></div>
 </div>
-
 <script src="os-home.js"></script>
 </body>
 </html>
