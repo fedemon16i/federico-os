@@ -11,21 +11,21 @@
     {src: PHOTO_BASE + "IMG_0533.jpeg", t: "Clear thinking"}
   ];
   var ABILITIES = [
-    {id:"map",cat:"PRODUCT",t:"Product Mapping",d:"Every page and feature tagged as an event.",tools:["pendo","ga4"]},
-    {id:"track",cat:"ANALYTICS",t:"Usage Tracking",d:"Clicks, drop-offs, who is behind each one.",tools:["pendo","mixpanel"]},
-    {id:"seg",cat:"UXR",t:"Segmentation",d:"Strugglers grouped — sessions replayed.",tools:["pendo","qualtrics"]},
-    {id:"syn",cat:"UXR",t:"Research Synthesis",d:"Interviews and tests ranked into actions.",tools:["maze","claude"]},
-    {id:"par",cat:"DESIGN",t:"Parallel Design",d:"Figma by hand + AI at once.",tools:["figma","claude"]},
-    {id:"dep",cat:"AI+DEV",t:"Deployment",d:"Ship to dev, staging, prod.",tools:["replit","github"]},
-    {id:"hub",cat:"AI+DEV",t:"Analytics Hub",d:"Dashboard built with Claude Code.",tools:["pendo","claude"]},
-    {id:"sys",cat:"SYSTEMS",t:"Connected Systems",d:"One design system, many teams.",tools:["figma","github"]}
+    {id:"map",cat:"PRODUCT",t:"Product Mapping",d:"Every page & feature, tagged as an event.",long:"Every screen → a named event I can query.",tools:[["pendo","Pendo"],["ga4","GA4"]],proj:"EY Fabric"},
+    {id:"track",cat:"ANALYTICS",t:"Usage Tracking",d:"Clicks, drop-offs, and who is behind each one.",long:"Live sessions — see who drops, not only totals.",tools:[["pendo","Pendo"],["mixpanel","Mixpanel"]],proj:"Chek"},
+    {id:"seg",cat:"UXR",t:"Segmentation & Replay",d:"Strugglers grouped — worst sessions replayed.",long:"Worst sessions replayed, group by struggle.",tools:[["pendo","Pendo"],["qualtrics","Qualtrics"]],proj:"EY Fabric"},
+    {id:"syn",cat:"UXR",t:"Research Synthesis",d:"Interviews, surveys, tests — ranked into actions.",long:"Talks + tests → a ranked list of what to fix.",tools:[["maze","Maze"],["claude","Claude"]],proj:"DollarCity"},
+    {id:"par",cat:"DESIGN",t:"Parallel Design",d:"By hand in Figma, and generated with AI at once.",long:"Figma craft + AI gen in one system.",tools:[["figma","Figma"],["claude","Claude"]],proj:"Chek"},
+    {id:"dep",cat:"AI+DEV",t:"Deployment",d:"Shipped to dev, staging, prod — or handed off.",long:"Ship to dev / staging / prod — or hand off clean.",tools:[["replit","Replit"],["github","GitHub"]],proj:"Customs ES"},
+    {id:"hub",cat:"AI+DEV",t:"Analytics Hub",d:"The dashboard itself, built with Claude Code.",long:"Adoption · users · alarms — the hub is a product.",tools:[["pendo","Pendo"],["claude","Claude"]],proj:"EY Fabric"},
+    {id:"sys",cat:"SYSTEMS",t:"Connected Systems",d:"One design system, many teams.",long:"Shared tokens, shared context, less drift.",tools:[["figma","Figma"],["github","GitHub"]],proj:"EY Fabric"}
   ];
   var PROJECTS = [
-    {id:"ey",name:"EY Fabric",meta:"XDA · 2024—",pc:"#c8a84b",url:"https://fedemon16i.github.io/federico-portfolio/projects/ey-fabric.html"},
-    {id:"bc",name:"Blockchains",meta:"Globant",pc:"#22d4c8",url:"https://fedemon16i.github.io/federico-portfolio/projects/blockchain.html"},
-    {id:"chek",name:"Chek",meta:"Applaudo",pc:"#a78bfa",url:"https://fedemon16i.github.io/federico-portfolio/projects/chek.html"},
-    {id:"cus",name:"Customs ES",meta:"Applaudo",pc:"#4a9eff",url:"https://fedemon16i.github.io/federico-portfolio/projects/customs.html"},
-    {id:"dc",name:"DollarCity",meta:"Applaudo",pc:"#34d399",url:"https://fedemon16i.github.io/federico-portfolio/projects/dollarcity.html"}
+    {id:"ey",name:"EY Fabric",meta:"XDA · 2024—",pc:"#c8a84b",url:"https://fedemon16i.github.io/federico-portfolio/projects/ey-fabric.html",role:"Product design · analytics",desc:"Linking research signals to design and product decisions inside EY Fabric."},
+    {id:"bc",name:"Blockchains",meta:"Globant",pc:"#22d4c8",url:"https://fedemon16i.github.io/federico-portfolio/projects/blockchain.html",role:"UX · product",desc:"Process from Figma → Spline → Unity. Phone-rich flows and connected systems."},
+    {id:"chek",name:"Chek",meta:"Applaudo",pc:"#a78bfa",url:"https://fedemon16i.github.io/federico-portfolio/projects/chek.html",role:"Product · behavioral",desc:"Protected payments, onboarding paths, research signals into features."},
+    {id:"cus",name:"Customs ES",meta:"Applaudo",pc:"#4a9eff",url:"https://fedemon16i.github.io/federico-portfolio/projects/customs.html",role:"UX · dual devices",desc:"50+ analog processes → digital. Dual devices at the gate."},
+    {id:"dc",name:"DollarCity",meta:"Applaudo",pc:"#34d399",url:"https://fedemon16i.github.io/federico-portfolio/projects/dollarcity.html",role:"UX · research",desc:"Field research into ranked actions and product outcomes."}
   ];
   var BIO = [
     {t:"Turning ambiguity into structure is basically my love language.",h:"Turning ambiguity into <em>structure</em> is basically my <em>love language</em>."},
@@ -37,9 +37,14 @@
   ];
   var CODEC_LINES = [
     "Linking what people <em>think and do</em> to design that ships.",
-    "Open <em>Projects</em> for case folders. Each keeps its own design system.",
-    "This channel is one-way for now — full codec chat comes later.",
-    "Drop a video or gif into the holo frame when ready."
+    "Open <em>Projects</em> — cases load embedded, next/prev between them.",
+    "Abilities mirror the portfolio skill stage — tools and outcomes.",
+    "This channel is one-way for now — codec chat comes later."
+  ];
+  var EXPERIENCE = [
+    {co:"EY",role:"XDA · Fabric",meta:"2024 — present",body:"Research signals → design and product decisions. Ownership, trade-offs, outcomes on Fabric."},
+    {co:"Applaudo",role:"UX / Product",meta:"Chek · Customs ES · DollarCity",body:"Behavioral analytics, dual-device field flows, and 50+ analog→digital processes."},
+    {co:"Globant",role:"UX",meta:"Blockchains",body:"Figma / Spline / Unity process. Connected systems and phone-rich journeys."}
   ];
 
   var themeBtn = document.getElementById("themeBtn");
@@ -107,6 +112,23 @@
     go(0);
   }
 
+  function wireTilt(root){
+    if(!root || !matchMedia("(pointer:fine)").matches) return;
+    root.querySelectorAll(".folder-card, .ability-row, .contact-card, .resume-block").forEach(function(card){
+      card.addEventListener("pointermove", function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        var rx = ((py - 0.5) * -6).toFixed(2);
+        var ry = ((px - 0.5) * 7).toFixed(2);
+        card.style.transform = "perspective(800px) rotateX("+rx+"deg) rotateY("+ry+"deg) translateY(-4px)";
+      });
+      card.addEventListener("pointerleave", function(){
+        card.style.transform = "";
+      });
+    });
+  }
+
   var lightbox = document.getElementById("lightbox");
   var lbImg = document.getElementById("lbImg");
   var lbCap = document.getElementById("lbCap");
@@ -152,6 +174,12 @@
     });
   }
 
+  function toolsHtml(tools){
+    return tools.map(function(t){
+      return '<span class="tool-chip"><b>'+t[1]+'</b></span>';
+    }).join("");
+  }
+
   function viewHome(){
     currentView = "home";
     setActiveNav("home");
@@ -165,8 +193,14 @@
       '<div class="photo-grid">'+cells+'</div>'+
       '<div class="hp-name">Federico Monroy</div>'+
       '<div class="hp-line">Sr. UX · Product · Behavioral analytics · Córdoba, AR</div>'+
+      '<div class="hp-stats">'+
+        '<div class="hp-stat"><b>EY</b><span>XDA · Fabric</span></div>'+
+        '<div class="hp-stat"><b>5</b><span>Case volumes</span></div>'+
+        '<div class="hp-stat"><b>8</b><span>Abilities</span></div>'+
+      '</div>'+
       '<div class="hp-bio" id="bioType"></div>'+
-      '<div class="hp-dots" id="bioDots"></div>';
+      '<div class="hp-dots" id="bioDots"></div>'+
+      '<p class="lede-line" style="margin-top:18px">Research signals → design and product decisions. Ownership, trade-offs, outcomes. Click a photo to enlarge.</p>';
     centerBody.querySelectorAll(".photo-cell").forEach(function(cell){
       cell.addEventListener("click", function(){ openLb(+cell.getAttribute("data-i")); });
     });
@@ -176,19 +210,23 @@
   function viewProjects(){
     currentView = "projects";
     setActiveNav("projects");
-    setChrome("PROJECTS", "DIRECTORY · 5", {close: true});
+    setChrome("PROJECTS", "DIRECTORY · 5 EMBEDDED", {close: true});
     var cards = PROJECTS.map(function(p, i){
       return '<div class="folder-card" data-i="'+i+'" style="--pc:'+p.pc+'">'+
         '<div class="fi">'+p.id.slice(0,2).toUpperCase()+'</div>'+
         '<div class="fn">'+p.name+'</div>'+
-        '<div class="fm">'+p.meta+'</div></div>';
+        '<div class="fm">'+p.meta+'</div>'+
+        '<div class="fc-role">'+p.role+'</div>'+
+        '<div class="fc-desc">'+p.desc+'</div>'+
+      '</div>';
     }).join("");
     centerBody.innerHTML =
-      '<p style="font-family:Share Tech Mono,monospace;font-size:12px;color:var(--dim);margin-bottom:16px;max-width:480px">Case folders — each keeps its own design system.</p>'+
+      '<p class="lede-line">Case folders — each keeps its own design system. Open one to load the full case embedded. Use ← → to move between cases.</p>'+
       '<div class="folder-grid">'+cards+'</div>';
     centerBody.querySelectorAll(".folder-card").forEach(function(card){
       card.addEventListener("click", function(){ openCase(+card.getAttribute("data-i")); });
     });
+    wireTilt(centerBody);
   }
 
   function openCase(i){
@@ -196,8 +234,9 @@
     currentView = "case";
     setActiveNav("projects");
     var p = PROJECTS[i];
-    setChrome(p.name, (i+1)+" / "+PROJECTS.length, {nav: true, close: true, caseMode: true});
-    centerBody.innerHTML = '<iframe class="case-frame" title="'+p.name+'" src="'+p.url+'" loading="lazy"></iframe>';
+    setChrome(p.name, (i+1)+" / "+PROJECTS.length+" · EMBEDDED", {nav: true, close: true, caseMode: true});
+    centerBody.innerHTML =
+      '<iframe class="case-frame" title="'+p.name+'" src="'+p.url+'" loading="eager"></iframe>';
   }
 
   function caseNav(dir){
@@ -212,32 +251,67 @@
     var rows = ABILITIES.map(function(a){
       return '<button type="button" class="ability-row" data-id="'+a.id+'">'+
         '<div class="ar-ico" aria-hidden="true"></div>'+
-        '<div><div class="ar-cat">'+a.cat+'</div><div class="ar-nm">'+a.t+'</div><div class="ar-ds">'+a.d+'</div></div>'+
+        '<div style="flex:1;min-width:0">'+
+          '<div class="ar-cat">'+a.cat+'</div>'+
+          '<div class="ar-nm">'+a.t+'</div>'+
+          '<div class="ar-long">'+a.long+'</div>'+
+          '<div class="ar-tools">'+toolsHtml(a.tools)+'</div>'+
+          '<div class="ar-proj">seen in <em>'+a.proj+'</em></div>'+
+        '</div>'+
       '</button>';
     }).join("");
     centerBody.innerHTML =
-      '<p style="font-family:Share Tech Mono,monospace;font-size:12px;color:var(--dim);margin-bottom:14px">Eight capabilities — reflection of the portfolio skill stage.</p>'+
+      '<p class="lede-line">Eight capabilities — reflection of the portfolio skill stage. Tools and the case where they show up.</p>'+
       '<div class="ability-list">'+rows+'</div>';
+    wireTilt(centerBody);
   }
 
   function viewResume(){
     currentView = "resume";
     setActiveNav("resume");
-    setChrome("RESUME", "FILE", {close: true});
+    setChrome("RESUME", "EXPERIENCE", {close: true});
+    var blocks = EXPERIENCE.map(function(e){
+      return '<div class="resume-block">'+
+        '<div class="rb-co">'+e.co+'</div>'+
+        '<div class="rb-role">'+e.role+'</div>'+
+        '<div class="rb-meta">'+e.meta+'</div>'+
+        '<p>'+e.body+'</p>'+
+      '</div>';
+    }).join("");
     centerBody.innerHTML =
-      '<div class="ph"><div class="k">// FILE</div><h3>RESUME</h3>'+
-      '<p>Federico Monroy — UX / Product · behavioral analytics. Córdoba, AR.</p>'+
-      '<p><a href="https://fedemon16i.github.io/federico-portfolio/resume.html" target="_blank" rel="noopener">Open resume →</a></p></div>';
+      '<p class="lede-line">Federico Monroy — UX / Product · behavioral analytics. Córdoba, AR · remote.</p>'+
+      '<div class="resume-stack">'+blocks+'</div>'+
+      '<p style="margin-top:18px"><a href="https://fedemon16i.github.io/federico-portfolio/resume.html" target="_blank" rel="noopener" style="color:var(--gold);font-family:Share Tech Mono,monospace;font-size:12px;border:1px solid var(--line);padding:8px 14px;text-decoration:none;display:inline-block">Open full resume →</a></p>';
+    wireTilt(centerBody);
   }
 
   function viewContact(){
     currentView = "contact";
     setActiveNav("contact");
-    setChrome("CONTACT", "COMMS", {close: true});
+    setChrome("CONTACT", "CHANNELS", {close: true});
     centerBody.innerHTML =
-      '<div class="ph"><div class="k">// COMMS</div><h3>CONTACT</h3>'+
-      '<p>Channels on the production portfolio.</p>'+
-      '<p><a href="https://fedemon16i.github.io/federico-portfolio/contact.html" target="_blank" rel="noopener">Open contact →</a></p></div>';
+      '<p class="lede-line">Looking for a Pendo / analytics-minded product designer who can own the loop end to end.</p>'+
+      '<div class="contact-grid">'+
+        '<a class="contact-card" href="https://www.linkedin.com/" target="_blank" rel="noopener">'+
+          '<div class="cc-k">// NETWORK</div><h3>LinkedIn</h3>'+
+          '<p>Roles, recommendations, and the long version of the work.</p>'+
+          '<span class="cc-cta">Open profile →</span></a>'+
+        '<a class="contact-card" href="https://github.com/fedemon16i" target="_blank" rel="noopener">'+
+          '<div class="cc-k">// SOURCE</div><h3>GitHub</h3>'+
+          '<p>Repos, experiments, and the living portfolio source.</p>'+
+          '<span class="cc-cta">fedemon16i →</span></a>'+
+        '<a class="contact-card" href="mailto:fedemon16i@gmail.com">'+
+          '<div class="cc-k">// DIRECT</div><h3>Email</h3>'+
+          '<p>For roles, collaborations, or a straight question.</p>'+
+          '<span class="cc-cta">fedemon16i@gmail.com →</span></a>'+
+        '<button type="button" class="contact-card" data-go-projects style="cursor:pointer;width:100%;font:inherit;color:inherit">'+
+          '<div class="cc-k">// PROOF</div><h3>See the work</h3>'+
+          '<p>Prefer proof before a message — start with the cases.</p>'+
+          '<span class="cc-cta">All projects →</span></button>'+
+      '</div>';
+    var go = centerBody.querySelector("[data-go-projects]");
+    if(go) go.addEventListener("click", viewProjects);
+    wireTilt(centerBody);
   }
 
   function route(view){
