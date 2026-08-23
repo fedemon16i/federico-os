@@ -48,12 +48,13 @@
   var CODEC_LINES=[
     "Linking what people <em>think and do</em> to design that ships.",
     "Open <em>Projects</em> — start with EY Fabric in two clicks.",
-    "Skills pulse with brand-colored tool stacks.",
-    "Close this window on mobile to see the desktop folders."
+    "Use ← → in the window chrome to cycle sections.",
+    "Close (×) returns to desktop folders — easy on mobile too."
   ];
   var TITLES={home:"About",projects:"Projects",skills:"Skills",resume:"Resume",contact:"Contact",system:"Design system"};
   var CV_URL="https://fedemon16i.github.io/federico-portfolio/assets/Federico_Monroy_CV.pdf";
   var LI_URL="https://www.linkedin.com/in/federico-monroy-1b6b2ba0/";
+  var ORDER=["home","projects","skills","resume","contact","system"];
 
   var body=document.getElementById("centerBody");
   var winMain=document.getElementById("winMain");
@@ -62,6 +63,13 @@
   var winPath=document.getElementById("winPath");
   var urlChip=document.getElementById("urlChip");
   var current="home", windowOpen=true, bioIdx=0, bioGen=0, lbIdx=0, winEl=null, zTop=100;
+
+  function cycle(dir){
+    var i=ORDER.indexOf(current);
+    if(i<0)i=0;
+    i=(i+dir+ORDER.length)%ORDER.length;
+    openWindow(ORDER[i]);
+  }
 
   var themeBtn=document.getElementById("themeBtn");
   function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("fmos-theme",t)}catch(e){}}
@@ -118,7 +126,11 @@
       if(e.key==="ArrowRight")lbNav(1);
       return;
     }
-    if(e.key==="Escape"&&windowOpen)closeWindow();
+    if(e.key==="Escape"&&windowOpen){closeWindow();return}
+    if(windowOpen){
+      if(e.key==="ArrowLeft")cycle(-1);
+      if(e.key==="ArrowRight")cycle(1);
+    }
   });
 
   function toolsHtml(tools){
@@ -178,6 +190,7 @@
     windowOpen=false;
     closeCaseWin();
     winMain.hidden=true;
+    winMain.classList.remove("maximized");
     desk.hidden=false;
     if(urlChip)urlChip.textContent="#/desktop";
     winPath.textContent="#/desktop";
@@ -187,6 +200,16 @@
   }
 
   document.getElementById("winClose").addEventListener("click",closeWindow);
+
+  var winMax=document.getElementById("winMax");
+  if(winMax)winMax.addEventListener("click",function(){
+    winMain.classList.toggle("maximized");
+  });
+
+  var winPrev=document.getElementById("winPrev");
+  var winNext=document.getElementById("winNext");
+  if(winPrev)winPrev.addEventListener("click",function(){cycle(-1)});
+  if(winNext)winNext.addEventListener("click",function(){cycle(1)});
 
   function viewHome(){
     var slides=PHOTOS.map(function(p,i){
@@ -348,7 +371,25 @@
   }
 
   function viewSystem(){
-    body.innerHTML='<div class="center-inner"><h1 class="section-h">FM.OS SYSTEM</h1><p class="section-lede">Tokens and rules for this operator shell. Cases keep their own design systems via iframe isolation.</p><h2 class="section-h" style="font-size:13px;margin-top:8px">COLOR</h2><div class="token-row"><div class="token-swatch"><i style="background:#050505"></i><span>bg</span></div><div class="token-swatch"><i style="background:#e8c547"></i><span>gold</span></div><div class="token-swatch"><i style="background:#d97757"></i><span>accent</span></div><div class="token-swatch"><i style="background:#7dffb3"></i><span>codec</span></div></div><h2 class="section-h" style="font-size:13px">RULES</h2><div class="ds-rule"><b>HASH ROUTES</b>#/home · #/projects · #/skills · #/resume · #/contact · #/system · #/desktop</div><div class="ds-rule"><b>CLOSE → DESKTOP</b>Window close shows labeled folders.</div><div class="ds-rule"><b>RECRUITER PATH</b>About or Contact → Projects → EY Fabric in ≤2 clicks.</div><div class="ds-rule"><b>CASE ISOLATION</b>Project windows iframe production cases.</div><div class="ds-rule"><b>CONTACT</b>Identical doors to production portfolio.</div></div>';
+    body.innerHTML=
+      '<div class="center-inner">'+
+        '<h1 class="section-h">FM.OS SYSTEM</h1>'+
+        '<p class="section-lede">Tokens and rules for this operator shell. Cases keep their own design systems via iframe isolation.</p>'+
+        '<h2 class="section-h" style="font-size:13px;margin-top:8px">COLOR</h2>'+
+        '<div class="token-row">'+
+          '<div class="token-swatch"><i style="background:#050505"></i><span>bg</span></div>'+
+          '<div class="token-swatch"><i style="background:#e8c547"></i><span>gold</span></div>'+
+          '<div class="token-swatch"><i style="background:#d97757"></i><span>accent</span></div>'+
+          '<div class="token-swatch"><i style="background:#7dffb3"></i><span>codec</span></div>'+
+        '</div>'+
+        '<h2 class="section-h" style="font-size:13px">RULES</h2>'+
+        '<div class="ds-rule"><b>HASH ROUTES</b>#/home · #/projects · #/skills · #/resume · #/contact · #/system · #/desktop</div>'+
+        '<div class="ds-rule"><b>CLOSE → DESKTOP</b>Window close (×) shows labeled folders — easy on mobile.</div>'+
+        '<div class="ds-rule"><b>← → CYCLE</b>Window chrome arrows (or keyboard) cycle sections without closing.</div>'+
+        '<div class="ds-rule"><b>□ MAXIMIZE</b>Expands the window over the stage.</div>'+
+        '<div class="ds-rule"><b>RECRUITER PATH</b>About or Contact → Projects → EY Fabric in ≤2 clicks.</div>'+
+        '<div class="ds-rule"><b>CASE ISOLATION</b>Project windows iframe production cases — their tokens stay intact.</div>'+
+      '</div>';
   }
 
   function render(view){
@@ -383,12 +424,16 @@
   tick();setInterval(tick,30000);
   setTimeout(function(){var b=document.getElementById("boot");if(b)b.classList.add("done")},1800);
 
-  window.FMOS={setCodecMedia:function(src){
-    var box=document.getElementById("codecMedia");if(!box)return;
-    if(/\.(mp4|webm|mov)(\?|$)/i.test(src))box.innerHTML='<video src="'+src+'" autoplay muted loop playsinline></video>';
-    else if(src.indexOf("<")===0)box.innerHTML=src;
-    else box.innerHTML='<img src="'+src+'" alt="Federico"/>';
-  },open:openWindow,close:closeWindow};
+  window.FMOS={
+    setCodecMedia:function(src){
+      var box=document.getElementById("codecMedia");if(!box)return;
+      if(/\.(mp4|webm|mov)(\?|$)/i.test(src))box.innerHTML='<video src="'+src+'" autoplay muted loop playsinline></video>';
+      else if(src.indexOf("<")===0)box.innerHTML=src;
+      else box.innerHTML='<img src="'+src+'" alt="Federico"/>';
+    },
+    open:openWindow,
+    close:closeWindow
+  };
 
   routeFromHash();
 })();
