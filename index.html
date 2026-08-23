@@ -11,10 +11,12 @@
 <body>
 <div class="scanlines" aria-hidden="true"></div>
 <div class="desktop-bg" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
 
 <div id="boot">
   <div class="boot-mark">FM.OS</div>
-  <div class="boot-sub">operator shell</div>
+  <div class="boot-sub">operator shell · v0.4</div>
+  <div class="boot-bar"><i></i></div>
 </div>
 
 <div id="shell">
@@ -39,43 +41,45 @@
   </header>
 
   <div class="workspace">
-    <aside class="codec-col" aria-label="Codec">
-      <div class="codec-head"><span>CODEC</span><span class="ptt">PTT</span></div>
-      <div class="codec-frame">
-        <div class="codec-media" id="codecMedia">
-          <div class="codec-placeholder"><b>FM</b>HOLO · FEED<br/>drop video / gif</div>
-        </div>
-        <div class="codec-cross" aria-hidden="true"></div>
-      </div>
-      <div class="codec-status">
-        <div class="freq-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="freq-readout"><span class="freq-num" id="freqNum">140.85</span><span class="freq-label">MEMORY</span></div>
-      </div>
-      <div class="codec-dialogue">
-        <div class="who">// FEDERICO</div>
-        <div class="line" id="codecLine" aria-live="polite">Linking what people <em>think and do</em> to design that ships.</div>
-      </div>
-    </aside>
-
     <div class="stage">
-      <!-- Desktop icons (visible when window closed, always on mobile after close) -->
       <div class="desk" id="desk" hidden>
-        <p class="desk-hint">Tap a folder · or use top menu</p>
-        <div class="desk-grid">
-          <button type="button" class="desk-icon" data-route="home"><span class="di-ico" style="--pc:#e8c547">A</span><span class="di-label">About me</span></button>
-          <button type="button" class="desk-icon" data-route="projects"><span class="di-ico" style="--pc:#22d4c8">P</span><span class="di-label">Projects</span></button>
-          <button type="button" class="desk-icon" data-route="skills"><span class="di-ico" style="--pc:#d97757">S</span><span class="di-label">Skills</span></button>
-          <button type="button" class="desk-icon" data-route="resume"><span class="di-ico" style="--pc:#a8a090">R</span><span class="di-label">Resume</span></button>
-          <button type="button" class="desk-icon" data-route="contact"><span class="di-ico" style="--pc:#4a9eff">C</span><span class="di-label">Contact</span></button>
-          <button type="button" class="desk-icon" data-route="system"><span class="di-ico" style="--pc:#7dffb3">Sys</span><span class="di-label">Design system</span></button>
+        <div class="desk-head">
+          <p class="desk-hint">DESKTOP · open a folder</p>
+          <span class="desk-status" id="deskStatus">sys ready</span>
         </div>
+        <div class="desk-grid">
+          <button type="button" class="desk-icon" data-route="home">
+            <span class="di-ico" style="--pc:#e8c547"><span class="di-glyph">A</span></span>
+            <span class="di-label">About me</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="projects">
+            <span class="di-ico" style="--pc:#22d4c8"><span class="di-glyph">P</span></span>
+            <span class="di-label">Projects</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="skills">
+            <span class="di-ico" style="--pc:#d97757"><span class="di-glyph">S</span></span>
+            <span class="di-label">Skills</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="resume">
+            <span class="di-ico" style="--pc:#a8a090"><span class="di-glyph">R</span></span>
+            <span class="di-label">Resume</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="contact">
+            <span class="di-ico" style="--pc:#4a9eff"><span class="di-glyph">C</span></span>
+            <span class="di-label">Contact</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="system">
+            <span class="di-ico" style="--pc:#7dffb3"><span class="di-glyph">Sys</span></span>
+            <span class="di-label">Design system</span>
+          </button>
+        </div>
+        <p class="desk-foot">double-tap · or use top menu · Esc closes windows</p>
       </div>
 
-      <!-- Central window -->
       <section class="win-main" id="winMain">
         <div class="win-chrome">
           <div class="win-dots">
-            <button type="button" class="wd close" id="winClose" title="Close → desktop folders" aria-label="Close to desktop">×</button>
+            <button type="button" class="wd close" id="winClose" title="Close → desktop" aria-label="Close to desktop">×</button>
             <button type="button" class="wd max" id="winMax" title="Maximize" aria-label="Maximize">□</button>
           </div>
           <div class="win-nav">
