@@ -58,8 +58,9 @@
     </aside>
 
     <div class="stage">
+      <!-- Desktop icons (visible when window closed, always on mobile after close) -->
       <div class="desk" id="desk" hidden>
-        <p class="desk-hint">Open a folder</p>
+        <p class="desk-hint">Tap a folder · or use top menu</p>
         <div class="desk-grid">
           <button type="button" class="desk-icon" data-route="home"><span class="di-ico" style="--pc:#e8c547">A</span><span class="di-label">About me</span></button>
           <button type="button" class="desk-icon" data-route="projects"><span class="di-ico" style="--pc:#22d4c8">P</span><span class="di-label">Projects</span></button>
@@ -70,10 +71,16 @@
         </div>
       </div>
 
+      <!-- Central window -->
       <section class="win-main" id="winMain">
         <div class="win-chrome">
           <div class="win-dots">
-            <button type="button" class="wd close" id="winClose" title="Close window" aria-label="Close">×</button>
+            <button type="button" class="wd close" id="winClose" title="Close → desktop folders" aria-label="Close to desktop">×</button>
+            <button type="button" class="wd max" id="winMax" title="Maximize" aria-label="Maximize">□</button>
+          </div>
+          <div class="win-nav">
+            <button type="button" class="wn" id="winPrev" title="Previous section" aria-label="Previous">←</button>
+            <button type="button" class="wn" id="winNext" title="Next section" aria-label="Next">→</button>
           </div>
           <div class="win-title" id="winTitle">About</div>
           <div class="win-path" id="winPath">#/home</div>
