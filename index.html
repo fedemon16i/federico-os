@@ -21,8 +21,6 @@
     <div class="brand"><span class="dot"></span> FM.OS</div>
     <div class="mid" id="clock">--:--</div>
     <div class="acts">
-      <button type="button" data-open="resume">Resume</button>
-      <button type="button" data-open="contact">Contact</button>
       <button type="button" class="theme-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle light and dark theme">TH</button>
     </div>
   </header>
@@ -58,41 +56,79 @@
       </div>
     </aside>
 
-    <section class="desktop" id="desktop">
-      <div class="home-panel" id="homePanel">
-        <div class="hp-head">
-          <h1>HOME</h1>
-          <span class="hp-tag">OPERATOR BRIEF</span>
+    <section class="center" id="center">
+      <div class="center-chrome">
+        <div class="cc-left">
+          <button type="button" class="nav-btn" id="prevBtn" aria-label="Previous" hidden>←</button>
+          <h1 id="centerTitle">HOME</h1>
+          <span class="cc-tag" id="centerTag">OPERATOR BRIEF</span>
         </div>
-
-        <div class="photo-grid" id="photoGrid" aria-label="About photos"></div>
-
-        <div class="hp-meta">
-          <div class="hp-name">Federico Monroy</div>
-          <div class="hp-line">Sr. UX · Product · Behavioral analytics · Córdoba, AR</div>
-          <div class="hp-bio" id="bioType"></div>
-          <div class="hp-dots" id="bioDots"></div>
-        </div>
-
-        <div class="hp-actions">
-          <button type="button" data-open="projects">Projects</button>
-          <button type="button" data-open="abilities">Abilities</button>
-          <button type="button" data-open="resume">Resume</button>
-          <button type="button" data-open="contact">Contact</button>
+        <div class="cc-right">
+          <button type="button" class="nav-btn" id="nextBtn" aria-label="Next" hidden>→</button>
+          <button type="button" class="nav-btn close-view" id="closeView" aria-label="Back to home" hidden>×</button>
         </div>
       </div>
+      <div class="center-body" id="centerBody"></div>
     </section>
+
+    <aside class="side-r">
+      <div class="side-k">SECTIONS</div>
+      <button type="button" class="sec-card on" data-view="home" style="--pc:#e8c547">
+        <div class="sc-ico">H</div>
+        <div class="sc-body">
+          <div class="sc-nm">Home</div>
+          <div class="sc-mt">About · photos</div>
+        </div>
+      </button>
+      <button type="button" class="sec-card" data-view="projects" style="--pc:#22d4c8">
+        <div class="sc-ico">DIR</div>
+        <div class="sc-body">
+          <div class="sc-nm">Projects</div>
+          <div class="sc-mt">5 case folders</div>
+        </div>
+      </button>
+      <button type="button" class="sec-card" data-view="abilities" style="--pc:#d97757">
+        <div class="sc-ico">MTX</div>
+        <div class="sc-body">
+          <div class="sc-nm">Abilities</div>
+          <div class="sc-mt">Matrix · 8</div>
+        </div>
+      </button>
+      <button type="button" class="sec-card" data-view="resume" style="--pc:#a8a090">
+        <div class="sc-ico">CV</div>
+        <div class="sc-body">
+          <div class="sc-nm">Resume</div>
+          <div class="sc-mt">File</div>
+        </div>
+      </button>
+      <button type="button" class="sec-card" data-view="contact" style="--pc:#4a9eff">
+        <div class="sc-ico">COM</div>
+        <div class="sc-body">
+          <div class="sc-nm">Contact</div>
+          <div class="sc-mt">Channels</div>
+        </div>
+      </button>
+    </aside>
   </div>
 
   <nav class="dock" aria-label="Primary">
-    <button type="button" class="on" data-open="home">H<span>Home</span></button>
+    <button type="button" class="on" data-view="home">H<span>Home</span></button>
     <span class="sep"></span>
-    <button type="button" data-open="projects">DIR<span>Projects</span></button>
-    <button type="button" data-open="abilities">MTX<span>Abilities</span></button>
-    <button type="button" data-open="resume">CV<span>Resume</span></button>
-    <button type="button" data-open="contact">COM<span>Contact</span></button>
+    <button type="button" data-view="projects">DIR<span>Projects</span></button>
+    <button type="button" data-view="abilities">MTX<span>Abilities</span></button>
+    <button type="button" data-view="resume">CV<span>Resume</span></button>
+    <button type="button" data-view="contact">COM<span>Contact</span></button>
   </nav>
 </div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous photo">←</button>
+  <img id="lbImg" alt=""/>
+  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next photo">→</button>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
 <script src="os-home.js"></script>
 </body>
 </html>
