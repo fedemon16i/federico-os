@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>FM.OS · Federico Monroy</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="os-home.css"/>
@@ -13,119 +13,50 @@
 
 <div id="boot">
   <div class="boot-mark">FM.OS</div>
-  <div class="boot-sub">codec link · operator shell</div>
+  <div class="boot-sub">operator shell</div>
 </div>
 
 <div id="shell">
   <header class="topbar">
-    <div class="brand"><span class="dot"></span> FM.OS</div>
-    <div class="mid" id="clock">--:--</div>
+    <button type="button" class="brand" data-view="home" aria-label="Home">
+      <span class="dot"></span> FM.OS
+    </button>
+    <nav class="top-nav" id="topNav" aria-label="Sections">
+      <button type="button" class="on" data-view="home">About</button>
+      <button type="button" data-view="projects">Projects</button>
+      <button type="button" data-view="skills">Skills</button>
+      <button type="button" data-view="resume">Resume</button>
+      <button type="button" data-view="contact">Contact</button>
+      <button type="button" data-view="ds">System</button>
+    </nav>
     <div class="acts">
-      <button type="button" class="theme-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle light and dark theme">TH</button>
+      <span class="mid" id="clock">--:--</span>
+      <button type="button" class="theme-btn" id="themeBtn" title="Theme" aria-label="Toggle theme">TH</button>
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">≡</button>
     </div>
   </header>
 
   <div class="main">
-    <aside class="codec-col">
-      <div class="codec-head">
-        <span>CODEC</span>
-        <span class="ptt">PTT</span>
-      </div>
-      <div class="codec-frame">
-        <div class="codec-media" id="codecMedia">
-          <div class="codec-placeholder">
-            <b>FM</b>
-            HOLO · FEED<br/>
-            drop video / gif
-          </div>
-        </div>
-        <div class="codec-cross" aria-hidden="true"></div>
-      </div>
-      <div class="codec-status">
-        <div class="freq-bars" aria-hidden="true">
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        </div>
-        <div class="freq-readout">
-          <span class="freq-num" id="freqNum">140.85</span>
-          <span class="freq-label">MEMORY</span>
-        </div>
-      </div>
-      <div class="codec-dialogue">
-        <div class="who">// FEDERICO</div>
-        <div class="line" id="codecLine" aria-live="polite">Linking what people <em>think and do</em> to design that ships.</div>
-      </div>
-    </aside>
-
     <section class="center" id="center">
-      <div class="center-chrome">
-        <div class="cc-left">
-          <button type="button" class="nav-btn" id="prevBtn" aria-label="Previous" hidden>←</button>
-          <h1 id="centerTitle">HOME</h1>
-          <span class="cc-tag" id="centerTag">OPERATOR BRIEF</span>
-        </div>
-        <div class="cc-right">
-          <button type="button" class="nav-btn" id="nextBtn" aria-label="Next" hidden>→</button>
-          <button type="button" class="nav-btn close-view" id="closeView" aria-label="Back to home" hidden>×</button>
-        </div>
-      </div>
       <div class="center-body" id="centerBody"></div>
     </section>
-
-    <aside class="side-r">
-      <div class="side-k">SECTIONS</div>
-      <button type="button" class="sec-card on" data-view="home" style="--pc:#e8c547">
-        <div class="sc-ico">H</div>
-        <div class="sc-body">
-          <div class="sc-nm">Home</div>
-          <div class="sc-mt">About · photos</div>
-        </div>
-      </button>
-      <button type="button" class="sec-card" data-view="projects" style="--pc:#22d4c8">
-        <div class="sc-ico">DIR</div>
-        <div class="sc-body">
-          <div class="sc-nm">Projects</div>
-          <div class="sc-mt">5 case folders</div>
-        </div>
-      </button>
-      <button type="button" class="sec-card" data-view="abilities" style="--pc:#d97757">
-        <div class="sc-ico">MTX</div>
-        <div class="sc-body">
-          <div class="sc-nm">Abilities</div>
-          <div class="sc-mt">Matrix · 8</div>
-        </div>
-      </button>
-      <button type="button" class="sec-card" data-view="resume" style="--pc:#a8a090">
-        <div class="sc-ico">CV</div>
-        <div class="sc-body">
-          <div class="sc-nm">Resume</div>
-          <div class="sc-mt">Experience</div>
-        </div>
-      </button>
-      <button type="button" class="sec-card" data-view="contact" style="--pc:#4a9eff">
-        <div class="sc-ico">COM</div>
-        <div class="sc-body">
-          <div class="sc-nm">Contact</div>
-          <div class="sc-mt">Channels</div>
-        </div>
-      </button>
-    </aside>
   </div>
+</div>
 
-  <nav class="dock" aria-label="Primary">
-    <button type="button" class="on" data-view="home">H<span>Home</span></button>
-    <span class="sep"></span>
-    <button type="button" data-view="projects">DIR<span>Projects</span></button>
-    <button type="button" data-view="abilities">MTX<span>Abilities</span></button>
-    <button type="button" data-view="resume">CV<span>Resume</span></button>
-    <button type="button" data-view="contact">COM<span>Contact</span></button>
-  </nav>
+<div class="m-drawer" id="mDrawer" hidden>
+  <button type="button" data-view="home">About</button>
+  <button type="button" data-view="projects">Projects</button>
+  <button type="button" data-view="skills">Skills</button>
+  <button type="button" data-view="resume">Resume</button>
+  <button type="button" data-view="contact">Contact</button>
+  <button type="button" data-view="ds">System</button>
 </div>
 
 <div class="lightbox" id="lightbox" hidden>
   <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
-  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous photo">←</button>
+  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">←</button>
   <img id="lbImg" alt=""/>
-  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next photo">→</button>
+  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next">→</button>
   <div class="lb-cap" id="lbCap"></div>
 </div>
 
