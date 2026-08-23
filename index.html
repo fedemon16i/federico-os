@@ -9,10 +9,13 @@
 </head>
 <body>
 <div class="scanlines" aria-hidden="true"></div>
+<div class="desktop-bg" aria-hidden="true"></div>
+
 <div id="boot">
   <div class="boot-mark">FM.OS</div>
   <div class="boot-sub">codec link · operator shell</div>
 </div>
+
 <div id="shell">
   <header class="topbar">
     <div class="brand"><span class="dot"></span> FM.OS</div>
@@ -25,13 +28,11 @@
   </header>
 
   <div class="main">
-    <!-- CODEC — Metal Gear style, only Federico speaks -->
     <aside class="codec-col">
       <div class="codec-head">
         <span>CODEC</span>
         <span class="ptt">PTT</span>
       </div>
-
       <div class="codec-frame">
         <div class="codec-media" id="codecMedia">
           <div class="codec-placeholder">
@@ -42,7 +43,6 @@
         </div>
         <div class="codec-cross" aria-hidden="true"></div>
       </div>
-
       <div class="codec-status">
         <div class="freq-bars" aria-hidden="true">
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
@@ -52,61 +52,36 @@
           <span class="freq-label">MEMORY</span>
         </div>
       </div>
-
       <div class="codec-dialogue">
         <div class="who">// FEDERICO</div>
         <div class="line" id="codecLine" aria-live="polite">Linking what people <em>think and do</em> to design that ships.</div>
       </div>
     </aside>
 
-    <!-- CENTER — default HOME / ABOUT ME (replaces skill tree) -->
-    <section class="center">
-      <div class="center-head">
-        <h1>HOME <span>ABOUT</span></h1>
-        <div class="operator-tag">OPERATOR BRIEF</div>
-      </div>
-      <div class="center-body">
-        <div class="about-home">
-          <div class="about-eyebrow">Sr. UX · Product · Behavioral analytics</div>
-          <h2 class="about-title">Turning ambiguity into <em>structure</em></h2>
-          <p class="about-lede">Research signals → design and product decisions. Ownership, trade-offs, outcomes. Córdoba, Argentina.</p>
-          <div class="about-stats">
-            <div class="about-stat"><b>EY</b><span>XDA · Fabric</span></div>
-            <div class="about-stat"><b>5</b><span>Case volumes</span></div>
-            <div class="about-stat"><b>8</b><span>Abilities</span></div>
-          </div>
-          <div class="bio-type" id="bioType"></div>
-          <div class="bio-dots" id="bioDots"></div>
-          <div class="matrix-block">
-            <h3>// ABILITY MATRIX</h3>
-            <div class="ability-grid" id="abilityGrid" role="list"></div>
-          </div>
+    <section class="desktop" id="desktop">
+      <div class="home-panel" id="homePanel">
+        <div class="hp-head">
+          <h1>HOME</h1>
+          <span class="hp-tag">OPERATOR BRIEF</span>
+        </div>
+
+        <div class="photo-grid" id="photoGrid" aria-label="About photos"></div>
+
+        <div class="hp-meta">
+          <div class="hp-name">Federico Monroy</div>
+          <div class="hp-line">Sr. UX · Product · Behavioral analytics · Córdoba, AR</div>
+          <div class="hp-bio" id="bioType"></div>
+          <div class="hp-dots" id="bioDots"></div>
+        </div>
+
+        <div class="hp-actions">
+          <button type="button" data-open="projects">Projects</button>
+          <button type="button" data-open="abilities">Abilities</button>
+          <button type="button" data-open="resume">Resume</button>
+          <button type="button" data-open="contact">Contact</button>
         </div>
       </div>
     </section>
-
-    <!-- RIGHT — volumes + quick cases -->
-    <aside class="side-r">
-      <div class="side-k">VOLUMES</div>
-      <div class="vol-item" data-open="projects" style="--pc:#e8c547">
-        <div class="ico">DIR</div>
-        <div><div class="nm">Projects</div><div class="mt">5 case folders</div></div>
-      </div>
-      <div class="vol-item" data-open="abilities" style="--pc:#d97757">
-        <div class="ico">MTX</div>
-        <div><div class="nm">Abilities</div><div class="mt">Matrix · 8</div></div>
-      </div>
-      <div class="vol-item" data-open="resume" style="--pc:#a8a090">
-        <div class="ico">CV</div>
-        <div><div class="nm">Resume</div><div class="mt">File</div></div>
-      </div>
-      <div class="vol-item" data-open="contact" style="--pc:#4a9eff">
-        <div class="ico">COM</div>
-        <div><div class="nm">Contact</div><div class="mt">Channels</div></div>
-      </div>
-      <div class="side-k" style="margin-top:20px">CASES</div>
-      <div id="caseList"></div>
-    </aside>
   </div>
 
   <nav class="dock" aria-label="Primary">
