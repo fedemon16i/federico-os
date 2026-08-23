@@ -5,7 +5,10 @@
     {src: PHOTO_BASE + "IMG_0534.jpeg", t: "Design"},
     {src: PHOTO_BASE + "IMG_0311.jpeg", t: "Off the map"},
     {src: PHOTO_BASE + "IMG_0532.jpeg", t: "Competitive"},
-    {src: PHOTO_BASE + "IMG_0990.jpeg", t: "People-first"}
+    {src: PHOTO_BASE + "IMG_0990.jpeg", t: "People-first"},
+    {src: PHOTO_BASE + "IMG_0536.jpeg", t: "Maker roots"},
+    {src: PHOTO_BASE + "IMG_0530.jpeg", t: "Remote-ready"},
+    {src: PHOTO_BASE + "IMG_0533.jpeg", t: "Clear thinking"}
   ];
   var ABILITIES = [
     {id:"map",cat:"PRODUCT",t:"Product Mapping",d:"Every page and feature tagged as an event.",tools:["pendo","ga4"]},
@@ -44,279 +47,215 @@
     document.documentElement.setAttribute("data-theme", t);
     try{ localStorage.setItem("fmos-theme", t); }catch(e){}
   }
-  try{
-    var saved = localStorage.getItem("fmos-theme");
-    if(saved) applyTheme(saved);
-  }catch(e){}
+  try{ var saved = localStorage.getItem("fmos-theme"); if(saved) applyTheme(saved); }catch(e){}
   if(themeBtn) themeBtn.addEventListener("click", function(){
     var cur = document.documentElement.getAttribute("data-theme") || "dark";
     applyTheme(cur === "dark" ? "light" : "dark");
   });
 
-  var photoGrid = document.getElementById("photoGrid");
-  if(photoGrid){
-    PHOTOS.forEach(function(p, i){
-      var cell = document.createElement("div");
-      cell.className = "photo-cell";
-      cell.innerHTML = '<img src="'+p.src+'" alt="'+p.t+'" loading="'+(i<2?'eager':'lazy')+'"/>'+
-        '<span class="pc-label">'+p.t+'</span>';
-      photoGrid.appendChild(cell);
-    });
-  }
+  var center = document.getElementById("center");
+  var centerBody = document.getElementById("centerBody");
+  var centerTitle = document.getElementById("centerTitle");
+  var centerTag = document.getElementById("centerTag");
+  var prevBtn = document.getElementById("prevBtn");
+  var nextBtn = document.getElementById("nextBtn");
+  var closeView = document.getElementById("closeView");
 
-  var bioEl = document.getElementById("bioType");
-  var dotsEl = document.getElementById("bioDots");
+  var currentView = "home";
+  var caseIdx = 0;
   var bioIdx = 0, bioGen = 0;
-  if(dotsEl){
-    dotsEl.innerHTML = BIO.map(function(_, i){
-      return '<span data-i="'+i+'"'+(i===0?' class="on"':'')+'></span>';
-    }).join("");
-    dotsEl.querySelectorAll("span").forEach(function(d){
-      d.addEventListener("click", function(){ goBio(+d.getAttribute("data-i")); });
-    });
-  }
-  function goBio(n){
-    bioIdx = n; bioGen++;
-    if(dotsEl) dotsEl.querySelectorAll("span").forEach(function(d, i){ d.classList.toggle("on", i === n); });
-    typeBio(BIO[n], bioGen);
-  }
-  function typeBio(line, gen){
-    if(!bioEl) return;
-    bioEl.textContent = "";
-    var i = 0;
-    (function step(){
-      if(gen !== bioGen) return;
-      if(i <= line.t.length){
-        bioEl.textContent = line.t.slice(0, i);
-        i++;
-        setTimeout(step, 18 + Math.random()*12);
-      } else {
-        bioEl.innerHTML = line.h;
-        setTimeout(function(){
-          if(gen !== bioGen) return;
-          goBio((bioIdx + 1) % BIO.length);
-        }, 4200);
-      }
-    })();
-  }
-  if(bioEl) goBio(0);
+  var lbIdx = 0;
 
   var codecI = 0;
   setInterval(function(){
     codecI = (codecI + 1) % CODEC_LINES.length;
     var el = document.getElementById("codecLine");
     if(!el) return;
-    el.style.animation = "none";
-    el.offsetHeight;
-    el.style.animation = "";
+    el.style.animation = "none"; el.offsetHeight; el.style.animation = "";
     el.innerHTML = CODEC_LINES[codecI];
   }, 8000);
   setInterval(function(){
     var el = document.getElementById("freqNum");
-    if(!el) return;
-    el.textContent = (140 + Math.random()*1.2).toFixed(2);
+    if(el) el.textContent = (140 + Math.random()*1.2).toFixed(2);
   }, 2800);
 
-  var windows = {}, zTop = 60;
-  var homePanel = document.getElementById("homePanel");
-
-  function focus(w){ zTop++; w.style.zIndex = zTop; }
-
-  function setHomeVisible(show){
-    if(!homePanel) return;
-    if(show) homePanel.classList.remove("hidden");
-    else homePanel.classList.add("hidden");
-  }
-
-  function activeWindowCount(){
-    return Object.keys(windows).filter(function(k){
-      return windows[k] && windows[k].style.display !== "none";
-    }).length;
-  }
-
-  function syncHome(){
-    setHomeVisible(activeWindowCount() === 0);
-  }
-
-  function makeWin(id, title, path, bodyHtml, opts){
-    opts = opts || {};
-    if(windows[id]){
-      windows[id].style.display = "";
-      focus(windows[id]);
-      syncHome();
-      return windows[id];
-    }
-    var w = document.createElement("div");
-    w.className = "win";
-    w.dataset.id = id;
-    var n = Object.keys(windows).length;
-    w.style.width = "min("+(opts.width||560)+"px, 90vw)";
-    w.style.height = "min("+(opts.height||400)+"px, 70vh)";
-    if(n > 0){
-      w.style.marginLeft = (n*16)+"px";
-      w.style.marginTop = (n*12)+"px";
-    }
-    w.innerHTML =
-      '<div class="win-bar">'+
-        '<div class="win-dots">'+
-          '<i class="c" data-a="close" title="Close"></i>'+
-          '<i class="x" data-a="max" title="Maximize"></i>'+
-        '</div>'+
-        '<div class="win-title"><b>'+title+'</b></div>'+
-        (path ? '<div class="win-path">'+path+'</div>' : '')+
-      '</div>'+
-      '<div class="win-body">'+bodyHtml+'</div>'+
-      '<div class="win-resize"></div>';
-    document.body.appendChild(w);
-    windows[id] = w;
-    focus(w);
-    wire(w, id);
-    syncHome();
-    return w;
-  }
-
-  function wire(w, id){
-    var bar = w.querySelector(".win-bar");
-    w.addEventListener("mousedown", function(){ focus(w); });
-    w.querySelectorAll(".win-dots i").forEach(function(dot){
-      dot.addEventListener("click", function(e){
-        e.stopPropagation();
-        var a = dot.getAttribute("data-a");
-        if(a === "close"){
-          w.remove();
-          delete windows[id];
-          syncHome();
+  function typeBio(el, dotsEl){
+    if(!el) return;
+    function go(n){
+      bioIdx = n; bioGen++;
+      if(dotsEl) dotsEl.querySelectorAll("span").forEach(function(d,i){ d.classList.toggle("on", i===n); });
+      var line = BIO[n];
+      el.textContent = "";
+      var i = 0, gen = bioGen;
+      (function step(){
+        if(gen !== bioGen) return;
+        if(i <= line.t.length){
+          el.textContent = line.t.slice(0, i); i++;
+          setTimeout(step, 18 + Math.random()*12);
+        } else {
+          el.innerHTML = line.h;
+          setTimeout(function(){ if(gen === bioGen) go((bioIdx+1)%BIO.length); }, 4200);
         }
-        if(a === "max") w.classList.toggle("maximized");
+      })();
+    }
+    if(dotsEl){
+      dotsEl.innerHTML = BIO.map(function(_,i){ return '<span data-i="'+i+'"'+(i===0?' class="on"':'')+'></span>'; }).join("");
+      dotsEl.querySelectorAll("span").forEach(function(d){
+        d.addEventListener("click", function(){ go(+d.getAttribute("data-i")); });
       });
-    });
-    var drag = false, sx, sy, ox, oy;
-    bar.addEventListener("mousedown", function(e){
-      if(w.classList.contains("maximized")) return;
-      if(e.target.closest(".win-dots")) return;
-      drag = true; sx = e.clientX; sy = e.clientY;
-      var r = w.getBoundingClientRect();
-      w.style.left = r.left+"px"; w.style.top = r.top+"px"; w.style.transform = "none";
-      ox = r.left; oy = r.top; e.preventDefault();
-    });
-    window.addEventListener("mousemove", function(e){
-      if(!drag) return;
-      w.style.left = (ox + e.clientX - sx)+"px";
-      w.style.top = (oy + e.clientY - sy)+"px";
-    });
-    window.addEventListener("mouseup", function(){ drag = false; });
-
-    var rz = w.querySelector(".win-resize"), resizing = false, rsx, rsy, rw, rh;
-    rz.addEventListener("mousedown", function(e){
-      e.stopPropagation();
-      if(w.classList.contains("maximized")) return;
-      resizing = true; rsx = e.clientX; rsy = e.clientY;
-      var r = w.getBoundingClientRect();
-      rw = r.width; rh = r.height;
-      w.style.left = r.left+"px"; w.style.top = r.top+"px"; w.style.transform = "none";
-    });
-    window.addEventListener("mousemove", function(e){
-      if(!resizing) return;
-      w.style.width = Math.max(320, rw + (e.clientX - rsx))+"px";
-      w.style.height = Math.max(220, rh + (e.clientY - rsy))+"px";
-    });
-    window.addEventListener("mouseup", function(){ resizing = false; });
+    }
+    go(0);
   }
 
-  function openProjects(){
-    var cards = PROJECTS.map(function(p){
-      return '<div class="folder-card" data-case="'+p.id+'" style="--pc:'+p.pc+'">'+
+  var lightbox = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lbImg");
+  var lbCap = document.getElementById("lbCap");
+  function openLb(i){
+    lbIdx = i;
+    lbImg.src = PHOTOS[i].src;
+    lbImg.alt = PHOTOS[i].t;
+    lbCap.textContent = PHOTOS[i].t;
+    lightbox.hidden = false;
+  }
+  function closeLb(){ lightbox.hidden = true; }
+  function lbNav(dir){
+    lbIdx = (lbIdx + dir + PHOTOS.length) % PHOTOS.length;
+    openLb(lbIdx);
+  }
+  document.getElementById("lbClose").addEventListener("click", closeLb);
+  document.getElementById("lbPrev").addEventListener("click", function(){ lbNav(-1); });
+  document.getElementById("lbNext").addEventListener("click", function(){ lbNav(1); });
+  lightbox.addEventListener("click", function(e){ if(e.target === lightbox) closeLb(); });
+  document.addEventListener("keydown", function(e){
+    if(lightbox.hidden) return;
+    if(e.key === "Escape") closeLb();
+    if(e.key === "ArrowLeft") lbNav(-1);
+    if(e.key === "ArrowRight") lbNav(1);
+  });
+
+  function setChrome(title, tag, opts){
+    opts = opts || {};
+    centerTitle.textContent = title;
+    centerTag.textContent = tag || "";
+    prevBtn.hidden = !opts.nav;
+    nextBtn.hidden = !opts.nav;
+    closeView.hidden = !opts.close;
+    center.classList.toggle("has-case", !!opts.caseMode);
+  }
+
+  function setActiveNav(view){
+    document.querySelectorAll(".sec-card").forEach(function(c){
+      c.classList.toggle("on", c.getAttribute("data-view") === view);
+    });
+    document.querySelectorAll(".dock button[data-view]").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute("data-view") === view);
+    });
+  }
+
+  function viewHome(){
+    currentView = "home";
+    setActiveNav("home");
+    setChrome("HOME", "OPERATOR BRIEF", {});
+    var cells = PHOTOS.slice(0, 5).map(function(p, i){
+      return '<div class="photo-cell" data-i="'+i+'">'+
+        '<img src="'+p.src+'" alt="'+p.t+'" loading="'+(i<2?'eager':'lazy')+'"/>'+
+        '<span class="pc-label">'+p.t+'</span></div>';
+    }).join("");
+    centerBody.innerHTML =
+      '<div class="photo-grid">'+cells+'</div>'+
+      '<div class="hp-name">Federico Monroy</div>'+
+      '<div class="hp-line">Sr. UX · Product · Behavioral analytics · Córdoba, AR</div>'+
+      '<div class="hp-bio" id="bioType"></div>'+
+      '<div class="hp-dots" id="bioDots"></div>';
+    centerBody.querySelectorAll(".photo-cell").forEach(function(cell){
+      cell.addEventListener("click", function(){ openLb(+cell.getAttribute("data-i")); });
+    });
+    typeBio(document.getElementById("bioType"), document.getElementById("bioDots"));
+  }
+
+  function viewProjects(){
+    currentView = "projects";
+    setActiveNav("projects");
+    setChrome("PROJECTS", "DIRECTORY · 5", {close: true});
+    var cards = PROJECTS.map(function(p, i){
+      return '<div class="folder-card" data-i="'+i+'" style="--pc:'+p.pc+'">'+
         '<div class="fi">'+p.id.slice(0,2).toUpperCase()+'</div>'+
         '<div class="fn">'+p.name+'</div>'+
         '<div class="fm">'+p.meta+'</div></div>';
     }).join("");
-    var body =
-      '<div class="ph" style="max-width:none;padding:14px 16px 4px">'+
-        '<div class="k">// DIRECTORY</div><h3>PROJECTS</h3>'+
-        '<p>Case folders — each volume keeps its own design system.</p></div>'+
+    centerBody.innerHTML =
+      '<p style="font-family:Share Tech Mono,monospace;font-size:12px;color:var(--dim);margin-bottom:16px;max-width:480px">Case folders — each keeps its own design system.</p>'+
       '<div class="folder-grid">'+cards+'</div>';
-    var w = makeWin("projects", "Projects", "/volumes/projects", body, {width:620, height:460});
-    w.querySelectorAll(".folder-card").forEach(function(card){
-      card.addEventListener("click", function(){
-        var p = PROJECTS.find(function(x){ return x.id === card.getAttribute("data-case"); });
-        if(p) openCase(p);
-      });
+    centerBody.querySelectorAll(".folder-card").forEach(function(card){
+      card.addEventListener("click", function(){ openCase(+card.getAttribute("data-i")); });
     });
   }
 
-  function openCase(p){
-    var body = '<iframe title="'+p.name+'" src="'+p.url+'" loading="lazy"></iframe>';
-    makeWin("case-"+p.id, p.name, p.url, body, {width:900, height:620});
+  function openCase(i){
+    caseIdx = i;
+    currentView = "case";
+    setActiveNav("projects");
+    var p = PROJECTS[i];
+    setChrome(p.name, (i+1)+" / "+PROJECTS.length, {nav: true, close: true, caseMode: true});
+    centerBody.innerHTML = '<iframe class="case-frame" title="'+p.name+'" src="'+p.url+'" loading="lazy"></iframe>';
   }
 
-  function openAbility(a){
-    var body =
-      '<div class="ph">'+
-        '<div class="k">// '+a.cat+'</div><h3>'+a.t+'</h3>'+
-        '<p>'+a.d+'</p>'+
-        '<p style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--faint)">tools · '+a.tools.join(" · ")+'</p>'+
-      '</div>';
-    makeWin("ab-"+a.id, a.t, "/matrix/"+a.id, body, {width:420, height:300});
+  function caseNav(dir){
+    caseIdx = (caseIdx + dir + PROJECTS.length) % PROJECTS.length;
+    openCase(caseIdx);
   }
 
-  function openAbilities(){
+  function viewAbilities(){
+    currentView = "abilities";
+    setActiveNav("abilities");
+    setChrome("ABILITIES", "MATRIX · 8", {close: true});
     var rows = ABILITIES.map(function(a){
-      return '<div class="vol-item" data-ab="'+a.id+'" style="--pc:#d97757;margin:0 10px 6px">'+
-        '<div class="ico" aria-hidden="true">MX</div>'+
-        '<div><div class="nm">'+a.t+'</div><div class="mt">'+a.cat+'</div></div></div>';
+      return '<button type="button" class="ability-row" data-id="'+a.id+'">'+
+        '<div class="ar-ico" aria-hidden="true"></div>'+
+        '<div><div class="ar-cat">'+a.cat+'</div><div class="ar-nm">'+a.t+'</div><div class="ar-ds">'+a.d+'</div></div>'+
+      '</button>';
     }).join("");
-    var body =
-      '<div class="ph" style="padding-bottom:6px">'+
-        '<div class="k">// MATRIX</div><h3>ABILITIES</h3>'+
-        '<p>Eight capabilities — reflection of the portfolio skill stage.</p></div>'+rows;
-    var w = makeWin("abilities", "Abilities", "/matrix", body, {width:400, height:480});
-    w.querySelectorAll("[data-ab]").forEach(function(row){
-      row.addEventListener("click", function(){
-        var a = ABILITIES.find(function(x){ return x.id === row.getAttribute("data-ab"); });
-        if(a) openAbility(a);
-      });
-    });
+    centerBody.innerHTML =
+      '<p style="font-family:Share Tech Mono,monospace;font-size:12px;color:var(--dim);margin-bottom:14px">Eight capabilities — reflection of the portfolio skill stage.</p>'+
+      '<div class="ability-list">'+rows+'</div>';
   }
 
-  function openResume(){
-    makeWin("resume", "Resume", "/volumes/resume",
+  function viewResume(){
+    currentView = "resume";
+    setActiveNav("resume");
+    setChrome("RESUME", "FILE", {close: true});
+    centerBody.innerHTML =
       '<div class="ph"><div class="k">// FILE</div><h3>RESUME</h3>'+
-      '<p>Federico Monroy — UX / Product · behavioral analytics. Cordoba, AR.</p>'+
-      '<p><a href="https://fedemon16i.github.io/federico-portfolio/resume.html" target="_blank" rel="noopener">Open resume →</a></p></div>',
-      {width:420, height:300});
+      '<p>Federico Monroy — UX / Product · behavioral analytics. Córdoba, AR.</p>'+
+      '<p><a href="https://fedemon16i.github.io/federico-portfolio/resume.html" target="_blank" rel="noopener">Open resume →</a></p></div>';
   }
 
-  function openContact(){
-    makeWin("contact", "Contact", "/volumes/contact",
+  function viewContact(){
+    currentView = "contact";
+    setActiveNav("contact");
+    setChrome("CONTACT", "COMMS", {close: true});
+    centerBody.innerHTML =
       '<div class="ph"><div class="k">// COMMS</div><h3>CONTACT</h3>'+
       '<p>Channels on the production portfolio.</p>'+
-      '<p><a href="https://fedemon16i.github.io/federico-portfolio/contact.html" target="_blank" rel="noopener">Open contact →</a></p></div>',
-      {width:400, height:280});
+      '<p><a href="https://fedemon16i.github.io/federico-portfolio/contact.html" target="_blank" rel="noopener">Open contact →</a></p></div>';
   }
 
-  function goHome(){
-    Object.keys(windows).forEach(function(k){
-      if(windows[k]){ windows[k].remove(); delete windows[k]; }
-    });
-    setHomeVisible(true);
-    document.querySelectorAll(".dock button").forEach(function(b){
-      b.classList.toggle("on", b.getAttribute("data-open") === "home");
-    });
+  function route(view){
+    if(view === "home") return viewHome();
+    if(view === "projects") return viewProjects();
+    if(view === "abilities") return viewAbilities();
+    if(view === "resume") return viewResume();
+    if(view === "contact") return viewContact();
   }
 
-  function route(id){
-    document.querySelectorAll(".dock button").forEach(function(b){
-      b.classList.toggle("on", b.getAttribute("data-open") === id);
-    });
-    if(id === "home") return goHome();
-    if(id === "projects") return openProjects();
-    if(id === "abilities") return openAbilities();
-    if(id === "resume") return openResume();
-    if(id === "contact") return openContact();
-  }
-
-  document.querySelectorAll("[data-open]").forEach(function(el){
-    el.addEventListener("click", function(){ route(el.getAttribute("data-open")); });
+  document.querySelectorAll("[data-view]").forEach(function(el){
+    el.addEventListener("click", function(){ route(el.getAttribute("data-view")); });
+  });
+  prevBtn.addEventListener("click", function(){ if(currentView === "case") caseNav(-1); });
+  nextBtn.addEventListener("click", function(){ if(currentView === "case") caseNav(1); });
+  closeView.addEventListener("click", function(){
+    if(currentView === "case") viewProjects();
+    else viewHome();
   });
 
   function tick(){
@@ -325,11 +264,7 @@
     if(c) c.textContent = d.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})+" · "+d.toLocaleDateString([], {month:"short", day:"numeric"});
   }
   tick(); setInterval(tick, 30000);
-
-  setTimeout(function(){
-    var b = document.getElementById("boot");
-    if(b) b.classList.add("done");
-  }, 2200);
+  setTimeout(function(){ var b = document.getElementById("boot"); if(b) b.classList.add("done"); }, 2200);
 
   window.FMOS = {
     setCodecMedia: function(src){
@@ -344,4 +279,6 @@
       }
     }
   };
+
+  viewHome();
 })();
