@@ -54,6 +54,9 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
       <button class="nav" type="button" data-route="contact"><span class="idx">05</span>Contact</button>
       <button class="nav" type="button" data-route="system"><span class="idx">06</span>Design system</button>
     </div>
+    <div class="rail-grp" id="railShortcuts">
+      <p class="rail-lbl">Shortcuts</p>
+    </div>
   </nav>
 
   <main class="main" id="main" tabindex="-1">
@@ -62,7 +65,7 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
 
   <aside class="panel" id="panel" aria-label="Session monitor">
     <div class="mon-head" id="monHead">
-      <b>Monitor</b>
+      <span class="mon-brand"><b>Monitor</b><span class="ph-badge" title="Instrumented with PostHog">POSTHOG</span></span>
       <span class="src" id="src"><i></i><span id="srcLabel">local</span></span>
     </div>
 
@@ -86,9 +89,11 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
     <p class="verdict" id="verdict">Idle. The funnel starts when you scroll.</p>
 
     <p class="disclaim">
-      This page runs PostHog — the same instrumentation I'd put on your product.
-      Pageviews, scroll depth, which cases you open, and a session replay are
-      captured. No forms, no personal data, no third-party ad tracking.
+      This monitor runs on PostHog — the same event tracking and session
+      replay stack I set up for clients. It's also how I work day to day:
+      I query this exact project through PostHog's MCP server from inside
+      Claude to analyze it conversationally, the way I'd analyze yours.
+      No forms, no personal data, no third-party ad tracking.
     </p>
   </aside>
 
@@ -99,6 +104,22 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
 <div class="lb" id="lb" hidden>
   <button class="lb-x" id="lbX" type="button" aria-label="Close photo">×</button>
   <img id="lbImg" alt=""/>
+</div>
+
+<!-- floating window: cases open here instead of a new tab — the OS gesture -->
+<div class="winfloat" id="winfloat" hidden>
+  <div class="winfloat-backdrop" id="wfBackdrop"></div>
+  <div class="winfloat-box" id="wfBox">
+    <div class="winfloat-bar" id="wfBar">
+      <span class="wf-dots">
+        <i class="wf-close" id="wfClose" role="button" tabindex="0" aria-label="Close window"></i>
+        <i class="wf-max" id="wfMax" role="button" tabindex="0" aria-label="Maximize window"></i>
+      </span>
+      <span class="wf-title" id="wfTitle">Case</span>
+      <span class="wf-path" id="wfPath">fm://cases/…</span>
+    </div>
+    <div class="winfloat-body"><iframe id="wfFrame" title="Case preview" src="about:blank"></iframe></div>
+  </div>
 </div>
 
 <script src="fmos.js"></script>

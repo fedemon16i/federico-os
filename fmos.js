@@ -36,6 +36,17 @@ var PHOTOS=[
   ['IMG_0533.jpeg','Federico thinking through a problem']
 ];
 
+/* Each case gets a small line-art scene instead of a photo — same wireframe
+   language as the live portfolio's demos (process shown, nothing invented).
+   --pc (set on the button below) tints the one accent stroke in each scene. */
+var CASE_SVG={
+  ey:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="9" width="48" height="8" rx="1"/><rect x="8" y="24" width="48" height="8" rx="1" stroke="var(--ac)" stroke-dasharray="3 3" class="pc-mark"/><circle class="pc-mark" cx="52" cy="28" r="2.6" fill="var(--ac)" stroke="none"/><rect x="8" y="39" width="48" height="8" rx="1"/><rect x="8" y="53" width="18" height="5" rx="1" fill="currentColor" stroke="none" opacity=".45"/></svg>',
+  chek:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="32" x2="50" y2="32"/><circle cx="14" cy="32" r="5"/><circle class="pc-mark" cx="32" cy="32" r="7" fill="var(--pc)" stroke="var(--pc)"/><circle cx="50" cy="32" r="5"/></svg>',
+  cus:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 10h14l6 6v26H8z"/><path d="M22 10v6h6"/><path d="M31 32h6" stroke-dasharray="2 3"/><rect x="41" y="14" width="17" height="24" rx="2"/><path class="pc-mark" stroke="var(--pc)" d="M45.5 25.5l3 3 6-7"/></svg>',
+  bc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="16" y1="46" x2="48" y2="46"/><line x1="16" y1="46" x2="32" y2="16"/><line x1="48" y1="46" x2="32" y2="16"/><circle cx="16" cy="46" r="4.5"/><circle cx="48" cy="46" r="4.5"/><circle class="pc-mark" cx="32" cy="16" r="6" fill="var(--pc)" stroke="var(--pc)"/></svg>',
+  dc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="10" width="9" height="28"/><rect x="27" y="10" width="9" height="28"/><rect x="46" y="10" width="9" height="28"/><path d="M12 46q11 8 22 0t18 0" stroke-dasharray="2 3"/><circle class="pc-mark" cx="12" cy="46" r="3" fill="var(--pc)" stroke="none"/></svg>'
+};
+
 var CASES=[
   {id:'ey',name:'EY Fabric',meta:'Globant × EY · 2023—2026',pc:'#ffe600',file:'ey-fabric.html',
    line:'Marketplace publishers shipped forms asking for serial codes and equipment IDs with no context and no validation. I used Pendo to find <b>which exact fields</b> people abandoned — and that list went straight to the product backlog.'},
@@ -49,13 +60,32 @@ var CASES=[
    line:'Field research at point of sale, turned into a <b>ranked list of actions</b> — not a research deck nobody opens two weeks later.'}
 ];
 
+/* tool mentions spread across the discipline, on purpose — Pendo is real and
+   deep (see EY Fabric above) but it is one tool among several, not the story */
 var CAPS=[
-  {k:'Analytics',t:'Product instrumentation',d:'Every screen becomes a named event I can query later. Taxonomy first, dashboards second.',tools:'Pendo · PostHog · GA4'},
+  {k:'Analytics',t:'Product instrumentation',d:'Every screen becomes a named event I can query later. Taxonomy first, dashboards second.',tools:'PostHog · GA4'},
   {k:'Analytics',t:'Funnels & drop-off',d:'Short funnels on the flows that pay. Conversion and volume read together, never apart.',tools:'Pendo · Mixpanel'},
-  {k:'Research',t:'Session replay triage',d:'Watch the sessions that failed, then group them by the struggle they share.',tools:'Pendo · OpenReplay'},
+  {k:'Research',t:'Session replay triage',d:'Watch the sessions that failed, then group them by the struggle they share.',tools:'OpenReplay · Clarity'},
   {k:'Research',t:'Synthesis',d:'Interviews and tests compressed into a ranked list of what to fix, with confidence attached.',tools:'Maze · Qualtrics · Claude'},
   {k:'Design',t:'Systems, not screens',d:'Shared tokens across design and code, so the drift stays small enough to fix.',tools:'Figma · GitHub'},
   {k:'AI + Dev',t:'AI impact measurement',d:'Did the AI feature change behaviour, or only sentiment? Baseline before shipping, delta after.',tools:'PostHog · Helicone'}
+];
+
+/* ── shortcuts: real destinations, real marks — the literal desktop-icon
+   gesture, scaled down to fit a rail instead of a full desktop grid ── */
+var ICONS={
+  pdf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.3 13.3h1.3a1 1 0 010 2H9.3v-2 2.4"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6.2l8.5 6.6 8.5-6.6"/></svg>',
+  link:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 14L20 4"/><path d="M14 4h6v6"/><path d="M20 13v6a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h6"/></svg>',
+  linkedin:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.24h4V23h-4V8.24zM8.5 8.24h3.83v2.02h.05c.53-1 1.85-2.06 3.8-2.06 4.06 0 4.81 2.67 4.81 6.15V23h-4v-6.63c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.5V23h-4V8.24z"/></svg>',
+  github:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 000 12.1c0 5.14 3.29 9.5 7.86 11.04.57.11.78-.25.78-.56 0-.27-.01-1.17-.02-2.13-3.2.7-3.88-1.38-3.88-1.38-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.78 2.7 1.27 3.36.97.1-.75.4-1.27.73-1.56-2.55-.29-5.24-1.29-5.24-5.75 0-1.27.45-2.3 1.19-3.11-.12-.29-.52-1.48.11-3.08 0 0 .97-.31 3.18 1.19a10.9 10.9 0 015.79 0c2.2-1.5 3.17-1.19 3.17-1.19.64 1.6.24 2.79.12 3.08.74.81 1.18 1.84 1.18 3.11 0 4.47-2.7 5.45-5.27 5.74.42.36.78 1.08.78 2.18 0 1.57-.01 2.84-.01 3.23 0 .31.21.68.79.56A11.5 11.5 0 0024 12.1 11.5 11.5 0 0012 .5z"/></svg>'
+};
+var SHORTCUTS=[
+  {label:'Résumé (PDF)',href:CV,ext:true,icon:'pdf'},
+  {label:'LinkedIn',href:LI,ext:true,icon:'linkedin'},
+  {label:'Email',href:'mailto:fedemon16i@gmail.com',ext:false,icon:'mail'},
+  {label:'GitHub',href:'https://github.com/fedemon16i',ext:true,icon:'github'},
+  {label:'Live portfolio',href:'https://fedemon16i.github.io/federico-portfolio/',ext:true,icon:'link'}
 ];
 
 var PHASES=[
@@ -114,13 +144,15 @@ function fmtTime(ms){
 
 /* Real state, never theatre: this lights up only if a PostHog snippet
    is actually present on the page. Drop the standard posthog.init()
-   into index.html and the row flips to "posthog" on its own. */
+   into index.html and the row flips to "live" on its own. The word
+   "PostHog" already sits in the header badge — the status label says
+   connection state instead, so the two don't just repeat each other. */
 function source(){
   var p=window.posthog;
   if(!p || typeof p.capture!=='function') return {live:false,label:'local'};
   /* the snippet installs a queueing stub instantly; __loaded means the real
      library arrived and events are actually leaving the browser */
-  return p.__loaded ? {live:true,label:'posthog'} : {live:false,label:'linking'};
+  return p.__loaded ? {live:true,label:'live'} : {live:false,label:'linking'};
 }
 
 function renderMonitor(){
@@ -249,12 +281,11 @@ function viewHome(){
       '<div class="cases">'+CASES.map(function(c){
         return '<button class="case" type="button" data-case="'+c.id+'" style="--pc:'+c.pc+'">'+
           '<i class="c-bar" aria-hidden="true"></i>'+
-          '<span>'+
-            '<span class="c-head"><span class="c-name">'+c.name+'</span>'+
-            '<span class="c-meta">'+c.meta+'</span></span>'+
-            '<span class="c-line">'+c.line+'</span>'+
-          '</span>'+
-          '<span class="c-go">OPEN →</span>'+
+          '<span class="c-prev-wrap" aria-hidden="true"><span class="c-prev">'+(CASE_SVG[c.id]||'')+'</span></span>'+
+          '<span class="c-head"><span class="c-name">'+c.name+'</span>'+
+          '<span class="c-meta">'+c.meta+'</span></span>'+
+          '<span class="c-line">'+c.line+'</span>'+
+          '<span class="c-go">VIEW IN WINDOW →</span>'+
         '</button>';
       }).join('')+'</div>'+
     '</section>'+
@@ -390,7 +421,7 @@ function bindStage(){
         seconds_on_page:Math.round((Date.now()-T.start)/1000)
       });
       renderMonitor();
-      window.open(CASE+c.file,'_blank','noopener');
+      openWindow(CASE+c.file, c.name, 'fm://cases/'+id);
     });
   });
 
@@ -420,6 +451,72 @@ function openLb(i){
 }
 document.getElementById('lbX').addEventListener('click',function(){ lb.hidden=true; });
 lb.addEventListener('click',function(e){ if(e.target===lb) lb.hidden=true; });
+
+/* ── shortcuts: the desktop-icon gesture, scaled to a rail ──────
+   Real destinations, real marks (LinkedIn, GitHub) or plain functional
+   glyphs (mail, doc, external-link) — never a generic stand-in icon for
+   a named brand, per the portfolio's own rule. */
+(function renderShortcuts(){
+  var host=document.getElementById('railShortcuts');
+  if(!host) return;
+  host.insertAdjacentHTML('beforeend', SHORTCUTS.map(function(s){
+    return '<a class="sc" href="'+s.href+'" '+(s.ext?'target="_blank" rel="noopener"':'')+
+      ' data-shortcut="'+s.label+'"><span class="sc-ico" aria-hidden="true">'+ICONS[s.icon]+'</span>'+s.label+'</a>';
+  }).join(''));
+})();
+
+document.addEventListener('click',function(e){
+  var t=e.target.closest?e.target.closest('[data-shortcut]'):null;
+  if(!t) return;
+  track('shortcut_clicked',{label:t.dataset.shortcut});
+  if(!drawer.hidden){ drawer.hidden=true; menuBtn.setAttribute('aria-expanded','false'); }
+});
+
+/* ── floating window — cases open here instead of a new tab. This is
+   the literal OS gesture: a titled, draggable window over the desktop,
+   not a page navigation. Same case pages, same design systems, untouched. */
+var wf=document.getElementById('winfloat'), wfBox=document.getElementById('wfBox'),
+    wfBar=document.getElementById('wfBar'), wfFrame=document.getElementById('wfFrame');
+
+function openWindow(url,title,path){
+  document.getElementById('wfTitle').textContent=title;
+  document.getElementById('wfPath').textContent=path;
+  wfFrame.src=url;
+  wfBox.classList.remove('maximized');
+  wfBox.style.left=''; wfBox.style.top=''; wfBox.style.transform='';
+  wf.hidden=false;
+  document.getElementById('wfClose').focus();
+}
+function closeWindow(){
+  wf.hidden=true;
+  wfFrame.src='about:blank'; /* stop whatever the case page was doing */
+}
+document.getElementById('wfClose').addEventListener('click',closeWindow);
+document.getElementById('wfBackdrop').addEventListener('click',closeWindow);
+document.getElementById('wfMax').addEventListener('click',function(){
+  wfBox.classList.toggle('maximized');
+});
+
+/* drag by the bar — plain pointer events, no pointer:fine guard, so it
+   also works by touch (that guard has broken touch twice in the sibling repo) */
+var dragging=false, dragDX=0, dragDY=0;
+wfBar.addEventListener('pointerdown',function(e){
+  if(e.target.closest('.wf-dots')) return;
+  var r=wfBox.getBoundingClientRect();
+  wfBox.style.left=r.left+'px'; wfBox.style.top=r.top+'px'; wfBox.style.transform='none';
+  dragDX=e.clientX-r.left; dragDY=e.clientY-r.top;
+  dragging=true;
+  wfBar.classList.add('dragging');
+  wfBar.setPointerCapture(e.pointerId);
+});
+wfBar.addEventListener('pointermove',function(e){
+  if(!dragging) return;
+  wfBox.style.left=Math.max(0,Math.min(window.innerWidth-80,e.clientX-dragDX))+'px';
+  wfBox.style.top =Math.max(0,Math.min(window.innerHeight-40,e.clientY-dragDY))+'px';
+});
+function stopDrag(){ dragging=false; wfBar.classList.remove('dragging'); }
+wfBar.addEventListener('pointerup',stopDrag);
+wfBar.addEventListener('pointercancel',stopDrag);
 
 /* ── chrome ──────────────────────────────────────────────────── */
 
@@ -453,6 +550,9 @@ try{ var saved=localStorage.getItem('fmos-theme'); if(saved) document.documentEl
 var drawer=document.getElementById('drawer'), menuBtn=document.getElementById('menuBtn');
 drawer.innerHTML=ORDER.map(function(r,i){
   return '<button type="button" data-route="'+r+'"><span class="idx">0'+(i+1)+'</span>'+LABEL[r]+'</button>';
+}).join('')+SHORTCUTS.map(function(s){
+  return '<a class="sc" href="'+s.href+'" '+(s.ext?'target="_blank" rel="noopener"':'')+
+    ' data-shortcut="'+s.label+'"><span class="sc-ico" aria-hidden="true">'+ICONS[s.icon]+'</span>'+s.label+'</a>';
 }).join('');
 menuBtn.addEventListener('click',function(){
   var open=drawer.hidden;
@@ -467,7 +567,7 @@ document.getElementById('monHead').addEventListener('click',function(){
 
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
-    lb.hidden=true; drawer.hidden=true;
+    lb.hidden=true; drawer.hidden=true; closeWindow();
     menuBtn.setAttribute('aria-expanded','false');
   }
   if(e.altKey&&e.key==='ArrowRight') go(ORDER[(ORDER.indexOf(current)+1)%ORDER.length]);
