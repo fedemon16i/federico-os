@@ -17,12 +17,15 @@ var reduced=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
 /* ── content ─────────────────────────────────────────────────── */
 
+/* Tool-agnostic on purpose (see REFERENCES.md, "the one hard rule"): the
+   claim is decisions from measured outcomes, not fluency in one vendor's
+   dashboard. Pendo, PostHog, Mixpanel — whatever the contract already runs. */
 var LINES=[
   'I find where products <em>break</em>, and measure it.',
-  'Pendo, funnels, session replay — <em>measurement as craft</em>.',
+  'Funnels, replay, whatever the stack already runs — <em>measurement as craft</em>.',
   'Design × Product × Analytics — I\'m the <em>bridge</em>.',
   'Not prettier UI. <em>Which field</em> made them quit.',
-  'Industrial Design roots. <em>Behavioral analytics</em> by choice.'
+  'Decisions from evidence, not from the loudest opinion in the room.'
 ];
 
 var PHOTOS=[
@@ -47,16 +50,25 @@ var CASE_SVG={
   dc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="10" width="9" height="28"/><rect x="27" y="10" width="9" height="28"/><rect x="46" y="10" width="9" height="28"/><path d="M12 46q11 8 22 0t18 0" stroke-dasharray="2 3"/><circle class="pc-mark" cx="12" cy="46" r="3" fill="var(--pc)" stroke="none"/></svg>'
 };
 
+/* role / industry / era — the amitux.in card structure (see REFERENCES.md):
+   what he did, the domain, how long, before any prose. Eras are real
+   employment windows already established in the bio, never a fabricated
+   month-count — no metric gets invented for the sake of looking precise. */
 var CASES=[
-  {id:'ey',name:'EY Fabric',meta:'Globant × EY · 2023—2026',pc:'#ffe600',file:'ey-fabric.html',
-   line:'Marketplace publishers shipped forms asking for serial codes and equipment IDs with no context and no validation. I used Pendo to find <b>which exact fields</b> people abandoned — and that list went straight to the product backlog.'},
-  {id:'chek',name:'Chek',meta:'Applaudo · fintech',pc:'#9b6cff',file:'chek.html',
+  {id:'ey',name:'EY Fabric',role:'Behavioral analytics',industry:'Enterprise marketplace',era:'Globant × EY · 2023–2026',
+   pc:'#ffe600',file:'ey-fabric.html',
+   line:'Marketplace publishers shipped forms asking for serial codes and equipment IDs with no context and no validation. Instrumented the flow to find <b>which exact fields</b> people abandoned — and that list went straight to the product backlog.'},
+  {id:'chek',name:'Chek',role:'Design system rebuild',industry:'Fintech',era:'Applaudo · 2021–2023',
+   pc:'#9b6cff',file:'chek.html',
    line:'Rebuilt the design system end to end — onboarding for credit, debit and account opening. The financial-education layer we designed became Banco Ripley\'s <b>Corta y Clara</b>.'},
-  {id:'cus',name:'Customs ES',meta:'Applaudo · government',pc:'#e05c4a',file:'customs.html',
+  {id:'cus',name:'Customs ES',role:'Digital transformation',industry:'Government',era:'Applaudo · 2021–2023',
+   pc:'#e05c4a',file:'customs.html',
    line:'<b>50+ paper processes</b> turned digital, with dual devices at the gate. No prior interface to redesign — the entire flow had to be derived from the operation itself.'},
-  {id:'bc',name:'Blockchain 3D',meta:'Globant · now EQUS',pc:'#22d4c8',file:'blockchain.html',
+  {id:'bc',name:'Blockchain 3D',role:'3D interface design',industry:'Blockchain / Web3',era:'Globant · 2023, now EQUS',
+   pc:'#22d4c8',file:'blockchain.html',
    line:'Figma → Spline → Unity treated as <b>one system</b>, not three handoffs. A 3D interface for connected blockchain flows, phone-first.'},
-  {id:'dc',name:'DollarCity',meta:'Applaudo · retail',pc:'#00a650',file:'dollarcity.html',
+  {id:'dc',name:'DollarCity',role:'Field research',industry:'Retail',era:'Applaudo · 2021–2023',
+   pc:'#00a650',file:'dollarcity.html',
    line:'Field research at point of sale, turned into a <b>ranked list of actions</b> — not a research deck nobody opens two weeks later.'}
 ];
 
@@ -94,7 +106,7 @@ var PHASES=[
   {yr:'2021 — 2023',t:'Product Design',
    d:'Taxsynapse, then Applaudo. Government digital transformation in El Salvador, retail field research for DollarCity, a fintech rebuilt from its design system up.'},
   {yr:'2023 — now',t:'Behavioral Analytics',now:true,
-   d:'At EY Fabric a director asked what I actually wanted to own. I said behavioral analytics. The team became Research & Analytics, and I went deep into Pendo — replay, funnels, journeys, spikes.'}
+   d:'At EY Fabric a director asked what I actually wanted to own. I said behavioral analytics. The team became Research & Analytics, and I went deep into instrumenting product — replay, funnels, journeys, spikes — whatever tool the account already ran.'}
 ];
 
 var ORDER=['home','projects','skills','resume','contact','system'];
@@ -249,7 +261,7 @@ function viewHome(){
       '<div class="facts">'+
         '<div class="fact"><b>5+ yrs</b><span>Digital product</span></div>'+
         '<div class="fact"><b>3</b><span>Countries</span></div>'+
-        '<div class="fact"><b>Pendo</b><span>Core tool</span></div>'+
+        '<div class="fact"><b>Evidence</b><span>Not opinion</span></div>'+
         '<div class="fact"><b>Remote</b><span>LATAM · contractor</span></div>'+
       '</div>'+
       '<p>Guatemalan, based in Córdoba. Industrial Designer by training, product designer '+
@@ -263,13 +275,13 @@ function viewHome(){
 
     '<section class="beat" data-beat>'+
       '<p class="beat-n">02 — <em>The turn</em></p>'+
-      '<h2>How an industrial designer ended up living inside Pendo</h2>'+
+      '<h2>How an industrial designer became the one who measures whether it worked</h2>'+
       '<div class="turn">'+PHASES.map(function(p){
         return '<div class="phase'+(p.now?' now':'')+'">'+
           '<p class="yr">'+p.yr+'</p><h3>'+p.t+'</h3><p>'+p.d+'</p></div>';
       }).join('')+'</div>'+
-      '<blockquote>I\'m not the strongest UX designer in Figma. I\'m the one who gets into '+
-        'Pendo, finds where the product breaks, and measures it.'+
+      '<blockquote>I\'m not the strongest UX designer in Figma. I\'m the one who instruments '+
+        'the product, finds where it breaks, and measures whether the fix actually worked.'+
         '<cite>The reason this portfolio exists</cite></blockquote>'+
     '</section>'+
 
@@ -280,12 +292,17 @@ function viewHome(){
         'number that says whether it worked.</p>'+
       '<div class="cases">'+CASES.map(function(c){
         return '<button class="case" type="button" data-case="'+c.id+'" style="--pc:'+c.pc+'">'+
-          '<i class="c-bar" aria-hidden="true"></i>'+
           '<span class="c-prev-wrap" aria-hidden="true"><span class="c-prev">'+(CASE_SVG[c.id]||'')+'</span></span>'+
-          '<span class="c-head"><span class="c-name">'+c.name+'</span>'+
-          '<span class="c-meta">'+c.meta+'</span></span>'+
-          '<span class="c-line">'+c.line+'</span>'+
-          '<span class="c-go">VIEW IN WINDOW →</span>'+
+          '<span class="c-body">'+
+            '<span class="c-facts">'+
+              '<span class="c-role">'+c.role+'</span>'+
+              '<span class="c-fact-row"><span class="c-industry">'+c.industry+'</span>'+
+              '<span class="c-era">'+c.era+'</span></span>'+
+            '</span>'+
+            '<span class="c-name">'+c.name+'</span>'+
+            '<span class="c-line">'+c.line+'</span>'+
+            '<span class="c-go">VIEW IN WINDOW →</span>'+
+          '</span>'+
         '</button>';
       }).join('')+'</div>'+
     '</section>'+
