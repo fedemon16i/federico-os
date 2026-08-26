@@ -28,23 +28,8 @@ var LINES=[
   'Decisions from evidence, not from the loudest opinion in the room.'
 ];
 
-/* the hologram Q&A — the open item from REFERENCES.md. No LLM call: a
-   small keyword match over real, already-public positioning. Never the
-   private compensation figures from the bio doc — those stay a
-   conversation, not a canned line a stranger can trigger. */
-var ASKS=[
-  {q:'Available for work?',k:['avail','work','hire','freelance','open to'],
-   a:'Yes — remote, contractor-friendly, based in Córdoba (UTC-3). <a href="mailto:fedemon16i@gmail.com">Email me</a> and let\'s talk.'},
-  {q:'What\'s your stack?',k:['stack','tool','tech','use','software'],
-   a:'Pendo, PostHog, Figma, Claude, GitHub — whatever the account already runs. The tool is never the point; the finding is.'},
-  {q:'Why analytics, not UI?',k:['why','analytic','ui','design','click','turn'],
-   a:'I\'m not the strongest UX designer in Figma. I\'m the one who instruments the product, finds where it breaks, and measures whether the fix worked.'},
-  {q:'Which case should I open first?',k:['case','project','first','best','start','open'],
-   a:'EY Fabric — Pendo found the exact form fields losing people, and that list went straight to the backlog. Open it under Evidence.'},
-  {q:'How do I reach you?',k:['reach','contact','email','linkedin','talk','connect'],
-   a:'<a href="mailto:fedemon16i@gmail.com">Email</a> or <a href="https://www.linkedin.com/in/federico-monroy-1b6b2ba0/" target="_blank" rel="noopener">LinkedIn</a> — both in Shortcuts, left rail.'}
-];
-var ASK_FALLBACK='Not sure I have a canned answer for that one — try a chip above, or just <a href="mailto:fedemon16i@gmail.com">email me</a> directly.';
+/* the hologram Q&A was removed on request — the avatar space stays open
+   for later (see REFERENCES.md), without the canned-answer interaction. */
 
 var PHOTOS=[
   ['IMG_0531.jpeg','Federico at work, product focus'],
@@ -343,18 +328,6 @@ function viewHome(){
         '<div>'+
           '<h1>Federico Monroy</h1>'+
           '<p class="oneliner" id="oneliner"></p>'+
-          '<div class="ask" id="ask">'+
-            '<p class="ask-k">Ask the hologram</p>'+
-            '<div class="ask-chips">'+ASKS.map(function(a,i){
-              return '<button type="button" data-ask="'+i+'">'+a.q+'</button>';
-            }).join('')+'</div>'+
-            '<form class="ask-form" id="askForm">'+
-              '<input type="text" id="askInput" placeholder="or type your own…" '+
-                'aria-label="Ask Federico\'s hologram a question" autocomplete="off"/>'+
-              '<button type="submit" aria-label="Ask">→</button>'+
-            '</form>'+
-            '<p class="ask-a" id="askAnswer" aria-live="polite"></p>'+
-          '</div>'+
         '</div>'+
       '</div>'+
       /* full-width stat band — inside the narrow right column these
@@ -623,23 +596,6 @@ function bindStage(){
     btn.addEventListener('click',function(){ openLb(+btn.dataset.photo); });
   });
 
-  /* the hologram Q&A — chips ask a fixed question; the input free-types
-     into the same keyword matcher. Neither calls out anywhere. */
-  Array.prototype.forEach.call(stage.querySelectorAll('[data-ask]'),function(btn){
-    btn.addEventListener('click',function(){ askHologram(ASKS[+btn.dataset.ask].q); });
-  });
-  var askForm=document.getElementById('askForm');
-  if(askForm){
-    askForm.addEventListener('submit',function(e){
-      e.preventDefault();
-      var input=document.getElementById('askInput');
-      var q=(input.value||'').trim();
-      if(!q) return;
-      askHologram(q);
-      input.value='';
-    });
-  }
-
   /* beats light up as they enter — the spine tracks where you are */
   if('IntersectionObserver' in window){
     /* tracks every beat's current intersecting state across calls — a
@@ -668,40 +624,6 @@ function bindStage(){
     },{root:main,rootMargin:'-42% 0px -42% 0px'});
     Array.prototype.forEach.call(stage.querySelectorAll('[data-beat]'),function(b){ io.observe(b); });
   }
-}
-
-/* ── the hologram answers ────────────────────────────────────────
-   Keyword match over ASKS, not an LLM call — see REFERENCES.md: v1 needs
-   no new infrastructure to get most of the value. A short "thinking"
-   beat plus a portrait flicker sells the hologram; the answer itself is
-   instant and deterministic. */
-var askGen=0;
-function askHologram(question){
-  var out=document.getElementById('askAnswer');
-  if(!out) return;
-  var gen=++askGen;
-  var qLower=question.toLowerCase();
-  var hit=ASKS.filter(function(a){
-    return a.k.some(function(k){ return qLower.indexOf(k)!==-1; });
-  })[0];
-  var answer=hit?hit.a:ASK_FALLBACK;
-
-  track('hologram_asked',{question:question,matched:!!hit});
-  bump();
-
-  var portrait=document.querySelector('.portrait');
-  if(portrait&&!reduced){
-    portrait.classList.add('holo-blip');
-    setTimeout(function(){ portrait.classList.remove('holo-blip'); },260);
-  }
-
-  out.classList.remove('in');
-  out.innerHTML='<span class="ask-think">Thinking<i></i><i></i><i></i></span>';
-  setTimeout(function(){
-    if(gen!==askGen) return; /* a newer question arrived mid-delay */
-    out.innerHTML=answer;
-    requestAnimationFrame(function(){ out.classList.add('in'); });
-  },reduced?0:420);
 }
 
 /* ── lightbox ────────────────────────────────────────────────── */
@@ -743,6 +665,20 @@ document.addEventListener('click',function(e){
    not a page navigation. Same case pages, same design systems, untouched. */
 var wf=document.getElementById('winfloat'), wfBox=document.getElementById('wfBox'),
     wfBar=document.getElementById('wfBar'), wfFrame=document.getElementById('wfFrame');
+
+/* winArriveFloat runs with fill-mode:both so the box holds its "arrived"
+   pose instead of snapping back the instant the animation ends — but held
+   forever, that forced transform:translate(-50%,-50%) silently outranks
+   any inline transform the drag/maximize code sets afterwards (a running
+   fill-mode animation always wins that cascade over an inline style).
+   Without this, dragging the window looks fine on the wfBox.style.left/top
+   values but renders somewhere else entirely, since the browser is still
+   applying the animation's centering transform underneath. Dropping the
+   class once the animation finishes hands control back to plain CSS/inline
+   styles, which is what drag and maximize both assume they have. */
+wfBox.addEventListener('animationend',function(e){
+  if(e.animationName==='winArriveFloat') wfBox.classList.remove('arrive');
+});
 
 /* the hash saved from just before a case window opens, so closing restores
    the section the visitor was actually on instead of always landing on
@@ -790,7 +726,17 @@ window.addEventListener('popstate',function(e){
 document.getElementById('wfClose').addEventListener('click',closeWindow);
 document.getElementById('wfBackdrop').addEventListener('click',closeWindow);
 document.getElementById('wfMax').addEventListener('click',function(){
+  var goingMax=!wfBox.classList.contains('maximized');
   wfBox.classList.toggle('maximized');
+  /* dragging sets left/top/transform as inline styles, which always beat
+     the .maximized CSS rule's width/height-only change. Maximizing after
+     any drag left the box's position wherever it was dragged to, so a
+     98vw/96vh box could open mostly off-screen — its own title bar and
+     close/max dots cut off past the viewport edge. Clearing the inline
+     styles restores the CSS rule's own centering (see the animationend
+     listener above for the other half of this: without it, a stale
+     fill-mode animation would still override whatever we clear to here). */
+  if(goingMax){ wfBox.style.left=''; wfBox.style.top=''; wfBox.style.transform=''; }
 });
 
 /* drag by the bar — plain pointer events, no pointer:fine guard, so it
