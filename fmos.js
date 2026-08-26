@@ -87,6 +87,26 @@ var T={
 
 function bump(){ T.events++; T.spark[T.spark.length-1]++; }
 
+/* ── PostHog bridge ──────────────────────────────────────────────
+   Event names follow the [object]_[action]_[context] taxonomy from
+   federico-skills. Everything is fire-and-forget: if the snippet is
+   absent the calls are no-ops and the monitor simply reads "local".
+
+   The funnel these build, in PostHog:
+     $pageview → scroll_reached(50) → case_hovered → case_opened     */
+function track(event,props){
+  try{
+    if(window.posthog && typeof window.posthog.capture==='function'){
+      window.posthog.capture(event,props||{});
+    }
+  }catch(err){/* analytics must never break the page */}
+}
+
+/* hover is noisy — one event per case per session, and only once the
+   dwell is long enough to mean something */
+var hoverSent={};
+var depthSent={};
+
 function fmtTime(ms){
   var s=Math.floor(ms/1000);
   return s<60 ? s+'s' : Math.floor(s/60)+'m'+(s%60<10?'0':'')+(s%60)+'s';
@@ -97,8 +117,10 @@ function fmtTime(ms){
    into index.html and the row flips to "posthog" on its own. */
 function source(){
   var p=window.posthog;
-  if(p && typeof p.capture==='function') return {live:true,label:'posthog'};
-  return {live:false,label:'local'};
+  if(!p || typeof p.capture!=='function') return {live:false,label:'local'};
+  /* the snippet installs a queueing stub instantly; __loaded means the real
+     library arrived and events are actually leaving the browser */
+  return p.__loaded ? {live:true,label:'posthog'} : {live:false,label:'linking'};
 }
 
 function renderMonitor(){
@@ -285,8 +307,16 @@ function paint(r){
   renderMonitor();
 }
 
+var sectionEnteredAt=Date.now();
+
 function go(r){
   if(r===current||!LABEL[r]) return;
+  track('section_viewed',{
+    section:r, from:current,
+    seconds_on_previous:Math.round((Date.now()-sectionEnteredAt)/1000),
+    previous_depth:T.depth
+  });
+  sectionEnteredAt=Date.now();
   current=r;
   T.seen[r]=true;
   bump();
@@ -340,6 +370,11 @@ function bindStage(){
         if(!enter) return;
         T.dwell[id]=(T.dwell[id]||0)+(Date.now()-enter);
         enter=0;
+        /* hesitation signal: dwelled on a case and did not click */
+        if(T.dwell[id]>800 && !hoverSent[id]){
+          hoverSent[id]=true;
+          track('case_hovered',{case_id:id,dwell_ms:Math.round(T.dwell[id])});
+        }
         renderMonitor();
       },70);
     });
@@ -348,6 +383,12 @@ function bindStage(){
       if(!c) return;
       T.opened.push(id);
       bump();
+      /* the conversion event of this page */
+      track('case_opened',{
+        case_id:id, case_name:c.name,
+        dwell_ms:Math.round(T.dwell[id]||0),
+        seconds_on_page:Math.round((Date.now()-T.start)/1000)
+      });
       renderMonitor();
       window.open(CASE+c.file,'_blank','noopener');
     });
@@ -374,6 +415,7 @@ function openLb(i){
   lbImg.alt=PHOTOS[i][1];
   lb.hidden=false;
   bump();
+  track('photo_opened',{photo:PHOTOS[i][0]});
   document.getElementById('lbX').focus();
 }
 document.getElementById('lbX').addEventListener('click',function(){ lb.hidden=true; });
@@ -392,6 +434,7 @@ document.addEventListener('click',function(e){
 document.getElementById('themeBtn').addEventListener('click',function(){
   var next=(document.documentElement.getAttribute('data-theme')||'dark')==='dark'?'light':'dark';
   bump();
+  track('theme_inverted',{to:next});
   function set(){ document.documentElement.setAttribute('data-theme',next); }
   if(reduced){ set(); }
   else{
@@ -439,6 +482,14 @@ main.addEventListener('scroll',function(){
   var d=Math.min(100,Math.round(main.scrollTop/h*100));
   if(d>T.depth) T.depth=d;
   bump();
+  /* milestone events, once each — a continuous scroll stream is noise */
+  [25,50,75,100].forEach(function(m){
+    var key=current+':'+m;
+    if(T.depth>=m && !depthSent[key]){
+      depthSent[key]=true;
+      track('scroll_reached',{depth:m,section:current});
+    }
+  });
 },{passive:true});
 
 /* ── boot ────────────────────────────────────────────────────── */
