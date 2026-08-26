@@ -355,8 +355,9 @@ function viewHome(){
         return '<div class="phase'+(p.now?' now':'')+'">'+
           '<p class="yr">'+p.yr+'</p><h3>'+p.t+'</h3><p>'+p.d+'</p></div>';
       }).join('')+'</div>'+
-      '<blockquote>I\'m not the strongest UX designer in Figma. I\'m the one who instruments '+
-        'the product, finds where it breaks, and measures whether the fix actually worked.'+
+      '<blockquote>I\'ve been in Figma since 2020, and I pick up new tools fast — Pendo took '+
+        'me weeks, not years. But I chose to become the one who instruments the product, '+
+        'finds where it breaks, and measures whether the fix actually worked.'+
         '<cite>The reason this portfolio exists</cite></blockquote>'+
     '</section>'+
 
