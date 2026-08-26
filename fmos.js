@@ -28,6 +28,24 @@ var LINES=[
   'Decisions from evidence, not from the loudest opinion in the room.'
 ];
 
+/* the hologram Q&A — the open item from REFERENCES.md. No LLM call: a
+   small keyword match over real, already-public positioning. Never the
+   private compensation figures from the bio doc — those stay a
+   conversation, not a canned line a stranger can trigger. */
+var ASKS=[
+  {q:'Available for work?',k:['avail','work','hire','freelance','open to'],
+   a:'Yes — remote, contractor-friendly, based in Córdoba (UTC-3). <a href="mailto:fedemon16i@gmail.com">Email me</a> and let\'s talk.'},
+  {q:'What\'s your stack?',k:['stack','tool','tech','use','software'],
+   a:'Pendo, PostHog, Figma, Claude, GitHub — whatever the account already runs. The tool is never the point; the finding is.'},
+  {q:'Why analytics, not UI?',k:['why','analytic','ui','design','click','turn'],
+   a:'I\'m not the strongest UX designer in Figma. I\'m the one who instruments the product, finds where it breaks, and measures whether the fix worked.'},
+  {q:'Which case should I open first?',k:['case','project','first','best','start','open'],
+   a:'EY Fabric — Pendo found the exact form fields losing people, and that list went straight to the backlog. Open it under Evidence.'},
+  {q:'How do I reach you?',k:['reach','contact','email','linkedin','talk','connect'],
+   a:'<a href="mailto:fedemon16i@gmail.com">Email</a> or <a href="https://www.linkedin.com/in/federico-monroy-1b6b2ba0/" target="_blank" rel="noopener">LinkedIn</a> — both in Shortcuts, left rail.'}
+];
+var ASK_FALLBACK='Not sure I have a canned answer for that one — try a chip above, or just <a href="mailto:fedemon16i@gmail.com">email me</a> directly.';
+
 var PHOTOS=[
   ['IMG_0531.jpeg','Federico at work, product focus'],
   ['IMG_0534.jpeg','Federico designing'],
@@ -315,6 +333,18 @@ function viewHome(){
         '<div>'+
           '<h1>Federico Monroy</h1>'+
           '<p class="oneliner" id="oneliner"></p>'+
+          '<div class="ask" id="ask">'+
+            '<p class="ask-k">Ask the hologram</p>'+
+            '<div class="ask-chips">'+ASKS.map(function(a,i){
+              return '<button type="button" data-ask="'+i+'">'+a.q+'</button>';
+            }).join('')+'</div>'+
+            '<form class="ask-form" id="askForm">'+
+              '<input type="text" id="askInput" placeholder="or type your own…" '+
+                'aria-label="Ask Federico\'s hologram a question" autocomplete="off"/>'+
+              '<button type="submit" aria-label="Ask">→</button>'+
+            '</form>'+
+            '<p class="ask-a" id="askAnswer" aria-live="polite"></p>'+
+          '</div>'+
         '</div>'+
       '</div>'+
       /* full-width stat band — inside the narrow right column these
@@ -537,6 +567,23 @@ function bindStage(){
     btn.addEventListener('click',function(){ openLb(+btn.dataset.photo); });
   });
 
+  /* the hologram Q&A — chips ask a fixed question; the input free-types
+     into the same keyword matcher. Neither calls out anywhere. */
+  Array.prototype.forEach.call(stage.querySelectorAll('[data-ask]'),function(btn){
+    btn.addEventListener('click',function(){ askHologram(ASKS[+btn.dataset.ask].q); });
+  });
+  var askForm=document.getElementById('askForm');
+  if(askForm){
+    askForm.addEventListener('submit',function(e){
+      e.preventDefault();
+      var input=document.getElementById('askInput');
+      var q=(input.value||'').trim();
+      if(!q) return;
+      askHologram(q);
+      input.value='';
+    });
+  }
+
   /* beats light up as they enter — the spine tracks where you are */
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){
@@ -544,6 +591,40 @@ function bindStage(){
     },{root:main,rootMargin:'-42% 0px -42% 0px'});
     Array.prototype.forEach.call(stage.querySelectorAll('[data-beat]'),function(b){ io.observe(b); });
   }
+}
+
+/* ── the hologram answers ────────────────────────────────────────
+   Keyword match over ASKS, not an LLM call — see REFERENCES.md: v1 needs
+   no new infrastructure to get most of the value. A short "thinking"
+   beat plus a portrait flicker sells the hologram; the answer itself is
+   instant and deterministic. */
+var askGen=0;
+function askHologram(question){
+  var out=document.getElementById('askAnswer');
+  if(!out) return;
+  var gen=++askGen;
+  var qLower=question.toLowerCase();
+  var hit=ASKS.filter(function(a){
+    return a.k.some(function(k){ return qLower.indexOf(k)!==-1; });
+  })[0];
+  var answer=hit?hit.a:ASK_FALLBACK;
+
+  track('hologram_asked',{question:question,matched:!!hit});
+  bump();
+
+  var portrait=document.querySelector('.portrait');
+  if(portrait&&!reduced){
+    portrait.classList.add('holo-blip');
+    setTimeout(function(){ portrait.classList.remove('holo-blip'); },260);
+  }
+
+  out.classList.remove('in');
+  out.innerHTML='<span class="ask-think">Thinking<i></i><i></i><i></i></span>';
+  setTimeout(function(){
+    if(gen!==askGen) return; /* a newer question arrived mid-delay */
+    out.innerHTML=answer;
+    requestAnimationFrame(function(){ out.classList.add('in'); });
+  },reduced?0:420);
 }
 
 /* ── lightbox ────────────────────────────────────────────────── */
