@@ -42,12 +42,18 @@ var PHOTOS=[
 /* Each case gets a small line-art scene instead of a photo — same wireframe
    language as the live portfolio's demos (process shown, nothing invented).
    --pc (set on the button below) tints the one accent stroke in each scene. */
+/* the flow class is the "alive" signal — a marching-ants dash that only
+   moves on hover/focus, one shared technique reused per scene so the five
+   cards read as one system: EY scans a field, Chek/Blockchain flow along
+   their connections, DollarCity flows along the walked path. Customs gets
+   its own fade (paper receding as the screen takes over) since a dash
+   doesn't fit a filled shape. Resting state stays still, per house rule. */
 var CASE_SVG={
-  ey:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="9" width="48" height="8" rx="1"/><rect x="8" y="24" width="48" height="8" rx="1" stroke="var(--ac)" stroke-dasharray="3 3" class="pc-mark"/><circle class="pc-mark" cx="52" cy="28" r="2.6" fill="var(--ac)" stroke="none"/><rect x="8" y="39" width="48" height="8" rx="1"/><rect x="8" y="53" width="18" height="5" rx="1" fill="currentColor" stroke="none" opacity=".45"/></svg>',
-  chek:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="32" x2="50" y2="32"/><circle cx="14" cy="32" r="5"/><circle class="pc-mark" cx="32" cy="32" r="7" fill="var(--pc)" stroke="var(--pc)"/><circle cx="50" cy="32" r="5"/></svg>',
-  cus:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 10h14l6 6v26H8z"/><path d="M22 10v6h6"/><path d="M31 32h6" stroke-dasharray="2 3"/><rect x="41" y="14" width="17" height="24" rx="2"/><path class="pc-mark" stroke="var(--pc)" d="M45.5 25.5l3 3 6-7"/></svg>',
-  bc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="16" y1="46" x2="48" y2="46"/><line x1="16" y1="46" x2="32" y2="16"/><line x1="48" y1="46" x2="32" y2="16"/><circle cx="16" cy="46" r="4.5"/><circle cx="48" cy="46" r="4.5"/><circle class="pc-mark" cx="32" cy="16" r="6" fill="var(--pc)" stroke="var(--pc)"/></svg>',
-  dc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="10" width="9" height="28"/><rect x="27" y="10" width="9" height="28"/><rect x="46" y="10" width="9" height="28"/><path d="M12 46q11 8 22 0t18 0" stroke-dasharray="2 3"/><circle class="pc-mark" cx="12" cy="46" r="3" fill="var(--pc)" stroke="none"/></svg>'
+  ey:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="9" width="48" height="8" rx="1"/><rect x="8" y="24" width="48" height="8" rx="1" stroke="var(--ac)" stroke-dasharray="3 3" class="cs-flow"/><circle class="pc-mark" cx="52" cy="28" r="2.6" fill="var(--ac)" stroke="none"/><rect x="8" y="39" width="48" height="8" rx="1"/><rect x="8" y="53" width="18" height="5" rx="1" fill="currentColor" stroke="none" opacity=".45"/></svg>',
+  chek:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="32" x2="50" y2="32" stroke-dasharray="4 4" class="cs-flow"/><circle cx="14" cy="32" r="5"/><circle class="pc-mark" cx="32" cy="32" r="7" fill="var(--pc)" stroke="var(--pc)"/><circle cx="50" cy="32" r="5"/></svg>',
+  cus:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><g class="cs-fade"><path d="M8 10h14l6 6v26H8z"/><path d="M22 10v6h6"/></g><path d="M31 32h6" stroke-dasharray="2 3"/><rect x="41" y="14" width="17" height="24" rx="2"/><path class="pc-mark" stroke="var(--pc)" d="M45.5 25.5l3 3 6-7"/></svg>',
+  bc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="16" y1="46" x2="48" y2="46" stroke-dasharray="4 4" class="cs-flow"/><line x1="16" y1="46" x2="32" y2="16" stroke-dasharray="4 4" class="cs-flow"/><line x1="48" y1="46" x2="32" y2="16" stroke-dasharray="4 4" class="cs-flow"/><circle cx="16" cy="46" r="4.5"/><circle cx="48" cy="46" r="4.5"/><circle class="pc-mark" cx="32" cy="16" r="6" fill="var(--pc)" stroke="var(--pc)"/></svg>',
+  dc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="10" width="9" height="28"/><rect x="27" y="10" width="9" height="28"/><rect x="46" y="10" width="9" height="28"/><path d="M12 46q11 8 22 0t18 0" stroke-dasharray="2 3" class="cs-flow"/><circle class="pc-mark" cx="12" cy="46" r="3" fill="var(--pc)" stroke="none"/></svg>'
 };
 
 /* role / industry / era — the amitux.in card structure (see REFERENCES.md):
@@ -81,6 +87,62 @@ var CAPS=[
   {k:'Research',t:'Synthesis',d:'Interviews and tests compressed into a ranked list of what to fix, with confidence attached.',tools:'Maze · Qualtrics · Claude'},
   {k:'Design',t:'Systems, not screens',d:'Shared tokens across design and code, so the drift stays small enough to fix.',tools:'Figma · GitHub'},
   {k:'AI + Dev',t:'AI impact measurement',d:'Did the AI feature change behaviour, or only sentiment? Baseline before shipping, delta after.',tools:'PostHog · Helicone'}
+];
+
+/* ── Capabilities route — video-game skill cards ──────────────────
+   Ported verbatim from the live portfolio's own tool-logo library
+   (index.html LOGO map) — real marks, real brand colours, not redrawn.
+   Content (title/description/tools/linked project) is the actual set
+   of 8 cards already live on the portfolio home, not invented for FM.OS. */
+var LOGO={
+  pendo:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FF4A7D"/><text x="12" y="16" text-anchor="middle" font-size="11" fill="#fff" font-family="sans-serif" font-weight="700">P</text></svg>',
+  ga4:'<svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1" fill="#F9AB00"/><rect x="10" y="7" width="4" height="14" rx="1" fill="#E37400"/><rect x="17" y="3" width="4" height="18" rx="1" fill="#F9AB00"/></svg>',
+  mixpanel:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#7856FF"/><circle cx="8" cy="14" r="2.4" fill="#fff"/><circle cx="16" cy="9" r="2.4" fill="#fff" opacity=".8"/></svg>',
+  maze:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#2A1E5C"/><path d="M7 16l5-8 5 8" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  qualtrics:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#0768DD"/><text x="12" y="16.5" text-anchor="middle" font-size="12" fill="#fff" font-family="sans-serif" font-weight="700">Q</text></svg>',
+  ow:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1d1d2b"/><circle cx="8" cy="10" r="2.4" fill="#ffd23e"/><circle cx="16" cy="10" r="2.4" fill="#4dd4ac"/><circle cx="12" cy="16" r="2.4" fill="#ff6b6b"/></svg>',
+  zoom:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#2D8CFF"/><rect x="4" y="8" width="11" height="8" rx="2" fill="#fff"/><path d="M16 10.5l4-2v7l-4-2z" fill="#fff"/></svg>',
+  figma:'<svg viewBox="0 0 38 57"><path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19z"/><path fill="#f24e1e" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#a259ff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>',
+  claude:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#D97757"/><path d="M7 17L12 6l5 11" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  replit:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#F26207"/><path d="M8 5h5v4.5H8zM13 9.5h5V14h-5zM8 14h5v4.5H8z" fill="#fff"/></svg>',
+  factory:'<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#111"/><path d="M6 18V9l5 3V9l5 3v6z" fill="#fff"/><rect x="15.5" y="5" width="2.5" height="4" fill="#fff"/></svg>',
+  github:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#24292f"/><path d="M12 3a9 9 0 0 0-2.85 17.54c.45.08.62-.2.62-.43v-1.7c-2.5.55-3.03-1.06-3.03-1.06-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.8 1.38 2.11.98 2.63.75.08-.58.31-.98.57-1.2-2-.23-4.1-1-4.1-4.45 0-.98.35-1.79.93-2.42-.1-.23-.4-1.15.08-2.4 0 0 .76-.24 2.48.92a8.6 8.6 0 0 1 4.51 0c1.72-1.16 2.47-.92 2.47-.92.49 1.25.18 2.17.09 2.4.58.63.93 1.44.93 2.42 0 3.47-2.11 4.22-4.12 4.44.32.28.61.83.61 1.67v2.47c0 .24.16.52.62.43A9 9 0 0 0 12 3z" fill="#fff"/></svg>'
+};
+/* per-category accent — never a glow, just the stripe/rarity marker.
+   UXR keeps the extra presence CLAUDE.md calls for (thicker stripe, the
+   one card class allowed a second accent line) without ever using glow. */
+var CAT_META={
+  uxr:{label:'UX / UXR',c:'#c084fc',strong:true},
+  product:{label:'Product',c:'#e8c547'},
+  analytics:{label:'Analytics',c:'#4dd4ac'},
+  aidev:{label:'AI + Dev',c:'#7dc4ff'},
+  system:{label:'System',c:'#22d3ee'}
+};
+var SKILLS=[
+  {t:'Product Mapping',cat:'product',long:'Every screen becomes a <b>named event</b> I can query.',
+   ic:'<path d="M9 20l-6-2V4l6 2 6-2 6 2v14l-6-2-6 2z"/><path d="M9 6v14M15 4v14"/>',
+   tools:[['pendo','Pendo'],['ga4','GA4']],proj:'EY Fabric'},
+  {t:'Usage Tracking',cat:'analytics',long:'Live sessions show <b>who</b> drops, not only totals.',
+   ic:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+   tools:[['pendo','Pendo'],['mixpanel','Mixpanel']],proj:'Chek'},
+  {t:'Segmentation & Replay',cat:'uxr',long:'<b>Worst sessions</b> replayed, grouped by struggle.',
+   ic:'<path d="M22 3H2l8 9.5V19l4 2v-8.5z"/>',
+   tools:[['pendo','Pendo'],['qualtrics','Qualtrics']],proj:'EY Fabric'},
+  {t:'Research Synthesis',cat:'uxr',long:'Talks and tests compress into a <b>ranked list</b> of what to fix.',
+   ic:'<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/>',
+   tools:[['zoom','Zoom'],['maze','Maze'],['ow','Optimal'],['claude','Claude']],proj:'DollarCity'},
+  {t:'Parallel Design',cat:'uxr',long:'<b>Figma craft</b> and <b>AI generation</b> in one system.',
+   ic:'<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>',
+   tools:[['figma','Figma'],['claude','Claude']],proj:'Chek'},
+  {t:'Deployment',cat:'aidev',long:'Ship to <b>dev, staging, prod</b> — or hand off clean.',
+   ic:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>',
+   tools:[['replit','Replit'],['github','GitHub'],['factory','Factory.ai']],proj:'Customs · $500K'},
+  {t:'Analytics Hub',cat:'aidev',long:'<b>Adoption, users, alarms</b> — the hub is a product.',
+   ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',
+   tools:[['pendo','Pendo'],['claude','Claude']],proj:'EY Fabric'},
+  {t:'Connected Systems',cat:'system',long:'Product <b>memory → skills → agents → tools</b> — I review every step.',
+   ic:'<circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M8.2 6h7.6M6 8.2v7.6M18 8.2v7.6M8.2 18h7.6"/>',
+   tools:[['github','GitHub'],['figma','Figma'],['pendo','Pendo']],proj:'EY Fabric'}
 ];
 
 /* ── shortcuts: real destinations, real marks — the literal desktop-icon
@@ -319,6 +381,35 @@ function viewHome(){
   '</div>';
 }
 
+/* ── Capabilities: video-game skill cards ──────────────────────
+   Real logos, real brand colours on the tool chips (the portfolio's own
+   carve-out: brand marks aren't decorative tokens). The "long" line — the
+   what-it-solves statement — is the headline; the skill name is secondary,
+   so it reads at a glance before anyone stops to study it. */
+function viewSkills(){
+  return '<div class="spine"><section class="beat" data-beat>'+
+    '<p class="beat-n">03 — <em>Capabilities</em></p>'+
+    '<h1>What eight years of shipping actually taught me</h1>'+
+    '<p>Not a skills list. Each one names what it solves first, then the '+
+      'tools and the case that proved it.</p>'+
+    '<div class="skills-grid">'+SKILLS.map(function(s,i){
+      var meta=CAT_META[s.cat];
+      return '<div class="skill-card cat-'+s.cat+(meta.strong?' strong':'')+'" '+
+        'style="--catc:'+meta.c+'" tabindex="0">'+
+        '<span class="sk-cat"><b>0'+(i+1)+'</b> · '+meta.label+'</span>'+
+        '<span class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+          'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+s.ic+'</svg></span>'+
+        '<p class="sk-solve">'+s.long+'</p>'+
+        '<p class="sk-name">'+s.t+'</p>'+
+        '<div class="sk-tools">'+s.tools.map(function(t){
+          return '<span class="sk-tool">'+LOGO[t[0]]+t[1]+'</span>';
+        }).join('')+'</div>'+
+        '<span class="sk-proj">Proven on <b>'+s.proj+'</b></span>'+
+      '</div>';
+    }).join('')+'</div>'+
+  '</section></div>';
+}
+
 function viewStub(r){
   return '<div class="spine"><section class="beat" data-beat>'+
     '<p class="beat-n">0'+(ORDER.indexOf(r)+1)+' — <em>'+LABEL[r]+'</em></p>'+
@@ -343,7 +434,7 @@ var main =document.getElementById('main');
 var current='home';
 
 function paint(r){
-  stage.innerHTML = r==='home' ? viewHome() : viewStub(r);
+  stage.innerHTML = r==='home' ? viewHome() : r==='skills' ? viewSkills() : viewStub(r);
   crumb.innerHTML='fm://<b>'+PATH[r]+'</b>';
   document.title='FM.OS — '+LABEL[r];
   if(history.replaceState) history.replaceState(null,'','#/'+PATH[r]);

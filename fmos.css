@@ -235,6 +235,13 @@ blockquote cite{display:block;font-family:var(--f-data);font-size:10px;letter-sp
 .c-prev .pc-mark{transition:opacity 200ms}
 .case:hover .c-prev .pc-mark{animation:pcMark 1.3s ease-in-out infinite}
 @keyframes pcMark{0%,100%{opacity:1}50%{opacity:.4}}
+/* the "alive" signal — still at rest, flows on hover/focus. One technique,
+   reused across EY/Chek/Blockchain/DollarCity so the five read as one
+   system instead of five one-off effects. */
+.case:hover .c-prev .cs-flow{animation:csFlow .9s linear infinite}
+@keyframes csFlow{to{stroke-dashoffset:-16}}
+.case:hover .c-prev .cs-fade{animation:csFade 1.6s ease-in-out infinite}
+@keyframes csFade{0%,100%{opacity:1}50%{opacity:.22}}
 
 .c-body{display:flex;flex-direction:column;gap:8px;padding:14px 2px 0;flex:1}
 .c-facts{display:flex;flex-direction:column;gap:3px}
@@ -257,6 +264,59 @@ blockquote cite{display:block;font-family:var(--f-data);font-size:10px;letter-sp
 .cap h3{font-size:14.5px;margin-bottom:5px}
 .cap p{font-size:13px;margin:0;color:var(--ink-2);max-width:none}
 .cap .tools{font-family:var(--f-data);font-size:10px;color:var(--ink-4);margin-top:9px;letter-spacing:.05em}
+
+/* ── Capabilities route — video-game skill cards ─────────────────
+   Each card leads with what it SOLVES (sk-solve), not the skill name —
+   that's the ask: read it at a glance before studying it. Depth reuses
+   the case-card technique (a hard-edged duplicate panel offset behind,
+   never a blurred shadow). The icon plays a small transform "action" on
+   hover/focus — the one place FM.OS allows a shape to move on its own,
+   because a game skill card is exactly the reference being chased here. */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;margin-top:20px}
+.skill-card{position:relative;display:flex;flex-direction:column;gap:10px;
+  padding:18px 16px 16px;border:1px solid var(--rule);border-top:3px solid var(--catc);
+  background:var(--paper);cursor:default;transition:border-color 260ms var(--ease)}
+.skill-card::before{content:'';position:absolute;inset:0;z-index:-1;border:1px solid var(--rule);
+  background:var(--paper-2);transform:translate(5px,5px);transition:transform 320ms var(--spring)}
+.skill-card:hover,.skill-card:focus-visible{border-color:var(--catc);outline:0}
+.skill-card:hover::before,.skill-card:focus-visible::before{transform:translate(8px,8px)}
+/* UXR keeps the extra presence CLAUDE.md calls for — a thicker top edge,
+   never a glow */
+.skill-card.strong{border-top-width:5px}
+
+.sk-cat{font-family:var(--f-data);font-size:9px;letter-spacing:.14em;color:var(--ink-4);text-transform:uppercase}
+.sk-cat b{color:var(--catc);font-weight:400}
+
+/* the RPG skill-icon badge — a hexagon frame, monochrome until it's touched */
+.sk-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+  background:var(--paper-2);border:1px solid var(--rule);color:var(--ink-3);
+  transition:border-color 220ms var(--ease),color 220ms var(--ease)}
+.skill-card.strong .sk-icon{width:50px;height:50px}
+.sk-icon svg{width:56%;height:56%}
+.skill-card:hover .sk-icon,.skill-card:focus-visible .sk-icon{border-color:var(--catc);color:var(--catc)}
+.skill-card:hover .sk-icon svg,.skill-card:focus-visible .sk-icon svg{animation:skAction .55s var(--spring)}
+@keyframes skAction{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.22) rotate(-8deg)}
+  70%{transform:scale(.94) rotate(4deg)}100%{transform:scale(1) rotate(0)}}
+
+/* what it solves — the headline. The skill name is secondary on purpose. */
+.sk-solve{font-family:var(--f-body);font-weight:500;font-size:15px;line-height:1.4;color:var(--ink);margin:0}
+.sk-solve b{color:var(--catc);font-weight:600}
+.sk-name{font-family:var(--f-data);font-size:10px;letter-spacing:.1em;color:var(--ink-4);
+  text-transform:uppercase;margin:0}
+
+.sk-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.sk-tool{display:inline-flex;align-items:center;gap:5px;font-family:var(--f-data);font-size:10px;
+  color:var(--ink-3);border:1px solid var(--rule);padding:3px 8px;transition:border-color 200ms}
+/* the one deliberate exception to the monochrome-ink rule: real tool
+   logos keep their real brand colour, always — a brand mark is identity,
+   not a decorative token, so it never gets desaturated to fit the shell */
+.sk-tool svg{width:13px;height:13px;flex-shrink:0}
+.skill-card:hover .sk-tool{border-color:var(--ink-3)}
+
+.sk-proj{font-family:var(--f-data);font-size:9.5px;color:var(--ink-4);letter-spacing:.03em}
+.sk-proj b{color:var(--catc);font-weight:400}
 
 /* ── the monitor ─────────────────────────────────────────────────
    A rack readout, not a section. Dense, monospace, instrument-like.
