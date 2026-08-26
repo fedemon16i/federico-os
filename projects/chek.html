@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Chek — Case</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--surface:#12111a;--raised:#1a1927;--border:rgba(155,108,255,.12);
+  --text:#ede9f8;--muted:#8b85a8;--dim:#5c5878;
+  --ac:#9b6cff;--ac-dim:rgba(155,108,255,.1);--on-ac:#fff;
+  --ok:#3dd68c;--bad:#e0524a;--warn:#e5b567;
+  --ff:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',monospace;
+  --r:10px;--rL:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:64px}
+
+.hd{background:var(--surface);border-bottom:1px solid var(--border);padding:24px 28px 20px;position:sticky;top:0;z-index:10}
+.hd-meta{font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.hd-name{font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.hd-name em{color:var(--ac);font-style:normal}
+.hd-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.tag{font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:6px;border:1px solid var(--border);color:var(--muted)}
+.tag-ac{border-color:rgba(155,108,255,.4);color:var(--ac);background:var(--ac-dim)}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.sec{padding:36px 0}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);margin-bottom:10px}
+h2{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:12px}
+h3{font-size:14px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
+p{margin-bottom:12px}
+p:last-child{margin-bottom:0}
+.muted{color:var(--muted)}
+
+.reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:20px}
+.reel-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.reel-n{font-size:26px;font-weight:800;font-family:var(--fm);color:var(--ac);letter-spacing:-.02em;line-height:1;display:block;margin-bottom:6px}
+.reel-l{font-size:12px;color:var(--muted);line-height:1.4}
+
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:560px){.ba{grid-template-columns:1fr}}
+.ba-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.ba-card.after{border-color:rgba(155,108,255,.35)}
+.ba-label{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:12px;display:flex;align-items:center;gap:6px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ba-ul{list-style:none}
+.ba-ul li{font-size:13px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border);line-height:1.4}
+.ba-ul li:last-child{border-bottom:none}
+.ba-ul li::before{content:'– ';color:var(--dim)}
+.ba-card.after .ba-ul li::before{color:var(--ac);content:'→ '}
+
+.steps{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:36px 1fr;gap:12px}
+.step-n{width:36px;height:36px;border-radius:var(--r);background:var(--ac-dim);border:1px solid rgba(155,108,255,.3);
+  font-family:var(--fm);font-size:11px;font-weight:600;color:var(--ac);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body p{font-size:13px;color:var(--muted)}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tool{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:5px 10px;font-family:var(--fm);font-size:11px;color:var(--muted)}
+.tool b{color:var(--text);font-weight:500}
+.tool-ac{border-color:rgba(155,108,255,.4);color:var(--ac);background:var(--ac-dim)}
+
+/* token grid */
+.tokens{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-top:16px}
+.tok{border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
+.tok-swatch{width:100%;height:32px;border-radius:6px;margin-bottom:8px}
+.tok-name{font-family:var(--fm);font-size:10px;color:var(--muted);letter-spacing:.04em}
+
+blockquote{border-left:3px solid var(--ac);margin:20px 0 0;padding:12px 16px;background:var(--ac-dim);border-radius:0 var(--r) var(--r) 0}
+blockquote p{font-size:14px;font-style:italic;margin-bottom:0}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <p class="hd-meta">Chek · Applaudo · 2021–2023</p>
+  <h1 class="hd-name">Chek — <em>Design System Rebuild</em></h1>
+  <div class="hd-row">
+    <span class="tag tag-ac">Fintech</span>
+    <span class="tag">Design system</span>
+    <span class="tag">Onboarding · Credit · Debit · Account opening</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="sec">
+    <p class="eyebrow">Context</p>
+    <h2>A fintech app with no shared foundation — rebuilt from tokens up.</h2>
+    <p>Chek is a digital financial app operating in Central America. The product had grown fast and the design system hadn't kept up: inconsistent components, no shared tokens, and every new screen solving the same problems from scratch.</p>
+    <p>The rebuild covered credit, debit, and account opening — three distinct onboarding flows with different regulatory constraints, user profiles, and risk levels. The financial education layer that came out of this work became <b>Banco Ripley's Corta y Clara program</b>.</p>
+
+    <div class="reel">
+      <div class="reel-item">
+        <span class="reel-n">3</span>
+        <span class="reel-l">Onboarding flows rebuilt on shared token foundation</span>
+      </div>
+      <div class="reel-item">
+        <span class="reel-n">DS</span>
+        <span class="reel-l">End-to-end design system: tokens → components → flows</span>
+      </div>
+      <div class="reel-item">
+        <span class="reel-n">1</span>
+        <span class="reel-l">Financial education layer → became Banco Ripley Corta y Clara</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Before · After</p>
+    <h2>From scattered screens to a shared language</h2>
+    <p class="muted">The before state was invisible — each screen worked, but nothing shared a foundation. The after is a system that drifts less.</p>
+    <div class="ba">
+      <div class="ba-card">
+        <div class="ba-label"><span class="dot" style="background:#e0524a"></span>Before</div>
+        <ul class="ba-ul">
+          <li>No shared token layer — colors and spacing hardcoded per screen</li>
+          <li>Three onboarding flows with zero component reuse</li>
+          <li>Error states inconsistent across credit and debit</li>
+          <li>Financial education copy embedded in one-off UI, not a system</li>
+          <li>Handoff to dev: Figma screens with no documented behavior</li>
+        </ul>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label"><span class="dot" style="background:#3dd68c"></span>After</div>
+        <ul class="ba-ul">
+          <li>Shared design token layer across all three flows</li>
+          <li>Component library: buttons, inputs, cards, alerts — one source</li>
+          <li>Unified error/success/loading states with documented variants</li>
+          <li>Financial education as a modular layer — portable to other products</li>
+          <li>Corta y Clara program adopted by Banco Ripley from this work</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">What I did</p>
+    <h2>Systems before screens</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          <h3>Audit every flow</h3>
+          <p>Catalogued every component across credit, debit, and account opening. Found the real inconsistencies — not just visual, but behavioral: the same action working differently in three places.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          <h3>Token layer first</h3>
+          <p>Color, spacing, radius, shadow — all as named tokens before any component was touched. The token layer is what keeps design and code in sync as the product grows.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          <h3>Components built on the token layer</h3>
+          <p>Rebuilt each component to reference tokens, not raw values. Three flows share the same button, the same input, the same error state — they just override the accent where needed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          <h3>Financial education layer</h3>
+          <p>Designed the in-app financial education as a modular layer — content blocks that teach without blocking the primary task. This layer was later adapted as Banco Ripley's Corta y Clara program.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Tools</p>
+    <h2>Design system stack</h2>
+    <div class="tools">
+      <div class="tool tool-ac"><b>Figma</b></div>
+      <div class="tool tool-ac"><b>Design tokens</b></div>
+      <div class="tool"><b>Variables (Figma)</b></div>
+      <div class="tool"><b>Component library</b></div>
+      <div class="tool"><b>Maze</b></div>
+    </div>
+    <blockquote>
+      <p>Shared tokens across design and code — so the drift stays small enough to fix before it becomes a rewrite.</p>
+    </blockquote>
+  </section>
+
+</div>
+</body>
+</html>
