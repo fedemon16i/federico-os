@@ -3,115 +3,89 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>FM.OS · Federico Monroy</title>
-<meta name="description" content="Sr. UX / Product Strategist — behavioral analytics. Córdoba, AR. FM.OS portfolio shell."/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="os-home.css"/>
+<title>FM.OS — Federico Monroy</title>
+<meta name="description" content="Federico Monroy — Product Designer turned Behavioral Analytics. Pendo, funnels, session replay. Córdoba, Argentina."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fmos.css"/>
 </head>
 <body>
-<div class="scanlines" aria-hidden="true"></div>
-<div class="desktop-bg" aria-hidden="true"></div>
-<div class="noise" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to main content</a>
 
-<div id="boot">
-  <div class="boot-mark">FM.OS</div>
-  <div class="boot-sub">operator shell · v0.4</div>
-  <div class="boot-bar"><i></i></div>
-</div>
+<div id="app">
 
-<div id="shell">
-  <header class="topbar">
-    <button type="button" class="brand" data-route="home" aria-label="Home">
-      <span class="dot"></span> FM.OS
-    </button>
-    <nav class="top-nav" aria-label="Primary">
-      <button type="button" class="on" data-route="home">About</button>
-      <button type="button" data-route="projects">Projects</button>
-      <button type="button" data-route="skills">Skills</button>
-      <button type="button" data-route="resume">Resume</button>
-      <button type="button" data-route="contact">Contact</button>
-      <button type="button" data-route="system">System</button>
-    </nav>
-    <div class="acts">
-      <span class="url-chip" id="urlChip" title="Active path">#/home</span>
-      <span class="mid" id="clock">--:--</span>
-      <button type="button" class="theme-btn" id="themeBtn" title="Theme" aria-label="Toggle theme">TH</button>
-      <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">≡</button>
-    </div>
-  </header>
+  <button class="brand" type="button" data-route="home" aria-label="FM.OS — home">
+    <b>FM.OS</b><span>backlight off · v2</span>
+  </button>
 
-  <div class="workspace">
-    <div class="stage">
-      <div class="desk" id="desk" hidden>
-        <div class="desk-head">
-          <p class="desk-hint">DESKTOP · open a folder</p>
-          <span class="desk-status" id="deskStatus">sys ready</span>
-        </div>
-        <div class="desk-grid">
-          <button type="button" class="desk-icon" data-route="home">
-            <span class="di-ico" style="--pc:#e8c547"><span class="di-glyph">A</span></span>
-            <span class="di-label">About me</span>
-          </button>
-          <button type="button" class="desk-icon" data-route="projects">
-            <span class="di-ico" style="--pc:#22d4c8"><span class="di-glyph">P</span></span>
-            <span class="di-label">Projects</span>
-          </button>
-          <button type="button" class="desk-icon" data-route="skills">
-            <span class="di-ico" style="--pc:#d97757"><span class="di-glyph">S</span></span>
-            <span class="di-label">Skills</span>
-          </button>
-          <button type="button" class="desk-icon" data-route="resume">
-            <span class="di-ico" style="--pc:#a8a090"><span class="di-glyph">R</span></span>
-            <span class="di-label">Resume</span>
-          </button>
-          <button type="button" class="desk-icon" data-route="contact">
-            <span class="di-ico" style="--pc:#4a9eff"><span class="di-glyph">C</span></span>
-            <span class="di-label">Contact</span>
-          </button>
-          <button type="button" class="desk-icon" data-route="system">
-            <span class="di-ico" style="--pc:#7dffb3"><span class="di-glyph">Sys</span></span>
-            <span class="di-label">Design system</span>
-          </button>
-        </div>
-        <p class="desk-foot">double-tap · or use top menu · Esc closes windows</p>
-      </div>
-
-      <section class="win-main" id="winMain">
-        <div class="win-chrome">
-          <div class="win-dots">
-            <button type="button" class="wd close" id="winClose" title="Close → desktop" aria-label="Close to desktop">×</button>
-            <button type="button" class="wd max" id="winMax" title="Maximize" aria-label="Maximize">□</button>
-          </div>
-          <div class="win-nav">
-            <button type="button" class="wn" id="winPrev" title="Previous section" aria-label="Previous">←</button>
-            <button type="button" class="wn" id="winNext" title="Next section" aria-label="Next">→</button>
-          </div>
-          <div class="win-title" id="winTitle">About</div>
-          <div class="win-path" id="winPath">#/home</div>
-        </div>
-        <div class="win-scroll" id="centerBody"></div>
-      </section>
+  <div class="top">
+    <p class="crumb" id="crumb">fm://<b>about</b></p>
+    <div class="top-act">
+      <button class="tbtn" id="themeBtn" type="button" aria-label="Invert contrast">INVERT</button>
+      <button class="tbtn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-label="Menu">MENU</button>
     </div>
   </div>
+
+  <nav class="rail" aria-label="Primary">
+    <div class="rail-grp">
+      <p class="rail-lbl">Read in order</p>
+      <button class="nav" type="button" data-route="home" aria-current="true"><span class="idx">01</span>About</button>
+      <button class="nav" type="button" data-route="projects"><span class="idx">02</span>Cases</button>
+      <button class="nav" type="button" data-route="skills"><span class="idx">03</span>Capabilities</button>
+    </div>
+    <div class="rail-grp">
+      <p class="rail-lbl">Reference</p>
+      <button class="nav" type="button" data-route="resume"><span class="idx">04</span>Résumé</button>
+      <button class="nav" type="button" data-route="contact"><span class="idx">05</span>Contact</button>
+      <button class="nav" type="button" data-route="system"><span class="idx">06</span>Design system</button>
+    </div>
+  </nav>
+
+  <main class="main" id="main" tabindex="-1">
+    <div class="wrap" id="stage"></div>
+  </main>
+
+  <aside class="panel" id="panel" aria-label="Session monitor">
+    <div class="mon-head" id="monHead">
+      <b>Monitor</b>
+      <span class="src" id="src"><i></i><span id="srcLabel">local</span></span>
+    </div>
+
+    <div class="gauges">
+      <div class="g"><b id="gTime">0s</b><span>Time</span></div>
+      <div class="g"><b id="gDepth">0%</b><span>Depth</span></div>
+      <div class="g"><b id="gSec">1/6</b><span>Views</span></div>
+      <div class="g"><b id="gEvt">0</b><span>Events</span></div>
+    </div>
+
+    <div class="trace">
+      <p class="trace-k">Activity</p>
+      <div class="spark" id="spark" aria-hidden="true"></div>
+    </div>
+
+    <div class="att">
+      <p class="att-k">Attention</p>
+      <div id="att"><p class="att-none">No dwell recorded</p></div>
+    </div>
+
+    <p class="verdict" id="verdict">Idle. The funnel starts when you scroll.</p>
+
+    <p class="disclaim">
+      I do behavioral analytics, so this page instruments itself the way I'd
+      instrument yours. Everything stays in your browser — no cookies, nothing sent.
+    </p>
+  </aside>
+
 </div>
 
-<div class="m-drawer" id="mDrawer" hidden>
-  <button type="button" data-route="home">About me</button>
-  <button type="button" data-route="projects">Projects</button>
-  <button type="button" data-route="skills">Skills</button>
-  <button type="button" data-route="resume">Resume</button>
-  <button type="button" data-route="contact">Contact</button>
-  <button type="button" data-route="system">Design system</button>
-</div>
+<nav class="drawer" id="drawer" hidden aria-label="Sections"></nav>
 
-<div class="lightbox" id="lightbox" hidden>
-  <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
-  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">←</button>
+<div class="lb" id="lb" hidden>
+  <button class="lb-x" id="lbX" type="button" aria-label="Close photo">×</button>
   <img id="lbImg" alt=""/>
-  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next">→</button>
-  <div class="lb-cap" id="lbCap"></div>
 </div>
 
-<script src="os-home.js"></script>
+<script src="fmos.js"></script>
 </body>
 </html>

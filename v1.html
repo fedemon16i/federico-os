@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>FM.OS · Federico Monroy</title>
+<meta name="description" content="Sr. UX / Product Strategist — behavioral analytics. Córdoba, AR. FM.OS portfolio shell."/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="os-home.css"/>
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="desktop-bg" aria-hidden="true"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<div id="boot">
+  <div class="boot-mark">FM.OS</div>
+  <div class="boot-sub">operator shell · v0.4</div>
+  <div class="boot-bar"><i></i></div>
+</div>
+
+<div id="shell">
+  <header class="topbar">
+    <button type="button" class="brand" data-route="home" aria-label="Home">
+      <span class="dot"></span> FM.OS
+    </button>
+    <nav class="top-nav" aria-label="Primary">
+      <button type="button" class="on" data-route="home">About</button>
+      <button type="button" data-route="projects">Projects</button>
+      <button type="button" data-route="skills">Skills</button>
+      <button type="button" data-route="resume">Resume</button>
+      <button type="button" data-route="contact">Contact</button>
+      <button type="button" data-route="system">System</button>
+    </nav>
+    <div class="acts">
+      <span class="url-chip" id="urlChip" title="Active path">#/home</span>
+      <span class="mid" id="clock">--:--</span>
+      <button type="button" class="theme-btn" id="themeBtn" title="Theme" aria-label="Toggle theme">TH</button>
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">≡</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <div class="stage">
+      <div class="desk" id="desk" hidden>
+        <div class="desk-head">
+          <p class="desk-hint">DESKTOP · open a folder</p>
+          <span class="desk-status" id="deskStatus">sys ready</span>
+        </div>
+        <div class="desk-grid">
+          <button type="button" class="desk-icon" data-route="home">
+            <span class="di-ico" style="--pc:#e8c547"><span class="di-glyph">A</span></span>
+            <span class="di-label">About me</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="projects">
+            <span class="di-ico" style="--pc:#22d4c8"><span class="di-glyph">P</span></span>
+            <span class="di-label">Projects</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="skills">
+            <span class="di-ico" style="--pc:#d97757"><span class="di-glyph">S</span></span>
+            <span class="di-label">Skills</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="resume">
+            <span class="di-ico" style="--pc:#a8a090"><span class="di-glyph">R</span></span>
+            <span class="di-label">Resume</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="contact">
+            <span class="di-ico" style="--pc:#4a9eff"><span class="di-glyph">C</span></span>
+            <span class="di-label">Contact</span>
+          </button>
+          <button type="button" class="desk-icon" data-route="system">
+            <span class="di-ico" style="--pc:#7dffb3"><span class="di-glyph">Sys</span></span>
+            <span class="di-label">Design system</span>
+          </button>
+        </div>
+        <p class="desk-foot">double-tap · or use top menu · Esc closes windows</p>
+      </div>
+
+      <section class="win-main" id="winMain">
+        <div class="win-chrome">
+          <div class="win-dots">
+            <button type="button" class="wd close" id="winClose" title="Close → desktop" aria-label="Close to desktop">×</button>
+            <button type="button" class="wd max" id="winMax" title="Maximize" aria-label="Maximize">□</button>
+          </div>
+          <div class="win-nav">
+            <button type="button" class="wn" id="winPrev" title="Previous section" aria-label="Previous">←</button>
+            <button type="button" class="wn" id="winNext" title="Next section" aria-label="Next">→</button>
+          </div>
+          <div class="win-title" id="winTitle">About</div>
+          <div class="win-path" id="winPath">#/home</div>
+        </div>
+        <div class="win-scroll" id="centerBody"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="m-drawer" id="mDrawer" hidden>
+  <button type="button" data-route="home">About me</button>
+  <button type="button" data-route="projects">Projects</button>
+  <button type="button" data-route="skills">Skills</button>
+  <button type="button" data-route="resume">Resume</button>
+  <button type="button" data-route="contact">Contact</button>
+  <button type="button" data-route="system">Design system</button>
+</div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">←</button>
+  <img id="lbImg" alt=""/>
+  <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Next">→</button>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<script src="os-home.js"></script>
+</body>
+</html>
