@@ -133,8 +133,38 @@ html.eink-refresh #app{filter:invert(1) contrast(1.2)}
 .wrap{max-width:760px;padding:44px 40px 120px}
 .wrap p{max-width:56ch}
 
+/* the window arrives with real weight instead of just appearing — the
+   vrtxforge reference from REFERENCES.md, minus its legibility problem.
+   Applies naturally on every paint(): .spine/.desktop are freshly inserted
+   markup each time, so a fresh element always replays its own animation —
+   no JS retrigger needed here (the floating case-window is a persistent
+   element instead, so it needs one — see .winfloat-box.arrive in fmos.js). */
+@keyframes winArrive{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── the Desktop — reached by CLOSE, from any section. A folder per
+   top-level route, same auto-fit grid convention as cases/skills, same
+   hard-edge depth. A generic folder glyph is fine here (unlike a tool
+   logo): it represents a UI concept, not a brand that needs a real mark. */
+.desktop{animation:winArrive 340ms var(--spring) both}
+.desktop-hint{font-family:var(--f-data);font-size:10px;letter-spacing:.14em;color:var(--ink-4);
+  text-transform:uppercase;margin-bottom:20px}
+.desktop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:640px}
+.desktop-icon{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  padding:18px 16px;border:1px solid var(--rule);background:var(--paper);cursor:pointer;
+  color:inherit;font:inherit;text-align:left;transition:border-color 220ms var(--ease),transform 260ms var(--spring)}
+.desktop-icon::before{content:'';position:absolute;inset:0;z-index:-1;border:1px solid var(--rule);
+  background:var(--paper-2);transform:translate(4px,4px);transition:transform 320ms var(--spring)}
+.desktop-icon:hover,.desktop-icon:focus-visible{border-color:var(--ac);transform:translateY(-3px)}
+.desktop-icon:hover::before,.desktop-icon:focus-visible::before{transform:translate(7px,7px)}
+.desktop-icon:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.di-folder{width:30px;height:30px;color:var(--ink-3);transition:color 200ms}
+.di-folder svg{width:100%;height:100%}
+.desktop-icon:hover .di-folder,.desktop-icon:focus-visible .di-folder{color:var(--ac)}
+.di-label{font-family:var(--f-data);font-size:12.5px;letter-spacing:.02em;color:var(--ink-2)}
+.di-label b{color:var(--ink-4);font-weight:400;margin-right:6px}
+
 /* the narrative spine — one continuous rule the whole story hangs off */
-.spine{position:relative;padding-left:34px}
+.spine{position:relative;padding-left:34px;animation:winArrive 340ms var(--spring) both}
 .spine::before{content:'';position:absolute;left:8px;top:6px;bottom:0;width:1px;background:var(--rule)}
 
 .beat{position:relative;padding-bottom:78px}
@@ -431,6 +461,12 @@ html[data-theme="light"] .winfloat-backdrop{background:rgba(232,228,220,.78)}
 .winfloat-box::before{content:'';position:absolute;inset:0;z-index:-1;border:1px solid var(--rule);
   background:var(--paper-2);transform:translate(6px,6px)}
 .winfloat-box.maximized{width:98vw;height:96vh}
+/* the arrival — same weight as winArrive, but keeping the centering
+   translate intact since this element is reused, not freshly inserted
+   (see fmos.js openWindow: class is removed/re-added to retrigger it) */
+@keyframes winArriveFloat{from{opacity:0;transform:translate(-50%,-50%) scale(.92)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.winfloat-box.arrive{animation:winArriveFloat 300ms var(--spring) both}
 .winfloat-bar{height:38px;flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:0 12px;
   border-bottom:1px solid var(--rule);background:var(--paper-2);cursor:grab;touch-action:none}
 .winfloat-bar.dragging{cursor:grabbing}

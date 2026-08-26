@@ -377,7 +377,7 @@ function viewHome(){
         '<cite>The reason this portfolio exists</cite></blockquote>'+
     '</section>'+
 
-    '<section class="beat" data-beat>'+
+    '<section class="beat" data-beat id="beat-evidence">'+
       '<p class="beat-n">03 — <em>Evidence</em></p>'+
       '<h2>Five cases, each with the problem stated first</h2>'+
       '<p>Not a catalogue. Every one names what was broken, what I did about it, and the '+
@@ -440,6 +440,23 @@ function viewSkills(){
   '</section></div>';
 }
 
+/* ── Desktop — the PostHog "close the window, see the folders" gesture.
+   Content stays reachable in one click by default (no forced click-through,
+   per REFERENCES.md's critique of links-grid-cyberpunk2077); the desktop is
+   reached by explicitly closing, not the default landing state. */
+function viewDesktop(){
+  return '<div class="desktop">'+
+    '<p class="desktop-hint">Window closed. Pick a folder.</p>'+
+    '<div class="desktop-grid">'+ORDER.map(function(r,i){
+      return '<button type="button" class="desktop-icon" data-route="'+r+'">'+
+        '<span class="di-folder" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" '+
+          'stroke="currentColor" stroke-width="1.6"><path d="M3 6.5a1 1 0 011-1h5l1.6 2H20a1 1 0 011 1V18a1 1 0 01-1 1H4a1 1 0 01-1-1z"/></svg></span>'+
+        '<span class="di-label"><b>0'+(i+1)+'</b> '+LABEL[r]+'</span>'+
+      '</button>';
+    }).join('')+'</div>'+
+  '</div>';
+}
+
 function viewStub(r){
   return '<div class="spine"><section class="beat" data-beat>'+
     '<p class="beat-n">0'+(ORDER.indexOf(r)+1)+' — <em>'+LABEL[r]+'</em></p>'+
@@ -464,10 +481,13 @@ var main =document.getElementById('main');
 var current='home';
 
 function paint(r){
-  stage.innerHTML = r==='home' ? viewHome() : r==='skills' ? viewSkills() : viewStub(r);
-  crumb.innerHTML='fm://<b>'+PATH[r]+'</b>';
-  document.title='FM.OS — '+LABEL[r];
-  if(history.replaceState) history.replaceState(null,'','#/'+PATH[r]);
+  stage.innerHTML = r==='desktop' ? viewDesktop()
+    : r==='home' ? viewHome()
+    : r==='skills' ? viewSkills()
+    : viewStub(r);
+  crumb.innerHTML = r==='desktop' ? 'fm://<b>desktop</b>' : 'fm://<b>'+PATH[r]+'</b>';
+  document.title = r==='desktop' ? 'FM.OS — Desktop' : 'FM.OS — '+LABEL[r];
+  if(history.replaceState) history.replaceState(null,'','#/'+(r==='desktop'?'desktop':PATH[r]));
   main.scrollTop=0;
   T.depth=0;
   if(r==='home') startLines();
@@ -478,26 +498,53 @@ function paint(r){
 
 var sectionEnteredAt=Date.now();
 
+/* "projects" (Cases) has no page of its own — the five cards live inside
+   Home's Evidence beat, deliberately, so the narrative reads as one
+   continuous story rather than a scroll position split off into its own
+   window. Nav/desktop still need it to go somewhere real, so it resolves
+   to home + a scroll to that beat instead of a disconnected stub. */
+function scrollToEvidence(){
+  var el=document.getElementById('beat-evidence');
+  if(el) el.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
+}
+
 function go(r){
-  if(r===current||!LABEL[r]) return;
-  track('section_viewed',{
+  if(r==='projects'){
+    if(current==='home'){ scrollToEvidence(); return; }
+    goReal('home');
+    setTimeout(scrollToEvidence,reduced?0:230);
+    return;
+  }
+  goReal(r);
+}
+
+function goReal(r){
+  if(r===current||(!LABEL[r]&&r!=='desktop')) return;
+  track(r==='desktop'?'desktop_opened':'section_viewed',{
     section:r, from:current,
     seconds_on_previous:Math.round((Date.now()-sectionEnteredAt)/1000),
     previous_depth:T.depth
   });
   sectionEnteredAt=Date.now();
   current=r;
-  T.seen[r]=true;
+  if(r!=='desktop') T.seen[r]=true;
   bump();
 
   if(reduced){ paint(r); return; }
-  /* e-paper page turn: the panel inverts, settles, and the new page is there */
+  /* e-paper page turn: the panel inverts, settles, and the new page is there.
+     The freshly painted content then arrives with real weight (winArrive
+     keyframes on .spine/.desktop) — a plain replace felt flat once the
+     floating case-window got the same treatment. */
   document.documentElement.classList.add('eink-refresh');
   setTimeout(function(){
     paint(r);
     setTimeout(function(){ document.documentElement.classList.remove('eink-refresh'); },70);
   },80);
 }
+
+/* the CLOSE control — reachable from any section, not just Home, matching
+   PostHog's "back out to the folders from wherever you are" */
+document.getElementById('closeBtn').addEventListener('click',function(){ go('desktop'); });
 
 function syncNav(r){
   Array.prototype.forEach.call(document.querySelectorAll('.nav,#drawer button'),function(b){
@@ -587,7 +634,15 @@ function bindStage(){
   /* beats light up as they enter — the spine tracks where you are */
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){ e.target.classList.toggle('on', e.isIntersecting); });
+      es.forEach(function(e){
+        e.target.classList.toggle('on', e.isIntersecting);
+        /* the Evidence beat scrolling into view is, for nav purposes, the
+           same as being "on" Cases — even though the route never changes
+           off home (see the projects alias in go()) */
+        if(e.target.id==='beat-evidence'&&current==='home'){
+          syncNav(e.isIntersecting?'projects':'home');
+        }
+      });
     },{root:main,rootMargin:'-42% 0px -42% 0px'});
     Array.prototype.forEach.call(stage.querySelectorAll('[data-beat]'),function(b){ io.observe(b); });
   }
@@ -674,6 +729,12 @@ function openWindow(url,title,path){
   wfBox.classList.remove('maximized');
   wfBox.style.left=''; wfBox.style.top=''; wfBox.style.transform='';
   wf.hidden=false;
+  /* retrigger the arrival animation — wfBox is a persistent element (shown/
+     hidden, not recreated), so a class already present wouldn't replay on
+     its own; force a reflow between remove and re-add */
+  wfBox.classList.remove('arrive');
+  void wfBox.offsetWidth;
+  wfBox.classList.add('arrive');
   document.getElementById('wfClose').focus();
 }
 function closeWindow(){
@@ -783,9 +844,10 @@ main.addEventListener('scroll',function(){
 
 /* ── boot ────────────────────────────────────────────────────── */
 
-/* deep link support: /#/cases lands on that section */
+/* deep link support: /#/cases lands on that section, /#/desktop on the desktop */
 (function(){
   var h=(location.hash||'').replace('#/','');
+  if(h==='desktop'){ current='desktop'; return; }
   for(var r in PATH){ if(PATH[r]===h){ current=r; T.seen[r]=true; break; } }
 })();
 
