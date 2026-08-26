@@ -57,54 +57,64 @@ var PHOTOS=[
   ['IMG_0533.jpeg','Federico thinking through a problem']
 ];
 
-/* Each case gets a small line-art scene instead of a photo — same wireframe
-   language as the live portfolio's demos (process shown, nothing invented).
-   --pc (set on the button below) tints the one accent stroke in each scene. */
-/* the flow class is the "alive" signal — a marching-ants dash that only
-   moves on hover/focus, one shared technique reused per scene so the five
-   cards read as one system: EY scans a field, Chek/Blockchain flow along
-   their connections, DollarCity flows along the walked path. Customs gets
-   its own fade (paper receding as the screen takes over) since a dash
-   doesn't fit a filled shape. Resting state stays still, per house rule. */
-var CASE_SVG={
-  ey:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="9" width="48" height="8" rx="1"/><rect x="8" y="24" width="48" height="8" rx="1" stroke="var(--ac)" stroke-dasharray="3 3" class="cs-flow"/><circle class="pc-mark" cx="52" cy="28" r="2.6" fill="var(--ac)" stroke="none"/><rect x="8" y="39" width="48" height="8" rx="1"/><rect x="8" y="53" width="18" height="5" rx="1" fill="currentColor" stroke="none" opacity=".45"/></svg>',
-  chek:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="14" y1="32" x2="50" y2="32" stroke-dasharray="4 4" class="cs-flow"/><circle cx="14" cy="32" r="5"/><circle class="pc-mark" cx="32" cy="32" r="7" fill="var(--pc)" stroke="var(--pc)"/><circle cx="50" cy="32" r="5"/></svg>',
-  cus:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><g class="cs-fade"><path d="M8 10h14l6 6v26H8z"/><path d="M22 10v6h6"/></g><path d="M31 32h6" stroke-dasharray="2 3"/><rect x="41" y="14" width="17" height="24" rx="2"/><path class="pc-mark" stroke="var(--pc)" d="M45.5 25.5l3 3 6-7"/></svg>',
-  bc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><line x1="16" y1="46" x2="48" y2="46" stroke-dasharray="4 4" class="cs-flow"/><line x1="16" y1="46" x2="32" y2="16" stroke-dasharray="4 4" class="cs-flow"/><line x1="48" y1="46" x2="32" y2="16" stroke-dasharray="4 4" class="cs-flow"/><circle cx="16" cy="46" r="4.5"/><circle cx="48" cy="46" r="4.5"/><circle class="pc-mark" cx="32" cy="16" r="6" fill="var(--pc)" stroke="var(--pc)"/></svg>',
-  dc:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="10" width="9" height="28"/><rect x="27" y="10" width="9" height="28"/><rect x="46" y="10" width="9" height="28"/><path d="M12 46q11 8 22 0t18 0" stroke-dasharray="2 3" class="cs-flow"/><circle class="pc-mark" cx="12" cy="46" r="3" fill="var(--pc)" stroke="none"/></svg>'
-};
+/* the case preview — one shared "app window" mockup (title bar, sidebar,
+   content rows, a cursor that travels to the flagged row), reused across
+   all five and recoloured via --pc. Closer to federico-portfolio's real
+   pcard mockups than a wireframe icon, still E-Ink: no colour except the
+   one accent line and the cursor. The wordmark is either a verified real
+   mark (EY, DollarCity — copied from the live portfolio's own LOGO/badge
+   svg, not redrawn from memory) or a plain styled text lockup, same rule
+   used everywhere else this session for third-party brands. */
+function caseWindowMock(c){
+  var wm = c.wm==='ey'
+    ? '<svg class="c-wm-ey" viewBox="0 0 30 22"><polygon points="1,4 27,0 27,4 1,8" fill="var(--pc)"/><text x="1" y="20" font-family="Arial,sans-serif" font-weight="800" font-size="17" fill="var(--pc)">EY</text></svg>'
+    : c.wm==='dc'
+    ? '<svg class="c-wm-dc" viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--pc)"/><text x="12" y="17" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="13" fill="#0a0b0a">D</text></svg>'
+    : '<span class="c-wm-text">'+c.wm+'</span>';
+  return '<div class="c-winmock">'+
+    '<div class="c-winmock-bar"><i></i><i></i><i></i></div>'+
+    '<div class="c-winmock-body">'+
+      '<div class="c-winmock-side"><i></i><i class="hl"></i><i></i></div>'+
+      '<div class="c-winmock-main">'+
+        '<div class="c-winmock-row wide"></div>'+
+        '<div class="c-winmock-row flag"></div>'+
+        '<div class="c-winmock-row"></div>'+
+      '</div>'+
+      '<span class="c-cursor" aria-hidden="true"></span>'+
+    '</div>'+
+    '<span class="c-wm">'+wm+'</span>'+
+  '</div>';
+}
 
 /* role / industry / era — the amitux.in card structure (see REFERENCES.md):
    what he did, the domain, how long, before any prose. Eras are real
    employment windows already established in the bio, never a fabricated
-   month-count — no metric gets invented for the sake of looking precise. */
+   month-count — no metric gets invented for the sake of looking precise.
+   hits: 2 real bullet facts, no invented ones. stack: LOGO keys only —
+   every chip is a verified real mark, so a project gets fewer chips
+   rather than a fabricated one (Blockchain's Spline/Unity aren't in LOGO,
+   so it shows Figma alone plus the pipeline named in prose instead). */
 var CASES=[
   {id:'ey',name:'EY Fabric',role:'Behavioral analytics',industry:'Enterprise marketplace',era:'Globant × EY · 2023–2026',
-   pc:'#ffe600',file:'ey-fabric.html',
+   pc:'#ffe600',file:'ey-fabric.html',wm:'ey',stack:['pendo','qualtrics','claude'],
+   hits:['Instrumented the marketplace in Pendo','Flagged the exact fields losing users'],
    line:'Marketplace publishers shipped forms asking for serial codes and equipment IDs with no context and no validation. Instrumented the flow to find <b>which exact fields</b> people abandoned — and that list went straight to the product backlog.'},
   {id:'chek',name:'Chek',role:'Design system rebuild',industry:'Fintech',era:'Applaudo · 2021–2023',
-   pc:'#9b6cff',file:'chek.html',
+   pc:'#9b6cff',file:'chek.html',wm:'cheK',stack:['figma','pendo','mixpanel'],
+   hits:['Design system rebuilt end to end','Onboarding redesigned for card + account'],
    line:'Rebuilt the design system end to end — onboarding for credit, debit and account opening. The financial-education layer we designed became Banco Ripley\'s <b>Corta y Clara</b>.'},
   {id:'cus',name:'Customs ES',role:'Digital transformation',industry:'Government',era:'Applaudo · 2021–2023',
-   pc:'#e05c4a',file:'customs.html',
+   pc:'#e05c4a',file:'customs.html',wm:'Customs ES',stack:['replit','github','factory'],
+   hits:['50+ paper processes digitized','Dual-device flow built for the gate'],
    line:'<b>50+ paper processes</b> turned digital, with dual devices at the gate. No prior interface to redesign — the entire flow had to be derived from the operation itself.'},
   {id:'bc',name:'Blockchain 3D',role:'3D interface design',industry:'Blockchain / Web3',era:'Globant · 2023, now EQUS',
-   pc:'#22d4c8',file:'blockchain.html',
+   pc:'#22d4c8',file:'blockchain.html',wm:'EQUS',stack:['figma'],
+   hits:['Figma → Spline → Unity, one pipeline','Phone-first 3D interface'],
    line:'Figma → Spline → Unity treated as <b>one system</b>, not three handoffs. A 3D interface for connected blockchain flows, phone-first.'},
   {id:'dc',name:'DollarCity',role:'Field research',industry:'Retail',era:'Applaudo · 2021–2023',
-   pc:'#00a650',file:'dollarcity.html',
+   pc:'#00a650',file:'dollarcity.html',wm:'dc',stack:['maze','ow','claude'],
+   hits:['Field research at point of sale','Ranked backlog, not a research deck'],
    line:'Field research at point of sale, turned into a <b>ranked list of actions</b> — not a research deck nobody opens two weeks later.'}
-];
-
-/* tool mentions spread across the discipline, on purpose — Pendo is real and
-   deep (see EY Fabric above) but it is one tool among several, not the story */
-var CAPS=[
-  {k:'Analytics',t:'Product instrumentation',d:'Every screen becomes a named event I can query later. Taxonomy first, dashboards second.',tools:'PostHog · GA4'},
-  {k:'Analytics',t:'Funnels & drop-off',d:'Short funnels on the flows that pay. Conversion and volume read together, never apart.',tools:'Pendo · Mixpanel'},
-  {k:'Research',t:'Session replay triage',d:'Watch the sessions that failed, then group them by the struggle they share.',tools:'OpenReplay · Clarity'},
-  {k:'Research',t:'Synthesis',d:'Interviews and tests compressed into a ranked list of what to fix, with confidence attached.',tools:'Maze · Qualtrics · Claude'},
-  {k:'Design',t:'Systems, not screens',d:'Shared tokens across design and code, so the drift stays small enough to fix.',tools:'Figma · GitHub'},
-  {k:'AI + Dev',t:'AI impact measurement',d:'Did the AI feature change behaviour, or only sentiment? Baseline before shipping, delta after.',tools:'PostHog · Helicone'}
 ];
 
 /* ── Capabilities route — video-game skill cards ──────────────────
@@ -384,7 +394,7 @@ function viewHome(){
         'number that says whether it worked.</p>'+
       '<div class="cases">'+CASES.map(function(c){
         return '<button class="case" type="button" data-case="'+c.id+'" style="--pc:'+c.pc+'">'+
-          '<span class="c-prev-wrap" aria-hidden="true"><span class="c-prev">'+(CASE_SVG[c.id]||'')+'</span></span>'+
+          '<span class="c-prev-wrap" aria-hidden="true">'+caseWindowMock(c)+'</span>'+
           '<span class="c-body">'+
             '<span class="c-facts">'+
               '<span class="c-role">'+c.role+'</span>'+
@@ -392,52 +402,49 @@ function viewHome(){
               '<span class="c-era">'+c.era+'</span></span>'+
             '</span>'+
             '<span class="c-name">'+c.name+'</span>'+
+            '<ul class="c-hits">'+c.hits.map(function(h){ return '<li><i>✦</i>'+h+'</li>'; }).join('')+'</ul>'+
             '<span class="c-line">'+c.line+'</span>'+
+            '<span class="c-tools">'+c.stack.map(function(k){ return '<span class="c-tool">'+LOGO[k]+'</span>'; }).join('')+'</span>'+
             '<span class="c-go">VIEW IN WINDOW →</span>'+
           '</span>'+
         '</button>';
       }).join('')+'</div>'+
     '</section>'+
 
-    '<section class="beat" data-beat>'+
-      '<p class="beat-n">04 — <em>How</em></p>'+
-      '<h2>What I actually do on a Tuesday</h2>'+
-      '<div class="caps">'+CAPS.map(function(c){
-        return '<div class="cap"><p class="k">'+c.k+'</p><h3>'+c.t+'</h3><p>'+c.d+'</p>'+
-               '<p class="tools">'+c.tools+'</p></div>';
-      }).join('')+'</div>'+
+    '<section class="beat" data-beat id="beat-capabilities">'+
+      '<p class="beat-n">04 — <em>Capabilities</em></p>'+
+      '<h2>What eight years of shipping actually taught me</h2>'+
+      '<p>Not a skills list. Each one names what it solves first, then the '+
+        'tools and the case that proved it.</p>'+
+      '<div class="skills-grid">'+renderSkillCards()+'</div>'+
     '</section>'+
 
   '</div>';
 }
 
-/* ── Capabilities: video-game skill cards ──────────────────────
-   Real logos, real brand colours on the tool chips (the portfolio's own
-   carve-out: brand marks aren't decorative tokens). The "long" line — the
-   what-it-solves statement — is the headline; the skill name is secondary,
-   so it reads at a glance before anyone stops to study it. */
-function viewSkills(){
-  return '<div class="spine"><section class="beat" data-beat>'+
-    '<p class="beat-n">03 — <em>Capabilities</em></p>'+
-    '<h1>What eight years of shipping actually taught me</h1>'+
-    '<p>Not a skills list. Each one names what it solves first, then the '+
-      'tools and the case that proved it.</p>'+
-    '<div class="skills-grid">'+SKILLS.map(function(s,i){
-      var meta=CAT_META[s.cat];
-      return '<div class="skill-card cat-'+s.cat+(meta.strong?' strong':'')+'" '+
-        'style="--catc:'+meta.c+'" tabindex="0">'+
-        '<span class="sk-cat"><b>0'+(i+1)+'</b> · '+meta.label+'</span>'+
-        '<span class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
-          'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+s.ic+'</svg></span>'+
-        '<p class="sk-solve">'+s.long+'</p>'+
-        '<p class="sk-name">'+s.t+'</p>'+
-        '<div class="sk-tools">'+s.tools.map(function(t){
-          return '<span class="sk-tool">'+LOGO[t[0]]+t[1]+'</span>';
-        }).join('')+'</div>'+
-        '<span class="sk-proj">Proven on <b>'+s.proj+'</b></span>'+
-      '</div>';
-    }).join('')+'</div>'+
-  '</section></div>';
+/* ── Capabilities — video-game skill cards, folded into Home as its own
+   beat (not a separate page: same "one continuous story" call already
+   made for Cases/Evidence — see the projects alias in go()). Real logos,
+   real brand colours on the tool chips (the portfolio's own carve-out:
+   brand marks aren't decorative tokens). The "long" line — the what-it-
+   solves statement — is the headline; the skill name is secondary, so it
+   reads at a glance before anyone stops to study it. */
+function renderSkillCards(){
+  return SKILLS.map(function(s,i){
+    var meta=CAT_META[s.cat];
+    return '<div class="skill-card cat-'+s.cat+(meta.strong?' strong':'')+'" '+
+      'style="--catc:'+meta.c+'" tabindex="0">'+
+      '<span class="sk-cat"><b>0'+(i+1)+'</b> · '+meta.label+'</span>'+
+      '<span class="sk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+        'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+s.ic+'</svg></span>'+
+      '<p class="sk-solve">'+s.long+'</p>'+
+      '<p class="sk-name">'+s.t+'</p>'+
+      '<div class="sk-tools">'+s.tools.map(function(t){
+        return '<span class="sk-tool">'+LOGO[t[0]]+t[1]+'</span>';
+      }).join('')+'</div>'+
+      '<span class="sk-proj">Proven on <b>'+s.proj+'</b></span>'+
+    '</div>';
+  }).join('');
 }
 
 /* ── Desktop — the PostHog "close the window, see the folders" gesture.
@@ -483,7 +490,6 @@ var current='home';
 function paint(r){
   stage.innerHTML = r==='desktop' ? viewDesktop()
     : r==='home' ? viewHome()
-    : r==='skills' ? viewSkills()
     : viewStub(r);
   crumb.innerHTML = r==='desktop' ? 'fm://<b>desktop</b>' : 'fm://<b>'+PATH[r]+'</b>';
   document.title = r==='desktop' ? 'FM.OS — Desktop' : 'FM.OS — '+LABEL[r];
@@ -498,21 +504,24 @@ function paint(r){
 
 var sectionEnteredAt=Date.now();
 
-/* "projects" (Cases) has no page of its own — the five cards live inside
-   Home's Evidence beat, deliberately, so the narrative reads as one
-   continuous story rather than a scroll position split off into its own
-   window. Nav/desktop still need it to go somewhere real, so it resolves
-   to home + a scroll to that beat instead of a disconnected stub. */
-function scrollToEvidence(){
-  var el=document.getElementById('beat-evidence');
+/* Cases and Capabilities have no page of their own — both live inside
+   Home's own beats (Evidence, Capabilities), deliberately, so the
+   narrative reads as one continuous story rather than being split off
+   into disconnected windows. Nav/desktop still need each to go somewhere
+   real, so they resolve to home + a scroll to that beat. */
+var BEAT_ALIAS={projects:'beat-evidence',skills:'beat-capabilities'};
+
+function scrollToBeat(id){
+  var el=document.getElementById(id);
   if(el) el.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
 }
 
 function go(r){
-  if(r==='projects'){
-    if(current==='home'){ scrollToEvidence(); return; }
+  var beatId=BEAT_ALIAS[r];
+  if(beatId){
+    if(current==='home'){ scrollToBeat(beatId); return; }
     goReal('home');
-    setTimeout(scrollToEvidence,reduced?0:230);
+    setTimeout(function(){ scrollToBeat(beatId); },reduced?0:230);
     return;
   }
   goReal(r);
@@ -606,7 +615,7 @@ function bindStage(){
         seconds_on_page:Math.round((Date.now()-T.start)/1000)
       });
       renderMonitor();
-      openWindow(CASE+c.file, c.name, 'fm://cases/'+id);
+      openWindow(CASE+c.file, c.name, id);
     });
   });
 
@@ -633,16 +642,29 @@ function bindStage(){
 
   /* beats light up as they enter — the spine tracks where you are */
   if('IntersectionObserver' in window){
+    /* tracks every beat's current intersecting state across calls — a
+       single observer callback can carry entries for several beats at
+       once (one flipping true, another flipping false a moment later as
+       the scroll passes it), and reacting to each entry in isolation lets
+       whichever fires last win even when it's reporting a different,
+       now-irrelevant beat. Compute the one correct answer from the full
+       known state instead, after every batch. */
+    var beatState={};
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){
         e.target.classList.toggle('on', e.isIntersecting);
-        /* the Evidence beat scrolling into view is, for nav purposes, the
-           same as being "on" Cases — even though the route never changes
-           off home (see the projects alias in go()) */
-        if(e.target.id==='beat-evidence'&&current==='home'){
-          syncNav(e.isIntersecting?'projects':'home');
-        }
+        beatState[e.target.id]=e.isIntersecting;
       });
+      /* an aliased beat scrolling into view is, for nav purposes, the same
+         as being "on" that route — even though the route never changes
+         off home (see BEAT_ALIAS in go()) */
+      if(current==='home'){
+        var activeKey='home';
+        for(var key in BEAT_ALIAS){
+          if(beatState[BEAT_ALIAS[key]]){ activeKey=key; break; }
+        }
+        syncNav(activeKey);
+      }
     },{root:main,rootMargin:'-42% 0px -42% 0px'});
     Array.prototype.forEach.call(stage.querySelectorAll('[data-beat]'),function(b){ io.observe(b); });
   }
@@ -722,7 +744,13 @@ document.addEventListener('click',function(e){
 var wf=document.getElementById('winfloat'), wfBox=document.getElementById('wfBox'),
     wfBar=document.getElementById('wfBar'), wfFrame=document.getElementById('wfFrame');
 
-function openWindow(url,title,path){
+/* the hash saved from just before a case window opens, so closing restores
+   the section the visitor was actually on instead of always landing on
+   whatever the window happened to overwrite it with */
+var hashBeforeWindow=null;
+
+function openWindow(url,title,caseId){
+  var path='fm://cases/'+caseId;
   document.getElementById('wfTitle').textContent=title;
   document.getElementById('wfPath').textContent=path;
   wfFrame.src=url;
@@ -736,11 +764,29 @@ function openWindow(url,title,path){
   void wfBox.offsetWidth;
   wfBox.classList.add('arrive');
   document.getElementById('wfClose').focus();
+
+  /* a specific case gets its own real, shareable URL — pushState (not
+     replace) so the browser back button closes it, same as it would close
+     any other "page" */
+  if(history.pushState){
+    hashBeforeWindow=location.hash;
+    history.pushState({caseWindow:caseId},'','#/cases/'+caseId);
+  }
 }
 function closeWindow(){
   wf.hidden=true;
   wfFrame.src='about:blank'; /* stop whatever the case page was doing */
+  if(hashBeforeWindow!==null && history.pushState){
+    history.pushState(null,'',hashBeforeWindow||'#/'+PATH[current]);
+    hashBeforeWindow=null;
+  }
 }
+window.addEventListener('popstate',function(e){
+  /* back/forward button: a case-window hash going away closes the window;
+     landing back on one from a refresh/forward isn't auto-opened here —
+     see the boot-time deep link handling below for that case instead */
+  if(!wf.hidden && !(e.state&&e.state.caseWindow)){ closeWindow(); }
+});
 document.getElementById('wfClose').addEventListener('click',closeWindow);
 document.getElementById('wfBackdrop').addEventListener('click',closeWindow);
 document.getElementById('wfMax').addEventListener('click',function(){
@@ -844,14 +890,33 @@ main.addEventListener('scroll',function(){
 
 /* ── boot ────────────────────────────────────────────────────── */
 
-/* deep link support: /#/cases lands on that section, /#/desktop on the desktop */
+/* deep link support: /#/cases and /#/capabilities land on home, scrolled
+   to that beat once painted; /#/desktop on the desktop; /#/cases/<id>
+   opens straight into that case's floating window — a specific project
+   really is a bookmarkable, shareable page, per the ask. */
+var bootScrollTo=null, bootOpenCase=null;
 (function(){
   var h=(location.hash||'').replace('#/','');
   if(h==='desktop'){ current='desktop'; return; }
-  for(var r in PATH){ if(PATH[r]===h){ current=r; T.seen[r]=true; break; } }
+  var caseMatch=h.match(/^cases\/(.+)$/);
+  if(caseMatch && CASES.some(function(c){ return c.id===caseMatch[1]; })){
+    current='home'; bootOpenCase=caseMatch[1]; return;
+  }
+  for(var r in PATH){
+    if(PATH[r]===h){
+      if(BEAT_ALIAS[r]){ current='home'; bootScrollTo=BEAT_ALIAS[r]; }
+      else { current=r; T.seen[r]=true; }
+      break;
+    }
+  }
 })();
 
 paint(current);
+if(bootScrollTo){ scrollToBeat(bootScrollTo); }
+if(bootOpenCase){
+  var bootCase=CASES.filter(function(c){ return c.id===bootOpenCase; })[0];
+  if(bootCase){ openWindow(CASE+bootCase.file, bootCase.name, bootCase.id); }
+}
 
 setInterval(function(){
   T.spark.shift();

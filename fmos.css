@@ -293,28 +293,43 @@ blockquote cite{display:block;font-family:var(--f-data);font-size:10px;letter-sp
   position:relative;padding:0}
 .case:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 
-/* the preview — a small line-art scene per case, not a photo. Depth comes
-   from a hard-edged duplicate panel offset behind it (an E-Ink-native trick:
-   paper stacked on paper), never a blurred drop-shadow. */
+/* the preview — an app-window mockup (title bar, sidebar, content rows, a
+   cursor that travels to the flagged row on hover) instead of an abstract
+   icon: closer to federico-portfolio's real pcard mockups, still E-Ink —
+   no colour except --pc and the cursor. Depth comes from a hard-edged
+   duplicate panel offset behind it (paper stacked on paper), never a
+   blurred drop-shadow. */
 .c-prev-wrap{position:relative;width:100%;aspect-ratio:16/10}
 .c-prev-wrap::before{content:'';position:absolute;inset:0;border:1px solid var(--rule);
   background:var(--paper-2);transform:translate(5px,5px);transition:transform 320ms var(--spring)}
 .case:hover .c-prev-wrap::before{transform:translate(8px,8px)}
-.c-prev{position:relative;width:100%;height:100%;border:1px solid var(--rule);border-top:2px solid var(--pc);
-  background:var(--paper);display:flex;align-items:center;justify-content:center;padding:18%;
-  color:var(--ink-3);transition:border-color 260ms var(--ease)}
-.case:hover .c-prev{border-color:var(--pc)}
-.c-prev svg{width:100%;height:100%;overflow:visible}
-.c-prev .pc-mark{transition:opacity 200ms}
-.case:hover .c-prev .pc-mark{animation:pcMark 1.3s ease-in-out infinite}
-@keyframes pcMark{0%,100%{opacity:1}50%{opacity:.4}}
-/* the "alive" signal — still at rest, flows on hover/focus. One technique,
-   reused across EY/Chek/Blockchain/DollarCity so the five read as one
-   system instead of five one-off effects. */
-.case:hover .c-prev .cs-flow{animation:csFlow .9s linear infinite}
-@keyframes csFlow{to{stroke-dashoffset:-16}}
-.case:hover .c-prev .cs-fade{animation:csFade 1.6s ease-in-out infinite}
-@keyframes csFade{0%,100%{opacity:1}50%{opacity:.22}}
+
+.c-winmock{position:relative;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid var(--rule);border-top:2px solid var(--pc);background:var(--paper);
+  transition:border-color 260ms var(--ease)}
+.case:hover .c-winmock{border-color:var(--pc)}
+.c-winmock-bar{flex:0 0 auto;height:16%;min-height:13px;display:flex;align-items:center;gap:4px;
+  padding:0 8%;border-bottom:1px solid var(--rule)}
+.c-winmock-bar i{width:5px;height:5px;border-radius:50%;background:var(--ink-4);display:block}
+.c-winmock-body{position:relative;flex:1;display:flex;gap:7%;padding:9%}
+.c-winmock-side{width:20%;display:flex;flex-direction:column;justify-content:space-around}
+.c-winmock-side i{display:block;height:14%;background:var(--ink-4);opacity:.3;border-radius:1px}
+.c-winmock-side i.hl{background:var(--pc);opacity:.9}
+.c-winmock-main{flex:1;display:flex;flex-direction:column;justify-content:space-around}
+.c-winmock-row{height:16%;background:var(--ink-4);opacity:.2;border-radius:1px}
+.c-winmock-row.wide{opacity:.32}
+.c-winmock-row.flag{background:none;border:1.5px dashed var(--ac);opacity:1}
+/* the moving cursor — the "alive" signal, still at rest, travels to the
+   flagged row on hover/focus. One shared motion for all five cases, so
+   they read as one system rather than five one-off effects. */
+.c-cursor{position:absolute;left:16%;top:24%;width:7px;height:7px;border-radius:50%;
+  background:var(--pc);opacity:0}
+.case:hover .c-cursor,.case:focus-visible .c-cursor{animation:curMove 1.7s var(--ease) infinite}
+@keyframes curMove{0%{left:16%;top:24%;opacity:0}12%{opacity:1}
+  50%{left:34%;top:54%;opacity:1}85%{opacity:1}100%{left:16%;top:24%;opacity:0}}
+.c-wm{position:absolute;right:7px;bottom:6px;opacity:.9;pointer-events:none;line-height:0}
+.c-wm-ey,.c-wm-dc{width:20px;height:auto;display:block}
+.c-wm-text{font-family:var(--f-body);font-weight:800;font-size:11px;color:var(--pc)}
 
 .c-body{display:flex;flex-direction:column;gap:8px;padding:14px 2px 0;flex:1}
 .c-facts{display:flex;flex-direction:column;gap:3px}
@@ -322,8 +337,18 @@ blockquote cite{display:block;font-family:var(--f-data);font-size:10px;letter-sp
 .c-fact-row{display:flex;justify-content:space-between;gap:8px;
   font-family:var(--f-data);font-size:9.5px;letter-spacing:.04em;color:var(--ink-4)}
 .c-name{font-family:var(--f-body);font-weight:600;font-size:17px;color:var(--ink)}
+/* the "in summary" bullets — real facts, no filler, per the amitux/Kotak
+   reference cards: what was done, stated plainly, before the prose. */
+.c-hits{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.c-hits li{display:flex;align-items:baseline;gap:7px;font-family:var(--f-data);font-size:11.5px;color:var(--ink-2)}
+.c-hits li i{font-style:normal;color:var(--pc);font-size:10px}
 .c-line{color:var(--ink-2);font-size:13.5px;line-height:1.5;flex:1}
 .c-line b{color:var(--ac);font-weight:500;font-family:var(--f-data);font-size:13px}
+/* small stack logos — bare marks, no label, so they read as a quiet strip
+   rather than competing with the Capabilities page's labeled chips */
+.c-tools{display:flex;flex-wrap:wrap;gap:7px}
+.c-tool{display:inline-flex;width:17px;height:17px;opacity:.9}
+.c-tool svg{width:100%;height:100%}
 .c-go{font-family:var(--f-data);font-size:10.5px;color:var(--ink-4);margin-top:auto;padding-top:6px;
   transition:color 200ms,transform 260ms var(--ease)}
 .case:hover .c-go{color:var(--ac);transform:translateX(4px)}
