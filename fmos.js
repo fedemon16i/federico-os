@@ -792,7 +792,12 @@ try{ var saved=localStorage.getItem('fmos-theme'); if(saved) document.documentEl
 var drawer=document.getElementById('drawer'), menuBtn=document.getElementById('menuBtn');
 drawer.innerHTML=ORDER.map(function(r,i){
   return '<button type="button" data-route="'+r+'"><span class="idx">0'+(i+1)+'</span>'+LABEL[r]+'</button>';
-}).join('')+SHORTCUTS.map(function(s){
+}).join('')+
+  /* Beats: a standalone page (not part of the SPA route table), added on
+     request — kept as a plain link rather than a data-route so it isn't
+     mistaken for a permanent step in the narrative order */
+  '<a class="dbeat" href="beats.html" target="_blank" rel="noopener"><span class="idx">•</span>Beats</a>'+
+  SHORTCUTS.map(function(s){
   return '<a class="sc" href="'+s.href+'" '+(s.ext?'target="_blank" rel="noopener"':'')+
     ' data-shortcut="'+s.label+'"><span class="sc-ico" aria-hidden="true">'+ICONS[s.icon]+'</span>'+s.label+'</a>';
 }).join('');
