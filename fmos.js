@@ -10,7 +10,7 @@
 'use strict';
 
 var PHOTO='https://fedemon16i.github.io/federico-portfolio/home-photos/';
-var CASE ='https://fedemon16i.github.io/federico-portfolio/projects/';
+var CASE ='projects/';
 var CV    ='https://fedemon16i.github.io/federico-portfolio/assets/Federico_Monroy_CV.pdf';
 var LI    ='https://www.linkedin.com/in/federico-monroy-1b6b2ba0/';
 var reduced=window.matchMedia('(prefers-reduced-motion:reduce)').matches;

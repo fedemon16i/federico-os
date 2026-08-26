@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Blockchain 3D — Case</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060c0d;--surface:#0b1416;--raised:#111d1f;--border:rgba(34,212,200,.1);
+  --text:#d4f0ee;--muted:#6a9ea0;--dim:#3d6b6d;
+  --ac:#22d4c8;--ac-dim:rgba(34,212,200,.08);--on-ac:#060c0d;
+  --ok:#3dd68c;--bad:#e05c4a;
+  --ff:'Exo 2',system-ui,sans-serif;--fm:'Share Tech Mono',monospace;
+  --r:6px;--rL:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:64px}
+
+.hd{background:var(--surface);border-bottom:1px solid var(--border);padding:24px 28px 20px;position:sticky;top:0;z-index:10}
+.hd-meta{font-family:var(--fm);font-size:11px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.hd-name{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.hd-name em{color:var(--ac);font-style:normal}
+.hd-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.tag{font-family:var(--fm);font-size:10px;letter-spacing:.06em;
+  padding:3px 8px;border-radius:4px;border:1px solid var(--border);color:var(--muted)}
+.tag-ac{border-color:rgba(34,212,200,.4);color:var(--ac);background:var(--ac-dim)}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.sec{padding:36px 0}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.12em;color:var(--ac);margin-bottom:10px}
+h2{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:12px}
+h3{font-size:14px;font-weight:600;letter-spacing:-.01em;margin-bottom:6px}
+p{margin-bottom:12px}
+p:last-child{margin-bottom:0}
+.muted{color:var(--muted)}
+
+.reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:20px}
+.reel-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.reel-n{font-size:24px;font-weight:700;font-family:var(--fm);color:var(--ac);letter-spacing:.02em;line-height:1;display:block;margin-bottom:6px}
+.reel-l{font-size:12px;color:var(--muted);line-height:1.4}
+
+/* pipeline */
+.pipeline{display:flex;gap:0;margin-top:20px;overflow-x:auto;padding-bottom:8px}
+.pipe-node{flex:1;min-width:120px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 12px;position:relative;text-align:center}
+.pipe-node+.pipe-node{margin-left:-1px;border-left-color:transparent}
+.pipe-node::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-family:var(--fm);font-size:14px;color:var(--ac);z-index:2}
+.pipe-node:last-child::after{display:none}
+.pipe-app{font-family:var(--fm);font-size:13px;font-weight:500;color:var(--ac);margin-bottom:4px}
+.pipe-role{font-size:11px;color:var(--muted)}
+
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:560px){.ba{grid-template-columns:1fr}}
+.ba-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.ba-card.after{border-color:rgba(34,212,200,.35)}
+.ba-label{font-family:var(--fm);font-size:10px;letter-spacing:.08em;
+  margin-bottom:12px;display:flex;align-items:center;gap:6px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ba-ul{list-style:none}
+.ba-ul li{font-size:13px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border);line-height:1.4}
+.ba-ul li:last-child{border-bottom:none}
+.ba-ul li::before{content:'– ';color:var(--dim)}
+.ba-card.after .ba-ul li::before{color:var(--ac);content:'→ '}
+
+.steps{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.step{display:grid;grid-template-columns:36px 1fr;gap:12px}
+.step-n{width:36px;height:36px;border-radius:var(--r);background:var(--ac-dim);border:1px solid rgba(34,212,200,.25);
+  font-family:var(--fm);font-size:11px;color:var(--ac);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body p{font-size:13px;color:var(--muted)}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tool{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:5px 10px;font-family:var(--fm);font-size:11px;color:var(--muted)}
+.tool b{color:var(--text);font-weight:500}
+.tool-ac{border-color:rgba(34,212,200,.4);color:var(--ac);background:var(--ac-dim)}
+
+blockquote{border-left:3px solid var(--ac);margin:20px 0 0;padding:12px 16px;background:var(--ac-dim);border-radius:0 var(--r) var(--r) 0}
+blockquote p{font-size:14px;font-style:italic;margin-bottom:0}
+
+/* scan line aesthetic */
+.hd::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(34,212,200,.015) 2px,rgba(34,212,200,.015) 4px);
+  pointer-events:none;z-index:-1}
+.hd{position:sticky;top:0;z-index:10;overflow:hidden}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <p class="hd-meta">BLOCKCHAIN 3D // GLOBANT · 2023 // NOW: EQUS</p>
+  <h1 class="hd-name">Blockchain 3D — <em>3D Interface Design</em></h1>
+  <div class="hd-row">
+    <span class="tag tag-ac">Blockchain / Web3</span>
+    <span class="tag">3D interface</span>
+    <span class="tag">Figma → Spline → Unity</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="sec">
+    <p class="eyebrow">// CONTEXT</p>
+    <h2>Figma, Spline, and Unity as one system — not three handoffs.</h2>
+    <p>The brief: a 3D interface for connected blockchain flows, designed phone-first. The constraint that made it interesting: the typical Figma → 3D → engine pipeline breaks at every seam. Each tool speaks a different language and assumes the one before it already solved the interaction model.</p>
+    <p>The work was treating these three tools as a continuous pipeline — one design decision propagated through all three layers, not translated at each boundary. The result became the foundation for <b>EQUS</b>.</p>
+
+    <div class="reel">
+      <div class="reel-item">
+        <span class="reel-n">3</span>
+        <span class="reel-l">Tools treated as one system: Figma → Spline → Unity</span>
+      </div>
+      <div class="reel-item">
+        <span class="reel-n">∅</span>
+        <span class="reel-l">Zero translation gaps at handoff boundaries</span>
+      </div>
+      <div class="reel-item">
+        <span class="reel-n">📱</span>
+        <span class="reel-l">Phone-first — 3D flows designed for mobile gesture interaction</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">// PIPELINE</p>
+    <h2>The three-tool system</h2>
+    <div class="pipeline">
+      <div class="pipe-node">
+        <div class="pipe-app">Figma</div>
+        <div class="pipe-role">Interaction model, flow logic, visual language</div>
+      </div>
+      <div class="pipe-node">
+        <div class="pipe-app">Spline</div>
+        <div class="pipe-role">3D scenes, camera paths, material system</div>
+      </div>
+      <div class="pipe-node">
+        <div class="pipe-app">Unity</div>
+        <div class="pipe-role">Runtime, gesture handling, blockchain data layer</div>
+      </div>
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:var(--muted)">Each tool owns a layer. The seams between them were the design problem — not just the screens inside each tool.</p>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">// BEFORE · AFTER</p>
+    <h2>From three isolated tools to a single propagating system</h2>
+    <div class="ba">
+      <div class="ba-card">
+        <div class="ba-label"><span class="dot" style="background:#e0524a"></span>Typical pipeline</div>
+        <ul class="ba-ul">
+          <li>Figma designs lose interaction intent when handed to 3D artist</li>
+          <li>3D scenes rebuilt from scratch — no shared material tokens</li>
+          <li>Unity dev receives 3D assets with no documented interaction model</li>
+          <li>Phone UX tacked on after desktop-first 3D scenes are done</li>
+          <li>Blockchain state changes hard-coded, not data-bound</li>
+        </ul>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label"><span class="dot" style="background:#22d4c8"></span>Integrated system</div>
+        <ul class="ba-ul">
+          <li>Figma defines the interaction model Spline and Unity inherit</li>
+          <li>Material tokens defined once, applied across all three tools</li>
+          <li>Unity receives scenes with documented gesture + state contracts</li>
+          <li>Phone-first from frame one — camera and gesture designed for thumb</li>
+          <li>Blockchain state changes drive scene transitions, not static screens</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">// PROCESS</p>
+    <h2>Design decisions that propagate</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-body">
+          <h3>Interaction model in Figma, phone-first</h3>
+          <p>Every flow started on the smallest screen. Swipe, tap, pinch — not click. The 3D scenes were designed to respond to gestures, not to expose a 3D viewport in a web page.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-body">
+          <h3>Spline as a design layer, not a 3D production layer</h3>
+          <p>Used Spline to prototype the 3D transitions and camera behavior before handing anything to Unity. The scene in Spline was a design decision, not a production asset.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-body">
+          <h3>Unity as the runtime, not the design environment</h3>
+          <p>Scene transitions and state logic were fully specced before Unity received assets. The Unity dev was implementing a documented contract, not interpreting a 3D model.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-body">
+          <h3>Blockchain state → scene state</h3>
+          <p>Transaction state, confirmation depth, connection status — each drove a visual scene state. The 3D interface was data-driven, not decorative.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">// TOOLS</p>
+    <h2>Stack</h2>
+    <div class="tools">
+      <div class="tool tool-ac"><b>Figma</b></div>
+      <div class="tool tool-ac"><b>Spline</b></div>
+      <div class="tool tool-ac"><b>Unity</b></div>
+      <div class="tool"><b>Blockchain APIs</b></div>
+      <div class="tool"><b>Protopie</b></div>
+    </div>
+    <blockquote>
+      <p>Figma → Spline → Unity treated as one system, not three handoffs.</p>
+    </blockquote>
+  </section>
+
+</div>
+</body>
+</html>

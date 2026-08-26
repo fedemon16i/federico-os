@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Customs ES — Case</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0c0b;--surface:#181210;--raised:#211916;--border:rgba(224,92,74,.12);
+  --text:#f2ede9;--muted:#978a84;--dim:#6a5e58;
+  --ac:#e05c4a;--ac-dim:rgba(224,92,74,.1);--on-ac:#fff;
+  --ok:#7ecb9a;--bad:#e05c4a;
+  --ff:'Nunito',system-ui,sans-serif;--fb:'Nunito Sans',system-ui,sans-serif;
+  --r:10px;--rL:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:64px}
+
+.hd{background:var(--surface);border-bottom:1px solid var(--border);padding:24px 28px 20px;position:sticky;top:0;z-index:10}
+.hd-meta{font-family:var(--fb);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
+.hd-name{font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+.hd-name em{color:var(--ac);font-style:normal}
+.hd-row{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.tag{font-family:var(--fb);font-size:10.5px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
+  padding:3px 9px;border-radius:8px;border:1px solid var(--border);color:var(--muted)}
+.tag-ac{border-color:rgba(224,92,74,.4);color:var(--ac);background:var(--ac-dim)}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+.sec{padding:36px 0}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{font-family:var(--fb);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);margin-bottom:10px}
+h2{font-size:20px;font-weight:800;letter-spacing:-.01em;line-height:1.25;margin-bottom:12px}
+h3{font-size:14px;font-weight:700;margin-bottom:6px}
+p{font-family:var(--fb);font-weight:400;margin-bottom:12px;color:var(--text)}
+p:last-child{margin-bottom:0}
+.muted{color:var(--muted)}
+
+.reel{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:20px}
+.reel-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.reel-n{font-size:28px;font-weight:800;color:var(--ac);line-height:1;display:block;margin-bottom:6px}
+.reel-l{font-family:var(--fb);font-size:12px;color:var(--muted);line-height:1.4}
+
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:560px){.ba{grid-template-columns:1fr}}
+.ba-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.ba-card.after{border-color:rgba(224,92,74,.35)}
+.ba-label{font-family:var(--fb);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:12px;display:flex;align-items:center;gap:6px;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ba-ul{list-style:none}
+.ba-ul li{font-family:var(--fb);font-size:13px;color:var(--muted);padding:7px 0;border-bottom:1px solid var(--border);line-height:1.45}
+.ba-ul li:last-child{border-bottom:none}
+.ba-ul li::before{content:'– ';color:var(--dim)}
+.ba-card.after .ba-ul li::before{color:var(--ac);content:'✓ '}
+
+/* process diagram */
+.proc{display:flex;flex-direction:column;gap:0;margin-top:16px}
+.proc-step{display:grid;grid-template-columns:44px 1fr;gap:16px;position:relative}
+.proc-step+.proc-step::before{content:'';position:absolute;left:21px;top:-16px;height:16px;width:2px;background:var(--border)}
+.proc-icon{width:44px;height:44px;border-radius:50%;background:var(--ac-dim);border:2px solid rgba(224,92,74,.3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:13px;color:var(--ac)}
+.proc-body{padding:10px 0}
+.proc-body h3{margin-bottom:4px}
+.proc-body p{font-size:13px;color:var(--muted);margin-bottom:12px}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tool{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:5px 11px;font-family:var(--fb);font-size:11.5px;font-weight:600;color:var(--muted)}
+.tool b{color:var(--text);font-weight:700}
+.tool-ac{border-color:rgba(224,92,74,.4);color:var(--ac);background:var(--ac-dim)}
+
+/* primeng callout */
+.prime-note{background:var(--raised);border:1px solid rgba(224,92,74,.2);border-radius:var(--rL);padding:18px 20px;margin-top:20px}
+.prime-note h3{font-size:14px;color:var(--ac);margin-bottom:6px}
+.prime-note p{font-family:var(--fb);font-size:13px;color:var(--muted);margin-bottom:0}
+
+blockquote{border-left:3px solid var(--ac);margin:20px 0 0;padding:12px 16px;background:var(--ac-dim);border-radius:0 var(--r) var(--r) 0}
+blockquote p{font-family:var(--fb);font-size:14px;font-style:italic;margin-bottom:0}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <p class="hd-meta">Customs ES · Applaudo · 2021–2023</p>
+  <h1 class="hd-name">Customs ES — <em>Digital Transformation</em></h1>
+  <div class="hd-row">
+    <span class="tag tag-ac">Government</span>
+    <span class="tag">Digital transformation</span>
+    <span class="tag">50+ processes · Dual device</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="sec">
+    <p class="eyebrow">Context</p>
+    <h2>50+ paper processes at El Salvador's customs — no prior interface to redesign.</h2>
+    <p>El Salvador's customs authority ran entirely on paper: declarations, permits, inspections, gate clearances. The project was a complete digital transformation — not a redesign of something that existed, but a first-time design of everything from scratch.</p>
+    <p>The operation meant two devices at every gate: an agent terminal and an inspector handheld. The entire interaction model had to be derived from how the actual operation worked, not from how a web form would usually look.</p>
+
+    <div class="reel">
+      <div class="reel-item">
+        <span class="reel-n">50+</span>
+        <span class="reel-l">Paper processes turned digital</span>
+      </div>
+      <div class="reel-item">
+        <span class="reel-n">2</span>
+        <span class="reel-l">Device types designed simultaneously: terminal + handheld</span>
+      </div>
+      <div class="reel-item">
+        <span class="reel-n">0</span>
+        <span class="reel-l">Prior digital interface to reference — everything derived from operation</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Before · After</p>
+    <h2>From paper at the gate to a digital twin of the operation</h2>
+    <div class="ba">
+      <div class="ba-card">
+        <div class="ba-label"><span class="dot" style="background:#e0524a"></span>Before — paper operation</div>
+        <ul class="ba-ul">
+          <li>All declarations and inspections on physical forms</li>
+          <li>Gate clearance manually logged, no real-time state</li>
+          <li>Errors discovered at end of shift review, not in the moment</li>
+          <li>No cross-reference between agent terminal and inspector handheld</li>
+          <li>Process time bounded by paper handling and manual data entry</li>
+        </ul>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label"><span class="dot" style="background:#7ecb9a"></span>After — digital twin</div>
+        <ul class="ba-ul">
+          <li>All 50+ processes digitized with consistent UI patterns</li>
+          <li>Real-time gate state: terminal and handheld in sync</li>
+          <li>Inline validation at point of entry — errors surfaced immediately</li>
+          <li>Dual-device interface: complementary screens, not duplicated screens</li>
+          <li>Flows derived from the actual operation, not imposed from outside</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">What I did</p>
+    <h2>Design from the operation outward</h2>
+    <div class="proc">
+      <div class="proc-step">
+        <div class="proc-icon">01</div>
+        <div class="proc-body">
+          <h3>Operational shadowing</h3>
+          <p>Observed the paper process before opening Figma. Every form field, every handoff between agents and inspectors, every exception case — mapped as they actually happened, not as the brief described them.</p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-icon">02</div>
+        <div class="proc-body">
+          <h3>Process inventory and deduplication</h3>
+          <p>50+ paper processes had significant overlap. Grouped them into a smaller set of digital interaction patterns before designing individual screens. The system before the screens.</p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-icon">03</div>
+        <div class="proc-body">
+          <h3>Dual-device model</h3>
+          <p>Gate clearance required an agent terminal (full-screen desktop) and an inspector handheld (compact, one-handed). Designed as a coordinated system: the terminal is the record, the handheld is the action layer.</p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-icon">04</div>
+        <div class="proc-body">
+          <h3>Handoff and implementation</h3>
+          <p>PrimeNG component library was the implementation stack. Figma components mapped to PrimeNG equivalents — what you design is what gets built, without translation gaps.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prime-note">
+      <h3>PrimeNG — why the implementation stack matters</h3>
+      <p>The development team implemented in Angular + PrimeNG. Designing with PrimeNG's component model in mind — its form layouts, data tables, dialog patterns — meant the Figma handoff translated directly to code without a component-mapping step that introduces drift. The UI that shipped matched the design because the design was built on the same primitives.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="eyebrow">Tools</p>
+    <h2>Design × implementation stack</h2>
+    <div class="tools">
+      <div class="tool tool-ac"><b>Figma</b></div>
+      <div class="tool tool-ac"><b>PrimeNG</b></div>
+      <div class="tool"><b>Angular</b></div>
+      <div class="tool"><b>Field research</b></div>
+      <div class="tool"><b>Process mapping</b></div>
+      <div class="tool"><b>Maze</b></div>
+    </div>
+
+    <blockquote>
+      <p>No prior interface to redesign — the entire flow had to be derived from the operation itself.</p>
+    </blockquote>
+  </section>
+
+</div>
+</body>
+</html>
