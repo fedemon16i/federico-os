@@ -156,12 +156,13 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
   position:absolute;inset:0;
   width:100%;height:100%;
   border:none;
-  /* allow transparent background to show through */
   background:transparent;
+  /* animations are display-only — no clicking into them */
+  pointer-events:none;
 }
-/* tiny fade-in on load */
-.beat-stage iframe{opacity:0;transition:opacity .4s}
-.beat-stage iframe.loaded{opacity:1}
+/* instant hide on stop (no fade-out flicker), fade-in on load */
+.beat-stage iframe{opacity:0}
+.beat-stage iframe.loaded{opacity:1;transition:opacity .4s}
 
 /* Loader pulse */
 .fld{
@@ -178,6 +179,35 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 
 /* accent per panel */
 .proj-panel{--accent:var(--pa,#888)}
+
+/* ── Try me banner ────────────────────────────────── */
+.try-bar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:10px 16px;margin:24px 0 8px;
+  border-radius:8px;
+  border:1px solid color-mix(in srgb,var(--ta,#fff) 22%,transparent);
+  background:color-mix(in srgb,var(--ta,#fff) 5%,transparent);
+}
+.try-label{font-family:var(--fm);font-size:10px;color:var(--muted);flex:1;letter-spacing:.03em}
+.try-link{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:6px;
+  border:1px solid color-mix(in srgb,var(--ta,#fff) 40%,transparent);
+  background:color-mix(in srgb,var(--ta,#fff) 8%,transparent);
+  font-family:var(--fm);font-size:10px;
+  color:color-mix(in srgb,var(--ta,#fff) 85%,var(--text));
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+  transition:background .18s,border-color .18s;
+}
+.try-link:hover{background:color-mix(in srgb,var(--ta,#fff) 14%,transparent)}
+
+/* chips in info col */
+.bi-chips{display:flex;flex-wrap:wrap;gap:5px;padding-top:2px}
+.bi-chip{
+  font-family:var(--fm);font-size:9px;letter-spacing:.04em;
+  padding:3px 8px;border-radius:100px;
+  border:1px solid var(--border);color:var(--muted);
+}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -255,15 +285,15 @@ var PROJECTS = [
     id:'ey', name:'EY Fabric', accent:'#c9a227',
     src:'projects/ey-pi-player.html',
     beats:[
-      {n:'01',name:'Measure',   desc:'Analytics snapshot across EY Fabric catalog listings — traffic, engagement, conversion at a glance.'},
-      {n:'02',name:'Analyze',   desc:'Funnel analysis revealing where users drop across search, detail, and apply flows.'},
-      {n:'03',name:'Research',  desc:'User research synthesis mapped to catalog friction points and unmet needs.'},
-      {n:'04',name:'Understand',desc:'Persona map — who uses the catalog, what they need, and what blocks them.'},
-      {n:'05',name:'Design',    desc:'Redesigned catalog search and product detail flow — clarity-first information architecture.'},
-      {n:'06',name:'Hub',       desc:'Central hub connecting all catalog interactions — a single control surface.'},
-      {n:'07',name:'User flow', desc:'Guided onboarding: Pendo tooltip → pre-checklist gate → step-by-step form with live cost.'},
-      {n:'08',name:'Publisher', desc:'Publisher dashboard — add onboarding guides, define checklists, review submissions.'},
-      {n:'09',name:'Improved',  desc:'Before vs after — same form, guided entry, inline context, cost before commit.'},
+      {n:'01',name:'Measure',   chips:['Mixpanel','GA4','Hotjar'],   desc:'Analytics snapshot across EY Fabric catalog listings — traffic, engagement, conversion at a glance.'},
+      {n:'02',name:'Analyze',   chips:['Mixpanel','Optimizely'],      desc:'Funnel analysis revealing where users drop across search, detail, and apply flows.'},
+      {n:'03',name:'Research',  chips:['Maze','Notion'],              desc:'User research synthesis mapped to catalog friction points and unmet needs.'},
+      {n:'04',name:'Understand',chips:['Figma','FigJam'],             desc:'Persona map — who uses the catalog, what they need, and what blocks them.'},
+      {n:'05',name:'Design',    chips:['Figma','Storybook'],          desc:'Redesigned catalog search and product detail flow — clarity-first information architecture.'},
+      {n:'06',name:'Hub',       chips:['Figma'],                      desc:'Central hub connecting all catalog interactions — a single control surface.'},
+      {n:'07',name:'User flow', chips:['Pendo','Figma'],              desc:'Guided onboarding: Pendo tooltip → pre-checklist gate → step-by-step form with live cost.'},
+      {n:'08',name:'Publisher', chips:['Pendo','Figma'],              desc:'Publisher dashboard — add onboarding guides, define checklists, review submissions.'},
+      {n:'09',name:'Improved',  chips:['Figma'],                      desc:'Before vs after — same form, guided entry, inline context, cost before commit.'},
     ]
   },
   {
@@ -298,6 +328,7 @@ var PROJECTS = [
   {
     id:'bc', name:'Blockchain 3D', accent:'#22d4c8',
     src:'projects/blockchain-player.html',
+    tryUrl:'projects/blockchain-player.html',
     beats:[
       {n:'01',name:'Onboard',desc:'Welcome to your 3D map — content lives on places you own in space.'},
       {n:'02',name:'Place',  desc:'Enter the map, long-press the street, confirm the address, style your pin.'},
@@ -308,6 +339,7 @@ var PROJECTS = [
   {
     id:'chek', name:'Chek', accent:'#7a3be0',
     src:'projects/chek-player.html',
+    tryUrl:'projects/chek-player.html',
     beats:[
       {n:'01',name:'Hub',     desc:'Credit card hub — balance, limit, quick actions, and recent moves at a glance.'},
       {n:'02',name:'Pay',     desc:'Pay card flow — amount input, date picker, confirmation, all in one modal.'},
@@ -365,6 +397,19 @@ PROJECTS.forEach(function(proj, pi){
   panel.setAttribute('role','tabpanel');
   panel.style.setProperty('--pa', proj.accent);
 
+  /* "Try me" banner — only for interactive projects */
+  if(proj.tryUrl){
+    var tryBar = document.createElement('div');
+    tryBar.className = 'try-bar';
+    tryBar.style.setProperty('--ta', proj.accent);
+    tryBar.innerHTML =
+      '<span class="try-label">Animations are display-only here.</span>'+
+      '<a class="try-link" href="'+proj.tryUrl+'" target="_blank" rel="noopener">'+
+      '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'+
+      ' Try interactive</a>';
+    panel.appendChild(tryBar);
+  }
+
   var list = document.createElement('div');
   list.className = 'beat-list';
 
@@ -390,6 +435,19 @@ PROJECTS.forEach(function(proj, pi){
     bdesc.className = 'bi-desc';
     bdesc.textContent = beat.desc;
 
+    /* Optional tool chips */
+    var chipsEl = null;
+    if(beat.chips && beat.chips.length){
+      chipsEl = document.createElement('div');
+      chipsEl.className = 'bi-chips';
+      beat.chips.forEach(function(c){
+        var ch = document.createElement('span');
+        ch.className = 'bi-chip';
+        ch.textContent = c;
+        chipsEl.appendChild(ch);
+      });
+    }
+
     var ctrls = document.createElement('div');
     ctrls.className = 'bi-ctrls';
 
@@ -410,6 +468,7 @@ PROJECTS.forEach(function(proj, pi){
     info.appendChild(bnum);
     info.appendChild(btitle);
     info.appendChild(bdesc);
+    if(chipsEl) info.appendChild(chipsEl);
     info.appendChild(ctrls);
 
     /* — Stage (frameless) — */
@@ -478,9 +537,13 @@ function stop(projId, bi){
   var key = projId+'_'+bi;
   var iframe = iframes[key];
   if(!iframe) return;
-  /* Reload the iframe — cleanest stop/reset across all player types */
+  /* Remove .loaded first (opacity 0 is already instant — no transition on un-loaded state)
+     then reload so the player chrome never flashes through */
   iframe.classList.remove('loaded');
-  iframe.src = srcs[key];
+  /* Short delay lets opacity:0 apply before the reload begins */
+  setTimeout(function(){
+    iframe.src = srcs[key];
+  }, 20);
 }
 
 function postMsg(iframe, msg){
