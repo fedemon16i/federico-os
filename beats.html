@@ -210,31 +210,43 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
    let the animation canvas render free on the page.
 ──────────────────────────────────────────────────────── */
 var STRIP_CSS = [
-  /* Transparent backgrounds all the way down */
-  'html,body,.page,.shell,.stage-col,.frame,.unit,.win{background:transparent!important}',
-  /* Remove stage grid texture and borders */
-  '.stage,.frame,.unit{background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
-  /* Hide EVERYTHING that isn't the animation canvas */
-  /* — EY PI / Skills player chrome — */
+  /* ── Transparent backgrounds all the way down ───────── */
+  'html,body,.page,.shell,.stage-col,.frame,.unit,.win,.unit-host{background:transparent!important}',
+  /* Stage itself — the main culprit: has --stage-bg color + grid image + border */
+  '.stage{background:transparent!important;background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
+  /* Other frame containers */
+  '.frame,.unit{background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
+
+  /* ── Hide ALL player chrome ─────────────────────────── */
+  /* EY PI / Skills */
   '.page>.kicker,.page>h1,.page>.lead{display:none!important}',
   '.tl,#tl,.tl-row,.pill-row{display:none!important}',
   '.controls,.controls-col{display:none!important}',
-  /* — Stage chrome — */
-  '.stage-chrome,.stage-top,.stage-arrows,.capbar,.cap{display:none!important}',
-  /* — Caption bar used in some players — */
-  '.cap-row,.cap-txt,.capbar{display:none!important}',
-  /* — Blockchain/DollarCity outer chrome — */
-  '.chrome-bar,.chrome-top,.timeline,.eyebrow,body>.wrap>h1,.lede,.note{display:none!important}',
-  /* — Text phase overlay (typewriter intro) — */
+  /* Stage chrome — all players */
+  '.stage-top,.stage-arrows,.stage-chrome,.capbar,.cap,.cap-row,.cap-txt{display:none!important}',
+  /* Outer page chrome */
+  '.page-chrome,.chrome-bar,.chrome-top,.timeline,.note{display:none!important}',
+  '.eyebrow,body>.wrap>h1,.lede{display:none!important}',
+  /* Text phase overlay */
   '#textPhase,.text-phase,.text-col,.intro-overlay{display:none!important}',
-  /* — Chek player top bar inside stage — */
-  '.stage-top{display:none!important}',
-  /* Kill any page-level padding/margin so animation sits flush */
+
+  /* ── Embed layout fixes ──────────────────────────────── */
+  /* Remove body padding — DollarCity/Chek have no embed body rule by default */
+  'html.embed body{padding:0!important;margin:0!important;overflow:hidden!important}',
   'html.embed .page{padding:0!important;margin:0!important}',
+  /* Outer .wrap (DollarCity/Chek/Blockchain wrapper) */
+  'html.embed .wrap{padding:0!important;margin:0!important;height:100%!important;display:flex!important;flex-direction:column!important;max-width:none!important}',
+  /* EY / Skills shell */
   'html.embed .shell{gap:0!important}',
   'html.embed .shell>div:first-child{display:none!important}',
+  /* Stage fills the full space */
+  'html.embed .stage{flex:1!important;min-height:0!important;height:auto!important;width:100%!important}',
+  /* Stage window inner padding (Chek has 64px bottom for capbar — remove it) */
+  '.stage-window{padding:0!important}',
+  /* Unit host (DollarCity centering wrapper) */
+  '.unit-host{width:100%!important;height:100%!important;min-height:0!important}',
   /* Make .unit fill the full stage */
-  'html.embed .unit,html.embed #unit{width:100%!important;height:100%!important;position:relative!important;top:auto!important;transform:none!important;max-width:none!important}'
+  'html.embed .unit,html.embed #unit,.unit{width:100%!important;height:100%!important;position:relative!important;top:auto!important;transform:none!important;max-width:none!important}'
 ].join('\n');
 
 /* ── Data ─────────────────────────────────────────── */
