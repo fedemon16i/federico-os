@@ -209,33 +209,125 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
   border:1px solid var(--border);color:var(--muted);
 }
 
-/* ── Window chrome (browser frame for desktop UI beats) ── */
-.wf-chrome{
-  position:absolute;top:0;left:0;right:0;height:34px;z-index:3;
-  background:#252527;border-bottom:1px solid rgba(255,255,255,.1);
-  display:flex;align-items:center;gap:10px;padding:0 14px;
-  pointer-events:none;
+/* ── Reviewer mode ─────────────────────────────────── */
+.rv-btn{
+  font-family:var(--fm);font-size:10px;
+  padding:5px 10px;border-radius:6px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--dim);cursor:pointer;
+  display:flex;align-items:center;gap:5px;
+  transition:color .18s,border-color .18s,background .18s;
+  letter-spacing:.04em;
 }
-.wf-chrome-dots{display:flex;gap:5px;flex-shrink:0}
-.wf-chrome-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18)}
-.wf-chrome-dot.cl{background:#ff5f57}
-.wf-chrome-dot.mn{background:#febc2e}
-.wf-chrome-dot.mx{background:#28c840}
-.wf-chrome-url{
-  flex:1;height:20px;
-  background:rgba(255,255,255,.07);
-  border-radius:5px;
-  display:flex;align-items:center;
-  padding:0 10px;
-  font-family:var(--fm);font-size:9px;
-  color:var(--muted);letter-spacing:.02em;
-  overflow:hidden;white-space:nowrap;max-width:240px;
+.rv-btn:hover{color:var(--muted);border-color:rgba(255,255,255,.18)}
+.rv-btn.active{color:#fbbf24;border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
+.rv-btn .rv-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(251,191,36,.45);
+  display:none;
 }
-.beat-stage.has-chrome{
-  border:1px solid rgba(255,255,255,.12);
+.rv-btn.active .rv-dot{display:block}
+
+/* Password modal */
+.rv-modal-bg{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.78);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+.rv-modal-bg.hidden{display:none}
+.rv-modal{
+  background:#161618;border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:28px 28px 22px;
+  width:min(330px,90vw);
+  display:flex;flex-direction:column;gap:14px;
+}
+.rv-modal-title{
+  font-family:var(--fd);font-size:1.05rem;font-weight:700;
+  letter-spacing:-.02em;
+}
+.rv-modal-sub{font-size:.8125rem;color:var(--muted);line-height:1.5;margin-top:-4px}
+.rv-pass{
+  width:100%;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;
+  font-family:var(--fm);font-size:14px;color:var(--text);
+  letter-spacing:.1em;
+}
+.rv-pass:focus{outline:none;border-color:rgba(251,191,36,.55)}
+.rv-err{font-size:.8125rem;color:#f87171;display:none;margin-top:-6px}
+.rv-err.on{display:block}
+.rv-modal-btns{display:flex;gap:8px}
+.rv-cancel,.rv-enter{
+  flex:1;padding:9px;border-radius:8px;
+  font-family:var(--fm);font-size:11px;cursor:pointer;
+  border:1px solid var(--border);letter-spacing:.04em;
+}
+.rv-cancel{background:transparent;color:var(--muted)}
+.rv-cancel:hover{color:var(--text)}
+.rv-enter{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.4);color:#fbbf24}
+.rv-enter:hover{background:rgba(251,191,36,.2)}
+
+/* Per-beat reviewer panel */
+.rv-panel{
+  display:none;
+  margin-top:10px;
+  border:1px solid rgba(251,191,36,.16);
   border-radius:10px;
+  padding:14px 14px 12px;
+  background:rgba(251,191,36,.022);
 }
-.beat-stage.has-chrome iframe{top:34px}
+body.reviewer .rv-panel{display:block}
+
+.rv-panel-hd{
+  font-family:var(--fm);font-size:9px;
+  color:rgba(251,191,36,.5);letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+/* Contains checklist */
+.rv-contains{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
+.rv-row{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--fm);font-size:10px;color:var(--muted);
+  cursor:pointer;user-select:none;line-height:1.4;
+}
+.rv-row input[type=checkbox]{
+  width:12px;height:12px;accent-color:#fbbf24;
+  cursor:pointer;flex-shrink:0;
+}
+.rv-row.ck{color:var(--text)}
+
+/* Status pills */
+.rv-status{display:flex;gap:5px;margin-bottom:11px}
+.rv-sbtn{
+  flex:1;padding:5px 0;border-radius:6px;
+  border:1px solid var(--border);background:transparent;
+  font-family:var(--fm);font-size:9px;color:var(--dim);
+  cursor:pointer;letter-spacing:.03em;
+  transition:color .15s,border-color .15s,background .15s;
+}
+.rv-sbtn:hover{color:var(--muted);border-color:rgba(255,255,255,.18)}
+.rv-sbtn[data-s="ok"].on{border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.1);color:#34d399}
+.rv-sbtn[data-s="partial"].on{border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.1);color:#fbbf24}
+.rv-sbtn[data-s="broken"].on{border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.1);color:#f87171}
+
+/* Notes */
+.rv-note{
+  width:100%;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);border-radius:7px;
+  padding:9px 12px;
+  font-family:var(--fn);font-size:12px;color:var(--text);
+  resize:vertical;min-height:56px;line-height:1.55;
+}
+.rv-note:focus{outline:none;border-color:rgba(251,191,36,.35)}
+.rv-note::placeholder{color:var(--dim);font-style:italic}
+.rv-saved{
+  font-family:var(--fm);font-size:9px;color:rgba(52,211,153,.65);
+  letter-spacing:.04em;margin-top:5px;height:13px;
+  opacity:0;transition:opacity .3s;
+}
+.rv-saved.on{opacity:1}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -251,6 +343,25 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
     Back
   </a>
+  <button id="rvBtn" class="rv-btn" aria-label="Reviewer mode">
+    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    Review
+    <span class="rv-dot" aria-hidden="true"></span>
+  </button>
+</div>
+
+<!-- Reviewer password modal -->
+<div class="rv-modal-bg hidden" id="rvModalBg" role="dialog" aria-modal="true" aria-label="Reviewer access">
+  <div class="rv-modal">
+    <div class="rv-modal-title">Reviewer mode</div>
+    <p class="rv-modal-sub">Solo vos podés acceder. Ingresá la contraseña.</p>
+    <input type="password" class="rv-pass" id="rvPass" placeholder="••••••" autocomplete="current-password"/>
+    <p class="rv-err" id="rvErr">Contraseña incorrecta</p>
+    <div class="rv-modal-btns">
+      <button class="rv-cancel" id="rvCancel">Cancelar</button>
+      <button class="rv-enter" id="rvEnter">Entrar</button>
+    </div>
+  </div>
 </div>
 
 <div class="pg-hd">
@@ -268,42 +379,43 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
    let the animation canvas render free on the page.
 ──────────────────────────────────────────────────────── */
 var STRIP_CSS = [
-  /* ── Transparent backgrounds ─────────────────────────── */
+  /* ── Transparent backgrounds all the way down ───────── */
   'html,body,.page,.shell,.stage-col,.frame,.unit,.win,.unit-host{background:transparent!important}',
+  /* Stage itself — the main culprit: has --stage-bg color + grid image + border */
   '.stage{background:transparent!important;background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
+  /* Other frame containers */
   '.frame,.unit{background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
 
   /* ── Hide ALL player chrome ─────────────────────────── */
-  /* EY PI / Skills: page chrome */
+  /* EY PI / Skills */
   '.page>.kicker,.page>h1,.page>.lead{display:none!important}',
-  /* Timeline row + beat pills */
-  '.tl,#tl,.tl-row,.pill-row,.timeline{display:none!important}',
+  '.tl,#tl,.tl-row,.pill-row{display:none!important}',
   '.controls,.controls-col{display:none!important}',
   /* Stage chrome — all players */
   '.stage-top,.stage-arrows,.stage-chrome,.capbar,.cap,.cap-row,.cap-txt{display:none!important}',
   /* Outer page chrome */
-  '.page-chrome,.chrome-bar,.chrome-top,.note{display:none!important}',
+  '.page-chrome,.chrome-bar,.chrome-top,.timeline,.note{display:none!important}',
   '.eyebrow,body>.wrap>h1,.lede{display:none!important}',
-  /* Text phase overlays (id + class variants) */
+  /* Text phase overlay */
   '#textPhase,.text-phase,.text-col,.intro-overlay{display:none!important}',
-  /* EY/Skills typewriter text slide + chip dock inside .win */
-  '.win .slide.text{display:none!important}',
-  '.dock{display:none!important}',
-  /* Blockchain side-hint cards (floating outside phone) */
-  '.side-hints,.hint-card{display:none!important}',
 
   /* ── Embed layout fixes ──────────────────────────────── */
+  /* Remove body padding — DollarCity/Chek have no embed body rule by default */
   'html.embed body{padding:0!important;margin:0!important;overflow:hidden!important}',
   'html.embed .page{padding:0!important;margin:0!important}',
+  /* Outer .wrap (DollarCity/Chek/Blockchain wrapper) */
   'html.embed .wrap{padding:0!important;margin:0!important;height:100%!important;display:flex!important;flex-direction:column!important;max-width:none!important}',
+  /* EY / Skills shell */
   'html.embed .shell{gap:0!important}',
   'html.embed .shell>div:first-child{display:none!important}',
+  /* Stage fills the full space */
   'html.embed .stage{flex:1!important;min-height:0!important;height:auto!important;width:100%!important}',
-  /* Stage-window: override inset (was 48px top + 60px bottom for hidden chrome) */
-  '.stage-window{inset:0!important;padding:0!important}',
+  /* Stage window inner padding (Chek has 64px bottom for capbar — remove it) */
+  '.stage-window{padding:0!important}',
+  /* Unit host (DollarCity centering wrapper) */
   '.unit-host{width:100%!important;height:100%!important;min-height:0!important}',
-  /* DO NOT override transform — EY/Skills use fit() which applies scale() */
-  'html.embed .unit,html.embed #unit,.unit{width:100%!important;height:100%!important;position:relative!important;top:auto!important;max-width:none!important}'
+  /* Make .unit fill the full stage */
+  'html.embed .unit,html.embed #unit,.unit{width:100%!important;height:100%!important;position:relative!important;top:auto!important;transform:none!important;max-width:none!important}'
 ].join('\n');
 
 /* ── Data ─────────────────────────────────────────── */
@@ -312,44 +424,70 @@ var PROJECTS = [
     id:'ey', name:'EY Fabric', accent:'#c9a227',
     src:'projects/ey-pi-player.html',
     beats:[
-      {n:'01',name:'Measure',   chips:['Mixpanel','GA4','Hotjar'],   desc:'Analytics snapshot across EY Fabric catalog listings — traffic, engagement, conversion at a glance.'},
-      {n:'02',name:'Analyze',   chips:['Mixpanel','Optimizely'],      desc:'Funnel analysis revealing where users drop across search, detail, and apply flows.'},
-      {n:'03',name:'Research',  chips:['Maze','Notion'],              desc:'User research synthesis mapped to catalog friction points and unmet needs.'},
-      {n:'04',name:'Understand',chips:['Figma','FigJam'],             desc:'Persona map — who uses the catalog, what they need, and what blocks them.'},
-      {n:'05',name:'Design',    chips:['Figma','Storybook'],          desc:'Redesigned catalog search and product detail flow — clarity-first information architecture.'},
-      {n:'06',name:'Hub',       chips:['Figma'],                      desc:'Central hub connecting all catalog interactions — a single control surface.'},
-      {n:'07',name:'User flow', chips:['Pendo','Figma'],              desc:'Guided onboarding: Pendo tooltip → pre-checklist gate → step-by-step form with live cost.'},
-      {n:'08',name:'Publisher', chips:['Pendo','Figma'],              desc:'Publisher dashboard — add onboarding guides, define checklists, review submissions.'},
-      {n:'09',name:'Improved',  chips:['Figma'],                      desc:'Before vs after — same form, guided entry, inline context, cost before commit.'},
+      {n:'01',name:'Measure',   chips:['Mixpanel','GA4','Hotjar'],   desc:'Analytics snapshot across EY Fabric catalog listings — traffic, engagement, conversion at a glance.',
+       contains:['Dashboard con KPIs de tráfico, engagement y conversión','Gráfico de serie de tiempo','Tabla de top páginas','Filtro de rango de fechas']},
+      {n:'02',name:'Analyze',   chips:['Mixpanel','Optimizely'],      desc:'Funnel analysis revealing where users drop across search, detail, and apply flows.',
+       contains:['Visualización de funnel','Porcentajes de drop-off por paso','Etapas: search → detail → apply','Comparativo de variantes']},
+      {n:'03',name:'Research',  chips:['Maze','Notion'],              desc:'User research synthesis mapped to catalog friction points and unmet needs.',
+       contains:['Grilla de síntesis de research','Tarjetas de friction points','Tags de área de problema','Insights priorizados']},
+      {n:'04',name:'Understand',chips:['Figma','FigJam'],             desc:'Persona map — who uses the catalog, what they need, and what blocks them.',
+       contains:['Mapa de personas','Segmentos de usuario','Pares necesidad / bloqueo','Grilla por rol']},
+      {n:'05',name:'Design',    chips:['Figma','Storybook'],          desc:'Redesigned catalog search and product detail flow — clarity-first information architecture.',
+       contains:['UI de búsqueda rediseñada','Layout de product detail','Jerarquía de información','Comparativo antes / después']},
+      {n:'06',name:'Hub',       chips:['Figma'],                      desc:'Central hub connecting all catalog interactions — a single control surface.',
+       contains:['Hub central de interacciones','Mapa de conexiones entre secciones','Quick-links a acciones','Vista unificada']},
+      {n:'07',name:'User flow', chips:['Pendo','Figma'],              desc:'Guided onboarding: Pendo tooltip → pre-checklist gate → step-by-step form with live cost.',
+       contains:['Tooltip de Pendo (primer paso)','Gate con pre-checklist','Formulario paso a paso','Preview de costo en tiempo real']},
+      {n:'08',name:'Publisher', chips:['Pendo','Figma'],              desc:'Publisher dashboard — add onboarding guides, define checklists, review submissions.',
+       contains:['Dashboard de publisher','Constructor de guía de onboarding','Editor de checklist','Cola de submissions']},
+      {n:'09',name:'Improved',  chips:['Figma'],                      desc:'Before vs after — same form, guided entry, inline context, cost before commit.',
+       contains:['Estado "antes" (form original)','Estado "después" (form guiado)','Contexto inline en campos','Costo visible antes de confirmar']},
     ]
   },
   {
     id:'skills', name:'Skills', accent:'#d97757',
     src:'projects/skills-player.html',
     beats:[
-      {n:'01',name:'Mapping',   desc:'Skills taxonomy mapped across roles, seniority, and org units.'},
-      {n:'02',name:'Usage',     desc:'Which skills are actually used — frequency and recency data surfaced.'},
-      {n:'03',name:'Segment',   desc:'Cohort segmentation — clusters of skill patterns by team and level.'},
-      {n:'04',name:'Research',  desc:'Research synthesis: where skills gap is felt most acutely by managers and ICs.'},
-      {n:'05',name:'Understand',desc:'Mental models — how people think about skill growth and gap identification.'},
-      {n:'06',name:'Design',    desc:'Redesigned skill profile and endorsement flow — mutual recognition built in.'},
-      {n:'07',name:'Hub',       desc:'Skill hub: personal profile, team view, and org-wide leaderboard in one surface.'},
-      {n:'08',name:'Systems',   desc:'Systems view — skill health across the whole org, filterable by domain.'},
+      {n:'01',name:'Mapping',   desc:'Skills taxonomy mapped across roles, seniority, and org units.',
+       contains:['Grilla de taxonomía de skills','Eje de roles y seniority','Filtro por unidad org','Vista de árbol / mapa']},
+      {n:'02',name:'Usage',     desc:'Which skills are actually used — frequency and recency data surfaced.',
+       contains:['Gráfico de frecuencia de uso','Heatmap de recency','Ranking de top skills','Filtro por período']},
+      {n:'03',name:'Segment',   desc:'Cohort segmentation — clusters of skill patterns by team and level.',
+       contains:['Clusters de cohortes','Filtro por equipo y nivel','Tarjetas de patrón de skills','Vista comparativa']},
+      {n:'04',name:'Research',  desc:'Research synthesis: where skills gap is felt most acutely by managers and ICs.',
+       contains:['Síntesis de research','Vista managers vs ICs','Indicadores de severidad de gap','Insights mapeados por área']},
+      {n:'05',name:'Understand',desc:'Mental models — how people think about skill growth and gap identification.',
+       contains:['Diagramas de modelo mental','Flujos de crecimiento esperado','Cartas de identificación de gap','Comparativo de perspectivas']},
+      {n:'06',name:'Design',    desc:'Redesigned skill profile and endorsement flow — mutual recognition built in.',
+       contains:['Perfil de skill rediseñado','Flujo de endorsement','UI de reconocimiento mutuo','Estado de skill por área']},
+      {n:'07',name:'Hub',       desc:'Skill hub: personal profile, team view, and org-wide leaderboard in one surface.',
+       contains:['Perfil personal de skills','Vista de equipo','Leaderboard org-wide','Navegación entre vistas']},
+      {n:'08',name:'Systems',   desc:'Systems view — skill health across the whole org, filterable by domain.',
+       contains:['Vista sistémica de salud de skills','Filtro por dominio','Score de salud por área','Comparativo de dominios']},
     ]
   },
   {
     id:'dc', name:'DollarCity', accent:'#00a650',
     src:'projects/dollarcity-player.html',
     beats:[
-      {n:'01',name:'Why',      desc:'Reviewers juggling tabs to watch footage and search products — everything moves to one screen.'},
-      {n:'02',name:'Search',   desc:'Flagged transactions surface first — score, exceptions, and one-click path to footage.'},
-      {n:'03',name:'States',   desc:'Every request shows its state up front — queued, downloading, ready — no more wondering.'},
-      {n:'04',name:'Review',   desc:'Footage and receipt line up frame-by-frame — classify without leaving the video.'},
-      {n:'05',name:'Expand',   desc:'One click expands footage full-frame — the receipt stays one tab away.'},
-      {n:'06',name:'Requests', desc:'Every clip a reviewer pulled lives in one place — searchable, filterable, deletable in bulk.'},
-      {n:'07',name:'New',      desc:'Requesting footage is one modal — camera, time range, and quality, nothing hidden.'},
-      {n:'08',name:'Queue',    desc:'Downloads process in the background — reviewers keep working instead of watching a spinner.'},
-      {n:'09',name:'Filters',  desc:'Filters and image-first product search replace memorized SKU lookups.'},
+      {n:'01',name:'Why',      desc:'Reviewers juggling tabs to watch footage and search products — everything moves to one screen.',
+       contains:['Layout split: footage + búsqueda en paralelo','Panel de video izquierdo','Panel de producto derecho','Sin cambio de tab']},
+      {n:'02',name:'Search',   desc:'Flagged transactions surface first — score, exceptions, and one-click path to footage.',
+       contains:['Lista de transacciones flaggeadas','Badge de risk score','Excepciones visibles','Botón directo a footage']},
+      {n:'03',name:'States',   desc:'Every request shows its state up front — queued, downloading, ready — no more wondering.',
+       contains:['Indicadores de estado por request','Labels: queued / downloading / ready','Timeline de estado','Sin ambigüedad']},
+      {n:'04',name:'Review',   desc:'Footage and receipt line up frame-by-frame — classify without leaving the video.',
+       contains:['Video player + recibo sincronizados','Navegación frame-by-frame','Botones de clasificación inline','Sin salir del video']},
+      {n:'05',name:'Expand',   desc:'One click expands footage full-frame — the receipt stays one tab away.',
+       contains:['Vista expandida de footage','Recibo en tab adyacente','Control de minimizar','Transición suave']},
+      {n:'06',name:'Requests', desc:'Every clip a reviewer pulled lives in one place — searchable, filterable, deletable in bulk.',
+       contains:['Lista unificada de clips','Barra de búsqueda + filtros','Selección múltiple','Acción de borrado en bulk']},
+      {n:'07',name:'New',      desc:'Requesting footage is one modal — camera, time range, and quality, nothing hidden.',
+       contains:['Modal de nueva solicitud','Selector de cámara','Picker de rango de tiempo','Opción de calidad']},
+      {n:'08',name:'Queue',    desc:'Downloads process in the background — reviewers keep working instead of watching a spinner.',
+       contains:['Cola de descarga en background','Indicadores de progreso','Labels de estado','Revisores pueden seguir trabajando']},
+      {n:'09',name:'Filters',  desc:'Filters and image-first product search replace memorized SKU lookups.',
+       contains:['Panel de filtros','Búsqueda de producto por imagen','Cards de resultado con foto','Sin memorizacion de SKU']},
     ]
   },
   {
@@ -357,10 +495,14 @@ var PROJECTS = [
     src:'projects/blockchain-player.html',
     tryUrl:'projects/blockchain-player.html',
     beats:[
-      {n:'01',name:'Onboard',desc:'Welcome to your 3D map — content lives on places you own in space.'},
-      {n:'02',name:'Place',  desc:'Enter the map, long-press the street, confirm the address, style your pin.'},
-      {n:'03',name:'Media',  desc:'Empty feed → choose source → device gallery → upload and publish.'},
-      {n:'04',name:'Visitor',desc:'Find MY POI on the map — tap the pin, scroll reels, play full-screen.'},
+      {n:'01',name:'Onboard',desc:'Welcome to your 3D map — content lives on places you own in space.',
+       contains:['Phone mockup (393×852)','Drawer de bienvenida','Mapa 3D al fondo','Dots de pasos (3)','CTA "Continue"']},
+      {n:'02',name:'Place',  desc:'Enter the map, long-press the street, confirm the address, style your pin.',
+       contains:['Mapa 3D (Three.js city)','Gesto de long-press','Tarjeta de confirmación de dirección','Sheet de estilos de pin']},
+      {n:'03',name:'Media',  desc:'Empty feed → choose source → device gallery → upload and publish.',
+       contains:['Estado de feed vacío','Sheet de selección de fuente','Galería iOS (grid de fotos)','Confirmación de upload']},
+      {n:'04',name:'Visitor',desc:'Find MY POI on the map — tap the pin, scroll reels, play full-screen.',
+       contains:['Mapa con POI vivo','Pin tip card con thumbnail','Sheet de reels','Player full-screen']},
     ]
   },
   {
@@ -368,28 +510,40 @@ var PROJECTS = [
     src:'projects/chek-player.html',
     tryUrl:'projects/chek-player.html',
     beats:[
-      {n:'01',name:'Hub',     desc:'Credit card hub — balance, limit, quick actions, and recent moves at a glance.'},
-      {n:'02',name:'Pay',     desc:'Pay card flow — amount input, date picker, confirmation, all in one modal.'},
-      {n:'03',name:'Limit',   desc:'Credit limit and balance breakdown — available, used, cash advance in one view.'},
-      {n:'04',name:'Moves',   desc:'Movements and statements — filterable transaction history with statement export.'},
-      {n:'05',name:'Security',desc:'Security help — card block and unblock, PIN change, fraud report flow.'},
-      {n:'06',name:'Onboard', desc:'Onboarding — step-by-step first-time setup for a new credit card activation.'},
+      {n:'01',name:'Hub',     desc:'Credit card hub — balance, limit, quick actions, and recent moves at a glance.',
+       contains:['UI de tarjeta de crédito','Balance + límite visibles','Botones de quick actions','Lista de movimientos recientes']},
+      {n:'02',name:'Pay',     desc:'Pay card flow — amount input, date picker, confirmation, all in one modal.',
+       contains:['Modal de pago','Input de monto','Date picker','Pantalla de confirmación']},
+      {n:'03',name:'Limit',   desc:'Credit limit and balance breakdown — available, used, cash advance in one view.',
+       contains:['Vista de desglose de límite','Barra: disponible / usado / cash advance','Detalle de límite','Comparativo visual']},
+      {n:'04',name:'Moves',   desc:'Movements and statements — filterable transaction history with statement export.',
+       contains:['Historial de transacciones','Filtro / búsqueda','Botón de exportar estado de cuenta','Agrupación por fecha']},
+      {n:'05',name:'Security',desc:'Security help — card block and unblock, PIN change, fraud report flow.',
+       contains:['Menú de seguridad','Toggle de bloqueo / desbloqueo','Flujo de cambio de PIN','Opción de reporte de fraude']},
+      {n:'06',name:'Onboard', desc:'Onboarding — step-by-step first-time setup for a new credit card activation.',
+       contains:['Pasos de onboarding','Formulario de activación','Indicador de progreso','Estado de completado']},
     ]
   },
   {
     id:'customs', name:'Customs ES', accent:'#e05c4a',
     src:'projects/customs-player.html',
-    hasChrome:true, ratio:'16/10',
-    chromeUrl:'aduana.gob.gt · CustomsES',
     beats:[
-      {n:'01',name:'Dashboard', desc:'Home shell — open documents, KPIs, filter and new-document action always visible.'},
-      {n:'02',name:'Select',    desc:'Pick the used-vehicle procedure — the legal path for the import opens.'},
-      {n:'03',name:'Form',      desc:'Fill operational facts: transport, office, importer, vehicle. Footer actions stay on screen.'},
-      {n:'04',name:'Review',    desc:'Review before the document exists — Generate stays in the window footer.'},
-      {n:'05',name:'Done',      desc:'Document created, same ID continues — ready for the field hand-off.'},
-      {n:'06',name:'Present',   desc:'Driver presents, officer waits to scan — two devices, one operation.'},
-      {n:'07',name:'Incident',  desc:'Scan fails — both screens say why. Driver and officer stay in the product.'},
-      {n:'08',name:'Release',   desc:'Second scan clears the vehicle — phone and tablet flip to approved.'},
+      {n:'01',name:'Dashboard', desc:'Home shell — open documents, KPIs, filter and new-document action always visible.',
+       contains:['Lista de documentos abiertos','Tiles de KPIs','Controles de filtro','Botón de nuevo documento']},
+      {n:'02',name:'Select',    desc:'Pick the used-vehicle procedure — the legal path for the import opens.',
+       contains:['Picker de tipo de procedimiento','Opción vehículo usado destacada','Acción de confirmación','Ruta legal visible']},
+      {n:'03',name:'Form',      desc:'Fill operational facts: transport, office, importer, vehicle. Footer actions stay on screen.',
+       contains:['Campo de transporte','Campo de oficina','Campo de importador','Campo de vehículo','Footer de acciones sticky']},
+      {n:'04',name:'Review',    desc:'Review before the document exists — Generate stays in the window footer.',
+       contains:['Resumen de todos los campos','Todos los datos legibles','Botón "Generar" en footer','Sin documento creado aún']},
+      {n:'05',name:'Done',      desc:'Document created, same ID continues — ready for the field hand-off.',
+       contains:['Confirmación de documento creado','ID del documento visible','Estado listo para campo','Hand-off a operativo']},
+      {n:'06',name:'Present',   desc:'Driver presents, officer waits to scan — two devices, one operation.',
+       contains:['Vista de dispositivo del conductor','Vista de dispositivo del oficial','Ambos en modo espera de scan','Una sola operación']},
+      {n:'07',name:'Incident',  desc:'Scan fails — both screens say why. Driver and officer stay in the product.',
+       contains:['Estado de error en ambas pantallas','Razón del error visible','Conductor y oficial en el producto','Sin salir del flujo']},
+      {n:'08',name:'Release',   desc:'Second scan clears the vehicle — phone and tablet flip to approved.',
+       contains:['Segundo scan exitoso','Ambas pantallas flip a "aprobado"','Vehículo liberado','Estado final claro']},
     ]
   }
 ];
@@ -500,28 +654,70 @@ PROJECTS.forEach(function(proj, pi){
     if(chipsEl) info.appendChild(chipsEl);
     info.appendChild(ctrls);
 
-    /* — Stage — */
-    var stage = document.createElement('div');
-    stage.className = 'beat-stage'+(proj.hasChrome?' has-chrome':'');
-    if(proj.ratio) stage.style.aspectRatio = proj.ratio;
+    /* — Reviewer panel (only visible in reviewer mode) — */
+    var rvPanel = document.createElement('div');
+    rvPanel.className = 'rv-panel';
+    rvPanel.dataset.key = key;
 
-    /* Window chrome bar (desktop/tablet UI beats) */
-    if(proj.hasChrome){
-      var chrome = document.createElement('div');
-      chrome.className = 'wf-chrome';
-      chrome.setAttribute('aria-hidden','true');
-      chrome.innerHTML =
-        '<div class="wf-chrome-dots">'+
-        '<div class="wf-chrome-dot cl"></div>'+
-        '<div class="wf-chrome-dot mn"></div>'+
-        '<div class="wf-chrome-dot mx"></div>'+
-        '</div>'+
-        '<div class="wf-chrome-url">'+
-        '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;opacity:.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>'+
-        (proj.chromeUrl||proj.name)+
-        '</div>';
-      stage.appendChild(chrome);
+    var rvHd = document.createElement('div');
+    rvHd.className = 'rv-panel-hd';
+    rvHd.textContent = 'Disección · '+beat.name;
+    rvPanel.appendChild(rvHd);
+
+    /* Contains checklist */
+    if(beat.contains && beat.contains.length){
+      var rvContains = document.createElement('div');
+      rvContains.className = 'rv-contains';
+      beat.contains.forEach(function(item, ci){
+        var row = document.createElement('label');
+        row.className = 'rv-row';
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.dataset.ci = ci;
+        cb.addEventListener('change', function(){ rvSave(key, rvPanel); });
+        row.appendChild(cb);
+        row.appendChild(document.createTextNode(item));
+        rvContains.appendChild(row);
+      });
+      rvPanel.appendChild(rvContains);
     }
+
+    /* Status selector */
+    var rvStatus = document.createElement('div');
+    rvStatus.className = 'rv-status';
+    [['ok','✓ OK'],['partial','⚠ Parcial'],['broken','✗ Roto']].forEach(function(pair){
+      var btn = document.createElement('button');
+      btn.className = 'rv-sbtn';
+      btn.dataset.s = pair[0];
+      btn.textContent = pair[1];
+      btn.addEventListener('click', function(){
+        rvStatus.querySelectorAll('.rv-sbtn').forEach(function(b){ b.classList.remove('on'); });
+        btn.classList.toggle('on', !btn.classList.contains('on'));
+        /* if toggled off, revert state removed above — check again */
+        rvSave(key, rvPanel);
+      });
+      rvStatus.appendChild(btn);
+    });
+    rvPanel.appendChild(rvStatus);
+
+    /* Notes textarea */
+    var rvNote = document.createElement('textarea');
+    rvNote.className = 'rv-note';
+    rvNote.placeholder = 'Observaciones…';
+    rvNote.addEventListener('input', function(){ rvSave(key, rvPanel); });
+    rvPanel.appendChild(rvNote);
+
+    /* Saved indicator */
+    var rvSaved = document.createElement('div');
+    rvSaved.className = 'rv-saved';
+    rvSaved.textContent = 'Guardado';
+    rvPanel.appendChild(rvSaved);
+
+    info.appendChild(rvPanel);
+
+    /* — Stage (frameless) — */
+    var stage = document.createElement('div');
+    stage.className = 'beat-stage';
 
     var fld = document.createElement('div');
     fld.className = 'fld';
@@ -608,6 +804,128 @@ function injectStrip(iframe){
     doc.head.appendChild(s);
   }catch(e){}
 }
+
+/* ──────────────────────────────────────────────────
+   REVIEWER MODE
+   Password: cambiala en la línea de RV_PASS abajo.
+   Los datos se guardan en localStorage de este browser.
+──────────────────────────────────────────────────── */
+var RV_PASS = 'fm2026'; /* ← cambiar acá */
+var RV_STORE = 'beats-review-v1';
+
+var rvBtn      = document.getElementById('rvBtn');
+var rvModalBg  = document.getElementById('rvModalBg');
+var rvPassEl   = document.getElementById('rvPass');
+var rvErrEl    = document.getElementById('rvErr');
+var rvEnterEl  = document.getElementById('rvEnter');
+var rvCancelEl = document.getElementById('rvCancel');
+
+/* Load saved data */
+function rvLoad(){
+  try{ return JSON.parse(localStorage.getItem(RV_STORE)||'{}'); }catch(e){ return {}; }
+}
+function rvWrite(data){
+  try{ localStorage.setItem(RV_STORE, JSON.stringify(data)); }catch(e){}
+}
+
+/* Apply saved state to a reviewer panel */
+function rvApply(key, panel){
+  var data = rvLoad();
+  var d = data[key]||{};
+  /* status */
+  panel.querySelectorAll('.rv-sbtn').forEach(function(b){
+    b.classList.toggle('on', b.dataset.s === d.status);
+  });
+  /* checkboxes */
+  panel.querySelectorAll('.rv-row input').forEach(function(cb){
+    cb.checked = !!(d.checked && d.checked.indexOf(parseInt(cb.dataset.ci,10)) !== -1);
+    cb.closest('.rv-row').classList.toggle('ck', cb.checked);
+  });
+  /* note */
+  var note = panel.querySelector('.rv-note');
+  if(note) note.value = d.note||'';
+}
+
+/* Save current state of a panel */
+var rvSaveTimer = {};
+function rvSave(key, panel){
+  clearTimeout(rvSaveTimer[key]);
+  rvSaveTimer[key] = setTimeout(function(){
+    var data = rvLoad();
+    var checked = [];
+    panel.querySelectorAll('.rv-row input').forEach(function(cb){
+      cb.closest('.rv-row').classList.toggle('ck', cb.checked);
+      if(cb.checked) checked.push(parseInt(cb.dataset.ci,10));
+    });
+    var activeBtn = panel.querySelector('.rv-sbtn.on');
+    var note = panel.querySelector('.rv-note');
+    data[key] = {
+      status: activeBtn ? activeBtn.dataset.s : '',
+      checked: checked,
+      note: note ? note.value : ''
+    };
+    rvWrite(data);
+    /* Flash "Guardado" */
+    var saved = panel.querySelector('.rv-saved');
+    if(saved){
+      saved.classList.add('on');
+      setTimeout(function(){ saved.classList.remove('on'); }, 1600);
+    }
+  }, 400);
+}
+
+/* Activate / deactivate reviewer mode */
+function rvActivate(){
+  document.body.classList.add('reviewer');
+  rvBtn.classList.add('active');
+  try{ sessionStorage.setItem('beats-rv','1'); }catch(e){}
+  /* Apply saved state to all panels */
+  document.querySelectorAll('.rv-panel').forEach(function(panel){
+    rvApply(panel.dataset.key, panel);
+  });
+}
+function rvDeactivate(){
+  document.body.classList.remove('reviewer');
+  rvBtn.classList.remove('active');
+  try{ sessionStorage.removeItem('beats-rv'); }catch(e){}
+}
+
+/* Toggle on click */
+rvBtn.addEventListener('click', function(){
+  if(document.body.classList.contains('reviewer')){
+    rvDeactivate();
+  } else {
+    rvModalBg.classList.remove('hidden');
+    rvPassEl.value = '';
+    rvErrEl.classList.remove('on');
+    setTimeout(function(){ rvPassEl.focus(); }, 80);
+  }
+});
+
+/* Modal confirm */
+function rvTryEnter(){
+  if(rvPassEl.value === RV_PASS){
+    rvModalBg.classList.add('hidden');
+    rvActivate();
+  } else {
+    rvErrEl.classList.add('on');
+    rvPassEl.select();
+  }
+}
+rvEnterEl.addEventListener('click', rvTryEnter);
+rvPassEl.addEventListener('keydown', function(e){
+  if(e.key === 'Enter') rvTryEnter();
+  if(e.key === 'Escape'){ rvModalBg.classList.add('hidden'); }
+});
+rvCancelEl.addEventListener('click', function(){ rvModalBg.classList.add('hidden'); });
+rvModalBg.addEventListener('click', function(e){
+  if(e.target === rvModalBg) rvModalBg.classList.add('hidden');
+});
+
+/* Restore session if previously active */
+try{
+  if(sessionStorage.getItem('beats-rv')==='1') rvActivate();
+}catch(e){}
 </script>
 </body>
 </html>
