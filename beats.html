@@ -268,66 +268,210 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .rv-enter{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.4);color:#fbbf24}
 .rv-enter:hover{background:rgba(251,191,36,.2)}
 
-/* Per-beat reviewer panel */
-.rv-panel{
+/* Comment mode toggle button */
+.cm-toggle-btn{
+  font-family:var(--fm);font-size:10px;
+  padding:5px 10px;border-radius:6px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--dim);cursor:pointer;
+  display:none;align-items:center;gap:5px;
+  transition:color .18s,border-color .18s,background .18s;
+  letter-spacing:.04em;
+}
+body.reviewer .cm-toggle-btn{display:flex}
+.cm-toggle-btn.on{color:#fbbf24;border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
+
+/* Comment count badge */
+.cm-count-row{
+  display:none;align-items:center;gap:6px;
+  font-family:var(--fm);font-size:9px;color:var(--dim);
+}
+body.reviewer .cm-count-row{display:flex}
+.cm-count-badge{
+  border-radius:100px;padding:1px 7px;
+  font-family:var(--fm);font-size:9px;
+  min-width:18px;text-align:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--dim);
+  transition:background .2s,border-color .2s,color .2s;
+}
+.cm-count-badge[data-n]:not([data-n="0"]){
+  background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.35);color:#fbbf24;
+}
+
+/* Comment overlay (sits above iframe, pointer-events:none by default) */
+.cm-overlay{
+  position:absolute;inset:0;z-index:10;
+  pointer-events:none;
+}
+body.reviewer.cm-mode .cm-overlay{pointer-events:auto;cursor:crosshair}
+
+/* Comment mode hint */
+.cm-mode-hint{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  z-index:30;pointer-events:none;
+  font-family:var(--fm);font-size:9px;color:rgba(251,191,36,.75);
+  background:rgba(8,8,11,.8);border:1px solid rgba(251,191,36,.22);
+  border-radius:100px;padding:3px 11px;
+  opacity:0;transition:opacity .3s;white-space:nowrap;
+}
+body.reviewer.cm-mode .cm-mode-hint{opacity:1}
+
+/* Comment pins */
+.cm-pin{
+  position:absolute;z-index:20;
+  transform:translate(-50%,-50%);
+  pointer-events:auto;cursor:pointer;
+}
+.cm-pin-dot{
+  width:22px;height:22px;border-radius:50%;
+  background:#fbbf24;color:#000;
+  font-family:var(--fm);font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+  transition:transform .15s,box-shadow .15s;
+}
+.cm-pin:hover .cm-pin-dot{transform:scale(1.15);box-shadow:0 4px 14px rgba(0,0,0,.6)}
+.cm-pin.active .cm-pin-dot{background:#fff;box-shadow:0 0 0 2px #fbbf24,0 4px 14px rgba(0,0,0,.6)}
+.cm-pin.resolved .cm-pin-dot{background:rgba(52,211,153,.9)}
+
+/* Thread panel in .bi col */
+.cm-thread-panel{
   display:none;
   margin-top:10px;
-  border:1px solid rgba(251,191,36,.16);
+  border:1px solid rgba(255,255,255,.08);
   border-radius:10px;
-  padding:14px 14px 12px;
-  background:rgba(251,191,36,.022);
+  overflow:hidden;
+  background:#0d0d10;
 }
-body.reviewer .rv-panel{display:block}
+body.reviewer .cm-thread-panel{display:block}
 
-.rv-panel-hd{
+/* Thread list */
+.cm-thread-list{background:rgba(8,8,11,.5)}
+.cm-thread-item{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:10px 12px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .15s;
+}
+.cm-thread-item:last-child{border-bottom:none}
+.cm-thread-item:hover{background:rgba(255,255,255,.03)}
+.cm-thread-item.resolved{opacity:.4}
+.cm-pin-num{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;
+  background:#fbbf24;color:#000;
+  font-family:var(--fm);font-size:8px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.cm-thread-item.resolved .cm-pin-num{background:rgba(52,211,153,.85)}
+.cm-thread-meta{flex:1;min-width:0}
+.cm-thread-comp{
+  font-family:var(--fm);font-size:8px;color:var(--accent,#fbbf24);
+  opacity:.7;letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px;
+}
+.cm-thread-text{
+  font-size:.8125rem;color:var(--text);line-height:1.45;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cm-thread-ts{font-family:var(--fm);font-size:8px;color:var(--dim);margin-top:3px}
+
+/* Open thread view */
+.cm-open-thread{display:none;flex-direction:column}
+.cm-open-thread.on{display:flex}
+.cm-thread-hd{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;border-bottom:1px solid var(--border);
+  background:rgba(8,8,11,.5);
+}
+.cm-back{
+  background:transparent;border:none;color:var(--muted);cursor:pointer;
   font-family:var(--fm);font-size:9px;
-  color:rgba(251,191,36,.5);letter-spacing:.1em;text-transform:uppercase;
-  margin-bottom:10px;
+  display:flex;align-items:center;gap:4px;padding:2px 0;transition:color .15s;
 }
-
-/* Contains checklist */
-.rv-contains{display:flex;flex-direction:column;gap:5px;margin-bottom:13px}
-.rv-row{
-  display:flex;align-items:center;gap:7px;
-  font-family:var(--fm);font-size:10px;color:var(--muted);
-  cursor:pointer;user-select:none;line-height:1.4;
+.cm-back:hover{color:var(--text)}
+.cm-resolve-btn{
+  margin-left:auto;
+  background:transparent;border:1px solid var(--border);border-radius:6px;
+  padding:4px 9px;font-family:var(--fm);font-size:9px;color:var(--muted);
+  cursor:pointer;letter-spacing:.03em;transition:color .15s,border-color .15s,background .15s;
 }
-.rv-row input[type=checkbox]{
-  width:12px;height:12px;accent-color:#fbbf24;
-  cursor:pointer;flex-shrink:0;
+.cm-resolve-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.cm-resolve-btn.resolved{border-color:rgba(52,211,153,.4);color:rgba(52,211,153,.85);background:rgba(52,211,153,.06)}
+.cm-delete-btn{
+  background:transparent;border:none;color:var(--dim);cursor:pointer;
+  padding:4px;transition:color .15s;
 }
-.rv-row.ck{color:var(--text)}
-
-/* Status pills */
-.rv-status{display:flex;gap:5px;margin-bottom:11px}
-.rv-sbtn{
-  flex:1;padding:5px 0;border-radius:6px;
-  border:1px solid var(--border);background:transparent;
-  font-family:var(--fm);font-size:9px;color:var(--dim);
-  cursor:pointer;letter-spacing:.03em;
-  transition:color .15s,border-color .15s,background .15s;
+.cm-delete-btn:hover{color:#f87171}
+.cm-msgs{
+  flex:1;overflow-y:auto;padding:10px 12px;
+  display:flex;flex-direction:column;gap:8px;max-height:180px;
 }
-.rv-sbtn:hover{color:var(--muted);border-color:rgba(255,255,255,.18)}
-.rv-sbtn[data-s="ok"].on{border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.1);color:#34d399}
-.rv-sbtn[data-s="partial"].on{border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.1);color:#fbbf24}
-.rv-sbtn[data-s="broken"].on{border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.1);color:#f87171}
-
-/* Notes */
-.rv-note{
-  width:100%;background:rgba(255,255,255,.03);
+.cm-msg{display:flex;flex-direction:column;gap:3px}
+.cm-msg-comp{
+  font-family:var(--fm);font-size:8px;color:var(--accent,#fbbf24);
+  opacity:.7;letter-spacing:.05em;text-transform:uppercase;
+}
+.cm-msg-text{font-size:.8125rem;color:var(--text);line-height:1.5}
+.cm-msg-footer{font-family:var(--fm);font-size:8px;color:var(--dim)}
+.cm-reply-row{
+  display:flex;align-items:flex-end;gap:7px;
+  padding:9px 12px;border-top:1px solid var(--border);
+  background:rgba(8,8,11,.5);
+}
+.cm-reply-input{
+  flex:1;background:rgba(255,255,255,.04);
   border:1px solid var(--border);border-radius:7px;
-  padding:9px 12px;
-  font-family:var(--fn);font-size:12px;color:var(--text);
-  resize:vertical;min-height:56px;line-height:1.55;
+  padding:7px 10px;font-family:var(--fn);font-size:12px;color:var(--text);
+  resize:none;min-height:32px;max-height:80px;line-height:1.45;
 }
-.rv-note:focus{outline:none;border-color:rgba(251,191,36,.35)}
-.rv-note::placeholder{color:var(--dim);font-style:italic}
-.rv-saved{
-  font-family:var(--fm);font-size:9px;color:rgba(52,211,153,.65);
-  letter-spacing:.04em;margin-top:5px;height:13px;
-  opacity:0;transition:opacity .3s;
+.cm-reply-input:focus{outline:none;border-color:rgba(251,191,36,.35)}
+.cm-reply-input::placeholder{color:var(--dim)}
+.cm-reply-send{
+  flex-shrink:0;padding:7px 11px;border-radius:7px;
+  background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);
+  font-family:var(--fm);font-size:9px;color:#fbbf24;
+  cursor:pointer;letter-spacing:.03em;transition:background .15s;
 }
-.rv-saved.on{opacity:1}
+.cm-reply-send:hover{background:rgba(251,191,36,.22)}
+.cm-reply-send:disabled{opacity:.35;cursor:default}
+
+/* New comment form */
+.cm-new-form{padding:12px;flex-direction:column;gap:9px;display:none}
+.cm-new-form.on{display:flex}
+.cm-form-hd{font-family:var(--fm);font-size:9px;color:rgba(251,191,36,.6);letter-spacing:.08em;text-transform:uppercase}
+.cm-comp-chips{display:flex;flex-wrap:wrap;gap:5px}
+.cm-comp-chip{
+  font-family:var(--fm);font-size:9px;padding:3px 9px;border-radius:100px;
+  border:1px solid var(--border);color:var(--muted);cursor:pointer;letter-spacing:.03em;
+  transition:color .15s,border-color .15s,background .15s;background:transparent;
+}
+.cm-comp-chip.on{color:#fbbf24;border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.08)}
+.cm-new-textarea{
+  width:100%;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:7px;
+  padding:9px 11px;font-family:var(--fn);font-size:12px;color:var(--text);
+  resize:none;min-height:60px;line-height:1.5;
+}
+.cm-new-textarea:focus{outline:none;border-color:rgba(251,191,36,.35)}
+.cm-new-textarea::placeholder{color:var(--dim)}
+.cm-form-actions{display:flex;gap:6px;justify-content:flex-end}
+.cm-form-cancel{
+  background:transparent;border:1px solid var(--border);border-radius:7px;
+  padding:6px 11px;font-family:var(--fm);font-size:9px;color:var(--muted);
+  cursor:pointer;letter-spacing:.03em;transition:color .15s;
+}
+.cm-form-cancel:hover{color:var(--text)}
+.cm-form-submit{
+  background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);border-radius:7px;
+  padding:6px 13px;font-family:var(--fm);font-size:9px;color:#fbbf24;
+  cursor:pointer;letter-spacing:.03em;transition:background .15s;
+}
+.cm-form-submit:hover{background:rgba(251,191,36,.22)}
+.cm-form-submit:disabled{opacity:.35;cursor:default}
+
+/* Empty state */
+.cm-empty{
+  padding:20px 12px;text-align:center;
+  font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.04em;
+}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -343,6 +487,10 @@ body.reviewer .rv-panel{display:block}
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
     Back
   </a>
+  <button id="cmToggleBtn" class="cm-toggle-btn" aria-label="Toggle comment mode">
+    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Comment
+  </button>
   <button id="rvBtn" class="rv-btn" aria-label="Reviewer mode">
     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     Review
@@ -652,72 +800,29 @@ PROJECTS.forEach(function(proj, pi){
     info.appendChild(btitle);
     info.appendChild(bdesc);
     if(chipsEl) info.appendChild(chipsEl);
+    /* Count row (reviewer only) */
+    var countRow = document.createElement('div');
+    countRow.className = 'cm-count-row';
+    var countBadge = document.createElement('span');
+    countBadge.className = 'cm-count-badge';
+    countBadge.dataset.cmcount = key;
+    countBadge.dataset.n = '0';
+    countBadge.textContent = '0';
+    countRow.appendChild(countBadge);
+    countRow.appendChild(document.createTextNode('comment' + (0===1?'':'s')));
+    info.appendChild(countRow);
     info.appendChild(ctrls);
 
-    /* — Reviewer panel (only visible in reviewer mode) — */
-    var rvPanel = document.createElement('div');
-    rvPanel.className = 'rv-panel';
-    rvPanel.dataset.key = key;
-
-    var rvHd = document.createElement('div');
-    rvHd.className = 'rv-panel-hd';
-    rvHd.textContent = 'Disección · '+beat.name;
-    rvPanel.appendChild(rvHd);
-
-    /* Contains checklist */
-    if(beat.contains && beat.contains.length){
-      var rvContains = document.createElement('div');
-      rvContains.className = 'rv-contains';
-      beat.contains.forEach(function(item, ci){
-        var row = document.createElement('label');
-        row.className = 'rv-row';
-        var cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.dataset.ci = ci;
-        cb.addEventListener('change', function(){ rvSave(key, rvPanel); });
-        row.appendChild(cb);
-        row.appendChild(document.createTextNode(item));
-        rvContains.appendChild(row);
-      });
-      rvPanel.appendChild(rvContains);
-    }
-
-    /* Status selector */
-    var rvStatus = document.createElement('div');
-    rvStatus.className = 'rv-status';
-    [['ok','✓ OK'],['partial','⚠ Parcial'],['broken','✗ Roto']].forEach(function(pair){
-      var btn = document.createElement('button');
-      btn.className = 'rv-sbtn';
-      btn.dataset.s = pair[0];
-      btn.textContent = pair[1];
-      btn.addEventListener('click', function(){
-        rvStatus.querySelectorAll('.rv-sbtn').forEach(function(b){ b.classList.remove('on'); });
-        btn.classList.toggle('on', !btn.classList.contains('on'));
-        /* if toggled off, revert state removed above — check again */
-        rvSave(key, rvPanel);
-      });
-      rvStatus.appendChild(btn);
-    });
-    rvPanel.appendChild(rvStatus);
-
-    /* Notes textarea */
-    var rvNote = document.createElement('textarea');
-    rvNote.className = 'rv-note';
-    rvNote.placeholder = 'Observaciones…';
-    rvNote.addEventListener('input', function(){ rvSave(key, rvPanel); });
-    rvPanel.appendChild(rvNote);
-
-    /* Saved indicator */
-    var rvSaved = document.createElement('div');
-    rvSaved.className = 'rv-saved';
-    rvSaved.textContent = 'Guardado';
-    rvPanel.appendChild(rvSaved);
-
-    info.appendChild(rvPanel);
+    /* Thread panel (reviewer only) */
+    var threadPanel = document.createElement('div');
+    threadPanel.className = 'cm-thread-panel';
+    threadPanel.dataset.cmthread = key;
+    info.appendChild(threadPanel);
 
     /* — Stage (frameless) — */
     var stage = document.createElement('div');
     stage.className = 'beat-stage';
+    stage.dataset.stage = key;
 
     var fld = document.createElement('div');
     fld.className = 'fld';
@@ -744,8 +849,29 @@ PROJECTS.forEach(function(proj, pi){
       }, 260);
     });
 
+    /* Comment overlay */
+    var cmOverlay = document.createElement('div');
+    cmOverlay.className = 'cm-overlay';
+    cmOverlay.dataset.stage = key;
+    (function(k){
+      cmOverlay.addEventListener('click', function(e){
+        if(!document.body.classList.contains('cm-mode')) return;
+        var rect = stage.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+        var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+        pendingClick[k] = {x:parseFloat(x), y:parseFloat(y)};
+        showNewForm(k, parseFloat(y));
+      });
+    })(key);
+
+    var cmHint = document.createElement('div');
+    cmHint.className = 'cm-mode-hint';
+    cmHint.textContent = 'Click to drop a comment';
+
     stage.appendChild(fld);
     stage.appendChild(iframe);
+    stage.appendChild(cmOverlay);
+    stage.appendChild(cmHint);
     row.appendChild(info);
     row.appendChild(stage);
     list.appendChild(row);
@@ -806,126 +932,345 @@ function injectStrip(iframe){
 }
 
 /* ──────────────────────────────────────────────────
-   REVIEWER MODE
-   Password: cambiala en la línea de RV_PASS abajo.
-   Los datos se guardan en localStorage de este browser.
+   COMMENT SYSTEM — Reviewer mode
+   Password: fm2026 (change RV_PASS to update)
 ──────────────────────────────────────────────────── */
-var RV_PASS = 'fm2026'; /* ← cambiar acá */
-var RV_STORE = 'beats-review-v1';
+var RV_PASS  = 'fm2026';
+var CM_STORE = 'beats-comments-v1';
 
-var rvBtn      = document.getElementById('rvBtn');
-var rvModalBg  = document.getElementById('rvModalBg');
-var rvPassEl   = document.getElementById('rvPass');
-var rvErrEl    = document.getElementById('rvErr');
-var rvEnterEl  = document.getElementById('rvEnter');
-var rvCancelEl = document.getElementById('rvCancel');
+var rvBtn       = document.getElementById('rvBtn');
+var rvModalBg   = document.getElementById('rvModalBg');
+var rvPassEl    = document.getElementById('rvPass');
+var rvErrEl     = document.getElementById('rvErr');
+var rvEnterEl   = document.getElementById('rvEnter');
+var rvCancelEl  = document.getElementById('rvCancel');
+var cmToggleBtn = document.getElementById('cmToggleBtn');
 
-/* Load saved data */
-function rvLoad(){
-  try{ return JSON.parse(localStorage.getItem(RV_STORE)||'{}'); }catch(e){ return {}; }
+/* ── localStorage ─────────────────────────────── */
+function cmLoad(){
+  try{ return JSON.parse(localStorage.getItem(CM_STORE)||'{}'); }catch(e){ return {}; }
 }
-function rvWrite(data){
-  try{ localStorage.setItem(RV_STORE, JSON.stringify(data)); }catch(e){}
+function cmWrite(data){
+  try{ localStorage.setItem(CM_STORE, JSON.stringify(data)); }catch(e){}
 }
 
-/* Apply saved state to a reviewer panel */
-function rvApply(key, panel){
-  var data = rvLoad();
-  var d = data[key]||{};
-  /* status */
-  panel.querySelectorAll('.rv-sbtn').forEach(function(b){
-    b.classList.toggle('on', b.dataset.s === d.status);
+/* ── Helpers ──────────────────────────────────── */
+function getBeat(key){
+  var parts = key.split('_'), projId=parts[0], bi=parseInt(parts[1],10);
+  for(var i=0;i<PROJECTS.length;i++){
+    if(PROJECTS[i].id===projId) return PROJECTS[i].beats[bi]||null;
+  }
+  return null;
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatTs(ts){
+  var d=Date.now()-ts;
+  if(d<60000) return 'ahora';
+  if(d<3600000) return Math.floor(d/60000)+'min';
+  var dt=new Date(ts), td=new Date();
+  if(dt.toDateString()===td.toDateString()) return dt.getHours()+':'+(dt.getMinutes()<10?'0':'')+dt.getMinutes();
+  return dt.getDate()+'/'+(dt.getMonth()+1);
+}
+
+/* ── Count badge ──────────────────────────────── */
+function updateCount(key){
+  var data=cmLoad(), comments=data[key]||[], n=comments.length;
+  var el=document.querySelector('[data-cmcount="'+key+'"]');
+  if(!el) return;
+  el.textContent=n;
+  el.dataset.n=n;
+  var row=el.parentElement;
+  if(row){
+    var label=row.childNodes[1];
+    if(label) label.textContent=' comment'+(n===1?'':'s');
+  }
+}
+
+/* ── Render pins ──────────────────────────────── */
+function renderPins(key){
+  var overlay=document.querySelector('.cm-overlay[data-stage="'+key+'"]');
+  if(!overlay) return;
+  overlay.querySelectorAll('.cm-pin').forEach(function(p){ p.remove(); });
+  var comments=(cmLoad()[key]||[]);
+  comments.forEach(function(c){
+    var pin=document.createElement('div');
+    pin.className='cm-pin'+(c.resolved?' resolved':'')+(String(activeThread[key])===String(c.id)?' active':'');
+    pin.dataset.cid=c.id;
+    pin.style.left=c.x+'%';
+    pin.style.top=c.y+'%';
+    pin.innerHTML='<div class="cm-pin-dot">'+c.num+'</div>';
+    (function(cid){ pin.addEventListener('click',function(e){ e.stopPropagation(); openThread(key,cid); }); })(c.id);
+    overlay.appendChild(pin);
   });
-  /* checkboxes */
-  panel.querySelectorAll('.rv-row input').forEach(function(cb){
-    cb.checked = !!(d.checked && d.checked.indexOf(parseInt(cb.dataset.ci,10)) !== -1);
-    cb.closest('.rv-row').classList.toggle('ck', cb.checked);
-  });
-  /* note */
-  var note = panel.querySelector('.rv-note');
-  if(note) note.value = d.note||'';
 }
 
-/* Save current state of a panel */
-var rvSaveTimer = {};
-function rvSave(key, panel){
-  clearTimeout(rvSaveTimer[key]);
-  rvSaveTimer[key] = setTimeout(function(){
-    var data = rvLoad();
-    var checked = [];
-    panel.querySelectorAll('.rv-row input').forEach(function(cb){
-      cb.closest('.rv-row').classList.toggle('ck', cb.checked);
-      if(cb.checked) checked.push(parseInt(cb.dataset.ci,10));
+/* ── Active thread registry ───────────────────── */
+var activeThread={};
+var pendingClick={};
+
+/* ── Open / close thread ──────────────────────── */
+function openThread(key, commentId){
+  activeThread[key]=commentId;
+  renderPins(key);
+  renderThreadPanel(key);
+}
+function closeThread(key){
+  activeThread[key]=null;
+  pendingClick[key]=null;
+  renderPins(key);
+  renderThreadPanel(key);
+}
+
+/* ── Show new-comment form ────────────────────── */
+function showNewForm(key, yPct){
+  activeThread[key]=null;
+  renderPins(key);
+  /* Suggest component by Y position */
+  var beat=getBeat(key);
+  var components=(beat&&beat.contains)||[];
+  var suggested='';
+  if(components.length){
+    var idx=Math.min(Math.floor((yPct/100)*components.length), components.length-1);
+    suggested=components[idx];
+  }
+  renderThreadPanel(key, suggested);
+}
+
+/* ── Render thread panel ──────────────────────── */
+function renderThreadPanel(key, suggestedComp){
+  var panel=document.querySelector('.cm-thread-panel[data-cmthread="'+key+'"]');
+  if(!panel) return;
+  panel.innerHTML='';
+  var data=cmLoad(), comments=data[key]||[], cid=activeThread[key];
+
+  if(cid!==null && cid!==undefined){
+    var comment=null;
+    for(var i=0;i<comments.length;i++){ if(String(comments[i].id)===String(cid)){ comment=comments[i]; break; } }
+    if(comment){ buildOpenThread(panel,key,comment); return; }
+    activeThread[key]=null;
+  }
+  /* Thread list */
+  if(comments.length){
+    var list=document.createElement('div');
+    list.className='cm-thread-list';
+    comments.forEach(function(c){
+      var item=document.createElement('div');
+      item.className='cm-thread-item'+(c.resolved?' resolved':'');
+      item.innerHTML=
+        '<div class="cm-pin-num">'+c.num+'</div>'+
+        '<div class="cm-thread-meta">'+
+          (c.component?'<div class="cm-thread-comp">'+esc(c.component)+'</div>':'')+
+          '<div class="cm-thread-text">'+esc(c.text)+'</div>'+
+          '<div class="cm-thread-ts">'+formatTs(c.ts)+(c.replies&&c.replies.length?' · '+c.replies.length+' repl'+(c.replies.length===1?'y':'ies'):'')+
+          '</div></div>';
+      (function(cid){ item.addEventListener('click',function(){ openThread(key,cid); }); })(c.id);
+      list.appendChild(item);
     });
-    var activeBtn = panel.querySelector('.rv-sbtn.on');
-    var note = panel.querySelector('.rv-note');
-    data[key] = {
-      status: activeBtn ? activeBtn.dataset.s : '',
-      checked: checked,
-      note: note ? note.value : ''
-    };
-    rvWrite(data);
-    /* Flash "Guardado" */
-    var saved = panel.querySelector('.rv-saved');
-    if(saved){
-      saved.classList.add('on');
-      setTimeout(function(){ saved.classList.remove('on'); }, 1600);
-    }
-  }, 400);
+    panel.appendChild(list);
+  } else {
+    var empty=document.createElement('div');
+    empty.className='cm-empty';
+    empty.textContent='No comments yet — enter comment mode (C) and click the stage.';
+    panel.appendChild(empty);
+  }
+  /* New form */
+  var newForm=document.createElement('div');
+  newForm.className='cm-new-form'+(pendingClick[key]?' on':'');
+  buildNewForm(newForm, key, suggestedComp||'');
+  panel.appendChild(newForm);
 }
 
-/* Activate / deactivate reviewer mode */
+function buildOpenThread(panel, key, comment){
+  var isR=comment.resolved;
+  var hd=document.createElement('div'); hd.className='cm-thread-hd';
+  hd.innerHTML=
+    '<button class="cm-back"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg> Threads</button>'+
+    '<button class="cm-resolve-btn'+(isR?' resolved':'')+'">'+( isR?'✓ Resolved':'Resolve')+'</button>'+
+    '<button class="cm-delete-btn" aria-label="Delete"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></button>';
+  hd.querySelector('.cm-back').addEventListener('click',function(){ closeThread(key); });
+  hd.querySelector('.cm-resolve-btn').addEventListener('click',function(){ toggleResolve(key,comment.id); });
+  hd.querySelector('.cm-delete-btn').addEventListener('click',function(){ deleteComment(key,comment.id); });
+  panel.appendChild(hd);
+
+  var msgs=document.createElement('div'); msgs.className='cm-msgs';
+  var first=document.createElement('div'); first.className='cm-msg';
+  first.innerHTML=(comment.component?'<div class="cm-msg-comp">'+esc(comment.component)+'</div>':'')+
+    '<div class="cm-msg-text">'+esc(comment.text)+'</div>'+
+    '<div class="cm-msg-footer">'+formatTs(comment.ts)+'</div>';
+  msgs.appendChild(first);
+  (comment.replies||[]).forEach(function(r){
+    var msg=document.createElement('div'); msg.className='cm-msg';
+    msg.style.cssText='border-left:2px solid rgba(255,255,255,.07);padding-left:9px;margin-left:2px';
+    msg.innerHTML='<div class="cm-msg-text">'+esc(r.text)+'</div><div class="cm-msg-footer">'+formatTs(r.ts)+'</div>';
+    msgs.appendChild(msg);
+  });
+  panel.appendChild(msgs);
+
+  var rr=document.createElement('div'); rr.className='cm-reply-row';
+  var ri=document.createElement('textarea'); ri.className='cm-reply-input'; ri.placeholder='Reply…'; ri.rows=1;
+  var rs=document.createElement('button'); rs.className='cm-reply-send'; rs.textContent='Send'; rs.disabled=true;
+  ri.addEventListener('input',function(){ rs.disabled=!ri.value.trim(); });
+  rs.addEventListener('click',function(){ var t=ri.value.trim(); if(!t) return; addReply(key,comment.id,t); });
+  rr.appendChild(ri); rr.appendChild(rs);
+  panel.appendChild(rr);
+}
+
+function buildNewForm(form, key, suggestedComp){
+  var beat=getBeat(key);
+  var components=(beat&&beat.contains)||[];
+  var selectedComp=suggestedComp||'';
+  form.innerHTML=
+    '<div class="cm-form-hd">+ Nuevo comentario</div>'+
+    (components.length?'<div class="cm-comp-chips"></div>':'')+
+    '<textarea class="cm-new-textarea" placeholder="¿Qué ves? ¿Qué falta?"></textarea>'+
+    '<div class="cm-form-actions">'+
+      '<button class="cm-form-cancel">Cancelar</button>'+
+      '<button class="cm-form-submit" disabled>Comentar</button>'+
+    '</div>';
+
+  if(components.length){
+    var chipsEl=form.querySelector('.cm-comp-chips');
+    components.forEach(function(comp){
+      var chip=document.createElement('button');
+      chip.className='cm-comp-chip'+(comp===selectedComp?' on':'');
+      chip.textContent=comp; chip.type='button';
+      chip.addEventListener('click',function(){
+        chipsEl.querySelectorAll('.cm-comp-chip').forEach(function(c){ c.classList.remove('on'); });
+        if(selectedComp===comp){ selectedComp=''; } else { chip.classList.add('on'); selectedComp=comp; }
+      });
+      chipsEl.appendChild(chip);
+    });
+  }
+
+  var ta=form.querySelector('.cm-new-textarea');
+  var submit=form.querySelector('.cm-form-submit');
+  ta.addEventListener('input',function(){ submit.disabled=!ta.value.trim(); });
+  form.querySelector('.cm-form-cancel').addEventListener('click',function(){
+    form.classList.remove('on');
+    pendingClick[key]=null;
+    closeThread(key);
+  });
+  submit.addEventListener('click',function(){
+    var txt=ta.value.trim(); if(!txt) return;
+    var px=pendingClick[key]||{x:50,y:50};
+    createComment(key, px.x, px.y, txt, selectedComp);
+    form.classList.remove('on');
+    pendingClick[key]=null;
+  });
+  /* Auto-focus textarea */
+  setTimeout(function(){ if(form.classList.contains('on')) ta.focus(); }, 60);
+}
+
+/* ── CRUD ─────────────────────────────────────── */
+function createComment(key, x, y, text, component){
+  var data=cmLoad(), comments=data[key]||[];
+  var num=comments.length+1;
+  comments.push({ id:Date.now()+'_'+Math.random().toString(36).slice(2,7), num:num, x:x, y:y,
+    text:text, component:component||'', ts:Date.now(), replies:[], resolved:false });
+  data[key]=comments; cmWrite(data);
+  renderPins(key); updateCount(key);
+  openThread(key, comments[comments.length-1].id);
+}
+
+function addReply(key, commentId, text){
+  var data=cmLoad(), comments=data[key]||[];
+  for(var i=0;i<comments.length;i++){
+    if(String(comments[i].id)===String(commentId)){
+      comments[i].replies=comments[i].replies||[];
+      comments[i].replies.push({text:text,ts:Date.now()}); break;
+    }
+  }
+  data[key]=comments; cmWrite(data);
+  openThread(key, commentId);
+}
+
+function toggleResolve(key, commentId){
+  var data=cmLoad(), comments=data[key]||[];
+  for(var i=0;i<comments.length;i++){
+    if(String(comments[i].id)===String(commentId)){ comments[i].resolved=!comments[i].resolved; break; }
+  }
+  data[key]=comments; cmWrite(data);
+  renderPins(key); updateCount(key);
+  openThread(key, commentId);
+}
+
+function deleteComment(key, commentId){
+  var data=cmLoad();
+  var comments=(data[key]||[]).filter(function(c){ return String(c.id)!==String(commentId); });
+  comments.forEach(function(c,i){ c.num=i+1; });
+  data[key]=comments; cmWrite(data);
+  renderPins(key); updateCount(key);
+  closeThread(key);
+}
+
+/* ── Comment mode ─────────────────────────────── */
+function enterCmMode(){
+  document.body.classList.add('cm-mode');
+  cmToggleBtn.classList.add('on');
+  cmToggleBtn.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Exit';
+}
+function exitCmMode(){
+  document.body.classList.remove('cm-mode');
+  cmToggleBtn.classList.remove('on');
+  cmToggleBtn.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Comment';
+  document.querySelectorAll('.cm-new-form').forEach(function(f){ f.classList.remove('on'); });
+  Object.keys(pendingClick).forEach(function(k){ pendingClick[k]=null; });
+}
+function toggleCmMode(){
+  if(document.body.classList.contains('cm-mode')) exitCmMode();
+  else enterCmMode();
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(!document.body.classList.contains('reviewer')) return;
+  if(e.key==='c'||e.key==='C'){ toggleCmMode(); }
+  if(e.key==='Escape'){ exitCmMode(); }
+});
+
+cmToggleBtn.addEventListener('click', toggleCmMode);
+
+/* ── Reviewer activate/deactivate ─────────────── */
 function rvActivate(){
   document.body.classList.add('reviewer');
   rvBtn.classList.add('active');
   try{ sessionStorage.setItem('beats-rv','1'); }catch(e){}
-  /* Apply saved state to all panels */
-  document.querySelectorAll('.rv-panel').forEach(function(panel){
-    rvApply(panel.dataset.key, panel);
-  });
+  document.querySelectorAll('[data-cmcount]').forEach(function(el){ updateCount(el.dataset.cmcount); });
+  document.querySelectorAll('.cm-overlay[data-stage]').forEach(function(ov){ renderPins(ov.dataset.stage); });
+  document.querySelectorAll('.cm-thread-panel[data-cmthread]').forEach(function(p){ renderThreadPanel(p.dataset.cmthread); });
 }
 function rvDeactivate(){
-  document.body.classList.remove('reviewer');
+  document.body.classList.remove('reviewer','cm-mode');
   rvBtn.classList.remove('active');
   try{ sessionStorage.removeItem('beats-rv'); }catch(e){}
 }
 
-/* Toggle on click */
-rvBtn.addEventListener('click', function(){
-  if(document.body.classList.contains('reviewer')){
-    rvDeactivate();
-  } else {
+rvBtn.addEventListener('click',function(){
+  if(document.body.classList.contains('reviewer')){ rvDeactivate(); }
+  else {
     rvModalBg.classList.remove('hidden');
-    rvPassEl.value = '';
-    rvErrEl.classList.remove('on');
+    rvPassEl.value=''; rvErrEl.classList.remove('on');
     setTimeout(function(){ rvPassEl.focus(); }, 80);
   }
 });
 
-/* Modal confirm */
 function rvTryEnter(){
-  if(rvPassEl.value === RV_PASS){
-    rvModalBg.classList.add('hidden');
-    rvActivate();
-  } else {
-    rvErrEl.classList.add('on');
-    rvPassEl.select();
-  }
+  if(rvPassEl.value===RV_PASS){ rvModalBg.classList.add('hidden'); rvActivate(); }
+  else { rvErrEl.classList.add('on'); rvPassEl.select(); }
 }
 rvEnterEl.addEventListener('click', rvTryEnter);
-rvPassEl.addEventListener('keydown', function(e){
-  if(e.key === 'Enter') rvTryEnter();
-  if(e.key === 'Escape'){ rvModalBg.classList.add('hidden'); }
+rvPassEl.addEventListener('keydown',function(e){
+  if(e.key==='Enter') rvTryEnter();
+  if(e.key==='Escape') rvModalBg.classList.add('hidden');
 });
-rvCancelEl.addEventListener('click', function(){ rvModalBg.classList.add('hidden'); });
-rvModalBg.addEventListener('click', function(e){
-  if(e.target === rvModalBg) rvModalBg.classList.add('hidden');
-});
+rvCancelEl.addEventListener('click',function(){ rvModalBg.classList.add('hidden'); });
+rvModalBg.addEventListener('click',function(e){ if(e.target===rvModalBg) rvModalBg.classList.add('hidden'); });
 
-/* Restore session if previously active */
-try{
-  if(sessionStorage.getItem('beats-rv')==='1') rvActivate();
-}catch(e){}
+try{ if(sessionStorage.getItem('beats-rv')==='1') rvActivate(); }catch(e){}
 </script>
 </body>
 </html>
