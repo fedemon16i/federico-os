@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Understand</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#e8e4dc;font-family:'IBM Plex Sans',system-ui,sans-serif}
+.board{padding:16px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin:0 0 12px}
+.row{display:grid;grid-template-columns:1.3fr 16px .9fr;gap:8px;align-items:center;margin-bottom:8px;opacity:0;transform:translateY(6px);transition:.4s}
+.row.on{opacity:1;transform:none}
+.find,.own{background:#161821;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px}
+.find .t,.own .t{font-size:12px;font-weight:650}
+.find .s,.own .s{font-size:9px;color:#9aa0b0;margin-top:3px}
+.arr{text-align:center;color:#e8c27a;font-size:14px}
+.own{border-color:rgba(232,194,122,.25)}
+</style></head>
+<body>
+<div class="board">
+  <div class="k">Evidence becomes work</div>
+  <div class="row" id="r0"><div class="find"><div class="t">No checklist before the form</div><div class="s">People arrive cold</div></div><div class="arr">→</div><div class="own"><div class="t">Design</div><div class="s">Gate + copy</div></div></div>
+  <div class="row" id="r1"><div class="find"><div class="t">Required service is unlabeled</div><div class="s">Looks optional, is not</div></div><div class="arr">→</div><div class="own"><div class="t">Content + product</div><div class="s">Field + help</div></div></div>
+  <div class="row" id="r2"><div class="find"><div class="t">No onboarding on first request</div><div class="s">Tooltip is not a path</div></div><div class="arr">→</div><div class="own"><div class="t">Analytics + design</div><div class="s">Guide + event</div></div></div>
+</div>
+<script>
+(function(){
+  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
+  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
+  [0,1,2].forEach(function(i){after(160+i*260,function(){document.getElementById('r'+i).classList.add('on')})});
+})();
+</script>
+</body></html>

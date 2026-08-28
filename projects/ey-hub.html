@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hub stack</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
+.stage{position:relative;min-height:360px}
+.browser{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0b0c10;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08)}
+.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
+.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
+.addr{flex:1;height:14px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:#9aa0b0;padding:0 8px;display:flex;align-items:center}
+.app{flex:1;display:grid;grid-template-columns:112px 1fr 120px;min-height:0;background:#12141c}
+.col{padding:10px;border-right:1px solid rgba(255,255,255,.07);font-size:9px}
+.col:last-child{border-right:0}
+.sh{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#8a8580;margin-bottom:8px}
+.fold{display:flex;gap:6px;align-items:center;padding:5px 6px;border-radius:6px;color:#c8c4bc;margin-bottom:3px;background:rgba(255,255,255,.03)}
+.fold.on{background:rgba(232,148,58,.12);color:#f0de5a}
+.box{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px;margin-bottom:6px}
+.t{font-size:11px;font-weight:700}.s{font-size:8.5px;color:#9aa0b0;margin-top:3px}
+.tag{display:inline-block;font-size:7.5px;padding:2px 6px;border-radius:100px;border:1px solid rgba(255,255,255,.1);margin:4px 4px 0 0;color:#c8c4bc}
+.ok{color:#7dcea0;border-color:rgba(125,206,160,.3)}
+.pill{font-size:8px;color:#9aa0b0;margin-bottom:6px}
+</style></head>
+<body>
+<div class="stage" id="stage"></div>
+<script>
+document.getElementById('stage').innerHTML='<div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="addr">hub / signals · factory → replit</div></div><div class="app"><div class="col"><div class="sh">RAG folders</div><div class="fold on">▣ Interviews</div><div class="fold">▣ Funnel notes</div><div class="fold">▣ Field labels</div><div class="fold">▣ Pendo events</div><div class="fold">▣ Prior reads</div></div><div class="col"><div class="sh">Build</div><div class="box"><div class="t">Factory.ai</div><div class="s">Motor — generate the hub from the knowledge folders.</div><span class="tag">prompted</span></div><div class="box"><div class="t">Figma Make</div><div class="s">Frames for Signals and the guided form.</div><span class="tag">make</span></div></div><div class="col"><div class="sh">Publish + listen</div><div class="pill">Replit · live</div><div class="box"><div class="t">Pendo</div><div class="s">MCP + API on the same events the map already named.</div><span class="tag ok">connected</span></div></div></div></div>';
+</script>
+</body></html>
