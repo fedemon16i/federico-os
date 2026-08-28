@@ -5,7 +5,7 @@ var EY_META=[
    under:'Sitemap + features + events — the instrumentation map.',
    chips:['Pendo','GA4','Paths'],
    contains:['Information architecture: Catalog home → Services / Request form / Workbench / Reports','Features tagged: Explore catalog, Service card, Required field, Submit request','Events: catalog_view · item_open · form_start · form_dropoff']},
-  {kind:'window',src:'projects/ey-naked.html?beat=1&kind=window',
+  {kind:'window',src:'projects/ey-02-analyze.html',
    line:'Real traffic on the catalog.<br>One path ends in a clear <em>drop-off</em>.',
    cap:'Home → categories → Services → Workbench → form.',
    under:'Users land on platform home → select Services → Workbench form stalls → funnel (gráfico, no ventana).',
