@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EY · 01 Measure</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:transparent;color:#f2f0ec;font-family:'IBM Plex Sans',system-ui,sans-serif}
+.diagram{padding:8px 4px 4px}
+.sm-title{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.38);margin:0 0 12px}
+.sm-tree{display:flex;flex-direction:column;align-items:center}
+.sm-node{display:inline-flex;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:650;opacity:0;transform:scale(.88);transition:opacity .4s,transform .4s cubic-bezier(.34,1.32,.64,1)}
+.sm-node.on{opacity:1;transform:none}
+.sm-node.home{background:#2dd4a8;color:#0a2a22}
+.sm-node.store{background:#f5a524;color:#2a1a00}
+.sm-node.account{background:#3b9eff;color:#041428}
+.sm-node.blog{background:#f04444;color:#2a0808}
+.sm-node.other{background:#9b7bff;color:#160a2a}
+.sm-node.leaf{background:rgba(255,255,255,.06);color:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.1);font-weight:500;font-size:10px}
+.sm-line{width:1px;height:8px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .3s}
+.sm-line.on{opacity:1}
+.sm-row{display:flex;gap:10px;justify-content:center;margin-top:4px;flex-wrap:wrap}
+.sm-branch{display:flex;flex-direction:column;align-items:center}
+.side-lists{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 10px}
+.mh{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:6px}
+.feat-row,.ev-row{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.62);padding:3px 0;opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s}
+.feat-row.on,.ev-row.on{opacity:1;transform:none}
+.ic{width:14px;height:14px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:8px}
+.ic.click{background:rgba(201,162,39,.14);color:#c9a227}
+.ic.bolt{background:rgba(255,74,125,.15);color:#FF4A7D}
+</style>
+</head>
+<body>
+<div class="diagram">
+  <div class="sm-title">Information architecture</div>
+  <div class="sm-tree">
+    <div class="sm-node home" id="nHome">Catalog home</div>
+    <div class="sm-line" id="ln0"></div>
+    <div class="sm-row">
+      <div class="sm-branch"><div class="sm-node store" id="nSvc">Services</div><div class="sm-line" id="lnS"></div><div class="sm-node leaf" id="nItem">Item detail</div></div>
+      <div class="sm-branch"><div class="sm-node account" id="nForm">Request form</div><div class="sm-line" id="lnF"></div><div class="sm-node leaf" id="nRev">Review</div></div>
+      <div class="sm-branch"><div class="sm-node blog" id="nWb">Workbench</div><div class="sm-line" id="lnW"></div><div class="sm-node leaf" id="nLic">Licenses</div></div>
+      <div class="sm-branch"><div class="sm-node other" id="nRep">Reports</div><div class="sm-line" id="lnR"></div><div class="sm-node leaf" id="nFun">Funnels</div></div>
+    </div>
+  </div>
+  <div class="side-lists">
+    <div class="box">
+      <div class="mh">Features tagged</div>
+      <div class="feat-row" id="ft0"><span class="ic click">◎</span> Explore catalog CTA</div>
+      <div class="feat-row" id="ft1"><span class="ic click">◎</span> Service card</div>
+      <div class="feat-row" id="ft2"><span class="ic click">◎</span> Required field</div>
+      <div class="feat-row" id="ft3"><span class="ic click">◎</span> Submit request</div>
+    </div>
+    <div class="box">
+      <div class="mh">Events</div>
+      <div class="ev-row" id="ev0"><span class="ic bolt">⚡</span> catalog_view</div>
+      <div class="ev-row" id="ev1"><span class="ic bolt">⚡</span> item_open</div>
+      <div class="ev-row" id="ev2"><span class="ic bolt">⚡</span> form_start</div>
+      <div class="ev-row" id="ev3"><span class="ic bolt">⚡</span> form_dropoff</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  function el(id){ return document.getElementById(id); }
+  function after(ms, fn){ return setTimeout(fn, ms); }
+  ['nHome','ln0','nSvc','nForm','nWb','nRep','lnS','lnF','lnW','lnR','nItem','nRev','nLic','nFun'].forEach(function(id,i){
+    after(80 + i*90, function(){ var n=el(id); if(n) n.classList.add('on'); });
+  });
+  after(1600, function(){
+    [0,1,2,3].forEach(function(i){
+      after(i*140, function(){
+        var a=el('ft'+i), b=el('ev'+i);
+        if(a) a.classList.add('on');
+        if(b) b.classList.add('on');
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
