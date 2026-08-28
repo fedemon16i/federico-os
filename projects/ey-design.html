@@ -10,33 +10,53 @@
 .bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0}
 .dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
 .dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
-.app{flex:1;display:grid;grid-template-columns:1fr 1fr;background:#12141c}
-.pane{padding:14px;border-right:1px solid rgba(255,255,255,.07);opacity:0;transform:translateY(10px);transition:.45s}
+.app{flex:1;display:grid;grid-template-columns:1fr 1fr;background:#12141c;min-height:0}
+.pane{padding:12px 14px;border-right:1px solid rgba(255,255,255,.07);opacity:0;transform:translateY(10px);transition:.4s}
 .pane.on{opacity:1;transform:none}
 .pane:last-child{border:0}
 .k{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#8a8580;margin-bottom:8px}
-.h{font-size:14px;font-weight:700;margin:0 0 6px}
-.s{font-size:10px;color:#9aa0b0;line-height:1.45}
-.chip{display:inline-block;margin-top:10px;font-size:8px;padding:3px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:#c8c4bc}
-.merge{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%) scale(.9);background:#e8943a;color:#1a1508;font-size:9px;font-weight:700;padding:5px 10px;border-radius:100px;opacity:0;transition:.4s}
+.fr{border:1px solid rgba(255,255,255,.1);padding:7px 8px;margin-bottom:6px;font-size:10px;opacity:0;transform:translateX(-6px);transition:.35s}
+.fr.on{opacity:1;transform:none}
+.fr b{display:block;font-size:10px}.fr span{font-size:8px;color:#9aa0b0}
+.line{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#c8c4bc;margin:0 0 5px;opacity:0}
+.line.on{opacity:1}
+.merge{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%) scale(.86);background:#e8943a;color:#1a1508;font-size:9px;font-weight:700;padding:5px 10px;border-radius:100px;opacity:0;transition:.35s;z-index:2}
 .merge.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.out{position:absolute;left:16px;right:16px;bottom:12px;background:#1c1e28;border:1px solid rgba(232,148,58,.45);padding:8px 10px;font-size:10px;opacity:0;transform:translateY(8px);transition:.4s}
+.out.on{opacity:1;transform:none}
+.out b{color:#e8943a}
 </style></head>
 <body>
 <div class="stage">
 <div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma + factory · merge</div>
 <div class="app">
-  <div class="pane" id="p0"><div class="k">By hand</div><div class="h">Figma frames</div><div class="s">Checklist before the form. Required service gets a name and a help note.</div><span class="chip">Figma</span></div>
-  <div class="pane" id="p1"><div class="k">With AI</div><div class="h">Factory pass</div><div class="s">Same constraint, generated walkthrough + field order.</div><span class="chip">Factory</span></div>
+  <div class="pane" id="p0">
+    <div class="k">By hand · Figma</div>
+    <div class="fr" id="f0"><b>Frame · gate</b><span>Checklist before the form</span></div>
+    <div class="fr" id="f1"><b>Frame · field</b><span>Required service named</span></div>
+    <div class="fr" id="f2"><b>Frame · help</b><span>Note next to the stall</span></div>
+  </div>
+  <div class="pane" id="p1">
+    <div class="k">With AI · Factory</div>
+    <div class="line" id="l0">constraint: same offering</div>
+    <div class="line" id="l1">walk the unlabeled field</div>
+    <div class="line" id="l2">keep cost next to the step</div>
+    <div class="line" id="l3">output: guided request</div>
+  </div>
 </div></div>
-<div class="merge" id="mg">merge → one proposal</div>
+<div class="merge" id="mg">merge</div>
+<div class="out" id="out"><b>One proposal.</b> Gate + named field + help — hand and model, same surface.</div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  after(120,function(){document.getElementById('p0').classList.add('on')});
-  after(420,function(){document.getElementById('p1').classList.add('on')});
-  after(820,function(){document.getElementById('mg').classList.add('on')});
+  after(80,function(){document.getElementById('p0').classList.add('on')});
+  ['f0','f1','f2'].forEach(function(id,i){after(220+i*180,function(){document.getElementById(id).classList.add('on')})});
+  after(700,function(){document.getElementById('p1').classList.add('on')});
+  ['l0','l1','l2','l3'].forEach(function(id,i){after(820+i*160,function(){document.getElementById(id).classList.add('on')})});
+  after(1600,function(){document.getElementById('mg').classList.add('on')});
+  after(2000,function(){document.getElementById('out').classList.add('on')});
 })();
 </script>
 </body></html>
