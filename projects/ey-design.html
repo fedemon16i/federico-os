@@ -5,69 +5,54 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#e8e8e8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-.stage{padding:6px;position:relative;min-height:360px}
+.stage{padding:8px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.br{height:300px;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(6px);transition:.4s}
+.br{height:210px;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(6px);transition:.4s}
 .br.on{opacity:1;transform:none}
-.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:8px;color:#9aa0b0;flex-shrink:0}
+.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:8px;color:#9aa0b0;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08)}
 .d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.fig .bb{background:#2c2c2c}.fig-app{flex:1;display:grid;grid-template-rows:24px 1fr;background:#1e1e1e;min-height:0}
-.fig-bar{display:flex;align-items:center;gap:6px;padding:0 8px;background:#2c2c2c;font-size:8px;color:#b5b5b5;border-bottom:1px solid #111}
-.dot{width:14px;height:14px;border-radius:3px;background:#3a3a3a}.dot.on{background:#0d99ff}
-.fig-cv{background:#1e1e1e;background-image:radial-gradient(#333 1px,transparent 1px);background-size:10px 10px;padding:14px 12px}
-.art{background:#fff;color:#111;width:70%;margin:0 auto 10px;padding:8px;box-shadow:0 0 0 1px #0d99ff;opacity:0;transform:translateY(6px);transition:.35s}
-.art.on{opacity:1;transform:none}.art.sm{width:56%;box-shadow:0 0 0 1px #555}
-.art .h{height:6px;width:42%;background:#111;margin-bottom:5px}.art .p{height:4px;width:78%;background:#ddd;margin-bottom:3px}.art .cta{height:7px;width:30%;background:#0d99ff;margin-top:4px}
-.ag .bb{background:#0d1017}
-.ag-app{flex:1;display:flex;flex-direction:column;background:#0d1017;min-height:0}
-.tools{display:flex;flex-wrap:wrap;gap:4px;padding:8px;border-bottom:1px solid #1c2333}
-.tools i{font-style:normal;font-size:7.5px;padding:2px 6px;border:1px solid #2a3344;color:#6d7384;border-radius:100px}
+.fig-cv{flex:1;background:#1e1e1e;background-image:radial-gradient(#333 1px,transparent 1px);background-size:10px 10px;padding:12px}
+.art{background:#fff;color:#111;width:72%;margin:0 auto;padding:8px;box-shadow:0 0 0 1px #0d99ff;opacity:0;transition:.35s}
+.art.on{opacity:1}.art .h{height:6px;width:40%;background:#111;margin-bottom:5px}.art .p{height:4px;width:80%;background:#ddd;margin-bottom:3px}.art .cta{height:7px;width:28%;background:#0d99ff;margin-top:4px}
+.ag{background:#0d1017;flex:1;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:8px;line-height:1.45;color:#c5d0e6}
+.ag div{opacity:0;transition:.3s}.ag div.on{opacity:1}.ag .c{color:#5c6370}.ag .g{color:#98c379}
+.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;border-bottom:1px solid #1c2333}
+.tools i{font-style:normal;font-size:7px;padding:2px 6px;border:1px solid #2a3344;color:#8b93a7;border-radius:100px}
 .tools i.on{color:#98c379;border-color:#2b8a3e}
-.cli{flex:1;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:8px;line-height:1.5;color:#c5d0e6}
-.cli div{opacity:0;transition:.3s}.cli div.on{opacity:1}
-.cli .c{color:#5c6370}.cli .g{color:#98c379}
-.merge{text-align:center;margin-top:8px;font-size:9px;font-weight:700;color:#1a1508;background:#e8943a;display:inline-block;padding:5px 12px;border-radius:100px;opacity:0;transition:.35s}
-.merge.on{opacity:1}
-.out{margin-top:8px;display:none;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#12141c;padding:10px 12px}
-.out.on{display:block}
-.out .k{font-size:8px;color:#8a8580;margin-bottom:6px}
-.out .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.card{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:8px;font-size:10px}
-.card .m{font-size:8px;color:#6d7384;margin-top:2px}
-.wrap{text-align:center}
+.ready{margin-top:8px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#12141c;padding:10px 12px;opacity:0;transform:translateY(8px);transition:.4s}
+.ready.on{opacity:1;transform:none}
+.ready .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ready .k{font-size:8px;color:#8a8580;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+.check{font-size:9px;font-weight:700;color:#0b0b0b;background:#7dcea0;padding:3px 8px;border-radius:100px}
+.screen{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tile{background:#161821;border:1px solid rgba(255,255,255,.06);padding:7px;font-size:10px}
+.tile span{display:block;font-size:8px;color:#6d7384;margin-top:2px}
 </style></head>
 <body>
 <div class="stage">
-  <div class="pair" id="pair">
-    <div class="br fig" id="fig">
-      <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma · designing by hand</div>
-      <div class="fig-app"><div class="fig-bar"><span class="dot on"></span><span class="dot"></span>Publisher frames</div>
-        <div class="fig-cv">
-          <div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div>
-          <div class="art sm" id="a1"><div class="h"></div><div class="p"></div><div class="cta"></div></div>
-        </div>
-      </div>
+  <div class="pair">
+    <div class="br" id="fig">
+      <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma · by hand</div>
+      <div class="fig-cv"><div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div></div>
     </div>
-    <div class="br ag" id="ag">
+    <div class="br" id="agw">
       <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>llm · agent · cli</div>
-      <div class="ag-app">
-        <div class="tools"><i id="t0">Claude Code</i><i id="t1">Factory.ai</i><i id="t2">Grok</i><i id="t3">Codex</i><i id="t4">CLI</i></div>
-        <div class="cli">
-          <div id="l0" class="c">$ agent design --surface publisher</div>
-          <div id="l1">constraint: not a single button</div>
-          <div id="l2">listings + type + line + AI pass</div>
-          <div id="l3" class="g">ok · canvas ready to merge</div>
-        </div>
+      <div class="tools"><i id="t0">Claude Code</i><i id="t1">Factory</i><i id="t2">Grok</i><i id="t3">Codex</i><i id="t4">CLI</i></div>
+      <div class="ag">
+        <div id="l0" class="c">$ agent design --surface publisher</div>
+        <div id="l1">listings + type + line + help the requester sees</div>
+        <div id="l2" class="g">ok · screen drafted</div>
       </div>
     </div>
   </div>
-  <div class="wrap"><div class="merge" id="mg">merge → one design</div></div>
-  <div class="out" id="out">
-    <div class="k">What left the merge</div>
-    <div class="grid">
-      <div class="card">Your offerings<div class="m">Listings with status, not one CTA</div></div>
-      <div class="card">Studio + AI pass<div class="m">Requirements the requester will see</div></div>
+  <div class="ready" id="ready">
+    <div class="top"><div class="k">From both methods</div><div class="check">Design ready</div></div>
+    <div class="screen">
+      <div class="tile">Your offerings<span>Listings with status</span></div>
+      <div class="tile">New offering<span>Type and line first</span></div>
+      <div class="tile">Studio<span>Requirements the user will see</span></div>
+      <div class="tile">AI pass<span>Writing + completeness</span></div>
     </div>
   </div>
 </div>
@@ -76,17 +61,11 @@
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
   after(60,function(){document.getElementById('fig').classList.add('on')});
-  after(220,function(){document.getElementById('a0').classList.add('on')});
-  after(500,function(){document.getElementById('a1').classList.add('on')});
-  after(400,function(){document.getElementById('ag').classList.add('on')});
-  ['t0','t1','t2','t3','t4'].forEach(function(id,i){after(560+i*120,function(){document.getElementById(id).classList.add('on')})});
-  ['l0','l1','l2','l3'].forEach(function(id,i){after(900+i*220,function(){document.getElementById(id).classList.add('on')})});
-  after(2000,function(){document.getElementById('mg').classList.add('on')});
-  after(2500,function(){
-    document.getElementById('pair').style.display='none';
-    document.getElementById('mg').style.display='none';
-    document.getElementById('out').classList.add('on');
-  });
+  after(200,function(){document.getElementById('a0').classList.add('on')});
+  after(280,function(){document.getElementById('agw').classList.add('on')});
+  ['t0','t1','t2','t3','t4'].forEach(function(id,i){after(400+i*100,function(){document.getElementById(id).classList.add('on')})});
+  ['l0','l1','l2'].forEach(function(id,i){after(700+i*200,function(){document.getElementById(id).classList.add('on')})});
+  after(1600,function(){document.getElementById('ready').classList.add('on')});
 })();
 </script>
 </body></html>
