@@ -1,73 +1,29 @@
-/* EY Fabric mini DS — reconstructed product language.
-   Not official EY brand. No confidential screens.
-   Web app UI only. Do not use on mobile or diagrams. */
-
+/* Fabric-like web DS. Style only. Invented copy. Refs stay local. */
 :root{
-  --ey-bg:#050508;
-  --ey-surface:#0e0e12;
-  --ey-raised:#14141a;
-  --ey-side:#0c0c10;
-  --ey-text:rgba(255,255,255,.88);
-  --ey-muted:rgba(255,255,255,.42);
-  --ey-faint:rgba(255,255,255,.28);
+  --ey-bg:#12141c;
+  --ey-nav:#0b0c10;
+  --ey-surface:#161821;
+  --ey-card:#1c1e28;
+  --ey-side:#101218;
+  --ey-text:#f3f4f8;
+  --ey-muted:#9aa0b0;
+  --ey-faint:#6d7384;
   --ey-line:rgba(255,255,255,.08);
-  --ey-accent:#c9a227;
-  --ey-accent-dim:rgba(201,162,39,.12);
-  --ey-on-accent:#1a1508;
+  --ey-orange:#e8943a;
+  --ey-gold:#f0de5a;
+  --ey-ok:#7dcea0;
   --ey-bad:#e0857f;
-  --ey-ok:#8fd4a8;
-  --ey-hero-a:rgba(255,120,40,.35);
-  --ey-hero-b:rgba(80,120,255,.25);
   --ey-font:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
-  --ey-mono:'IBM Plex Mono',ui-monospace,monospace;
-  --ey-radius:7px;
-  --ey-nav:26px;
-  --ey-spring:cubic-bezier(.34,1.32,.64,1);
+  --ey-radius:8px;
 }
-
-.ey-browser{
-  height:100%;min-height:360px;display:flex;flex-direction:column;
-  border-radius:10px;overflow:hidden;
-  border:1px solid var(--ey-line);background:#0b0b10;
-  box-shadow:0 12px 40px rgba(0,0,0,.35);
-  font-family:var(--ey-font);color:var(--ey-text);
-}
-.ey-bbar{height:28px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#16161c;border-bottom:1px solid var(--ey-line);flex-shrink:0}
-.ey-dots{display:flex;gap:5px}
-.ey-dots i{width:8px;height:8px;border-radius:50%;display:block}
+.ey-browser{height:100%;min-height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--ey-line);background:var(--ey-nav);box-shadow:0 16px 40px rgba(0,0,0,.4);font-family:var(--ey-font);color:var(--ey-text)}
+.ey-bbar{height:26px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0}
+.ey-dots{display:flex;gap:5px}.ey-dots i{width:8px;height:8px;border-radius:50%;display:block}
 .ey-dots .r{background:#ff5f57}.ey-dots .y{background:#febc2e}.ey-dots .g{background:#28c840}
-.ey-addr{flex:1;height:16px;border-radius:4px;background:rgba(255,255,255,.06);font-size:8px;color:var(--ey-muted);display:flex;align-items:center;padding:0 8px}
-
+.ey-addr{flex:1;height:15px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--ey-muted);display:flex;align-items:center;padding:0 8px}
 .ey-app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--ey-bg)}
-.ey-topnav{height:var(--ey-nav);display:flex;align-items:center;gap:10px;padding:0 10px;border-bottom:1px solid var(--ey-line);font-size:9px;color:var(--ey-muted);background:var(--ey-surface);flex-shrink:0}
-.ey-topnav .brand{color:#fff;font-weight:700}
-.ey-topnav .ai{margin-left:auto;font-size:8px;padding:2px 6px;border-radius:100px;border:1px solid rgba(255,255,255,.12)}
-
-.ey-hero{padding:12px;background:radial-gradient(ellipse at 85% 30%,var(--ey-hero-a),transparent 45%),radial-gradient(ellipse at 70% 80%,var(--ey-hero-b),transparent 50%),var(--ey-bg)}
-.ey-hero .eyebrow{font-size:9px;color:var(--ey-muted);margin-bottom:4px}
-.ey-hero h2{margin:0 0 4px;font-size:13px;line-height:1.2;font-weight:700;max-width:78%}
-.ey-hero p{margin:0 0 8px;font-size:9px;color:var(--ey-muted);max-width:78%;line-height:1.35}
-
-.ey-btn{border-radius:5px;padding:5px 10px;font-size:10px;font-weight:650;cursor:pointer;border:0}
-.ey-btn-pri{background:#fff;color:#111}
-.ey-btn-sec{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2)}
-.ey-btn-gold{background:var(--ey-accent);color:var(--ey-on-accent)}
-
-.ey-band{margin:6px 10px;padding:8px 10px;border-radius:8px;border:1px solid var(--ey-line);background:rgba(255,255,255,.03);font-size:10px}
-.ey-cat{display:grid;grid-template-columns:92px 1fr;height:100%;min-height:0;overflow:hidden}
-.ey-side{background:var(--ey-side);border-right:1px solid var(--ey-line);padding:8px 6px;font-size:9px}
-.ey-side a{display:flex;justify-content:space-between;padding:5px 6px;border-radius:5px;color:var(--ey-muted);margin-bottom:2px;text-decoration:none}
-.ey-side a.on{background:var(--ey-accent-dim);color:var(--ey-accent)}
-.ey-main{padding:8px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
-.ey-banner{height:40px;border-radius:var(--ey-radius);margin-bottom:5px;padding:8px 10px;background:linear-gradient(110deg,rgba(120,40,180,.45),rgba(40,80,200,.35)),#1a1028}
-.ey-chips{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
-.ey-chips span{font-size:8px;padding:3px 7px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid var(--ey-line);color:var(--ey-muted)}
-.ey-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.ey-grid.three{grid-template-columns:1fr 1fr 1fr}
-.ey-card{background:var(--ey-raised);border:1px solid var(--ey-line);border-radius:var(--ey-radius);padding:7px}
-.ey-card.sel{border-color:rgba(201,162,39,.45);background:var(--ey-accent-dim)}
-.ey-card .ico{width:18px;height:18px;border-radius:4px;background:rgba(255,140,40,.15);color:#ff9a3c;display:flex;align-items:center;justify-content:center;font-size:10px;margin-bottom:4px}
-.ey-card .t{font-size:10px;font-weight:650}.ey-card .s{font-size:8px;color:var(--ey-faint)}
-.ey-box{height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.28);padding:0 8px;display:flex;align-items:center;font-size:9.5px}
-.ey-box.ph{color:var(--ey-faint)}.ey-box.bad{border-color:var(--ey-bad)}
-.ey-flag{display:inline-flex;margin-top:4px;font-size:9px;font-weight:650;color:var(--ey-bad);background:rgba(224,133,127,.12);border:1px solid rgba(224,133,127,.35);padding:3px 7px;border-radius:100px}
+.ey-topnav{height:28px;display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--ey-nav);border-bottom:1px solid var(--ey-line);font-size:9px;color:var(--ey-muted);flex-shrink:0}
+.ey-topnav .mark{font-weight:800;color:#fff}
+.ey-topnav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ey-topnav .ai{padding:2px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.14)}
+.ey-topnav .av{width:16px;height:16px;border-radius:50%;background:#3a3d4a;color:#fff;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center}
