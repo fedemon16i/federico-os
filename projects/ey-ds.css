@@ -1,4 +1,8 @@
-/* Shared Fabric window. Product UIs only. */
+/* Shared Fabric window.
+   SCALE RULE: the window fills the host. Host may grow for outside callouts.
+   Scale the whole stage (window + arrows) together — never crop the window.
+   Prefer max width AND height on the same screen.
+*/
 :root{
   --ey-bg:#12141c;
   --ey-nav:#0b0c10;
@@ -13,19 +17,26 @@
   --ey-gold:#f0de5a;
   --ey-ok:#7dcea0;
   --ey-bad:#e0857f;
+  --ey-new:#e24b4b;
   --ey-font:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
   --ey-radius:10px;
 }
-html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font);overflow:visible}
-.stage,.ey-stage{position:relative;height:100%;padding:8px;box-sizing:border-box;overflow:visible}
+html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font)}
+.stage,.ey-stage{
+  position:relative;height:100%;width:100%;
+  padding:28px 36px 22px;
+  box-sizing:border-box;
+  display:flex;align-items:stretch;justify-content:stretch;
+}
 .ey-browser,.br,.browser{
-  height:100%;
+  flex:1;min-height:0;min-width:0;
   display:flex;flex-direction:column;
   border-radius:var(--ey-radius);
   overflow:hidden;
   border:1px solid var(--ey-line);
   background:var(--ey-nav);
   box-shadow:0 14px 36px rgba(0,0,0,.45);
+  position:relative;
 }
 .ey-bbar,.bb,.bbar{
   height:22px;display:flex;align-items:center;gap:8px;padding:0 10px;
@@ -45,3 +56,25 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
   font-size:9px;color:var(--ey-muted);flex-shrink:0;
 }
 .ey-topnav .on,.nav .on{color:#fff}
+.uc,.cursor{
+  position:absolute;z-index:12;pointer-events:none;
+  width:16px;height:16px;
+  transition:left .85s cubic-bezier(.34,1.32,.64,1),top .85s cubic-bezier(.34,1.32,.64,1);
+}
+.uc svg,.cursor svg{display:block;width:16px;height:16px;overflow:visible}
+.uc em,.cursor em{
+  position:absolute;left:14px;top:-10px;
+  font-style:normal;font-size:7px;font-weight:700;
+  padding:1px 5px;color:#111;white-space:nowrap;
+}
+.callout{
+  position:absolute;z-index:14;font-size:8px;font-weight:700;
+  color:#fff;background:var(--ey-new);padding:3px 7px;border-radius:3px;
+  white-space:nowrap;pointer-events:none;
+}
+.callout:after{
+  content:'';position:absolute;width:18px;height:1px;background:var(--ey-new);
+}
+.callout.left:after{right:-18px;top:50%}
+.callout.right:after{left:-18px;top:50%}
+.ring{outline:2px solid var(--ey-new);outline-offset:2px}
