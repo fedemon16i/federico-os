@@ -1,63 +1,56 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Publisher workspace</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<title>Publisher pipeline</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384;--spring:cubic-bezier(.34,1.32,.64,1)}
-.stage{position:relative;min-height:360px}
-.browser{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--nav)}
-.bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted)}
-.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
-.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
+:root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384}
+.stage{min-height:360px}
+.br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0b0c10}
+.bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
+.d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
 .app{flex:1;display:flex;flex-direction:column;background:var(--bg);min-height:0}
-.nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--nav);border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
+.nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:#0b0c10;border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
 .nav .on{color:#fff}
-.shell{flex:1;display:grid;grid-template-columns:118px 1fr;min-height:0}
-.side{padding:12px 8px;border-right:1px solid var(--line);font-size:9px;color:var(--muted);background:#101218}
-.side .sh{color:#fff;font-weight:700;margin-bottom:8px;padding:0 6px}
-.side a{display:block;padding:5px 7px;border-radius:6px;margin-bottom:2px}
-.side a.on{background:rgba(255,255,255,.07);color:#fff}
-.main{padding:12px 14px}
-.crumb{font-size:8px;color:var(--faint);margin-bottom:6px}
-h3{margin:0 0 10px;font-size:14px}
-.list{display:flex;flex-direction:column;gap:6px}
-.row{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;opacity:0;transform:translateY(6px);transition:.35s}
-.row.on{opacity:1;transform:none}.row.sel{border-color:rgba(232,148,58,.55)}
-.row .t{font-size:11px;font-weight:650}.row .m{font-size:8px;color:var(--faint)}
-.pill{font-size:8px;padding:2px 6px;border-radius:100px;border:1px solid var(--line);color:var(--muted)}
+.body{flex:1;padding:12px 14px;min-height:0}
+.prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:8px}
+.prog b{color:#fff}
+h3{margin:0 0 8px;font-size:14px}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:11px}
+.row.sel{border-color:rgba(232,148,58,.55)}
+.row .m{font-size:8px;color:var(--faint)}
+.pill{font-size:8px;padding:2px 6px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
 .pill.ok{color:var(--ok);border-color:rgba(125,206,160,.35)}
-.prog{font-size:8px;font-family:'IBM Plex Mono',monospace;color:var(--faint);margin-bottom:8px}
-.fld{margin-bottom:8px}.fld label{display:block;font-size:8px;color:var(--muted);margin-bottom:3px}
-.box{height:22px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#c8c4bc}
+.pill.warn{color:#f0de5a;border-color:rgba(240,222,90,.3)}
+.item{font-size:10px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--line)}
+.item b{color:#fff;font-weight:650}
 .ai{border:1px solid rgba(232,148,58,.3);background:#1a1612;padding:8px;font-size:9px;color:var(--muted);margin-top:8px}
 .ai b{color:var(--or);display:block;margin-bottom:4px}
-.cursor{position:absolute;z-index:50;pointer-events:none;opacity:0;width:16px;height:16px;transition:left .7s var(--spring),top .7s var(--spring),opacity .2s}
-.cursor.show{opacity:1}
+.note{font-size:9px;color:var(--muted);margin-top:6px}
 </style></head>
 <body>
 <div class="stage" id="stage"></div>
-<div class="cursor" id="c1"><svg viewBox="0 0 18 18"><path d="M2 2 L2 14 L6.2 10.4 L9.6 16.2 L11.4 15.3 L8 9.4 L14 9.4 Z" fill="#fff"/></svg></div>
 <script>
 (function(){
-  var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[];
+  var stage=document.getElementById('stage'), timers=[], i=0;
   function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t)}
-  function el(id){return document.getElementById(id)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function place(t){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+8)+'px';c1.style.top=(r.top-s.top+8)+'px';c1.classList.add('show')}
-  function frame(addr,html){stage.innerHTML='<div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div>'+html+'</div>';c1.classList.remove('show')}
-  var NAV='<div class="nav"><span>Overview</span><span>Marketplace</span><span class="on">Workspace</span></div>';
-  var SIDE='<div class="side"><div class="sh">Workspace</div><a class="on" href="#">Published</a><a href="#">Drafts</a><a href="#">Reviews</a></div>';
-  var ws='<div class="app">'+NAV+'<div class="shell">'+SIDE+'<div class="main"><div class="crumb">Workspace › Published products</div><h3>Select a product</h3><div class="list"><div class="row" id="p0"><div><div class="t">Workbench workspace</div><div class="m">Service · Shared delivery</div></div><span class="pill ok">Live</span></div><div class="row" id="p1"><div><div class="t">Cluster service</div><div class="m">Service · Compute</div></div><span class="pill ok">Live</span></div><div class="row" id="p2"><div><div class="t">Starter kit · Data</div><div class="m">Kit · Enablement</div></div><span class="pill">Draft</span></div></div></div></div></div>';
-  var open='<div class="app">'+NAV+'<div class="shell">'+SIDE+'<div class="main"><div class="crumb">Workspace › Workbench workspace</div><div class="prog">Step 1 of 3 · Confirm the offering</div><h3>Workbench workspace</h3><div class="fld"><label>Item type</label><div class="box">Service</div></div><div class="fld"><label>Line</label><div class="box">Shared delivery</div></div></div></div></div>';
-  var studio='<div class="app">'+NAV+'<div class="shell">'+SIDE+'<div class="main"><div class="crumb">Workspace › Workbench › Studio</div><div class="prog">Step 3 of 3 · Help the requester will see</div><h3>Requirements</h3><div class="fld"><label>Checklist</label><div class="box">Workspace name · required service</div></div><div class="ai"><b>AI pass</b>Split the paragraph. Link help to required service. Add a walkthrough.</div></div></div></div>';
-  frame('publisher / workspace', ws);
-  ['p0','p1','p2'].forEach(function(id,i){after(80+i*120,function(){el(id).classList.add('on')})});
-  after(700,function(){place(el('p0'));after(450,function(){el('p0').classList.add('sel');after(350,function(){
-    frame('publisher / product', open);
-    after(900,function(){frame('publisher / studio', studio)});
-  })})});
+  function show(addr,html){
+    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span>Marketplace</span><span class="on">Workspace</span></div><div class="body">'+html+'</div></div></div>';
+  }
+  var pages=[
+    {a:'workspace / published', h:'<div class="prog">Start · pick a product</div><h3>Published products</h3><div class="row sel"><div><div>Workbench workspace</div><div class="m">Service · Shared delivery</div></div><span class="pill ok">Live</span></div><div class="row"><div><div>Cluster service</div><div class="m">Service · Compute</div></div><span class="pill ok">Live</span></div>'},
+    {a:'workspace / onboarding', h:'<div class="prog">Step <b>1 of 6</b> · Onboarding</div><h3>What the requester sees first</h3><div class="item"><b>Walkthrough</b> — 20s before the form</div><div class="item"><b>Chat</b> — reads the same requirements</div><div class="note">This is not a tooltip. It is the path.</div>'},
+    {a:'workspace / checklist', h:'<div class="prog">Step <b>2 of 6</b> · Checklist</div><h3>Requirements</h3><div class="item"><b>Workspace name</b> — required</div><div class="item"><b>Required service</b> — required, must be named</div><div class="item"><b>Admin users</b> — optional on first request</div>'},
+    {a:'workspace / help', h:'<div class="prog">Step <b>3 of 6</b> · Help docs</div><h3>Documentation the chat will use</h3><div class="item"><b>What is a required service?</b></div><div class="item"><b>Region is residency, not the catalog item</b></div><div class="note">Same articles appear on the card tag and in the chatbot.</div>'},
+    {a:'workspace / builder', h:'<div class="prog">Step <b>4 of 6</b> · Form builder</div><h3>Build the request</h3><div class="ai"><b>Intelligent builder</b>Reads requirements + field types → drafts Need / Setup / Service / Review. Hand builder stays available.</div><div class="item" style="margin-top:8px"><b>Generated</b> — Service step isolated. That is the stall.</div>'},
+    {a:'workspace / ai-review', h:'<div class="prog">Step <b>5 of 6</b> · AI review</div><h3>Writing + completeness</h3><div class="ai"><b>Pass</b>Required service is labeled. Help is linked. Onboarding is more than a tooltip. Ready for a person.</div>'},
+    {a:'workspace / human-review', h:'<div class="prog">Step <b>6 of 6</b> · Human review</div><h3>Someone approves</h3><div class="row sel"><div><div>Workbench workspace</div><div class="m">Onboarding · checklist · help · form</div></div><span class="pill warn">In review</span></div><div class="note">Live only after this. Publish is not a button.</div>'}
+  ];
+  function go(){ var p=pages[i]; if(!p) return; show(p.a,p.h); i++; if(i<pages.length) after(1100,go); }
+  go();
 })();
 </script>
 </body></html>

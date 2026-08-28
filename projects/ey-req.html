@@ -1,61 +1,57 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Request steps</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<title>Requester path</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384}
-.stage{position:relative;min-height:360px}
-.browser{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--nav)}
-.bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted)}
-.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
-.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
-.app{flex:1;display:flex;flex-direction:column;background:var(--bg);min-height:0}
-.nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--nav);border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
+:root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384}
+.stage{min-height:360px}
+.br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0b0c10}
+.bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
+.d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
+.app{flex:1;background:var(--bg);display:flex;flex-direction:column;min-height:0}
+.nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:#0b0c10;border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
 .nav .on{color:#fff}
-.body{flex:1;padding:12px 16px;min-height:0}
-.prog{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:8px;font-family:'IBM Plex Mono',monospace;color:var(--faint)}
-.prog b{color:#fff;font-weight:600}
-.dots2{display:flex;gap:4px;margin-left:auto}
-.dots2 i{width:6px;height:6px;border-radius:50%;background:#2a2c36}
-.dots2 i.on{background:var(--or)}.dots2 i.done{background:var(--ok)}
-h3{margin:0 0 10px;font-size:15px}
-.fld{margin-bottom:8px}.fld label{display:block;font-size:8px;color:var(--muted);margin-bottom:3px}
-.box{height:24px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#c8c4bc}
-.help{font-size:9px;color:var(--muted);border:1px solid var(--line);padding:8px;margin:8px 0;background:#161821}
+.body{flex:1;padding:12px 14px}
+.prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:8px}.prog b{color:#fff}
+h3{margin:0 0 8px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
+.card .t{font-size:12px;font-weight:650}.card .m{font-size:8px;color:var(--faint);margin:3px 0 8px}
+.tag{display:inline-block;font-size:8px;padding:3px 7px;border:1px solid rgba(232,148,58,.4);color:#f0de5a;border-radius:100px}
+.exp{margin-top:8px;font-size:9px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px;display:none}
+.exp.on{display:block}
+.chat{background:#161821;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:9px;min-height:88px}
+.chat .lab{font-size:8px;color:var(--or);font-weight:700;margin-bottom:6px}
+.bub{background:#1c1e28;padding:6px 7px;border-radius:6px;margin:4px 0;color:var(--muted)}
+.bub.me{background:#241c14;color:#f3e6d0}
+.fld label{display:block;font-size:8px;color:var(--muted);margin:6px 0 3px}
+.box{height:22px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#c8c4bc}
+.help{font-size:9px;color:var(--muted);border:1px solid var(--line);padding:8px;margin-top:8px;background:#161821}
 .help b{color:#fff}
-.chk{display:flex;gap:6px;align-items:center;font-size:10px;color:var(--muted);margin:6px 0}
-.chk i{width:10px;height:10px;border:1px solid var(--line);flex-shrink:0}
-.chk i.on{background:var(--ok);border-color:var(--ok)}
-.price{font-size:9px;color:var(--muted);margin-top:8px}.price b{color:var(--gold);font-size:13px}
-.row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-.next{background:#fff;color:#111;border:0;padding:6px 12px;font-size:10px;font-weight:650;border-radius:5px}
-.back{background:transparent;color:var(--muted);border:1px solid var(--line);padding:6px 10px;font-size:10px;border-radius:5px}
+.price{font-size:9px;color:var(--muted);margin-top:8px}.price b{color:var(--gold)}
+.okline{font-size:10px;color:var(--ok);margin-top:8px;font-weight:650}
 </style></head>
 <body>
 <div class="stage" id="stage"></div>
 <script>
 (function(){
-  var stage=document.getElementById('stage'), timers=[], step=0;
+  var stage=document.getElementById('stage'), timers=[], i=0;
   function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function chrome(addr,html){
-    stage.innerHTML='<div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span class="on">Marketplace</span></div><div class="body">'+html+'</div></div></div>';
-  }
-  function dots(n){
-    var s=''; for(var i=0;i<4;i++) s+='<i class="'+(i<n?'done':i===n?'on':'')+'"></i>';
-    return s;
+  function show(addr,html){
+    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span class="on">Marketplace</span></div><div class="body">'+html+'</div></div></div>';
   }
   var pages=[
-    {addr:'platform / request · 1 of 4', html:'<div class="prog">Step <b>1 of 4</b> · Need<div class="dots2">'+dots(0)+'</div></div><h3>Before you request</h3><div class="chk"><i class="on"></i><span>I have a workspace name.</span></div><div class="chk"><i class="on"></i><span>I know this needs a required service.</span></div><div class="help">Publisher checklist — same items the offering published.</div><div class="row"><span></span><span class="next">Continue</span></div>'},
-    {addr:'platform / request · 2 of 4', html:'<div class="prog">Step <b>2 of 4</b> · Setup<div class="dots2">'+dots(1)+'</div></div><h3>Name the workspace</h3><div class="fld"><label>Workspace name</label><div class="box">North studio</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div><div class="row"><span class="back">Back</span><span class="next">Continue</span></div>'},
-    {addr:'platform / request · 3 of 4', html:'<div class="prog">Step <b>3 of 4</b> · Service<div class="dots2">'+dots(2)+'</div></div><h3>Required service</h3><div class="fld"><label>Attach one service</label><div class="box">Select…</div></div><div class="help"><b>This is the stall.</b> The list is short on purpose. Price attaches here.</div><div class="price">Estimate <b>$0 / mo</b> until a service is picked.</div><div class="row"><span class="back">Back</span><span class="next">Continue</span></div>'},
-    {addr:'platform / request · 4 of 4', html:'<div class="prog">Step <b>4 of 4</b> · Review<div class="dots2">'+dots(3)+'</div></div><h3>Review</h3><div class="help">North studio · West 2 · service still open.</div><div class="price">Total <b>$0 / mo</b></div><div class="row"><span class="back">Back</span><span class="next">Submit request</span></div>'}
+    {a:'marketplace / services', h:'<h3>Services</h3><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><span class="tag" id="tg">Requirements</span><div class="exp on" id="ex"><b>Before you enter.</b> Workspace name. One required service. Admin users optional.</div></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><span class="tag">Requirements</span></div>'},
+    {a:'marketplace / onboarding', h:'<div class="prog">Onboarding · before the form</div><h3>Ask the offering</h3><div class="chat"><div class="lab">Chat · reads publisher docs</div><div class="bub">What counts as a required service?</div><div class="bub me">The shared tool this workspace will run. Pick one. Optional add-ons come after.</div></div>'},
+    {a:'marketplace / form · 1a', h:'<div class="prog">Step <b>1 of 2</b> · Need · substep 1</div><h3>Ready?</h3><div class="help">Checklist from the publisher. Same items as the card tag.</div><div class="help"><b>I have a workspace name.</b></div>'},
+    {a:'marketplace / form · 1b', h:'<div class="prog">Step <b>1 of 2</b> · Setup · substep 2</div><h3>Name the workspace</h3><div class="fld"><label>Workspace name</label><div class="box">North studio</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>'},
+    {a:'marketplace / form · 2', h:'<div class="prog">Step <b>2 of 2</b> · Service</div><h3>Required service</h3><div class="fld"><label>Attach one service</label><div class="box">Select…</div></div><div class="help"><b>This was the stall.</b> Chat + tag + checklist already named it.</div><div class="price">Estimate <b>$0 / mo</b> until a pick.</div><div class="okline">Reaching this step is the win.</div>'}
   ];
-  function show(i){ chrome(pages[i].addr, pages[i].html); }
-  show(0);
-  [1,2,3].forEach(function(i){ after(900*i, function(){ show(i); }); });
+  function go(){ var p=pages[i]; if(!p) return; show(p.a,p.h); i++; if(i<pages.length) after(1150,go); }
+  go();
 })();
 </script>
 </body></html>
