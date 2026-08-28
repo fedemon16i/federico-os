@@ -8,13 +8,12 @@
 .nav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
 .nav .search{width:140px;height:16px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 7px}
 .nav .ai{padding:2px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.14);font-size:8px}
-.nav .av{width:15px;height:15px;border-radius:50%;background:#3a3d4a;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff}
+.nav .av{width:15px;height:15px;border-radius:50%;background:#3a3d4a;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .nav .mark{font-weight:800;color:#fff}
-.hero{padding:16px 16px 14px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a;position:relative}
+.hero{padding:16px 16px 14px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a}
 .hero .k{font-size:9px;color:rgba(255,255,255,.55);margin-bottom:6px}
 .hero h2{margin:0 0 6px;font-size:18px;line-height:1.15;max-width:70%}
 .hero p{margin:0 0 12px;font-size:9.5px;color:rgba(255,255,255,.5);max-width:62%;line-height:1.4}
-.hero .btns{display:flex;gap:8px;position:relative}
 .btn-w{background:#fff;color:#111;border:0;border-radius:5px;padding:6px 12px;font-size:10px;font-weight:650}
 .btn-o{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:5px;padding:6px 12px;font-size:10px}
 .band{margin:10px 14px;padding:10px 12px;border-radius:8px;border:1px solid var(--ey-line);background:linear-gradient(90deg,#1a1c26,rgba(40,50,90,.25))}
@@ -30,7 +29,7 @@
 .lead h3{margin:0 0 3px;font-size:13px}
 .tools .q{height:22px;border-radius:5px;border:1px solid var(--ey-line);background:var(--ey-surface);font-size:8.5px;color:var(--ey-faint);display:flex;align-items:center;padding:0 8px;margin-bottom:8px}
 .tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
-.tile{height:72px;border-radius:7px;padding:8px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.tile{height:72px;border-radius:7px;padding:8px;display:flex;flex-direction:column;justify-content:flex-end}
 .tile .t{font-size:10.5px;font-weight:650}.tile .s{font-size:7.5px;color:rgba(255,255,255,.62)}
 .t1{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.55)),linear-gradient(120deg,#6b2bb8,#3a1a6a)}
 .t2{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.6)),linear-gradient(120deg,#2a4a8a,#1a2038)}
@@ -41,7 +40,7 @@
 .banner{height:48px;border-radius:7px;margin-bottom:7px;padding:8px 10px;background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.55)),linear-gradient(110deg,#6b2bb8,#2a1048);display:flex;flex-direction:column;justify-content:flex-end}
 .banner .t{font-size:11px;font-weight:650}.banner .s{font-size:8px;color:rgba(255,255,255,.6)}
 .svcs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.svc{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px;position:relative}
+.svc{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px}
 .svc .t{font-size:10px;font-weight:650}.svc .meta{font-size:7.5px;color:var(--ey-faint)}
 .svc .acts{display:flex;gap:5px;margin-top:6px}
 .svc .acts button{flex:1;height:18px;border-radius:4px;font-size:8px;border:1px solid var(--ey-line);background:transparent;color:#d8dbe4}
@@ -49,7 +48,7 @@
 .wb{display:grid;grid-template-columns:1.15fr .85fr;flex:1;min-height:0}
 .wb-l{padding:10px 12px}.wb-r{padding:10px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column}
 .wb-l h3{margin:2px 0 8px;font-size:16px}
-.fld{margin-bottom:8px;position:relative}
+.fld{margin-bottom:8px}
 .fld label{display:block;font-size:8px;color:var(--ey-muted);margin-bottom:2px}
 .box{height:22px;border-radius:5px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9.5px}
 .box.ph{color:var(--ey-faint)}.box.drop{border-color:var(--ey-bad)}
@@ -61,13 +60,12 @@
 .order h4{margin:0 0 8px;font-size:11px}.order .empty{color:var(--ey-faint);font-size:9px}
 .order .tot{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--ey-line);font-size:11px;font-weight:700}
 .order .tot b{color:var(--ey-gold)}
-.pin{position:absolute;z-index:4;display:flex;flex-direction:column;align-items:flex-start;pointer-events:none}
-.pin em{font-style:normal;font-size:7px;font-weight:700;padding:1px 5px;color:#111;white-space:nowrap}
-.pin i{width:0;height:0;border:5px solid transparent;border-top-color:#fff;margin-left:3px}
-.p1{right:8px;top:14px}.p1 em{background:#FFE600}
-.p2{right:8px;top:28px}.p2 em{background:#7dc4ff}
-.p3{right:8px;top:42px}.p3 em{background:#e8943a}
-.fld .p1,.fld .p2,.fld .p3{right:6px;top:16px}
+.uc{position:absolute;z-index:8;pointer-events:none;opacity:0;transition:left .85s cubic-bezier(.34,1.32,.64,1),top .85s cubic-bezier(.34,1.32,.64,1),opacity .2s}
+.uc.on{opacity:1}
+.uc em{display:block;font-style:normal;font-size:7px;font-weight:700;padding:1px 5px;color:#111;white-space:nowrap}
+.uc i{display:block;width:0;height:0;border:5px solid transparent;border-top-color:#fff;margin-left:3px}
+.u1 em{background:#FFE600}.u2 em{background:#7dc4ff}.u3 em{background:#e8943a}
+.ey-browser{position:relative}
 </style></head>
 <body>
 <div class="stage" id="stage"></div>
@@ -76,25 +74,50 @@
   var stage=document.getElementById('stage'), timers=[];
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  var PINS='<div class="pin p1"><em>user 1</em><i></i></div><div class="pin p2"><em>user 2</em><i></i></div><div class="pin p3"><em>user 3</em><i></i></div>';
+  var PINS='<div class="uc u1 on" id="u1"><em>user 1</em><i></i></div><div class="uc u2 on" id="u2"><em>user 2</em><i></i></div><div class="uc u3 on" id="u3"><em>user 3</em><i></i></div>';
   function show(html,url){
-    stage.innerHTML='<div class="ey-browser"><div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr">'+url+'</div></div>'+html+'</div>';
+    stage.innerHTML='<div class="ey-browser" id="win"><div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr">'+url+'</div></div>'+html+PINS+'</div>';
+  }
+  function move(id,el,ox,oy){
+    var n=document.getElementById(id), w=document.getElementById('win');
+    if(!n||!el||!w) return;
+    var r=el.getBoundingClientRect(), b=w.getBoundingClientRect();
+    var x=Math.max(8, Math.min(b.width-54, r.left-b.left+(ox||0)));
+    var y=Math.max(8, Math.min(b.height-28, r.top-b.top+(oy||0)));
+    n.style.left=x+'px'; n.style.top=y+'px'; n.classList.add('on');
+  }
+  function pack(el){
+    move('u1',el,6,4); after(80,function(){move('u2',el,22,16)}); after(160,function(){move('u3',el,-8,20)});
   }
   var NAV='<div class="nav"><span class="mark">◆</span><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search products…</div><span class="ai">AI</span><span class="av">FM</span></div></div>';
   var SIDE='<div class="side"><div class="sh">Catalog</div><a class="on" href="#"><span>All</span><span class="n">284</span></a><a href="#"><span>Services</span><span class="n">118</span></a><a href="#"><span>Licenses</span><span class="n">19</span></a><a href="#"><span>Kits</span><span class="n">14</span></a></div>';
-  var home='<div class="app">'+NAV+'<div class="hero"><div class="k">Shared delivery for teams and clients</div><h2>Unlock technology at speed and scale</h2><p>Reusable components and a request path that should be obvious.</p><div class="btns" id="hit"><button class="btn-w" type="button">Explore Catalog</button><button class="btn-o" type="button">Talk to us</button>'+PINS+'</div></div><div class="band"><h4>Developer workflow</h4><p>Build and deploy into the shared container platform.</p></div></div>';
-  var catalog='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="crumb">Home › Catalog</div><div class="lead"><h3>Make the path through the catalog obvious.</h3></div><div class="tools"><div class="q">Filter by layer…</div></div><div class="tiles"><div class="tile t1" id="hit"><div class="t">Services</div><div class="s">Compute and shared tools</div>'+PINS+'</div><div class="tile t2"><div class="t">Licenses</div><div class="s">Delivery rights</div></div><div class="tile t3"><div class="t">Starter kits</div><div class="s">Packaged starts</div></div><div class="tile t4"><div class="t">Packages</div><div class="s">Reusable modules</div></div><div class="tile t5"><div class="t">APIs</div><div class="s">Platform blocks</div></div><div class="tile t6"><div class="t">Explore</div><div class="s">All layers</div></div></div></div></div></div>';
-  var services='<div class="app">'+NAV+'<div class="cat"><div class="side"><div class="sh">Catalog</div><a href="#"><span>All</span><span class="n">284</span></a><a class="on" href="#"><span>Services</span><span class="n">118</span></a></div><div class="main"><div class="crumb">Home › Catalog › Services</div><div class="banner"><div class="t">Services</div><div class="s">Shared infrastructure offerings</div></div><div class="svcs"><div class="svc"><div class="t">Cluster service</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc"><div class="t">Automation seat</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc"><div class="t">Workflow · Prod</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc" id="hit"><div class="t">Workbench</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div>'+PINS+'</div></div></div></div></div>';
-  var form='<div class="app">'+NAV+'<div class="wb"><div class="wb-l"><div class="crumb">Catalog › Workbench</div><h3>Workbench</h3><div class="fld"><label>Instance name (required)</label><div class="box ph drop" id="f1">Enter a name…</div><div class="pin p1"><em>user 1</em><i></i></div><div class="flag on">user 1 · drop-off</div></div><div class="fld"><label>Location (required)</label><div class="box drop" id="f2">Region West 2</div><div class="pin p2"><em>user 2</em><i></i></div><div class="flag on">user 2 · drop-off</div></div><div class="note">Choose at least one service required for this instance.</div><div class="fld"><label>Required service (required)</label><div class="box ph drop" id="f3">Select a service…</div><div class="pin p3"><em>user 3</em><i></i></div><div class="flag on">user 3 · drop-off</div></div></div><div class="wb-r"><div class="prog"><span>Custom</span><span>Billing</span><span>Confirm</span></div><div class="disc">Costs are estimates. Formal intake covers platform charges.</div><div class="order"><h4>Your order</h4><div class="empty">No services selected.</div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div></div></div>';
-  var pages=[home,catalog,services,form];
-  var urls=['platform / overview','platform / catalog','platform / catalog / services','platform / workbench'];
-  var i=0;
-  function go(){
-    show(pages[i],urls[i]);
-    i++;
-    if(i<pages.length) after(1600,go);
+  var home='<div class="app">'+NAV+'<div class="hero"><div class="k">Shared delivery for teams and clients</div><h2>Unlock technology at speed and scale</h2><p>Reusable components and a request path that should be obvious.</p><div class="btns"><button class="btn-w" id="go" type="button">Explore Catalog</button><button class="btn-o" type="button">Talk to us</button></div></div><div class="band"><h4>Developer workflow</h4><p>Build and deploy into the shared container platform.</p></div></div>';
+  var catalog='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="crumb">Home › Catalog</div><div class="lead"><h3>Make the path through the catalog obvious.</h3></div><div class="tools"><div class="q">Filter by layer…</div></div><div class="tiles"><div class="tile t1" id="go"><div class="t">Services</div><div class="s">Compute and shared tools</div></div><div class="tile t2"><div class="t">Licenses</div><div class="s">Delivery rights</div></div><div class="tile t3"><div class="t">Starter kits</div><div class="s">Packaged starts</div></div><div class="tile t4"><div class="t">Packages</div><div class="s">Reusable modules</div></div><div class="tile t5"><div class="t">APIs</div><div class="s">Platform blocks</div></div><div class="tile t6"><div class="t">Explore</div><div class="s">All layers</div></div></div></div></div></div>';
+  var services='<div class="app">'+NAV+'<div class="cat"><div class="side"><div class="sh">Catalog</div><a href="#"><span>All</span><span class="n">284</span></a><a class="on" href="#"><span>Services</span><span class="n">118</span></a></div><div class="main"><div class="crumb">Home › Catalog › Services</div><div class="banner"><div class="t">Services</div><div class="s">Shared infrastructure offerings</div></div><div class="svcs"><div class="svc"><div class="t">Cluster service</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc"><div class="t">Automation seat</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc"><div class="t">Workflow · Prod</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc" id="go"><div class="t">Workbench</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div></div></div></div></div>';
+  var form='<div class="app">'+NAV+'<div class="wb"><div class="wb-l"><div class="crumb">Catalog › Workbench</div><h3>Workbench</h3><div class="fld"><label>Instance name (required)</label><div class="box ph" id="f1">Enter a name…</div><div class="flag" id="d1">user 1 · drop-off</div></div><div class="fld"><label>Location (required)</label><div class="box" id="f2">Region West 2</div><div class="flag" id="d2">user 2 · drop-off</div></div><div class="note">Choose at least one service required for this instance.</div><div class="fld"><label>Required service (required)</label><div class="box ph" id="f3">Select a service…</div><div class="flag" id="d3">user 3 · drop-off</div></div></div><div class="wb-r"><div class="prog"><span>Custom</span><span>Billing</span><span>Confirm</span></div><div class="disc">Costs are estimates. Formal intake covers platform charges.</div><div class="order"><h4>Your order</h4><div class="empty">No services selected.</div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div></div></div>';
+  function play(){
+    show(home,'platform / overview');
+    after(200,function(){ pack(document.getElementById('go')); });
+    after(1400,function(){
+      show(catalog,'platform / catalog');
+      after(200,function(){ pack(document.getElementById('go')); });
+    });
+    after(2800,function(){
+      show(services,'platform / catalog / services');
+      after(200,function(){ pack(document.getElementById('go')); });
+    });
+    after(4200,function(){
+      show(form,'platform / workbench');
+      after(200,function(){
+        var a=document.getElementById('f1'),b=document.getElementById('f2'),c=document.getElementById('f3');
+        move('u1',a,10,2); move('u2',a,28,18); move('u3',a,-6,22);
+        after(800,function(){ a.classList.add('drop'); document.getElementById('d1').classList.add('on'); move('u2',b,8,2); });
+        after(1600,function(){ b.classList.add('drop'); document.getElementById('d2').classList.add('on'); move('u3',c,8,2); });
+        after(2400,function(){ c.classList.add('drop'); document.getElementById('d3').classList.add('on'); });
+      });
+    });
   }
-  go();
+  play();
 })();
 </script>
 </body></html>
