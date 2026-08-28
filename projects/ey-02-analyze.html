@@ -68,13 +68,37 @@
   var services='<div class="app" style="background:#0a0a0e"><div class="fab-topnav"><span class="brand">◆ Platform</span><span>Marketplace</span><span class="ai">Services</span></div><div class="cat-layout"><div class="cat-side"><a href="#"><span>All</span></a><a class="on" href="#"><span>Services</span></a></div><div class="cat-main"><div class="cat-banner"><div class="t">Services</div><div class="s">Shared infrastructure offerings</div></div><div class="svc-grid"><div class="svc-card" id="sv0"><div class="t">Cluster service</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Start</button></div></div><div class="svc-card" id="sv1"><div class="t">Automation seat</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Start</button></div></div><div class="svc-card" id="sv2"><div class="t">Workflow · Prod</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Start</button></div></div><div class="svc-card" id="sv3"><div class="t">Workbench</div><div class="acts"><button type="button">View</button><button class="pri" id="getStart" type="button">Start</button></div></div></div></div></div></div>';
   var form='<div class="app" style="background:#0a0a0e"><div class="fab-topnav"><span class="brand">◆ Platform</span><span>Marketplace</span><span class="ai">Workbench</span></div><div class="wb-layout"><div class="wb-left"><div class="wb-crumb">Catalog › Services › Workbench</div><h3>Workbench</h3><div class="wb-field"><label>Instance name (required)</label><div class="box ph" id="fName">Enter a name…</div></div><div class="wb-field"><label>Location (required)</label><div class="box" id="fLoc">Region West 2</div></div><div class="wb-field"><label>Required service (required)</label><div class="box ph" id="reqFld">Select a service…</div><div class="drop-flag" id="drop">Drop-off · service unclear</div></div></div><div class="wb-right"><div class="wb-disc">Costs are estimates.</div></div></div></div>';
   var funnel='<div class="funnel"><div class="funnel-note" id="funnelNote">Drop-off at <em>Required service</em>.</div><div class="fstep" id="fs0" data-w="100%">Home <span>100%</span></div><div class="fstep" id="fs1" data-w="90%">Catalog <span>90%</span></div><div class="fstep" id="fs2" data-w="74%">Services <span>74%</span></div><div class="fstep" id="fs3" data-w="58%">Workbench <span>58%</span></div><div class="fstep" id="fs4" data-w="22%">Form · required <span>22%</span></div></div>';
-  var scene=new URLSearchParams(location.search).get('scene')||'home';
-  function playHome(){ show(home); after(400, function(){ place(el('exploreCta'),8,6); clickCur(function(){}); }); }
-  function playCatalog(){ show(catalog); after(400, function(){ place(el('catSvc'),8,8); clickCur(function(){ var c=el('catSvc'); if(c) c.classList.add('sel'); }); }); }
-  function playServices(){ show(services); [0,1,2,3].forEach(function(i){ after(i*55, function(){ var n=el('sv'+i); if(n) n.classList.add('on'); }); }); after(600, function(){ place(el('getStart'),4,3); clickCur(function(){ var w=el('sv3'); if(w) w.classList.add('sel'); }); }); }
-  function playForm(){ show(form); after(400, function(){ place(el('fName'),6,5); after(500, function(){ var n=el('fName'); if(n){ n.textContent='Team workspace'; n.classList.remove('ph'); } place(el('reqFld'),6,5); after(700, function(){ var f=el('reqFld'); if(f) f.classList.add('bad'); var d=el('drop'); if(d) d.classList.add('on'); hideCur(); }); }); }); }
-  function playFunnel(){ show(funnel); var note=el('funnelNote'); if(note) after(80, function(){ note.style.opacity='1'; }); var si=0; (function grow(){ if(si>4) return; var n=el('fs'+si); if(n){ n.classList.add('show'); n.style.width=n.getAttribute('data-w'); if(si===4) n.classList.add('dead'); } si++; after(540, grow); })(); }
-  ({home:playHome,catalog:playCatalog,services:playServices,form:playForm,funnel:playFunnel}[scene]||playHome)();
+  var scene=new URLSearchParams(location.search).get('scene')||'path';
+  function playPath(){
+    show(home);
+    after(400, function(){ place(el('exploreCta'),8,6); clickCur(function(){
+      show(catalog);
+      after(400, function(){ place(el('catSvc'),8,8); clickCur(function(){
+        var c=el('catSvc'); if(c) c.classList.add('sel');
+        after(280, function(){
+          show(services);
+          [0,1,2,3].forEach(function(i){ after(i*55, function(){ var n=el('sv'+i); if(n) n.classList.add('on'); }); });
+          after(600, function(){ place(el('getStart'),4,3); clickCur(function(){
+            var w=el('sv3'); if(w) w.classList.add('sel');
+            after(280, function(){
+              show(form);
+              after(400, function(){ place(el('fName'),6,5); after(500, function(){
+                var n=el('fName'); if(n){ n.textContent='Team workspace'; n.classList.remove('ph'); }
+                place(el('reqFld'),6,5);
+                after(700, function(){ var f=el('reqFld'); if(f) f.classList.add('bad'); var d=el('drop'); if(d) d.classList.add('on'); hideCur(); });
+              }); });
+            });
+          }); });
+        });
+      }); });
+    }); });
+  }
+  function playFunnel(){
+    show(funnel);
+    var note=el('funnelNote'); if(note) after(80, function(){ note.style.opacity='1'; });
+    var si=0; (function grow(){ if(si>4) return; var n=el('fs'+si); if(n){ n.classList.add('show'); n.style.width=n.getAttribute('data-w'); if(si===4) n.classList.add('dead'); } si++; after(540, grow); })();
+  }
+  if(scene==='funnel') playFunnel(); else playPath();
 })();
 </script>
 </body>
