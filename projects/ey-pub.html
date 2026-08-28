@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Publisher workspace</title>
+<title>Publisher</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
 :root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384;--spring:cubic-bezier(.34,1.32,.64,1)}
 .stage{position:relative;min-height:360px}
 .br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0b0c10}
-.bb{height:22px;display:flex;align-items:center;gap:7px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.bb{height:20px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.app{flex:1;display:grid;grid-template-columns:108px 1fr;min-height:0;background:var(--bg)}
-.side{padding:10px 8px;border-right:1px solid var(--line);font-size:9px;color:var(--muted);background:#101218}
-.side .sh{color:#fff;font-weight:700;margin-bottom:8px}
-.side a{display:block;padding:5px 7px;border-radius:6px;margin-bottom:2px}
+.app{flex:1;display:grid;grid-template-columns:96px 1fr;min-height:0;background:var(--bg)}
+.side{padding:8px 6px;border-right:1px solid var(--line);font-size:8px;color:var(--muted);background:#101218}
+.side .sh{color:#fff;font-weight:700;margin-bottom:6px;font-size:10px}
+.side a{display:block;padding:4px 6px;border-radius:5px;margin-bottom:2px}
 .side a.on{background:rgba(255,255,255,.07);color:#fff}
-.main{padding:10px 12px;min-width:0}
-.prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:6px}.prog b{color:#fff}
-h3{margin:0 0 8px;font-size:13px}
-.btn{display:inline-block;background:#fff;color:#111;font-size:9px;font-weight:650;padding:5px 9px;border-radius:5px}
-.kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
-.kpi{border:1px solid var(--line);padding:7px;font-size:8px;color:var(--faint)}
-.kpi b{display:block;color:#fff;font-size:13px;margin-top:2px}
-.row{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:7px;padding:7px 8px;margin-bottom:5px;font-size:10px}
-.row.sel{border-color:rgba(232,148,58,.55)}
-.row .m{font-size:8px;color:var(--faint)}
-.pill{font-size:7.5px;padding:2px 6px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
+.main{padding:8px 10px;min-width:0;overflow:hidden}
+.prog{font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--faint);margin-bottom:5px}.prog b{color:#fff}
+h3{margin:0 0 6px;font-size:13px}
+.btn{display:inline-block;background:#fff;color:#111;font-size:8px;font-weight:650;padding:4px 8px;border-radius:4px}
+.kpis{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;margin-bottom:7px}
+.kpi{border:1px solid var(--line);padding:6px;font-size:7px;color:var(--faint)}
+.kpi b{display:block;color:#fff;font-size:12px;margin-top:1px}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 7px;margin-bottom:4px;font-size:9px}
+.row .m{font-size:7px;color:var(--faint)}
+.pill{font-size:7px;padding:1px 5px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
 .pill.warn{color:#f0de5a}.pill.ok{color:var(--ok)}.pill.bad{color:#e0857f}
-.types{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
-.type{border:1px solid var(--line);background:var(--card);padding:8px;border-radius:7px;font-size:10px}
+.types{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.type{border:1px solid var(--line);background:var(--card);padding:7px;border-radius:6px;font-size:9px}
 .type.sel{border-color:rgba(232,148,58,.55);background:#241c14}
-.type .s{font-size:8px;color:var(--faint);margin-top:3px}
-.item{font-size:10px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--line)}
-.item b{color:#fff}
-.tip{display:inline-block;margin-left:6px;font-size:7px;padding:1px 5px;border:1px solid rgba(232,148,58,.4);color:var(--or);border-radius:100px}
-.guide{border:1px dashed rgba(232,148,58,.4);padding:8px;font-size:9px;color:var(--muted);margin-top:6px}
-.cursor{position:absolute;z-index:20;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .85s var(--spring),top .85s var(--spring),opacity .2s}
+.type .s{font-size:7px;color:var(--faint);margin-top:2px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.box{border:1px solid var(--line);background:var(--card);padding:7px;border-radius:6px;font-size:8px;color:var(--muted)}
+.box b{color:#fff;display:block;margin-bottom:4px}
+.item{font-size:9px;color:var(--muted);padding:3px 0;border-bottom:1px solid var(--line)}
+.item.on{color:#f0de5a}
+.tip{font-size:7px;padding:1px 5px;border:1px solid rgba(232,148,58,.4);color:var(--or);border-radius:100px;margin-left:4px}
+.guide{border:1px dashed rgba(232,148,58,.35);padding:7px;font-size:8px;color:var(--muted);margin-top:5px}
+.ai{border:1px solid rgba(125,206,160,.35);padding:7px;font-size:8px;color:var(--muted);margin-top:5px}
+.ai b{color:var(--ok)}
+.cursor{position:absolute;z-index:20;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .8s var(--spring),top .8s var(--spring),opacity .2s}
 .cursor.show{opacity:1}.cursor.click{transform:scale(.88)}
 </style></head>
 <body>
@@ -47,29 +51,30 @@ h3{margin:0 0 8px;font-size:13px}
   var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[],i=0;
   function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function place(t){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+8)+'px';c1.style.top=(r.top-s.top+6)+'px';c1.classList.add('show')}
-  function click(cb){after(500,function(){c1.classList.add('click');after(280,function(){c1.classList.remove('click');if(cb)cb()})})}
-  function show(addr,sideOn,html){
-    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="side"><div class="sh">Publish</div><a href="#" class="'+(sideOn==='q'?'on':'')+'">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Artifacts</a><a href="#" class="'+(sideOn==='n'?'on':'')+'">New item</a></div><div class="main">'+html+'</div></div></div>';
+  function place(t){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+6)+'px';c1.style.top=(r.top-s.top+5)+'px';c1.classList.add('show')}
+  function click(cb){after(480,function(){c1.classList.add('click');after(260,function(){c1.classList.remove('click');if(cb)cb()})})}
+  function show(addr,on,html){
+    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Artifacts</a><a href="#">Reviews</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div></div></div>';
     c1.classList.remove('show');
   }
-  var pages=[
-    function(){show('workspace / queue','q','<h3>Publishing work</h3><div class="kpis"><div class="kpi">Pending review<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">Live this week<b>1</b></div></div><div class="row"><div><div>Cluster service</div><div class="m">Waiting on legal line</div></div><span class="pill warn">Pending</span></div><div class="row"><div><div>Starter kit</div><div class="m">Fix the required-field label</div></div><span class="pill bad">Correction</span></div><span class="btn" id="hit">Publish new item</span>')},
-    function(){show('workspace / new','n','<div class="prog">Step <b>1 of 5</b> · Type</div><h3>What are you publishing?</h3><div class="types"><div class="type sel" id="hit"><div>Service</div><div class="s">Requestable offering</div></div><div class="type"><div>License</div><div class="s">Seat or key</div></div><div class="type"><div>Artifact</div><div class="s">Package / file</div></div></div>')},
-    function(){show('workspace / service','n','<div class="prog">Step <b>2 of 5</b> · Service setup</div><h3>Instances and keys</h3><div class="item"><b>Instance</b> — region-bound workspace</div><div class="item"><b>License hook</b> — key issued after approve</div><div class="item" id="hit"><b>Download register</b> — who pulled the artifact</div>')},
-    function(){show('workspace / requirements','n','<div class="prog">Step <b>3 of 5</b> · User requirements</div><h3>Fields the requester will fill</h3><div class="item"><b>Workspace name</b> — short text</div><div class="item"><b>Required service</b> — pick list</div><div class="item" id="hit"><b>Billing account</b> — long id · loaded from type</div>')},
-    function(){show('workspace / guidance','n','<div class="prog">Step <b>4 of 5</b> · Guidance</div><h3>Helpers on long inputs</h3><div class="item">Billing account <span class="tip" id="hit">What is this?</span></div><div class="item">License key <span class="tip">What is this?</span></div><div class="guide">Short copy only. Detected because the field is a code, not a name.</div>')},
-    function(){show('workspace / onboard','n','<div class="prog">Step <b>5 of 5</b> · Onboarding</div><h3>Add a guide</h3><div class="guide" id="hit"><b style="color:#e8943a">Guide builder</b><br>Step 1 Workspace · Step 2 Team · Step 3 Billing. Same pattern as a product tour.</div>')}
-  ];
-  function go(){
-    if(i>=pages.length) return;
-    pages[i]();
-    after(420,function(){
-      place(document.getElementById('hit'));
-      click(function(){ i++; after(750,go); });
-    });
+  function playWorkspace(){
+    var pages=[
+      function(){show('workspace / home','q','<h3>Workspace</h3><div class="kpis"><div class="kpi">Pending<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">AI pass<b>4</b></div><div class="kpi">Live<b>11</b></div></div><div class="row"><div><div>Cluster service</div><div class="m">Legal line missing</div></div><span class="pill warn">Pending</span></div><div class="row"><div><div>Starter kit</div><div class="m">Required label unclear</div></div><span class="pill bad">Correction</span></div><div class="row"><div><div>Automation seat</div><div class="m">AI approved · human next</div></div><span class="pill ok">AI pass</span></div><span class="btn" id="hit">Publish new item</span>')},
+      function(){show('workspace / type','n','<div class="prog">New item · type</div><h3>What are you publishing?</h3><div class="types"><div class="type sel" id="hit"><div>Service</div><div class="s">Requestable offering</div></div><div class="type"><div>License</div><div class="s">Seat or key</div></div><div class="type"><div>Artifact</div><div class="s">Package</div></div></div>')}
+    ];
+    i=0; (function go(){ if(i>=pages.length) return; pages[i](); after(400,function(){ place(document.getElementById('hit')); click(function(){ i++; after(700,go); }); }); })();
   }
-  go();
+  function playArmar(){
+    var pages=[
+      function(){show('offering / fields','n','<div class="prog">Step <b>1 of 4</b> · Requirements</div><h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml — name, service, billing id, region</div><div class="box"><b>Add by hand</b>Workspace name · required service · owner</div></div>')},
+      function(){show('offering / guidance','n','<div class="prog">Step <b>2 of 4</b> · Guidance</div><h3>Which fields need help?</h3><div class="item">Workspace name</div><div class="item on" id="hit">Billing account <span class="tip">What is this?</span></div><div class="item on">License key <span class="tip">What is this?</span></div><div class="guide"><b style="color:#e8943a">From prior list</b> — Billing account: tenant cost center, 8–12 chars. License key: issued after approve.</div>')},
+      function(){show('offering / onboard','n','<div class="prog">Step <b>3 of 4</b> · Onboarding</div><h3>Add a guide?</h3><div class="split"><div class="box">No — card + chat only</div><div class="box" id="hit" style="border-color:rgba(232,148,58,.5)"><b>Yes — builder</b>1 Workspace · 2 Team · 3 Billing</div></div><div class="guide">Same tour the requester will see beside the form.</div>')},
+      function(){show('offering / review','n','<div class="prog">Step <b>4 of 4</b> · Review</div><h3>AI passed. Human next.</h3><div class="ai"><b>AI review</b> Fields labeled. Tooltips short. Onboarding is a tour, not a tooltip.</div><div class="row" style="margin-top:6px" id="hit"><div><div>Workbench workspace</div><div class="m">Service · Shared delivery</div></div><span class="pill warn">Human review</span></div>')}
+    ];
+    i=0; (function go(){ if(i>=pages.length) return; pages[i](); after(400,function(){ place(document.getElementById('hit')); click(function(){ i++; after(750,go); }); }); })();
+  }
+  var scene=new URLSearchParams(location.search).get('scene');
+  if(scene==='armar') playArmar(); else playWorkspace();
 })();
 </script>
 </body></html>
