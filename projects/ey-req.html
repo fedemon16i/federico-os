@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Guided request</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
+:root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--muted:#9aa0b0;--faint:#6d7384;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--spring:cubic-bezier(.34,1.32,.64,1)}
+.stage{position:relative;min-height:360px}
+.browser{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--nav);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
+.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
+.addr{flex:1;height:14px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--muted);display:flex;align-items:center;padding:0 8px}
+.app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--bg)}
+.nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--nav);border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
+.nav .mark{font-weight:800;color:#fff}.nav .on{color:#fff}.nav .right{margin-left:auto}
+.lay{display:grid;grid-template-columns:1fr 150px;height:100%}
+.main{padding:10px 12px}.rail{padding:8px;background:#101218;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.crumb{font-size:8px;color:var(--faint)}
+h3{margin:2px 0 8px;font-size:14px}
+.steps{display:flex;gap:4px;margin-bottom:8px}
+.steps span{font-size:8px;padding:3px 7px;border-radius:100px;border:1px solid var(--line);color:var(--muted)}
+.steps span.on{color:#fff;background:rgba(255,255,255,.08)}
+.fld label{display:block;font-size:8px;color:var(--muted);margin:5px 0 2px}
+.box{height:22px;border-radius:5px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:9.5px;color:var(--faint)}
+.help{font-size:8px;color:var(--muted);background:#161821;border:1px solid var(--line);border-radius:6px;padding:6px 8px;margin:6px 0}
+.help b{color:#fff;font-weight:650}
+.price{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px}
+.price .l{font-size:8px;color:var(--faint)}.price .v{font-size:14px;font-weight:700;color:var(--gold)}
+.price .why{font-size:8px;color:var(--muted);margin-top:4px}
+.chat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:8.5px;display:flex;flex-direction:column}
+.chat .lab{font-size:8px;color:var(--or);font-weight:700;margin-bottom:5px}
+.bub{background:#161821;border-radius:6px;padding:5px 6px;margin:4px 0;color:var(--muted)}
+.bub.me{background:#241c14;color:#f3e6d0}
+.chk{display:flex;gap:6px;font-size:9px;color:var(--muted);margin:4px 0;align-items:center}
+.chk i{width:10px;height:10px;border:1px solid var(--line);border-radius:3px}
+.chk i.on{background:var(--ok);border-color:var(--ok)}
+.cursor{position:absolute;z-index:50;pointer-events:none;opacity:0;width:16px;height:16px;transition:left .8s var(--spring),top .8s var(--spring),opacity .2s}
+.cursor.show{opacity:1}.cursor.click{transform:scale(.88)}
+</style></head>
+<body>
+<div class="stage" id="stage"></div>
+<div class="cursor" id="c1"><svg viewBox="0 0 18 18"><path d="M2 2 L2 14 L6.2 10.4 L9.6 16.2 L11.4 15.3 L8 9.4 L14 9.4 Z" fill="#fff"/></svg></div>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[];
+  function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t);return t}
+  function el(id){return document.getElementById(id)}
+  function hideCur(){c1.classList.remove('show','click')}
+  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop'){timers.forEach(clearTimeout);hideCur()}});
+  function place(t,ox,oy){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+(ox||8))+'px';c1.style.top=(r.top-s.top+(oy||8))+'px';c1.classList.add('show')}
+  function show(html,url){stage.innerHTML='<div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="addr">'+url+'</div></div>'+html+'</div>';hideCur()}
+  var NAV='<div class="nav"><span class="mark">◆</span><span>Overview</span><span class="on">Marketplace</span><span class="right">Help</span></div>';
+  var gate='<div class="app">'+NAV+'<div class="lay"><div class="main"><div class="crumb">Catalog › Workbench</div><h3>Before the form</h3><div class="help"><b>Publisher checklist</b> — what this offering expects.</div><div class="chk"><i class="on"></i><span>I have a workspace name.</span></div><div class="chk" id="ck2"><i></i><span>I know which service this workspace needs.</span></div><div class="chk"><i class="on"></i><span>I can name a point of contact later.</span></div></div><div class="rail"><div class="price"><div class="l">Estimated for this path</div><div class="v">$0 / mo</div><div class="why">No service selected yet. Price appears after the required pick.</div></div><div class="chat"><div class="lab">Ask the offering</div><div class="bub">What counts as a required service?</div><div class="bub me">The shared tool this workspace will run — pick one from the list. Optional add-ons come after.</div></div></div></div></div>';
+  var form='<div class="app">'+NAV+'<div class="lay"><div class="main"><div class="crumb">Catalog › Workbench › Request</div><div class="steps"><span>Need</span><span class="on">Setup</span><span>Service</span><span>Review</span></div><h3>Setup</h3><div class="fld"><label>Workspace name</label><div class="box" id="nm">North studio</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div><div class="help" id="helpTip"><b>Help · required service is next.</b> Publisher note: this is the field people miss. The list is short on purpose.</div></div><div class="rail"><div class="price"><div class="l">This setup</div><div class="v">$0 / mo</div><div class="why">Base workspace is included. Cost attaches to the service step.</div></div><div class="chat"><div class="lab">Ask the offering</div><div class="bub me">Region is just residency. It does not change the catalog item.</div></div></div></div></div>';
+  var scene=new URLSearchParams(location.search).get('scene')||'gate';
+  if(scene==='form'){show(form,'platform / workbench / setup');after(400,function(){place(el('helpTip'),6,6)})}
+  else {show(gate,'platform / workbench / ready');after(500,function(){place(el('ck2'),6,4)})}
+})();
+</script>
+</body></html>
