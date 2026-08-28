@@ -65,8 +65,10 @@ html,body{margin:0;background:transparent;color:#f2f0ec;font-family:'IBM Plex Sa
 </div>
 <script>
 (function(){
+  var timers=[];
   function el(id){ return document.getElementById(id); }
-  function after(ms, fn){ return setTimeout(fn, ms); }
+  function after(ms, fn){ var t=setTimeout(fn, ms); timers.push(t); return t; }
+  window.addEventListener('message', function(e){ if(e.data && e.data.type==='fm-stop') timers.forEach(clearTimeout); });
   ['nHome','ln0','nSvc','nForm','nWb','nRep','lnS','lnF','lnW','lnR','nItem','nRev','nLic','nFun'].forEach(function(id,i){
     after(80 + i*90, function(){ var n=el(id); if(n) n.classList.add('on'); });
   });
