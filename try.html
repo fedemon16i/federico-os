@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Try window — FM.OS</title>
+<style>
+html,body{margin:0;height:100%;background:#08080b}
+iframe{border:0;width:100%;height:100%}
+</style>
+</head>
+<body>
+<iframe id="f" title="Product window"></iframe>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var p=q.get('p')||'projects/ey-pi-player.html';
+  var b=q.get('beat')||'0';
+  var f=document.getElementById('f');
+  f.src=p+'?embed=1&window=1&try=1&beat='+b;
+  f.addEventListener('load',function(){
+    try{
+      var doc=f.contentDocument;
+      if(!doc||!doc.documentElement) return;
+      doc.documentElement.classList.add('embed','window','try');
+      var s=doc.createElement('script');
+      s.src='../fm-once.js';
+      doc.head.appendChild(s);
+    }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
