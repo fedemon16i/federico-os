@@ -10,79 +10,77 @@
 .bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0;flex-shrink:0}
 .d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.app{flex:1;display:grid;grid-template-columns:112px 1fr 124px;min-height:0;background:#12141c}
-.col{padding:10px;border-right:1px solid rgba(255,255,255,.07);font-size:9px;min-width:0}
-.col:last-child{border:0}
-.sh{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#8a8580;margin-bottom:8px}
-.fold{padding:5px 6px;border-radius:6px;color:#9aa0b0;margin-bottom:3px;background:rgba(255,255,255,.03);opacity:0;transition:.3s}
-.fold.on{opacity:1}.fold.hot{background:rgba(232,148,58,.14);color:#f0de5a}
-.box{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px;margin-bottom:6px;opacity:0;transform:translateY(6px);transition:.35s}
-.box.on{opacity:1;transform:none}
-.t{font-size:11px;font-weight:700}.s{font-size:8px;color:#9aa0b0;margin-top:3px}
-.tag{display:inline-block;margin-top:4px;font-size:7.5px;padding:2px 6px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:#c8c4bc}
-.tag.go{color:#7dcea0;border-color:rgba(125,206,160,.35)}
-table{width:100%;border-collapse:collapse;font-size:9px;margin-top:6px}
-th,td{text-align:left;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06);color:#c8c4bc}
+.app{flex:1;display:grid;grid-template-columns:120px 1fr;min-height:0;background:#12141c}
+.side{padding:12px 10px;border-right:1px solid rgba(255,255,255,.08);font-size:9px;color:#9aa0b0}
+.side .brand{color:#fff;font-weight:700;margin-bottom:10px;font-size:11px}
+.side a{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;margin-bottom:3px}
+.side a.on{background:rgba(255,255,255,.06);color:#fff}
+.bell{background:#e24b4b;color:#fff;font-size:8px;padding:1px 6px;border-radius:100px;opacity:0;transform:scale(.8);transition:.3s}
+.bell.on{opacity:1;transform:none}
+.main{padding:12px 14px}
+.h{font-size:14px;font-weight:700;margin:0 0 10px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi{border:1px solid rgba(255,255,255,.08);padding:10px}
+.kpi .l{font-size:8px;color:#8a8580;letter-spacing:.08em;text-transform:uppercase}
+.kpi .v{font-size:16px;font-weight:700;margin-top:4px}
+.kpi.hot .v{color:#ff6b6b}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.06)}
 th{color:#8a8580;font-weight:500;font-size:8px}
-tr.hot td{color:#ff8a8a}
-.toast{position:absolute;right:14px;top:34px;width:168px;background:#2a1416;border:1px solid rgba(226,75,75,.45);padding:8px 10px;font-size:9px;border-radius:8px;opacity:0;transform:translateX(12px);transition:.4s;z-index:5}
+td{color:#c8c4bc}
+tr.hot td{color:#ff8a8a;background:rgba(226,75,75,.08)}
+.toast{position:absolute;right:16px;top:36px;width:200px;background:#2a1416;border:1px solid rgba(226,75,75,.45);padding:10px 12px;font-size:10px;border-radius:8px;opacity:0;transform:translateY(-8px);transition:.4s;z-index:5}
 .toast.on{opacity:1;transform:none}
-.toast b{color:#ff8a8a;display:block;margin-bottom:3px}
-.bars{display:flex;align-items:flex-end;gap:4px;height:36px;margin-top:8px}
-.bars i{flex:1;background:#2a2c36;height:20%;display:block;transition:height .45s}
-.bars.on i:nth-child(1){height:100%}.bars.on i:nth-child(2){height:88%}
-.bars.on i:nth-child(3){height:72%}.bars.on i:nth-child(4){height:54%}
-.bars.on i:nth-child(5){height:22%;background:#e24b4b}
+.toast b{display:block;color:#ff8a8a;margin-bottom:4px}
 </style></head>
 <body>
 <div class="stage">
 <div class="br">
-  <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>hub / factory → replit · pendo</div>
+  <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>hub.platform / signals</div>
   <div class="app">
-    <div class="col">
-      <div class="sh">RAG</div>
-      <div class="fold" id="f0">Interviews</div>
-      <div class="fold" id="f1">Funnel notes</div>
-      <div class="fold" id="f2">Field labels</div>
-      <div class="fold" id="f3">Pendo events</div>
-      <div class="fold" id="f4">Prior reads</div>
+    <div class="side">
+      <div class="brand">Hub</div>
+      <a class="on" href="#">Signals <span class="bell" id="bell">1</span></a>
+      <a href="#">Paths</a>
+      <a href="#">Guides</a>
+      <a href="#">Events</a>
     </div>
-    <div class="col">
-      <div class="sh">Build + signals</div>
-      <div class="box" id="b0"><div class="t">Factory.ai</div><div class="s">Motor from the folders.</div><span class="tag">prompted</span></div>
-      <div class="box" id="b1"><div class="t">Figma Make</div><div class="s">Frames for Signals.</div><span class="tag">make</span></div>
-      <table id="tb" style="opacity:0;transition:.4s">
+    <div class="main">
+      <div class="h">Signals</div>
+      <div class="kpis">
+        <div class="kpi"><div class="l">Form starts</div><div class="v" id="v0">held</div></div>
+        <div class="kpi" id="k1"><div class="l">Required field</div><div class="v" id="v1">stable</div></div>
+        <div class="kpi"><div class="l">Guides</div><div class="v">thin</div></div>
+      </div>
+      <table>
         <thead><tr><th>Step</th><th>Reach</th><th>Drop</th></tr></thead>
         <tbody>
           <tr><td>Home</td><td>100</td><td>—</td></tr>
           <tr><td>Catalog</td><td>88</td><td>12</td></tr>
           <tr><td>Services</td><td>72</td><td>16</td></tr>
           <tr><td>Workbench</td><td>54</td><td>18</td></tr>
-          <tr class="hot"><td>Required</td><td>22</td><td>32</td></tr>
+          <tr id="hot"><td>Required service</td><td>22</td><td id="drop">18</td></tr>
         </tbody>
       </table>
-      <div class="bars" id="bars"><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="col">
-      <div class="sh">Live</div>
-      <div class="box" id="b2"><div class="t">Replit</div><div class="s">Publisher for the hub.</div><span class="tag go">live</span></div>
-      <div class="box" id="b3"><div class="t">Pendo</div><div class="s">MCP + API.</div><span class="tag go">connected</span></div>
     </div>
   </div>
 </div>
-<div class="toast" id="toast"><b>Drop-off alert</b>Required service — stall after the name field.</div>
+<div class="toast" id="toast"><b>Drop-off growing</b>Required service — more people leave after naming the workspace.</div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  ['f0','f1','f2','f3','f4'].forEach(function(id,i){after(80+i*90,function(){var n=document.getElementById(id);n.classList.add('on','hot');after(180,function(){n.classList.remove('hot')})})});
-  after(600,function(){document.getElementById('b0').classList.add('on')});
-  after(820,function(){document.getElementById('b1').classList.add('on')});
-  after(1040,function(){document.getElementById('b2').classList.add('on')});
-  after(1220,function(){document.getElementById('b3').classList.add('on')});
-  after(1500,function(){document.getElementById('toast').classList.add('on')});
-  after(1800,function(){document.getElementById('tb').style.opacity='1';document.getElementById('bars').classList.add('on')});
+  after(900,function(){
+    document.getElementById('toast').classList.add('on');
+    document.getElementById('bell').classList.add('on');
+  });
+  after(1300,function(){
+    document.getElementById('k1').classList.add('hot');
+    document.getElementById('v1').textContent='rising';
+    document.getElementById('hot').className='hot';
+    document.getElementById('drop').textContent='32';
+  });
 })();
 </script>
 </body></html>
