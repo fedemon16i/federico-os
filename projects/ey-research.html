@@ -4,41 +4,42 @@
 <title>Research</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#e8e4dc;font-family:'IBM Plex Sans',system-ui,sans-serif}
-.board{padding:16px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin:0 0 12px}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px}
-.card{background:#161821;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;opacity:0;transform:translateY(8px);transition:.4s}
+*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
+:root{--y:#FFE600;--ink:#0b0b0b;--line:rgba(255,255,255,.12)}
+.board{padding:22px 20px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 16px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}
+.card{border:1px solid var(--line);padding:14px 16px;opacity:0;transform:translateY(8px);transition:.4s}
 .card.on{opacity:1;transform:none}
-.q{font-size:12px;line-height:1.45;margin:0 0 8px}
-.q em{color:#e8c27a;font-style:normal}
-.who{font-size:9px;color:#8a8580}
-.sc{font-size:10px;color:#9aa0b0}
-.sc b{display:block;font-size:18px;color:#fff;letter-spacing:-.03em}
-.sc b.bad{color:#ff8aa3}
-.path{margin-top:10px;font-size:10px;color:#9aa0b0}
-.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#e8c27a;margin-right:6px}
+.q{font-size:14px;line-height:1.45;margin:0 0 10px;letter-spacing:-.02em}
+.q em{color:var(--y);font-style:normal}
+.who{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#8a8580}
+.sc{font-size:11px;color:#b8b4ac}
+.sc b{display:block;font-size:22px;color:#fff;letter-spacing:-.04em;margin:4px 0}
+.sc b.y{color:var(--y)}
+.path{margin-top:12px;font-size:12px;color:#c8c4bc}
+.tick{display:inline-block;width:8px;height:8px;background:var(--y);margin-right:8px}
 </style></head>
 <body>
 <div class="board">
   <div class="k">Why the drop exists</div>
   <div class="grid">
     <div>
-      <div class="card" id="c0"><p class="q">“I opened Workbench and did not know <em>which service</em> I was supposed to attach.”</p><div class="who">Requester · catalog user</div></div>
-      <div class="card" id="c1" style="margin-top:8px"><p class="q">“The form looks finished. The required field does not look required.”</p><div class="who">Requester · second session</div></div>
+      <div class="card" id="c0"><p class="q">I opened Workbench and did not know <em>which service</em> to attach.</p><div class="who">Requester · catalog</div></div>
+      <div class="card" id="c1" style="margin-top:12px"><p class="q">The form looks finished. The required field does not look required.</p><div class="who">Requester · session 2</div></div>
     </div>
     <div>
-      <div class="card sc" id="c2">Task success<b class="bad">low</b>same path, cold form</div>
-      <div class="card sc" id="c3" style="margin-top:8px">Time on required field<b>long</b>then back or abandon</div>
+      <div class="card sc" id="c2">Task success<b class="y">Low</b>same path, cold form</div>
+      <div class="card sc" id="c3" style="margin-top:12px">Time on required field<b>Long</b>then back or leave</div>
     </div>
   </div>
-  <div class="card path" id="c4" style="margin-top:10px"><span class="dot"></span>Replay: name fills → cursor on required service → leave</div>
+  <div class="card path" id="c4"><span class="tick"></span>Replay: name fills → required service → leave</div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  ['c0','c1','c2','c3','c4'].forEach(function(id,i){after(120+i*220,function(){var n=document.getElementById(id);if(n)n.classList.add('on')})});
+  ['c0','c1','c2','c3','c4'].forEach(function(id,i){after(100+i*200,function(){document.getElementById(id).classList.add('on')})});
 })();
 </script>
 </body></html>

@@ -4,36 +4,38 @@
 <title>Funnel</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#e8e4dc;font-family:'IBM Plex Sans',system-ui,sans-serif}
-.board{padding:18px 16px 12px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin:0 0 10px}
-.note{font-size:15px;font-weight:700;letter-spacing:-.03em;margin:0 0 16px;opacity:0;transform:translateY(6px);transition:.4s}
+*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
+:root{--y:#FFE600;--ink:#0b0b0b}
+.board{padding:22px 20px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 10px}
+.note{font-size:18px;font-weight:700;letter-spacing:-.03em;margin:0 0 20px;opacity:0;transform:translateY(8px);transition:.4s}
 .note.on{opacity:1;transform:none}
-.note em{color:#ff8aa3;font-style:normal}
-.row{display:flex;align-items:center;gap:10px;margin:0 0 8px;opacity:0;transform:translateX(-8px);transition:.45s}
+.note em{color:var(--y);font-style:normal}
+.row{display:flex;align-items:center;gap:12px;margin:0 0 10px;opacity:0;transform:translateX(-8px);transition:.4s}
 .row.on{opacity:1;transform:none}
-.bar{height:28px;border-radius:6px;background:linear-gradient(90deg,#2a2c36,#3a3d4a);display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:650;width:18%;transition:width .6s cubic-bezier(.34,1.2,.64,1)}
-.bar span{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9aa0b0}
-.row.dead .bar{background:linear-gradient(90deg,#3a1820,#5a2430);color:#ffb4a8}
-.lbl{width:88px;font-size:10px;color:#9aa0b0}
+.lbl{width:92px;font-size:11px;color:#b8b4ac}
+.bar{height:30px;background:#171717;display:flex;align-items:center;padding:0 12px;font-size:11px;font-weight:700;width:16%;transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.bar span{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8a8580}
+.row.dead .bar{background:var(--y);color:var(--ink)}
+.row.dead .bar span{color:var(--ink)}
 </style></head>
 <body>
 <div class="board">
   <div class="k">Drop-off</div>
   <p class="note" id="note">The path holds until <em>required service</em>.</p>
   <div class="row" id="r0"><div class="lbl">Home</div><div class="bar" data-w="100%">Home <span>100</span></div></div>
-  <div class="row" id="r1"><div class="lbl">Catalog</div><div class="bar" data-w="90%">Catalog <span>90</span></div></div>
-  <div class="row" id="r2"><div class="lbl">Services</div><div class="bar" data-w="74%">Services <span>74</span></div></div>
-  <div class="row" id="r3"><div class="lbl">Workbench</div><div class="bar" data-w="58%">Workbench <span>58</span></div></div>
-  <div class="row dead" id="r4"><div class="lbl">Required</div><div class="bar" data-w="22%">Form · required <span>22</span></div></div>
+  <div class="row" id="r1"><div class="lbl">Catalog</div><div class="bar" data-w="88%">Catalog <span>88</span></div></div>
+  <div class="row" id="r2"><div class="lbl">Services</div><div class="bar" data-w="72%">Services <span>72</span></div></div>
+  <div class="row" id="r3"><div class="lbl">Workbench</div><div class="bar" data-w="54%">Workbench <span>54</span></div></div>
+  <div class="row dead" id="r4"><div class="lbl">Required</div><div class="bar" data-w="22%">Required field <span>22</span></div></div>
 </div>
 <script>
 (function(){
-  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x);return x}
+  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  after(80,function(){document.getElementById('note').classList.add('on')});
+  after(60,function(){document.getElementById('note').classList.add('on')});
   [0,1,2,3,4].forEach(function(i){
-    after(280+i*420,function(){
+    after(240+i*380,function(){
       var row=document.getElementById('r'+i); if(!row) return;
       row.classList.add('on');
       var b=row.querySelector('.bar'); b.style.width=b.getAttribute('data-w');
