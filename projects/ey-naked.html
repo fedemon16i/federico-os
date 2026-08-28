@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EY beat</title>
+<style>
+html,body{margin:0;height:100%;background:transparent}
+iframe{border:0;width:100%;height:100%;background:transparent}
+</style>
+</head>
+<body>
+<iframe id="p" title="EY beat"></iframe>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var beat=q.get('beat')||'1';
+  var kind=q.get('kind')||'window';
+  var p=document.getElementById('p');
+  p.src='ey-pi-player.html?embed=1&once=1&window=1&beat='+beat;
+  p.addEventListener('load', function(){
+    try{
+      var d=p.contentDocument;
+      if(!d||!d.documentElement) return;
+      d.documentElement.classList.add('embed','window','naked',kind);
+      var st=d.createElement('style');
+      st.textContent=[
+        'html.naked,html.naked body{overflow:visible!important;background:transparent!important}',
+        'html.naked .page{padding:0!important;max-width:none!important}',
+        'html.naked .shell{display:block!important}',
+        'html.naked .frame{width:100%!important;height:100%!important;min-height:0!important}',
+        'html.naked .unit,html.naked #unit{',
+        'width:100%!important;height:100%!important;max-width:none!important;',
+        'border:none!important;border-radius:0!important;box-shadow:none!important;',
+        'background:transparent!important;background-image:none!important;overflow:visible!important}',
+        'html.naked .win,html.naked #win{',
+        'top:0!important;left:0!important;right:0!important;bottom:0!important;',
+        'border-radius:0!important;overflow:visible!important}',
+        'html.naked .cap,html.naked #cap,html.naked .slide.text,html.naked #textPhase{display:none!important}',
+        'html.naked.diagram .wchrome,html.naked.diagram .app-nav{display:none!important}',
+        'html.naked.diagram .app{border:none!important;border-radius:0!important;background:transparent!important}'
+      ].join('');
+      d.head.appendChild(st);
+    }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
