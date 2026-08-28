@@ -5,41 +5,55 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--y:#FFE600;--ink:#0b0b0b;--line:rgba(255,255,255,.12)}
-.board{padding:22px 20px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 16px}
-.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:12px}
-.card{border:1px solid var(--line);padding:14px 16px;opacity:0;transform:translateY(8px);transition:.4s}
+:root{--y:#FFE600;--line:rgba(255,255,255,.12)}
+.board{padding:20px 18px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{border:1px solid var(--line);padding:12px 14px;min-height:108px;opacity:0;transform:translateY(8px);transition:.4s}
 .card.on{opacity:1;transform:none}
-.q{font-size:14px;line-height:1.45;margin:0 0 10px;letter-spacing:-.02em}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);margin-bottom:8px}
+.q{font-size:13px;line-height:1.4;margin:0 0 8px;letter-spacing:-.02em}
 .q em{color:var(--y);font-style:normal}
-.who{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#8a8580}
-.sc{font-size:11px;color:#b8b4ac}
-.sc b{display:block;font-size:22px;color:#fff;letter-spacing:-.04em;margin:4px 0}
-.sc b.y{color:var(--y)}
-.path{margin-top:12px;font-size:12px;color:#c8c4bc}
-.tick{display:inline-block;width:8px;height:8px;background:var(--y);margin-right:8px}
+.who,.s{font-size:10px;color:#9a968c}
+.scores{display:flex;gap:8px;margin-top:4px}
+.sc{flex:1;border:1px solid var(--line);padding:8px 6px;text-align:center}
+.sc b{display:block;font-size:11px;color:#fff;margin-bottom:2px}
+.sc span{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:#8a8580}
+.path{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.path i{font-style:normal;font-size:9px;padding:3px 7px;border:1px solid var(--line);color:#c8c4bc}
+.path i.on{border-color:var(--y);color:var(--y)}
 </style></head>
 <body>
 <div class="board">
-  <div class="k">Why the drop exists</div>
+  <div class="k">Several studies · same friction</div>
   <div class="grid">
-    <div>
-      <div class="card" id="c0"><p class="q">I opened Workbench and did not know <em>which service</em> to attach.</p><div class="who">Requester · catalog</div></div>
-      <div class="card" id="c1" style="margin-top:12px"><p class="q">The form looks finished. The required field does not look required.</p><div class="who">Requester · session 2</div></div>
+    <div class="card" id="c0">
+      <div class="tag">Interviews</div>
+      <p class="q">I did not know <em>which service</em> to attach.</p>
+      <div class="who">Requester · catalog · second voice: the field does not look required.</div>
     </div>
-    <div>
-      <div class="card sc" id="c2">Task success<b class="y">Low</b>same path, cold form</div>
-      <div class="card sc" id="c3" style="margin-top:12px">Time on required field<b>Long</b>then back or leave</div>
+    <div class="card" id="c1">
+      <div class="tag">Scores</div>
+      <div class="s">Same offering, collected after the request attempt.</div>
+      <div class="scores"><div class="sc"><b>CSAT</b><span>effort</span></div><div class="sc"><b>NPS</b><span>return</span></div><div class="sc"><b>CES</b><span>form</span></div></div>
+    </div>
+    <div class="card" id="c2">
+      <div class="tag">Session replay</div>
+      <p class="q">Name fills. Cursor on required service. Leave.</p>
+      <div class="s">Same recording pattern across sessions.</div>
+    </div>
+    <div class="card" id="c3">
+      <div class="tag">Task study</div>
+      <p class="q">“Request a workspace” — people stall on the unlabeled field.</p>
+      <div class="path"><i>start</i><i>name</i><i class="on">required</i><i>leave</i></div>
     </div>
   </div>
-  <div class="card path" id="c4"><span class="tick"></span>Replay: name fills → required service → leave</div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  ['c0','c1','c2','c3','c4'].forEach(function(id,i){after(100+i*200,function(){document.getElementById(id).classList.add('on')})});
+  ['c0','c1','c2','c3'].forEach(function(id,i){after(80+i*180,function(){document.getElementById(id).classList.add('on')})});
 })();
 </script>
 </body></html>

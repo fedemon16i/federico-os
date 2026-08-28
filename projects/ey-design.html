@@ -11,19 +11,32 @@
 .dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
 .dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
 .app{flex:1;display:grid;grid-template-columns:1fr 1fr;background:#12141c}
-.pane{padding:12px;border-right:1px solid rgba(255,255,255,.07)}
+.pane{padding:14px;border-right:1px solid rgba(255,255,255,.07);opacity:0;transform:translateY(10px);transition:.45s}
+.pane.on{opacity:1;transform:none}
 .pane:last-child{border:0}
 .k{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#8a8580;margin-bottom:8px}
-.h{font-size:13px;font-weight:700;margin:0 0 6px}
-.s{font-size:9px;color:#9aa0b0;line-height:1.4}
-.chip{display:inline-block;margin-top:8px;font-size:8px;padding:3px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:#c8c4bc}
-.merge{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);background:#e8943a;color:#1a1508;font-size:9px;font-weight:700;padding:5px 10px;border-radius:100px}
+.h{font-size:14px;font-weight:700;margin:0 0 6px}
+.s{font-size:10px;color:#9aa0b0;line-height:1.45}
+.chip{display:inline-block;margin-top:10px;font-size:8px;padding:3px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:#c8c4bc}
+.merge{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%) scale(.9);background:#e8943a;color:#1a1508;font-size:9px;font-weight:700;padding:5px 10px;border-radius:100px;opacity:0;transition:.4s}
+.merge.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 </style></head>
 <body>
 <div class="stage">
 <div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma + factory · merge</div>
-<div class="app"><div class="pane"><div class="k">By hand</div><div class="h">Figma frames</div><div class="s">Checklist before the form. Required service gets a name and a help note.</div><span class="chip">Figma</span></div>
-<div class="pane"><div class="k">With AI</div><div class="h">Factory pass</div><div class="s">Same constraint, generated walkthrough + field order.</div><span class="chip">Factory</span></div></div></div>
-<div class="merge">merge → one proposal</div>
+<div class="app">
+  <div class="pane" id="p0"><div class="k">By hand</div><div class="h">Figma frames</div><div class="s">Checklist before the form. Required service gets a name and a help note.</div><span class="chip">Figma</span></div>
+  <div class="pane" id="p1"><div class="k">With AI</div><div class="h">Factory pass</div><div class="s">Same constraint, generated walkthrough + field order.</div><span class="chip">Factory</span></div>
+</div></div>
+<div class="merge" id="mg">merge → one proposal</div>
 </div>
+<script>
+(function(){
+  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
+  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
+  after(120,function(){document.getElementById('p0').classList.add('on')});
+  after(420,function(){document.getElementById('p1').classList.add('on')});
+  after(820,function(){document.getElementById('mg').classList.add('on')});
+})();
+</script>
 </body></html>
