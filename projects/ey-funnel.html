@@ -6,15 +6,15 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
 :root{--y:#FFE600;--ink:#0b0b0b}
-.board{padding:22px 20px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 10px}
-.note{font-size:18px;font-weight:700;letter-spacing:-.03em;margin:0 0 20px;opacity:0;transform:translateY(8px);transition:.4s}
+.board{padding:20px 18px 16px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 8px}
+.note{font-size:16px;font-weight:700;letter-spacing:-.03em;margin:0 0 16px;opacity:0;transform:translateY(8px);transition:.4s}
 .note.on{opacity:1;transform:none}
 .note em{color:var(--y);font-style:normal}
-.row{display:flex;align-items:center;gap:12px;margin:0 0 10px;opacity:0;transform:translateX(-8px);transition:.4s}
+.row{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;margin:0 0 8px;opacity:0;transform:translateX(-8px);transition:.4s}
 .row.on{opacity:1;transform:none}
-.lbl{width:92px;font-size:11px;color:#b8b4ac}
-.bar{height:30px;background:#171717;display:flex;align-items:center;padding:0 12px;font-size:11px;font-weight:700;width:16%;transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.lbl{font-size:11px;color:#b8b4ac}
+.bar{height:26px;background:#171717;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:700;width:16%;min-width:72px;transition:width .55s cubic-bezier(.2,.8,.2,1)}
 .bar span{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8a8580}
 .row.dead .bar{background:var(--y);color:var(--ink)}
 .row.dead .bar span{color:var(--ink)}
@@ -27,7 +27,7 @@
   <div class="row" id="r1"><div class="lbl">Catalog</div><div class="bar" data-w="88%">Catalog <span>88</span></div></div>
   <div class="row" id="r2"><div class="lbl">Services</div><div class="bar" data-w="72%">Services <span>72</span></div></div>
   <div class="row" id="r3"><div class="lbl">Workbench</div><div class="bar" data-w="54%">Workbench <span>54</span></div></div>
-  <div class="row dead" id="r4"><div class="lbl">Required</div><div class="bar" data-w="22%">Required field <span>22</span></div></div>
+  <div class="row dead" id="r4"><div class="lbl">Required</div><div class="bar" data-w="22%">Required <span>22</span></div></div>
 </div>
 <script>
 (function(){
@@ -35,9 +35,8 @@
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
   after(60,function(){document.getElementById('note').classList.add('on')});
   [0,1,2,3,4].forEach(function(i){
-    after(240+i*380,function(){
-      var row=document.getElementById('r'+i); if(!row) return;
-      row.classList.add('on');
+    after(240+i*360,function(){
+      var row=document.getElementById('r'+i); row.classList.add('on');
       var b=row.querySelector('.bar'); b.style.width=b.getAttribute('data-w');
     });
   });
