@@ -1,0 +1,133 @@
+/* Light overrides for extracted EY fragments. Injected by beats.html. */
+html[data-theme="light"] body{
+  color:#1c1b18 !important;
+  background:transparent !important;
+}
+html[data-theme="light"] .br,
+html[data-theme="light"] .browser{
+  background:#f3f1ea !important;
+  border-color:rgba(20,18,14,.12) !important;
+  box-shadow:0 10px 28px rgba(20,18,14,.08) !important;
+}
+html[data-theme="light"] .bb,
+html[data-theme="light"] .bbar,
+html[data-theme="light"] .nav,
+html[data-theme="light"] .fab-topnav,
+html[data-theme="light"] .fig-bar,
+html[data-theme="light"] .rep-tabs{
+  background:#e7e4db !important;
+  color:#5c5850 !important;
+  border-color:rgba(20,18,14,.1) !important;
+}
+html[data-theme="light"] .addr{color:#5c5850 !important;background:rgba(20,18,14,.06) !important}
+html[data-theme="light"] .app,
+html[data-theme="light"] .fig-app,
+html[data-theme="light"] .ag-app,
+html[data-theme="light"] .rep-app,
+html[data-theme="light"] .main,
+html[data-theme="light"] .body,
+html[data-theme="light"] .side,
+html[data-theme="light"] .col,
+html[data-theme="light"] .fig-l,
+html[data-theme="light"] .fig-r,
+html[data-theme="light"] .rep-files,
+html[data-theme="light"] .rep-main{
+  background:#f7f5ef !important;
+  color:#1c1b18 !important;
+  border-color:rgba(20,18,14,.1) !important;
+}
+html[data-theme="light"] h3,
+html[data-theme="light"] .t,
+html[data-theme="light"] .sh,
+html[data-theme="light"] .brand,
+html[data-theme="light"] .nav .on{
+  color:#1c1b18 !important;
+}
+html[data-theme="light"] .muted,
+html[data-theme="light"] .s,
+html[data-theme="light"] .m,
+html[data-theme="light"] .crumb,
+html[data-theme="light"] .who,
+html[data-theme="light"] .note,
+html[data-theme="light"] .prog,
+html[data-theme="light"] label{
+  color:#6a6660 !important;
+}
+html[data-theme="light"] .card,
+html[data-theme="light"] .box,
+html[data-theme="light"] .row,
+html[data-theme="light"] .ai,
+html[data-theme="light"] .help,
+html[data-theme="light"] .chat,
+html[data-theme="light"] .price,
+html[data-theme="light"] .order,
+html[data-theme="light"] .disc,
+html[data-theme="light"] .find,
+html[data-theme="light"] .own,
+html[data-theme="light"] .ready,
+html[data-theme="light"] .screen,
+html[data-theme="light"] .tile{
+  background:#fff !important;
+  border-color:rgba(20,18,14,.1) !important;
+  color:#3a3832 !important;
+}
+html[data-theme="light"] .k,
+html[data-theme="light"] .tag,
+html[data-theme="light"] .note em,
+html[data-theme="light"] .q em,
+html[data-theme="light"] .bi-n{
+  color:#7a6020 !important;
+}
+html[data-theme="light"] .board{
+  color:#1c1b18 !important;
+}
+html[data-theme="light"] .board .k{
+  color:#7a6020 !important;
+}
+html[data-theme="light"] .node.root,
+html[data-theme="light"] .row.dead .bar{
+  background:#ffe600 !important;
+  color:#1a1508 !important;
+}
+html[data-theme="light"] .node.arm,
+html[data-theme="light"] .bar{
+  background:#eceae3 !important;
+  color:#1c1b18 !important;
+  border-color:rgba(20,18,14,.12) !important;
+}
+html[data-theme="light"] .leave{
+  background:#7a6020 !important;
+  color:#fff !important;
+}
+html[data-theme="light"] .toast{
+  background:#fde8e8 !important;
+  border-color:#c45656 !important;
+  color:#5a2020 !important;
+}
+html[data-theme="light"] .toast b,
+html[data-theme="light"] tr.hot td{
+  color:#a33b3b !important;
+}
+html[data-theme="light"] .win{
+  background:#f7f5ef !important;
+  color:#1c1b18 !important;
+}
+html[data-theme="light"] .cli,
+html[data-theme="light"] .ag,
+html[data-theme="light"] .code{
+  background:#f3f1ea !important;
+  color:#2a2924 !important;
+}
+html[data-theme="light"] .fig-cv{
+  background:#e7e4db !important;
+}
+html[data-theme="light"] .hero{
+  background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.35),transparent 36%),#f3efe6 !important;
+  color:#1c1b18 !important;
+}
+html[data-theme="light"] .hero h2,
+html[data-theme="light"] .hero .k{color:#1c1b18 !important}
+html[data-theme="light"] .hero p{color:#5c5850 !important}
+html[data-theme="light"] .btn-w{background:#1c1b18 !important;color:#f5f5f0 !important}
+html[data-theme="light"] .nxt{background:#1c1b18 !important;color:#f5f5f0 !important}
+html[data-theme="light"] .badge{background:#c45656 !important;color:#fff !important}
