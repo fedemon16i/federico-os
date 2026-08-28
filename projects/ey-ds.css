@@ -1,4 +1,4 @@
-/* Fabric-like web DS. Style only. Invented copy. Refs stay local. */
+/* Shared Fabric window. All product UIs use this chrome. */
 :root{
   --ey-bg:#12141c;
   --ey-nav:#0b0c10;
@@ -8,22 +8,42 @@
   --ey-text:#f3f4f8;
   --ey-muted:#9aa0b0;
   --ey-faint:#6d7384;
-  --ey-line:rgba(255,255,255,.08);
+  --ey-line:rgba(255,255,255,.10);
   --ey-orange:#e8943a;
   --ey-gold:#f0de5a;
   --ey-ok:#7dcea0;
   --ey-bad:#e0857f;
   --ey-font:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
-  --ey-radius:8px;
+  --ey-radius:10px;
+  --ey-win-h:360px;
 }
-.ey-browser{height:100%;min-height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--ey-line);background:var(--ey-nav);box-shadow:0 16px 40px rgba(0,0,0,.4);font-family:var(--ey-font);color:var(--ey-text)}
-.ey-bbar{height:26px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0}
-.ey-dots{display:flex;gap:5px}.ey-dots i{width:8px;height:8px;border-radius:50%;display:block}
-.ey-dots .r{background:#ff5f57}.ey-dots .y{background:#febc2e}.ey-dots .g{background:#28c840}
-.ey-addr{flex:1;height:15px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--ey-muted);display:flex;align-items:center;padding:0 8px}
-.ey-app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--ey-bg)}
-.ey-topnav{height:28px;display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--ey-nav);border-bottom:1px solid var(--ey-line);font-size:9px;color:var(--ey-muted);flex-shrink:0}
-.ey-topnav .mark{font-weight:800;color:#fff}
-.ey-topnav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.ey-topnav .ai{padding:2px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.14)}
-.ey-topnav .av{width:16px;height:16px;border-radius:50%;background:#3a3d4a;color:#fff;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center}
+html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font)}
+.stage,.ey-stage{position:relative;height:100%;padding:10px;box-sizing:border-box}
+.ey-browser,.br,.browser{
+  height:100%;
+  max-height:var(--ey-win-h);
+  display:flex;flex-direction:column;
+  border-radius:var(--ey-radius);
+  overflow:hidden;
+  border:1px solid var(--ey-line);
+  background:var(--ey-nav);
+  box-shadow:0 14px 36px rgba(0,0,0,.45);
+}
+.ey-bbar,.bb,.bbar{
+  height:22px;display:flex;align-items:center;gap:8px;padding:0 10px;
+  background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0;
+  font-size:8px;color:var(--ey-muted);
+}
+.ey-dots,.d,.dots{display:flex;gap:5px}
+.ey-dots i,.d i,.dots i{width:7px;height:7px;border-radius:50%;display:block}
+.ey-dots .r,.d .r,.dots .r{background:#ff5f57}
+.ey-dots .y,.d .y,.dots .y{background:#febc2e}
+.ey-dots .g,.d .g,.dots .g{background:#28c840}
+.ey-addr,.addr{flex:1;height:14px;border-radius:4px;background:rgba(255,255,255,.05);display:flex;align-items:center;padding:0 8px}
+.ey-app,.app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--ey-bg)}
+.ey-topnav,.nav{
+  height:24px;display:flex;align-items:center;gap:10px;padding:0 12px;
+  background:var(--ey-nav);border-bottom:1px solid var(--ey-line);
+  font-size:9px;color:var(--ey-muted);flex-shrink:0;
+}
+.ey-topnav .on,.nav .on{color:#fff}

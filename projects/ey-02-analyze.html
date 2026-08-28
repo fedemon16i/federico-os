@@ -3,37 +3,29 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Analyze</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="ey-ds.css"/>
 <style>
-*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0b0c10;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--bad:#e0857f;--spring:cubic-bezier(.34,1.32,.64,1)}
-.stage{position:relative;height:100%}
-.br{height:100%;display:flex;flex-direction:column;background:var(--nav)}
-.bb{height:22px;display:flex;align-items:center;gap:7px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:#9aa0b0;flex-shrink:0}
-.d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
-.d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--bg)}
-.nav{height:24px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--nav);border-bottom:1px solid var(--line);font-size:9px;color:#9aa0b0;flex-shrink:0}
-.nav .on{color:#fff}
 .hero{padding:16px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.5),transparent 36%),#07070a}
-.hero h2{margin:0 0 8px;font-size:18px}.btn{background:#fff;color:#111;border:0;border-radius:5px;padding:6px 12px;font-size:10px;font-weight:650}
+.hero h2{margin:0 0 8px;font-size:18px}
+.btn{background:#fff;color:#111;border:0;border-radius:5px;padding:6px 12px;font-size:10px;font-weight:650}
 .cat{display:grid;grid-template-columns:110px 1fr;flex:1;min-height:0}
-.side{background:#101218;padding:10px 8px;font-size:9px;color:#9aa0b0}
+.side{background:var(--ey-side);padding:10px 8px;font-size:9px;color:var(--ey-muted)}
 .main{padding:10px}
 .tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
 .tile{height:64px;border-radius:7px;padding:8px;display:flex;align-items:flex-end;font-size:11px;font-weight:650;background:linear-gradient(160deg,rgba(0,0,0,.3),rgba(0,0,0,.6)),#3a1a6a}
 .svcs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.svc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:11px}
+.svc{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px;font-size:11px}
 .svc button{margin-top:6px;font-size:8px;padding:3px 7px;background:rgba(255,255,255,.08);color:#fff;border:0;border-radius:4px}
 .wb{display:grid;grid-template-columns:1.15fr .85fr;flex:1;min-height:0}
-.wb-l{padding:10px 12px}.wb-r{padding:10px;background:#101218;border-left:1px solid var(--line)}
-.fld{margin-bottom:8px}.fld label{display:block;font-size:8px;color:#9aa0b0;margin-bottom:2px}
-.box{height:22px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:10px}
-.box.drop{border-color:var(--bad)}
+.wb-l{padding:10px 12px}.wb-r{padding:10px;background:var(--ey-side);border-left:1px solid var(--ey-line)}
+.fld{margin-bottom:8px}.fld label{display:block;font-size:8px;color:var(--ey-muted);margin-bottom:2px}
+.box{height:22px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:10px}
+.box.drop{border-color:var(--ey-bad)}
 .flag{display:inline-block;margin-top:4px;font-size:8px;font-weight:700;color:#111;background:#FFE600;padding:2px 6px;border-radius:100px;opacity:0}
 .flag.on{opacity:1}
-.order{border:1px solid var(--line);background:var(--card);padding:10px;border-radius:8px;font-size:10px}
-.order b{color:var(--gold)}
-.cursor{position:absolute;z-index:20;pointer-events:none;opacity:0;transition:left .8s var(--spring),top .8s var(--spring),opacity .2s}
+.order{border:1px solid var(--ey-line);background:var(--ey-card);padding:10px;border-radius:8px;font-size:10px}
+.order b{color:var(--ey-gold)}
+.cursor{position:absolute;z-index:20;pointer-events:none;opacity:0;transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1),opacity .2s}
 .cursor.on{opacity:1}
 .cursor em{display:block;font-style:normal;font-size:8px;font-weight:700;background:#FFE600;color:#111;padding:2px 6px;margin-bottom:2px;white-space:nowrap}
 .cursor i{display:block;width:0;height:0;border:6px solid transparent;border-top-color:#fff;margin-left:3px}
@@ -52,7 +44,10 @@
     var r=el.getBoundingClientRect(),s=stage.getBoundingClientRect();
     c1.style.left=(r.left-s.left+8)+'px'; c1.style.top=(r.top-s.top-18)+'px'; c1.classList.add('on');
   }
-  function show(html,url){c1.classList.remove('on');stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+url+'</div>'+html+'</div>'}
+  function show(html,url){
+    c1.classList.remove('on');
+    stage.innerHTML='<div class="ey-browser"><div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr">'+url+'</div></div>'+html+'</div>';
+  }
   var NAV='<div class="nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span></div>';
   var home='<div class="app">'+NAV+'<div class="hero"><h2>Unlock technology at speed and scale</h2><button class="btn" id="go" type="button">Explore Catalog</button></div></div>';
   var cat='<div class="app">'+NAV+'<div class="cat"><div class="side">Catalog</div><div class="main"><div class="tiles"><div class="tile" id="go">Services</div><div class="tile">Licenses</div><div class="tile">Kits</div></div></div></div></div>';
