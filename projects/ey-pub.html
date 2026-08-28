@@ -8,9 +8,9 @@
 .app{display:grid;grid-template-columns:96px 1fr;flex:1;min-height:0}
 .side{padding:8px 6px;border-right:1px solid var(--ey-line);font-size:8px;color:var(--ey-muted);background:var(--ey-side)}
 .side .sh{color:#fff;font-weight:700;margin-bottom:6px;font-size:10px}
-.side a{display:block;padding:4px 6px;border-radius:5px;margin-bottom:2px;text-decoration:none;color:inherit}
+.side a{display:block;padding:4px 6px;border-radius:5px;margin-bottom:2px;color:inherit;text-decoration:none}
 .side a.on{background:rgba(255,255,255,.07);color:#fff}
-.main{padding:8px 10px}
+.main{padding:8px 10px;overflow:hidden}
 h3{margin:0 0 6px;font-size:13px}
 .btn{display:inline-block;background:#fff;color:#111;font-size:8px;font-weight:650;padding:4px 8px;border-radius:4px}
 .kpis{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;margin-bottom:7px}
@@ -19,9 +19,10 @@ h3{margin:0 0 6px;font-size:13px}
 .row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:6px;padding:6px 7px;margin-bottom:4px;font-size:9px}
 .pill{font-size:7px;padding:1px 5px;border:1px solid var(--ey-line);border-radius:100px}
 .pill.warn{color:#f0de5a}.pill.ok{color:var(--ey-ok)}.pill.bad{color:var(--ey-bad)}
-.types{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
-.type{border:1px solid var(--ey-line);background:var(--ey-card);padding:7px;border-radius:6px;font-size:9px}
-.type.sel{border-color:rgba(232,148,58,.55);background:#241c14}
+.cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.cat{border:1px solid var(--ey-line);background:var(--ey-card);padding:6px 7px;border-radius:6px}
+.cat.sel{border-color:rgba(226,75,75,.7);outline:2px solid #e24b4b;outline-offset:1px}
+.cat .t{font-size:9px;font-weight:650}.cat .d{font-size:7px;color:var(--ey-muted);margin:2px 0}.cat .e{font-size:7px;color:#f0de5a}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .box{border:1px solid var(--ey-line);background:var(--ey-card);padding:7px;border-radius:6px;font-size:8px;color:var(--ey-muted)}
 .box b{color:#fff;display:block;margin-bottom:4px}
@@ -30,9 +31,6 @@ h3{margin:0 0 6px;font-size:13px}
 .tip{font-size:7px;padding:1px 5px;border:1px solid rgba(232,148,58,.4);color:var(--ey-orange);border-radius:100px;margin-left:4px}
 .ai{border:1px solid rgba(125,206,160,.35);padding:7px;font-size:8px;color:var(--ey-muted);margin-top:5px}
 .ai b{color:var(--ey-ok)}
-.uc{position:absolute;z-index:8;left:20px;top:40px;pointer-events:none;transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1)}
-.uc i{display:block;width:0;height:0;border:6px solid transparent;border-top-color:#fff}
-.ey-browser{position:relative}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
@@ -40,7 +38,7 @@ h3{margin:0 0 6px;font-size:13px}
   <div class="ey-browser" id="win">
     <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div>
     <div id="slot"></div>
-    <div class="uc" id="c1"><i></i></div>
+    <div class="uc" id="c1"><svg viewBox="0 0 24 24"><path d="M4 2.5 L4 18.5 L8.6 14.2 L12.2 22 L15 20.7 L11.3 13 L18.5 13 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
   </div>
 </div>
 <script>
@@ -52,10 +50,26 @@ h3{margin:0 0 6px;font-size:13px}
     var n=document.getElementById('c1'); if(!n||!el) return;
     var r=el.getBoundingClientRect(), b=win.getBoundingClientRect();
     n.style.left=Math.max(8,Math.min(b.width-18,r.left-b.left+6))+'px';
-    n.style.top=Math.max(24,Math.min(b.height-18,r.top-b.top+6))+'px';
+    n.style.top=Math.max(22,Math.min(b.height-18,r.top-b.top+4))+'px';
   }
   function shell(on,html){
     slot.innerHTML='<div class="app"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Artifacts</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div></div>';
+  }
+  var CATS=[
+    ['Service','A requestable offering.','Cluster compute'],
+    ['License','A right a team can hold.','Automation seat'],
+    ['Artifact','A reusable file or image.','Base container'],
+    ['Starter kit','A packaged first run.','Team workspace kit'],
+    ['API','A callable platform block.','Billing API'],
+    ['Package','A bundle of offerings.','Delivery pack'],
+    ['Dataset','A governed data source.','Usage ledger'],
+    ['Playbook','A guided runbook.','Incident path'],
+    ['Seat','A named access unit.','Editor seat']
+  ];
+  function catGrid(sel){
+    return '<div class="cats">'+CATS.map(function(c,i){
+      return '<div class="cat'+(i===sel?' sel':'')+'" id="c'+i+'"><div class="t">'+c[0]+'</div><div class="d">'+c[1]+'</div><div class="e">e.g. '+c[2]+'</div></div>';
+    }).join('')+'</div>';
   }
   function playWorkspace(){
     document.getElementById('addr').textContent='workspace / home';
@@ -63,25 +77,33 @@ h3{margin:0 0 6px;font-size:13px}
     after(400,function(){ move(document.getElementById('hit')); });
     after(1500,function(){
       document.getElementById('addr').textContent='workspace / type';
-      shell('n','<h3>What are you publishing?</h3><div class="types"><div class="type sel" id="hit">Service</div><div class="type">License</div><div class="type">Artifact</div></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      shell('n','<h3>What are you publishing?</h3>'+catGrid(-1));
+      after(200,function(){ move(document.getElementById('c0')); });
+      after(1100,function(){
+        document.getElementById('c0').classList.add('sel');
+      });
     });
   }
   function playArmar(){
-    document.getElementById('addr').textContent='offering / fields';
-    shell('n','<h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml</div><div class="box"><b>Add by hand</b>Name · service · owner</div></div>');
-    after(300,function(){ move(document.getElementById('hit')); });
+    document.getElementById('addr').textContent='workspace / type';
+    shell('n','<h3>What are you publishing?</h3>'+catGrid(0));
+    after(400,function(){ move(document.getElementById('c0')); });
     after(1500,function(){
+      document.getElementById('addr').textContent='offering / fields';
+      shell('n','<h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml</div><div class="box"><b>Add by hand</b>Name · service · owner</div></div>');
+      after(80,function(){ move(document.getElementById('hit')); });
+    });
+    after(3000,function(){
       document.getElementById('addr').textContent='offering / guidance';
       shell('n','<h3>Which fields need help?</h3><div class="item">Workspace name</div><div class="item on" id="hit">Billing account <span class="tip">What is this?</span></div><div class="item on">License key <span class="tip">What is this?</span></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
-    after(3000,function(){
+    after(4500,function(){
       document.getElementById('addr').textContent='offering / onboard';
       shell('n','<h3>Add a guide?</h3><div class="split"><div class="box">No</div><div class="box" id="hit" style="border-color:rgba(232,148,58,.5)"><b>Yes — builder</b>Workspace · Team · Billing</div></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
-    after(4500,function(){
+    after(6000,function(){
       document.getElementById('addr').textContent='offering / review';
       shell('n','<h3>AI passed. Human next.</h3><div class="ai"><b>AI review</b> Fields labeled. Tooltips short.</div><div class="row" id="hit" style="margin-top:6px">Workbench workspace<span class="pill warn">Human review</span></div>');
       after(80,function(){ move(document.getElementById('hit')); });
