@@ -6,10 +6,10 @@
 <title>EY · 02 Analyze</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0b0c10;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
 :root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--side:#101218;--muted:#9aa0b0;--faint:#6d7384;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--bad:#e0857f;--spring:cubic-bezier(.34,1.32,.64,1)}
-.stage{position:relative;width:100%;min-height:380px}
-.browser{height:380px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--nav);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.stage{position:relative;width:100%;height:100%}
+.browser{height:100%;display:flex;flex-direction:column;overflow:hidden;background:var(--nav)}
 .bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);flex-shrink:0}
 .dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
 .dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
@@ -59,8 +59,8 @@
 .svc .acts{display:flex;gap:5px;margin-top:6px}
 .svc .acts button{flex:1;height:18px;border-radius:4px;font-size:8px;border:1px solid var(--line);background:transparent;color:#d8dbe4}
 .svc .acts button.pri{background:rgba(255,255,255,.08);color:#fff}
-.wb{display:grid;grid-template-columns:1.15fr .85fr;flex:1;min-height:0}
-.wb-l{padding:10px 12px}.wb-r{padding:10px;background:#101218;border-left:1px solid var(--line)}
+.wb{display:grid;grid-template-columns:1.15fr .85fr;flex:1;min-height:0;height:100%}
+.wb-l{padding:10px 12px}.wb-r{padding:10px;background:#101218;border-left:1px solid var(--line);display:flex;flex-direction:column}
 .wb-l h3{margin:2px 0 8px;font-size:16px}
 .fld{margin-bottom:6px}.fld label{display:block;font-size:8px;color:var(--muted);margin-bottom:2px}
 .box{height:22px;border-radius:5px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:9.5px}
@@ -69,7 +69,7 @@
 .flag{display:inline-flex;margin-top:4px;font-size:8.5px;font-weight:650;color:var(--bad);background:rgba(224,133,127,.12);border:1px solid rgba(224,133,127,.35);padding:3px 7px;border-radius:100px;opacity:0}.flag.on{opacity:1}
 .prog{display:flex;align-items:center;justify-content:space-between;font-size:7.5px;color:var(--faint);margin-bottom:8px}
 .disc{font-size:8px;color:var(--muted);line-height:1.35;padding:7px 8px;border-radius:7px;border:1px solid var(--line);background:var(--card);margin-bottom:8px}
-.order{border-radius:8px;border:1px solid var(--line);background:var(--card);padding:10px;min-height:96px;display:flex;flex-direction:column}
+.order{border-radius:8px;border:1px solid var(--line);background:var(--card);padding:10px;flex:1;display:flex;flex-direction:column}
 .order h4{margin:0 0 8px;font-size:11px}.order .empty{color:var(--faint);font-size:9px;flex:1}
 .order .tot{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--line);font-size:11px;font-weight:700}
 .order .tot b{color:var(--gold)}
