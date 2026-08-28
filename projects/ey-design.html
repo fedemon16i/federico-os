@@ -6,66 +6,62 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#e8e8e8;font-family:'IBM Plex Sans',system-ui,sans-serif}
 .stage{padding:8px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin:0 0 8px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.br{height:210px;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(6px);transition:.4s}
+.br{height:188px;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(6px);transition:.4s}
 .br.on{opacity:1;transform:none}
-.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:8px;color:#9aa0b0;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08)}
+.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:8px;color:#9aa0b0;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.fig-cv{flex:1;background:#1e1e1e;background-image:radial-gradient(#333 1px,transparent 1px);background-size:10px 10px;padding:12px}
-.art{background:#fff;color:#111;width:72%;margin:0 auto;padding:8px;box-shadow:0 0 0 1px #0d99ff;opacity:0;transition:.35s}
-.art.on{opacity:1}.art .h{height:6px;width:40%;background:#111;margin-bottom:5px}.art .p{height:4px;width:80%;background:#ddd;margin-bottom:3px}.art .cta{height:7px;width:28%;background:#0d99ff;margin-top:4px}
-.ag{background:#0d1017;flex:1;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:8px;line-height:1.45;color:#c5d0e6}
-.ag div{opacity:0;transition:.3s}.ag div.on{opacity:1}.ag .c{color:#5c6370}.ag .g{color:#98c379}
-.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;border-bottom:1px solid #1c2333}
-.tools i{font-style:normal;font-size:7px;padding:2px 6px;border:1px solid #2a3344;color:#8b93a7;border-radius:100px}
+.cv{flex:1;background:#1e1e1e;background-image:radial-gradient(#333 1px,transparent 1px);background-size:10px 10px;padding:14px}
+.art{background:#fff;color:#111;width:74%;margin:0 auto;padding:8px;box-shadow:0 0 0 1px #0d99ff;opacity:0;transition:.35s}
+.art.on{opacity:1}.art .h{height:6px;width:42%;background:#111;margin-bottom:5px}.art .p{height:4px;width:78%;background:#ddd;margin-bottom:3px}.art .cta{height:7px;width:30%;background:#0d99ff;margin-top:4px}
+.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;border-bottom:1px solid #1c2333;background:#0d1017}
+.tools i{font-style:normal;font-size:7px;padding:2px 6px;border:1px solid #2a3344;color:#6d7384;border-radius:100px}
 .tools i.on{color:#98c379;border-color:#2b8a3e}
-.ready{margin-top:8px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#12141c;padding:10px 12px;opacity:0;transform:translateY(8px);transition:.4s}
+.cli{flex:1;padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-size:8px;line-height:1.45;color:#c5d0e6;background:#0d1017}
+.cli div{opacity:0;transition:.3s}.cli div.on{opacity:1}.cli .c{color:#5c6370}.cli .g{color:#98c379}
+.ready{margin-top:8px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#12141c;padding:10px 12px;opacity:0;transform:translateY(6px);transition:.4s}
 .ready.on{opacity:1;transform:none}
 .ready .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.ready .k{font-size:8px;color:#8a8580;font-family:'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
 .check{font-size:9px;font-weight:700;color:#0b0b0b;background:#7dcea0;padding:3px 8px;border-radius:100px}
-.screen{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.tile{background:#161821;border:1px solid rgba(255,255,255,.06);padding:7px;font-size:10px}
-.tile span{display:block;font-size:8px;color:#6d7384;margin-top:2px}
+.screen{display:grid;grid-template-columns:72px 1fr;gap:8px;background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px;min-height:72px}
+.ph{background:#161821;border-radius:4px}.ph .bar{height:6px;background:#2a2c36;margin:6px;width:70%}
+.tile{font-size:10px}.tile span{display:block;font-size:8px;color:#6d7384;margin-top:3px}
 </style></head>
 <body>
 <div class="stage">
+  <div class="k">Same designer · two workshops</div>
   <div class="pair">
     <div class="br" id="fig">
       <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma · by hand</div>
-      <div class="fig-cv"><div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div></div>
+      <div class="cv"><div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div></div>
     </div>
-    <div class="br" id="agw">
-      <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>llm · agent · cli</div>
-      <div class="tools"><i id="t0">Claude Code</i><i id="t1">Factory</i><i id="t2">Grok</i><i id="t3">Codex</i><i id="t4">CLI</i></div>
-      <div class="ag">
+    <div class="br" id="ag">
+      <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>agents · I can use all of them</div>
+      <div class="tools"><i id="t0">Claude Code</i><i id="t1">Cursor</i><i id="t2">Factory.ai</i><i id="t3">Replit</i><i id="t4">CLI</i></div>
+      <div class="cli">
         <div id="l0" class="c">$ agent design --surface publisher</div>
-        <div id="l1">listings + type + line + help the requester sees</div>
+        <div id="l1">same constraint as the Figma file</div>
         <div id="l2" class="g">ok · screen drafted</div>
       </div>
     </div>
   </div>
   <div class="ready" id="ready">
-    <div class="top"><div class="k">From both methods</div><div class="check">Design ready</div></div>
-    <div class="screen">
-      <div class="tile">Your offerings<span>Listings with status</span></div>
-      <div class="tile">New offering<span>Type and line first</span></div>
-      <div class="tile">Studio<span>Requirements the user will see</span></div>
-      <div class="tile">AI pass<span>Writing + completeness</span></div>
-    </div>
+    <div class="top"><div class="k" style="margin:0">A screen left both workshops</div><div class="check">Design ready</div></div>
+    <div class="screen"><div class="ph"><div class="bar"></div><div class="bar" style="width:40%"></div></div><div class="tile">Publisher workspace<span>Select a live offering · then set onboarding, checklist, help, form.</span></div></div>
   </div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  after(60,function(){document.getElementById('fig').classList.add('on')});
-  after(200,function(){document.getElementById('a0').classList.add('on')});
-  after(280,function(){document.getElementById('agw').classList.add('on')});
-  ['t0','t1','t2','t3','t4'].forEach(function(id,i){after(400+i*100,function(){document.getElementById(id).classList.add('on')})});
-  ['l0','l1','l2'].forEach(function(id,i){after(700+i*200,function(){document.getElementById(id).classList.add('on')})});
-  after(1600,function(){document.getElementById('ready').classList.add('on')});
+  after(80,function(){document.getElementById('fig').classList.add('on')});
+  after(240,function(){document.getElementById('a0').classList.add('on')});
+  after(360,function(){document.getElementById('ag').classList.add('on')});
+  ['t0','t1','t2','t3','t4'].forEach(function(id,i){after(480+i*110,function(){document.getElementById(id).classList.add('on')})});
+  ['l0','l1','l2'].forEach(function(id,i){after(800+i*220,function(){document.getElementById(id).classList.add('on')})});
+  after(1700,function(){document.getElementById('ready').classList.add('on')});
 })();
 </script>
 </body></html>

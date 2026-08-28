@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Hub</title>
+<title>Hub built</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
@@ -10,51 +10,43 @@
 .bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0;font-family:'IBM Plex Mono',monospace}
 .d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.app{flex:1;display:grid;grid-template-columns:128px 1fr 120px;min-height:0;background:#12141c}
-.col{padding:12px 10px;border-right:1px solid rgba(255,255,255,.07);min-width:0}
-.col:last-child{border:0}
+.app{flex:1;display:grid;grid-template-columns:132px 1fr 118px;min-height:0;background:#12141c}
+.col{padding:12px 10px;border-right:1px solid rgba(255,255,255,.07);min-width:0}.col:last-child{border:0}
 .sh{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin:0 0 10px}
-.fold{display:flex;justify-content:space-between;align-items:center;padding:6px 7px;border-radius:6px;margin-bottom:4px;background:rgba(255,255,255,.03);font-size:10px;color:#c8c4bc;opacity:0;transition:.3s}
-.fold.on{opacity:1}
-.fold .n{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8a8580}
-.fold.hot .n{color:#ff8a8a}
+.fold{display:flex;justify-content:space-between;padding:6px 7px;border-radius:6px;margin-bottom:4px;background:rgba(255,255,255,.03);font-size:10px;color:#c8c4bc;opacity:0;transition:.3s}
+.fold.on{opacity:1}.fold .n{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8a8580}.fold.hot .n{color:#ff8a8a}
 .box{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px;margin-bottom:8px;opacity:0;transform:translateY(6px);transition:.35s}
 .box.on{opacity:1;transform:none}
-.t{font-size:12px;font-weight:700;font-family:'IBM Plex Sans',sans-serif}.s{font-size:9px;color:#9aa0b0;margin-top:3px;line-height:1.35}
+.t{font-size:12px;font-weight:700}.s{font-size:9px;color:#9aa0b0;margin-top:3px;line-height:1.35}
 .tag{display:inline-block;margin-top:5px;font-size:8px;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:#c8c4bc}
 .tag.go{color:#7dcea0;border-color:rgba(125,206,160,.35)}
-viz{display:block;margin-top:8px;opacity:0;transition:.4s}
-viz.on{opacity:1}
-table{width:100%;border-collapse:collapse;font-size:10px;font-family:'IBM Plex Sans',sans-serif}
+viz{display:block;margin-top:4px;opacity:0;transition:.4s}viz.on{opacity:1}
+table{width:100%;border-collapse:collapse;font-size:10px}
 th,td{text-align:left;padding:4px 2px;border-bottom:1px solid rgba(255,255,255,.06)}
-th{color:#8a8580;font-weight:500;font-size:8px;font-family:'IBM Plex Mono',monospace}
-td{color:#c8c4bc}tr.hot td{color:#ff8a8a}
-.bars{display:flex;align-items:flex-end;gap:4px;height:32px;margin-top:8px}
+th{color:#8a8580;font-size:8px;font-family:'IBM Plex Mono',monospace}td{color:#c8c4bc}tr.hot td{color:#ff8a8a}
+.bars{display:flex;align-items:flex-end;gap:4px;height:28px;margin-top:8px}
 .bars i{flex:1;background:#2a2c36;height:20%;display:block;transition:height .45s}
-.bars.on i:nth-child(1){height:100%}.bars.on i:nth-child(2){height:88%}
-.bars.on i:nth-child(3){height:72%}.bars.on i:nth-child(4){height:54%}
-.bars.on i:nth-child(5){height:22%;background:#e24b4b}
-.toast{position:absolute;right:14px;top:34px;width:190px;background:#2a1416;border:1px solid rgba(226,75,75,.45);padding:10px;font-size:10px;border-radius:8px;opacity:0;transform:translateY(-8px);transition:.4s;z-index:5;font-family:'IBM Plex Sans',sans-serif}
-.toast.on{opacity:1;transform:none}
-.toast b{display:block;color:#ff8a8a;margin-bottom:4px;font-size:10px}
+.bars.on i:nth-child(1){height:100%}.bars.on i:nth-child(2){height:88%}.bars.on i:nth-child(3){height:54%}.bars.on i:nth-child(4){height:22%;background:#e24b4b}
+.toast{position:absolute;right:14px;top:34px;width:196px;background:#2a1416;border:1px solid rgba(226,75,75,.45);padding:10px;font-size:10px;border-radius:8px;opacity:0;transform:translateY(-8px);transition:.4s;z-index:5}
+.toast.on{opacity:1;transform:none}.toast b{display:block;color:#ff8a8a;margin-bottom:4px}
 </style></head>
 <body>
 <div class="stage">
 <div class="br">
-  <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>hub / factory → replit · pendo</div>
+  <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>hub · factory + replit + figma + github + pendo</div>
   <div class="app">
     <div class="col">
-      <div class="sh">RAG · counts</div>
-      <div class="fold" id="f0">Interviews<span class="n">12</span></div>
+      <div class="sh">Knowledge</div>
+      <div class="fold" id="f0">Research<span class="n">12</span></div>
       <div class="fold" id="f1">Funnel notes<span class="n">8</span></div>
       <div class="fold" id="f2">Field labels<span class="n">21</span></div>
       <div class="fold hot" id="f3">Pendo events<span class="n">54</span></div>
       <div class="fold" id="f4">Prior reads<span class="n">6</span></div>
     </div>
     <div class="col">
-      <div class="sh">Build</div>
-      <div class="box" id="b0"><div class="t">Factory.ai</div><div class="s">Motor from the folders.</div><span class="tag">prompted</span></div>
-      <div class="box" id="b1"><div class="t">Figma Make</div><div class="s">Frames for Signals.</div><span class="tag">make</span></div>
+      <div class="sh">How it was built</div>
+      <div class="box" id="b0"><div class="t">Factory.ai + Figma</div><div class="s">Motor and frames. The hub is a product, not a slide.</div><span class="tag">built</span></div>
+      <div class="box" id="b1"><div class="t">GitHub · skills</div><div class="s">Analytics skills on the same events Measure named.</div><span class="tag">repo</span></div>
       <viz id="viz">
         <table>
           <thead><tr><th>Step</th><th>Reach</th><th>Drop</th></tr></thead>
@@ -65,29 +57,29 @@ td{color:#c8c4bc}tr.hot td{color:#ff8a8a}
             <tr class="hot"><td>Required</td><td>22</td><td>32</td></tr>
           </tbody>
         </table>
-        <div class="bars" id="bars"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bars" id="bars"><i></i><i></i><i></i><i></i></div>
       </viz>
     </div>
     <div class="col">
-      <div class="sh">Live</div>
-      <div class="box" id="b2"><div class="t">Replit</div><div class="s">Publisher for the hub.</div><span class="tag go">live</span></div>
+      <div class="sh">Live listen</div>
+      <div class="box" id="b2"><div class="t">Replit</div><div class="s">Publisher of the hub.</div><span class="tag go">live</span></div>
       <div class="box" id="b3"><div class="t">Pendo</div><div class="s">MCP + API.</div><span class="tag go">connected</span></div>
     </div>
   </div>
 </div>
-<div class="toast" id="toast"><b>Needs attention</b>Drop-off growing on required service. Opened in Signals.</div>
+<div class="toast" id="toast"><b>Needs attention</b>Drop-off growing on required service. Opened here.</div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
   ['f0','f1','f2','f3','f4'].forEach(function(id,i){after(80+i*80,function(){document.getElementById(id).classList.add('on')})});
-  after(500,function(){document.getElementById('b0').classList.add('on')});
-  after(700,function(){document.getElementById('b1').classList.add('on')});
-  after(900,function(){document.getElementById('b2').classList.add('on')});
-  after(1080,function(){document.getElementById('b3').classList.add('on')});
-  after(1500,function(){document.getElementById('toast').classList.add('on')});
-  after(1900,function(){document.getElementById('viz').classList.add('on');document.getElementById('bars').classList.add('on')});
+  after(520,function(){document.getElementById('b0').classList.add('on')});
+  after(720,function(){document.getElementById('b1').classList.add('on')});
+  after(920,function(){document.getElementById('b2').classList.add('on')});
+  after(1100,function(){document.getElementById('b3').classList.add('on')});
+  after(1600,function(){document.getElementById('toast').classList.add('on')});
+  after(2000,function(){document.getElementById('viz').classList.add('on');document.getElementById('bars').classList.add('on')});
 })();
 </script>
 </body></html>
