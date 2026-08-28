@@ -5,8 +5,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384}
-.stage{min-height:360px}
+:root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384;--spring:cubic-bezier(.34,1.32,.64,1)}
+.stage{position:relative;min-height:360px}
 .br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0b0c10}
 .bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
@@ -14,42 +14,54 @@
 .app{flex:1;display:flex;flex-direction:column;background:var(--bg);min-height:0}
 .nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:#0b0c10;border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
 .nav .on{color:#fff}
-.body{flex:1;padding:12px 14px;min-height:0}
-.prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:8px}
-.prog b{color:#fff}
+.body{flex:1;padding:12px 14px}
+.prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:8px}.prog b{color:#fff}
 h3{margin:0 0 8px;font-size:14px}
 .row{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:11px}
 .row.sel{border-color:rgba(232,148,58,.55)}
 .row .m{font-size:8px;color:var(--faint)}
 .pill{font-size:8px;padding:2px 6px;border:1px solid var(--line);border-radius:100px;color:var(--muted)}
-.pill.ok{color:var(--ok);border-color:rgba(125,206,160,.35)}
-.pill.warn{color:#f0de5a;border-color:rgba(240,222,90,.3)}
-.item{font-size:10px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--line)}
-.item b{color:#fff;font-weight:650}
+.pill.ok{color:var(--ok)}.pill.warn{color:#f0de5a}
+.item{font-size:10px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--line)}
+.item b{color:#fff}
 .ai{border:1px solid rgba(232,148,58,.3);background:#1a1612;padding:8px;font-size:9px;color:var(--muted);margin-top:8px}
 .ai b{color:var(--or);display:block;margin-bottom:4px}
 .note{font-size:9px;color:var(--muted);margin-top:6px}
+.nxt{display:inline-block;margin-top:10px;background:#fff;color:#111;font-size:9px;font-weight:650;padding:5px 10px;border-radius:5px}
+.cursor{position:absolute;z-index:50;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .85s var(--spring),top .85s var(--spring),opacity .2s}
+.cursor.show{opacity:1}.cursor.click{transform:scale(.88)}
 </style></head>
 <body>
 <div class="stage" id="stage"></div>
+<div class="cursor" id="c1"><svg viewBox="0 0 18 18"><path d="M2 2 L2 14 L6.2 10.4 L9.6 16.2 L11.4 15.3 L8 9.4 L14 9.4 Z" fill="#fff"/></svg></div>
 <script>
 (function(){
-  var stage=document.getElementById('stage'), timers=[], i=0;
+  var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[],i=0;
   function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t)}
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function show(addr,html){
-    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span>Marketplace</span><span class="on">Workspace</span></div><div class="body">'+html+'</div></div></div>';
-  }
+  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop'){timers.forEach(clearTimeout);c1.classList.remove('show','click')}});
+  function place(t){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+8)+'px';c1.style.top=(r.top-s.top+6)+'px';c1.classList.add('show')}
+  function click(cb){after(500,function(){c1.classList.add('click');after(280,function(){c1.classList.remove('click');if(cb)cb()})})}
+  function show(addr,html){stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span>Marketplace</span><span class="on">Workspace</span></div><div class="body">'+html+'</div></div></div>';c1.classList.remove('show')}
   var pages=[
-    {a:'workspace / published', h:'<div class="prog">Start · pick a product</div><h3>Published products</h3><div class="row sel"><div><div>Workbench workspace</div><div class="m">Service · Shared delivery</div></div><span class="pill ok">Live</span></div><div class="row"><div><div>Cluster service</div><div class="m">Service · Compute</div></div><span class="pill ok">Live</span></div>'},
-    {a:'workspace / onboarding', h:'<div class="prog">Step <b>1 of 6</b> · Onboarding</div><h3>What the requester sees first</h3><div class="item"><b>Walkthrough</b> — 20s before the form</div><div class="item"><b>Chat</b> — reads the same requirements</div><div class="note">This is not a tooltip. It is the path.</div>'},
-    {a:'workspace / checklist', h:'<div class="prog">Step <b>2 of 6</b> · Checklist</div><h3>Requirements</h3><div class="item"><b>Workspace name</b> — required</div><div class="item"><b>Required service</b> — required, must be named</div><div class="item"><b>Admin users</b> — optional on first request</div>'},
-    {a:'workspace / help', h:'<div class="prog">Step <b>3 of 6</b> · Help docs</div><h3>Documentation the chat will use</h3><div class="item"><b>What is a required service?</b></div><div class="item"><b>Region is residency, not the catalog item</b></div><div class="note">Same articles appear on the card tag and in the chatbot.</div>'},
-    {a:'workspace / builder', h:'<div class="prog">Step <b>4 of 6</b> · Form builder</div><h3>Build the request</h3><div class="ai"><b>Intelligent builder</b>Reads requirements + field types → drafts Need / Setup / Service / Review. Hand builder stays available.</div><div class="item" style="margin-top:8px"><b>Generated</b> — Service step isolated. That is the stall.</div>'},
-    {a:'workspace / ai-review', h:'<div class="prog">Step <b>5 of 6</b> · AI review</div><h3>Writing + completeness</h3><div class="ai"><b>Pass</b>Required service is labeled. Help is linked. Onboarding is more than a tooltip. Ready for a person.</div>'},
-    {a:'workspace / human-review', h:'<div class="prog">Step <b>6 of 6</b> · Human review</div><h3>Someone approves</h3><div class="row sel"><div><div>Workbench workspace</div><div class="m">Onboarding · checklist · help · form</div></div><span class="pill warn">In review</span></div><div class="note">Live only after this. Publish is not a button.</div>'}
+    {a:'workspace / published', h:'<div class="prog">Start · pick a product</div><h3>Published products</h3><div class="row" id="hit"><div><div>Workbench workspace</div><div class="m">Service · Shared delivery</div></div><span class="pill ok">Live</span></div><div class="row"><div><div>Cluster service</div><div class="m">Service · Compute</div></div><span class="pill ok">Live</span></div>'},
+    {a:'workspace / onboarding', h:'<div class="prog">Step <b>1 of 6</b> · Onboarding</div><h3>What the requester sees first</h3><div class="item"><b>Walkthrough</b> — before the form</div><div class="item"><b>Chat</b> — reads the same requirements</div><span class="nxt" id="hit">Continue</span>'},
+    {a:'workspace / checklist', h:'<div class="prog">Step <b>2 of 6</b> · Checklist</div><h3>Requirements</h3><div class="item"><b>Workspace name</b> — required</div><div class="item"><b>Required service</b> — named</div><span class="nxt" id="hit">Continue</span>'},
+    {a:'workspace / help', h:'<div class="prog">Step <b>3 of 6</b> · Help docs</div><h3>Docs the chat will use</h3><div class="item"><b>What is a required service?</b></div><div class="item"><b>Region is residency</b></div><span class="nxt" id="hit">Continue</span>'},
+    {a:'workspace / builder', h:'<div class="prog">Step <b>4 of 6</b> · Form builder</div><h3>Build the request</h3><div class="ai" id="hit"><b>Intelligent builder</b>Reads requirements + field types → Need / Setup / Service / Review. Hand builder stays.</div>'},
+    {a:'workspace / ai-review', h:'<div class="prog">Step <b>5 of 6</b> · AI review</div><h3>Writing + completeness</h3><div class="ai" id="hit"><b>Pass</b>Required service is labeled. Help is linked. Ready for a person.</div>'},
+    {a:'workspace / human-review', h:'<div class="prog">Step <b>6 of 6</b> · Human review</div><h3>Someone approves</h3><div class="row sel" id="hit"><div><div>Workbench workspace</div><div class="m">Onboarding · checklist · help · form</div></div><span class="pill warn">In review</span></div><div class="note">Live only after this.</div>'}
   ];
-  function go(){ var p=pages[i]; if(!p) return; show(p.a,p.h); i++; if(i<pages.length) after(1100,go); }
+  function go(){
+    var p=pages[i]; if(!p) return;
+    show(p.a,p.h);
+    after(400,function(){
+      var hit=document.getElementById('hit'); place(hit);
+      click(function(){
+        if(hit && hit.classList.contains('row')) hit.classList.add('sel');
+        i++; after(700,go);
+      });
+    });
+  }
   go();
 })();
 </script>

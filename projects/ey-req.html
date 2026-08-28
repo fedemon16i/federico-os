@@ -5,8 +5,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384}
-.stage{min-height:360px}
+:root{--bg:#12141c;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384;--spring:cubic-bezier(.34,1.32,.64,1)}
+.stage{position:relative;min-height:360px}
 .br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#0b0c10}
 .bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
@@ -14,15 +14,14 @@
 .app{flex:1;background:var(--bg);display:flex;flex-direction:column;min-height:0}
 .nav{height:26px;display:flex;align-items:center;gap:10px;padding:0 12px;background:#0b0c10;border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
 .nav .on{color:#fff}
-.body{flex:1;padding:12px 14px}
+.body{flex:1;padding:12px 14px;position:relative}
 .prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:8px}.prog b{color:#fff}
 h3{margin:0 0 8px;font-size:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
 .card .t{font-size:12px;font-weight:650}.card .m{font-size:8px;color:var(--faint);margin:3px 0 8px}
 .tag{display:inline-block;font-size:8px;padding:3px 7px;border:1px solid rgba(232,148,58,.4);color:#f0de5a;border-radius:100px}
-.exp{margin-top:8px;font-size:9px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px;display:none}
-.exp.on{display:block}
-.chat{background:#161821;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:9px;min-height:88px}
+.exp{margin-top:8px;font-size:9px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px}
+.chat{background:#161821;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:9px}
 .chat .lab{font-size:8px;color:var(--or);font-weight:700;margin-bottom:6px}
 .bub{background:#1c1e28;padding:6px 7px;border-radius:6px;margin:4px 0;color:var(--muted)}
 .bub.me{background:#241c14;color:#f3e6d0}
@@ -32,25 +31,47 @@ h3{margin:0 0 8px;font-size:14px}
 .help b{color:#fff}
 .price{font-size:9px;color:var(--muted);margin-top:8px}.price b{color:var(--gold)}
 .okline{font-size:10px;color:var(--ok);margin-top:8px;font-weight:650}
+.win{position:absolute;inset:0;background:#12141c;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .6s;pointer-events:none}
+.win.on{opacity:1;pointer-events:auto}
+.win .mark{width:36px;height:36px;border-radius:50%;background:#7dcea0;color:#0b0b0b;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;margin-bottom:10px;transform:scale(.8);transition:.4s .2s}
+.win.on .mark{transform:scale(1)}
+.win p{margin:0;font-size:14px;font-weight:700}.win span{font-size:10px;color:var(--muted);margin-top:6px}
+.cursor{position:absolute;z-index:50;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .85s var(--spring),top .85s var(--spring),opacity .2s}
+.cursor.show{opacity:1}.cursor.click{transform:scale(.88)}
 </style></head>
 <body>
 <div class="stage" id="stage"></div>
+<div class="cursor" id="c1"><svg viewBox="0 0 18 18"><path d="M2 2 L2 14 L6.2 10.4 L9.6 16.2 L11.4 15.3 L8 9.4 L14 9.4 Z" fill="#fff"/></svg></div>
 <script>
 (function(){
-  var stage=document.getElementById('stage'), timers=[], i=0;
+  var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[],i=0;
   function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function show(addr,html){
-    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span class="on">Marketplace</span></div><div class="body">'+html+'</div></div></div>';
+  function place(t){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+8)+'px';c1.style.top=(r.top-s.top+6)+'px';c1.classList.add('show')}
+  function click(cb){after(500,function(){c1.classList.add('click');after(280,function(){c1.classList.remove('click');if(cb)cb()})})}
+  function frame(addr,html){
+    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span class="on">Marketplace</span></div><div class="body" id="bd">'+html+'<div class="win" id="win"><div class="mark">✓</div><p>They reached the field.</p><span>Required service is no longer a surprise.</span></div></div></div></div>';
+    c1.classList.remove('show');
   }
   var pages=[
-    {a:'marketplace / services', h:'<h3>Services</h3><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><span class="tag" id="tg">Requirements</span><div class="exp on" id="ex"><b>Before you enter.</b> Workspace name. One required service. Admin users optional.</div></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><span class="tag">Requirements</span></div>'},
-    {a:'marketplace / onboarding', h:'<div class="prog">Onboarding · before the form</div><h3>Ask the offering</h3><div class="chat"><div class="lab">Chat · reads publisher docs</div><div class="bub">What counts as a required service?</div><div class="bub me">The shared tool this workspace will run. Pick one. Optional add-ons come after.</div></div>'},
-    {a:'marketplace / form · 1a', h:'<div class="prog">Step <b>1 of 2</b> · Need · substep 1</div><h3>Ready?</h3><div class="help">Checklist from the publisher. Same items as the card tag.</div><div class="help"><b>I have a workspace name.</b></div>'},
-    {a:'marketplace / form · 1b', h:'<div class="prog">Step <b>1 of 2</b> · Setup · substep 2</div><h3>Name the workspace</h3><div class="fld"><label>Workspace name</label><div class="box">North studio</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>'},
-    {a:'marketplace / form · 2', h:'<div class="prog">Step <b>2 of 2</b> · Service</div><h3>Required service</h3><div class="fld"><label>Attach one service</label><div class="box">Select…</div></div><div class="help"><b>This was the stall.</b> Chat + tag + checklist already named it.</div><div class="price">Estimate <b>$0 / mo</b> until a pick.</div><div class="okline">Reaching this step is the win.</div>'}
+    {a:'marketplace / services', h:'<h3>Services</h3><div class="card" id="hit"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><span class="tag">Requirements</span><div class="exp"><b>Before you enter.</b> Workspace name. One required service.</div></div>'},
+    {a:'marketplace / onboarding', h:'<div class="prog">Onboarding</div><h3>Ask the offering</h3><div class="chat" id="hit"><div class="lab">Chat · reads publisher docs</div><div class="bub">What counts as a required service?</div><div class="bub me">The shared tool this workspace will run.</div></div>'},
+    {a:'form · 1a Need', h:'<div class="prog">Step <b>1 of 2</b> · Need</div><h3>Ready?</h3><div class="help" id="hit">Checklist from the publisher. Same items as the card tag.</div>'},
+    {a:'form · 1b Setup', h:'<div class="prog">Step <b>1 of 2</b> · Setup</div><h3>Name the workspace</h3><div class="fld"><label>Workspace name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>'},
+    {a:'form · 2 Service', h:'<div class="prog">Step <b>2 of 2</b> · Service</div><h3>Required service</h3><div class="fld"><label>Attach one service</label><div class="box" id="hit">Select…</div></div><div class="help"><b>This was the stall.</b></div><div class="okline">Reaching this step is the win.</div>'}
   ];
-  function go(){ var p=pages[i]; if(!p) return; show(p.a,p.h); i++; if(i<pages.length) after(1150,go); }
+  function go(){
+    var p=pages[i]; if(!p) return;
+    frame(p.a,p.h);
+    after(450,function(){
+      place(document.getElementById('hit'));
+      click(function(){
+        i++;
+        if(i<pages.length) after(800,go);
+        else after(700,function(){c1.classList.remove('show');document.getElementById('win').classList.add('on')});
+      });
+    });
+  }
   go();
 })();
 </script>
