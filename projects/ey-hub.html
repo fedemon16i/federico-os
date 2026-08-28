@@ -1,102 +1,82 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Hub stack</title>
+<title>Hub signals</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
 .stage{min-height:360px}
-.browser{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0b0c10}
-.bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08)}
-.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
-.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
-.addr{flex:1;height:14px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:#9aa0b0;padding:0 8px;display:flex;align-items:center}
-.app{flex:1;display:grid;grid-template-columns:118px 1fr 128px;background:#12141c;min-height:0}
-.col{padding:12px;border-right:1px solid rgba(255,255,255,.07);font-size:9px;opacity:.28;transition:opacity .4s}
-.col.on{opacity:1}
-.col:last-child{border:0}
-.sh{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#8a8580;margin-bottom:8px}
-.fold{padding:5px 6px;border-radius:6px;color:#6d7384;margin-bottom:3px;background:rgba(255,255,255,.03);transition:.3s}
-.fold.on{color:#c8c4bc}
-.fold.hot{background:rgba(232,148,58,.14);color:#f0de5a}
-.box{background:#1c1e28;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px;margin-bottom:6px;opacity:0;transform:translateY(8px);transition:.35s}
-.box.on{opacity:1;transform:none}
-.box.run{border-color:rgba(232,148,58,.45)}
-.t{font-size:11px;font-weight:700}.s{font-size:8.5px;color:#9aa0b0;margin-top:3px}
-.tag{display:inline-block;font-size:7.5px;padding:2px 6px;border-radius:100px;border:1px solid rgba(255,255,255,.1);margin-top:5px;color:#c8c4bc}
-.tag.go{color:#7dcea0;border-color:rgba(125,206,160,.35)}
-.pulse{display:inline-block;width:6px;height:6px;border-radius:50%;background:#6d7384;margin-right:5px;vertical-align:middle}
-.pulse.on{background:#7dcea0;box-shadow:0 0 8px #7dcea0}
-.sig{margin-top:8px;height:28px;display:flex;align-items:flex-end;gap:3px;opacity:0;transition:.4s}
-.sig.on{opacity:1}
-.sig b{display:block;width:6px;background:rgba(232,148,58,.35);height:8px;transition:height .4s}
-.sig.on b:nth-child(1){height:10px}.sig.on b:nth-child(2){height:16px}.sig.on b:nth-child(3){height:12px}.sig.on b:nth-child(4){height:22px}.sig.on b:nth-child(5){height:14px}
+.br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#0b0c10}
+.bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0}
+.d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
+.d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
+.app{flex:1;display:grid;grid-template-columns:108px 1fr;background:#12141c;min-height:0}
+.side{padding:10px 8px;border-right:1px solid rgba(255,255,255,.08);font-size:9px;color:#8a8580}
+.side a{display:flex;justify-content:space-between;padding:6px 7px;border-radius:6px;margin-bottom:3px;color:#9aa0b0}
+.side a.on{background:rgba(255,255,255,.06);color:#fff}
+.badge{background:#e24b4b;color:#fff;font-size:8px;padding:1px 5px;border-radius:100px}
+.main{padding:10px 12px;overflow:hidden}
+.note{display:flex;align-items:center;gap:8px;background:#2a1416;border:1px solid rgba(226,75,75,.4);padding:7px 10px;font-size:10px;margin-bottom:8px;opacity:0;transform:translateY(-6px);transition:.35s}
+.note.on{opacity:1;transform:none}
+.note b{color:#ff8a8a}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.kpi{border:1px solid rgba(255,255,255,.08);padding:8px;opacity:0;transform:translateY(6px);transition:.35s}
+.kpi.on{opacity:1;transform:none}
+.kpi .l{font-size:8px;color:#8a8580;text-transform:uppercase;letter-spacing:.08em}
+.kpi .v{font-size:16px;font-weight:700;margin-top:3px}
+.kpi.hot .v{color:#ff6b6b}
+table{width:100%;border-collapse:collapse;font-size:10px;opacity:0;transition:.4s}
+table.on{opacity:1}
+th{text-align:left;font-size:8px;color:#8a8580;font-weight:500;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.08)}
+td{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.05);color:#c8c4bc}
+tr.hot td{color:#ff8a8a;background:rgba(226,75,75,.08)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:48px;margin-top:8px}
+.bars b{flex:1;background:#2a2c36;height:10%;transition:height .5s;display:block}
+.bars.on b:nth-child(1){height:100%}.bars.on b:nth-child(2){height:88%}.bars.on b:nth-child(3){height:72%}
+.bars.on b:nth-child(4){height:54%}.bars.on b:nth-child(5){height:22%;background:#e24b4b}
 </style></head>
 <body>
 <div class="stage">
-<div class="browser"><div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="addr" id="addr">hub / idle</div></div>
-<div class="app">
-  <div class="col" id="c0">
-    <div class="sh">RAG folders</div>
-    <div class="fold" id="f0">▣ Interviews</div>
-    <div class="fold" id="f1">▣ Funnel notes</div>
-    <div class="fold" id="f2">▣ Field labels</div>
-    <div class="fold" id="f3">▣ Pendo events</div>
-    <div class="fold" id="f4">▣ Prior reads</div>
-  </div>
-  <div class="col" id="c1">
-    <div class="sh">Build</div>
-    <div class="box" id="b0"><div class="t">Factory.ai</div><div class="s">Motor reads the folders.</div><span class="tag" id="t0">idle</span></div>
-    <div class="box" id="b1"><div class="t">Figma Make</div><div class="s">Frames for Signals + guided form.</div><span class="tag" id="t1">idle</span></div>
-  </div>
-  <div class="col" id="c2">
-    <div class="sh">Publish + listen</div>
-    <div class="box" id="b2"><div class="t"><i class="pulse" id="pl"></i>Replit</div><div class="s">Publisher for the hub.</div><span class="tag" id="t2">offline</span></div>
-    <div class="box" id="b3"><div class="t">Pendo</div><div class="s">MCP + API on named events.</div><span class="tag" id="t3">waiting</span>
-      <div class="sig" id="sig"><b></b><b></b><b></b><b></b><b></b></div>
+<div class="br">
+  <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>hub / signals · pendo + factory</div>
+  <div class="app">
+    <div class="side">
+      <div style="color:#fff;font-weight:700;margin-bottom:8px;font-size:10px">Signals</div>
+      <a class="on" href="#">Drop-off <span class="badge" id="bd">3</span></a>
+      <a href="#">Guides</a>
+      <a href="#">Events</a>
+      <a href="#">RAG</a>
+    </div>
+    <div class="main">
+      <div class="note" id="note"><b>Alert.</b> Required service — people leave after naming the workspace.</div>
+      <div class="kpis">
+        <div class="kpi" id="k0"><div class="l">Form starts</div><div class="v">high</div></div>
+        <div class="kpi hot" id="k1"><div class="l">Required field</div><div class="v">drop</div></div>
+        <div class="kpi" id="k2"><div class="l">Guide views</div><div class="v">thin</div></div>
+      </div>
+      <table id="tb">
+        <thead><tr><th>Step</th><th>Reach</th><th>Drop</th></tr></thead>
+        <tbody>
+          <tr><td>Home</td><td>full</td><td>—</td></tr>
+          <tr><td>Catalog</td><td>held</td><td>low</td></tr>
+          <tr><td>Services</td><td>held</td><td>low</td></tr>
+          <tr><td>Workbench</td><td>opens</td><td>mid</td></tr>
+          <tr class="hot"><td>Required service</td><td>stall</td><td>high</td></tr>
+        </tbody>
+      </table>
+      <div class="bars" id="bars"><b></b><b></b><b></b><b></b><b></b></div>
     </div>
   </div>
-</div></div>
+</div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  var addr=document.getElementById('addr');
-  after(80,function(){document.getElementById('c0').classList.add('on')});
-  ['f0','f1','f2','f3','f4'].forEach(function(id,i){
-    after(160+i*120,function(){
-      document.getElementById(id).classList.add('on','hot');
-      after(200,function(){document.getElementById(id).classList.remove('hot')});
-    });
-  });
-  after(900,function(){
-    document.getElementById('c1').classList.add('on');
-    document.getElementById('b0').classList.add('on','run');
-    document.getElementById('t0').textContent='reading RAG';
-    addr.textContent='hub / factory reading';
-  });
-  after(1300,function(){
-    document.getElementById('t0').textContent='prompted';
-    document.getElementById('b1').classList.add('on','run');
-    document.getElementById('t1').textContent='make';
-    addr.textContent='hub / figma make';
-  });
-  after(1700,function(){
-    document.getElementById('c2').classList.add('on');
-    document.getElementById('b2').classList.add('on');
-    document.getElementById('t2').textContent='live';
-    document.getElementById('t2').classList.add('go');
-    document.getElementById('pl').classList.add('on');
-    addr.textContent='hub / replit live';
-  });
-  after(2100,function(){
-    document.getElementById('b3').classList.add('on');
-    document.getElementById('t3').textContent='connected';
-    document.getElementById('t3').classList.add('go');
-    document.getElementById('sig').classList.add('on');
-    addr.textContent='hub / pendo mcp + api';
-  });
+  after(120,function(){document.getElementById('note').classList.add('on')});
+  ['k0','k1','k2'].forEach(function(id,i){after(360+i*160,function(){document.getElementById(id).classList.add('on')})});
+  after(900,function(){document.getElementById('tb').classList.add('on')});
+  after(1200,function(){document.getElementById('bars').classList.add('on')});
 })();
 </script>
 </body></html>

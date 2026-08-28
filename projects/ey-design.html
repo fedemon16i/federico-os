@@ -1,118 +1,83 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Design</title>
+<title>Design dual</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a}
-.stage{position:relative;min-height:360px}
-.browser{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--nav);box-shadow:0 16px 40px rgba(0,0,0,.4)}
-.bbar{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);flex-shrink:0}
-.dots{display:flex;gap:5px}.dots i{width:7px;height:7px;border-radius:50%;display:block}
-.dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
-.addr{flex:1;height:14px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:#9aa0b0;padding:0 8px;display:flex;align-items:center}
-.app{flex:1;min-height:0;background:var(--bg)}
-.split{display:grid;grid-template-columns:1fr 1fr;height:100%}
-.pane{padding:10px 12px;border-right:1px solid var(--line);opacity:0;transform:translateY(8px);transition:.4s}
-.pane.on{opacity:1;transform:none}
-.pane:last-child{border:0}
-.k{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin-bottom:8px}
-.cv{border:1px dashed rgba(255,255,255,.14);background:#0e1016;min-height:210px;padding:8px;position:relative}
-.fr{border:1px solid rgba(255,255,255,.12);background:#1c1e28;padding:6px 8px;margin-bottom:6px;font-size:10px;opacity:0;transform:translateY(6px);transition:.35s}
-.fr.on{opacity:1;transform:none}
-.fr b{display:block}.fr span{font-size:8px;color:#9aa0b0}
-.tools{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
-.tools i{font-style:normal;font-size:8px;padding:2px 6px;border:1px solid var(--line);color:#6d7384;border-radius:100px}
-.tools i.on{color:#f0de5a;border-color:rgba(240,222,90,.4)}
-.prompt{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#c8c4bc;line-height:1.45;min-height:42px;margin-bottom:8px}
-.merge{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) scale(.85);background:var(--or);color:#1a1508;font-size:10px;font-weight:700;padding:6px 12px;border-radius:100px;opacity:0;z-index:3;transition:.35s}
+.stage{padding:4px;min-height:360px;position:relative}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.br{height:348px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#0b0c10;opacity:0;transform:translateY(8px);transition:.4s}
+.br.on{opacity:1;transform:none}
+.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0}
+.d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
+.d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
+.body{flex:1;min-height:0;display:flex;background:#12141c}
+.rail{width:22px;background:#0e0f14;border-right:1px solid rgba(255,255,255,.07)}
+.canvas{flex:1;padding:10px;background:radial-gradient(circle at 50% 40%,#1a1c24,#0c0d12)}
+.art{background:#1c1e28;border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:6px;margin:0 auto 8px;width:86%;opacity:0;transform:scale(.96);transition:.35s}
+.art.on{opacity:1;transform:none}
+.art .h{height:8px;width:40%;background:#fff;margin-bottom:5px}
+.art .p{height:5px;width:70%;background:rgba(255,255,255,.15);margin-bottom:3px}
+.art .btn{height:8px;width:28%;background:#e8943a;margin-top:4px}
+.art.sel{outline:1px solid #e8943a}
+.lbl{font-size:7px;color:#8a8580;margin:0 0 4px 7%}
+.side{width:72px;background:#0e0f14;border-right:1px solid rgba(255,255,255,.07);padding:8px 6px;font-size:7px;color:#8a8580}
+.side div{margin-bottom:4px}
+.chat{flex:1;padding:8px;display:flex;flex-direction:column;gap:5px}
+.msg{font-size:8.5px;line-height:1.35;padding:6px 7px;border-radius:6px;max-width:95%;opacity:0;transform:translateY(6px);transition:.3s}
+.msg.on{opacity:1;transform:none}
+.msg.me{background:#241c14;color:#f3e6d0;align-self:flex-end}
+.msg.ai{background:#1c1e28;color:#c8c4bc}
+.repo{font-family:'IBM Plex Mono',monospace;font-size:7.5px;color:#9aa0b0;padding:6px 8px;border-top:1px solid rgba(255,255,255,.07)}
+.repo span{display:block;opacity:0;transition:.3s}.repo span.on{opacity:1}
+.merge{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);background:#e8943a;color:#1a1508;font-size:9px;font-weight:700;padding:6px 12px;border-radius:100px;opacity:0;z-index:4;transition:.35s}
 .merge.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.pub{padding:10px 12px;display:none;height:100%}
-.pub.on{display:block}
-.nav{display:flex;gap:10px;font-size:9px;color:#9aa0b0;margin-bottom:8px}
-.nav .on{color:#fff}
-.hrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.hrow h3{margin:0;font-size:13px}
-.btn{background:#fff;color:#111;border:0;border-radius:5px;padding:4px 8px;font-size:9px;font-weight:650}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;opacity:0;transform:translateY(6px);transition:.35s}
-.card.on{opacity:1;transform:none}
-.card .t{font-size:10px;font-weight:650}.card .m{font-size:8px;color:#6d7384;margin:2px 0 5px}
-.pill{font-size:7.5px;padding:2px 6px;border-radius:100px;border:1px solid var(--line);color:#9aa0b0;margin-right:4px}
-.pill.ok{color:#7dcea0;border-color:rgba(125,206,160,.3)}
-.pill.warn{color:var(--gold);border-color:rgba(240,222,90,.3)}
-.done{font-size:9px;color:#9aa0b0;margin-top:8px;opacity:0}.done.on{opacity:1}
-.done b{color:var(--or)}
 </style></head>
 <body>
 <div class="stage">
-<div class="browser">
-  <div class="bbar"><div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="addr" id="addr">design / split canvas</div></div>
-  <div class="app" id="app">
-    <div class="split" id="split">
-      <div class="pane" id="left">
-        <div class="k">Figma · by hand</div>
-        <div class="cv">
-          <div class="fr" id="fr0"><b>Gate</b><span>Checklist before request</span></div>
-          <div class="fr" id="fr1"><b>Field</b><span>Required service named</span></div>
-          <div class="fr" id="fr2"><b>Studio</b><span>Publisher listings + status</span></div>
-        </div>
-      </div>
-      <div class="pane" id="right">
-        <div class="k">AI canvas · same problem</div>
-        <div class="tools">
-          <i id="t0">Factory.ai</i><i id="t1">Claude Code</i><i id="t2">Grok</i><i id="t3">Codex</i><i id="t4">Replit</i>
-        </div>
-        <div class="prompt" id="pr"></div>
-        <div class="cv">
-          <div class="fr" id="ai0"><b>Generated walkthrough</b><span>Field order + help</span></div>
-          <div class="fr" id="ai1"><b>Generated studio</b><span>Type, line, AI review</span></div>
+  <div class="pair">
+    <div class="br" id="fig">
+      <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma · catalog / publisher</div>
+      <div class="body"><div class="rail"></div>
+        <div class="canvas">
+          <div class="lbl">Page · hand</div>
+          <div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="btn"></div></div>
+          <div class="art" id="a1"><div class="h"></div><div class="p"></div><div class="p" style="width:40%"></div></div>
+          <div class="art" id="a2"><div class="h"></div><div class="p"></div><div class="btn"></div></div>
         </div>
       </div>
     </div>
-    <div class="pub" id="pub">
-      <div class="nav"><span>Overview</span><span>Marketplace</span><span class="on">Publish</span></div>
-      <div class="hrow"><h3>Your offerings</h3><span class="btn">New offering</span></div>
-      <div class="grid">
-        <div class="card" id="pc0"><div class="t">Workbench workspace</div><div class="m">Service · Shared delivery</div><span class="pill ok">Live</span><span class="pill warn">Checklist 2/5</span></div>
-        <div class="card" id="pc1"><div class="t">Cluster service</div><div class="m">Service · Compute</div><span class="pill ok">Onboarding on</span><span class="pill warn">AI: tighten copy</span></div>
-        <div class="card" id="pc2"><div class="t">Starter kit · Data</div><div class="m">Kit · Enablement</div><span class="pill">Draft</span></div>
-        <div class="card" id="pc3"><div class="t">Automation seat</div><div class="m">License</div><span class="pill ok">Ready for review</span></div>
+    <div class="br" id="ai">
+      <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>factory · repo / chat</div>
+      <div class="body">
+        <div class="side"><div>repo</div><div id="r0">studio.md</div><div id="r1">listings.tsx</div><div id="r2">ai-pass.ts</div></div>
+        <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+          <div class="chat">
+            <div class="msg me" id="m0">Same problem. Publisher is not one button.</div>
+            <div class="msg ai" id="m1">Drafting listings + type/line + AI review.</div>
+            <div class="msg me" id="m2">Keep requester help in the same surface.</div>
+            <div class="msg ai" id="m3">Canvas ready. Merge with the Figma frames.</div>
+          </div>
+          <div class="repo"><span id="g0">claude · factory · grok · codex · replit</span></div>
+        </div>
       </div>
-      <div class="done" id="done"><b>Merged design.</b> Hand frames + AI canvas → publisher studio.</div>
     </div>
   </div>
-</div>
-<div class="merge" id="mg">merge both</div>
+  <div class="merge" id="mg">merge canvases</div>
 </div>
 <script>
 (function(){
-  var t=[], lines=[
-    'constraint: publisher is not a single button',
-    'listings + type + line + AI pass',
-    'requester must see the same help'
-  ];
-  function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
+  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
   function on(id){var n=document.getElementById(id); if(n) n.classList.add('on')}
-  var addr=document.getElementById('addr'), pr=document.getElementById('pr');
-  after(80,function(){on('left')});
-  ['fr0','fr1','fr2'].forEach(function(id,i){after(260+i*220,function(){on(id)})});
-  after(900,function(){on('right'); addr.textContent='design / ai canvas'});
-  ['t0','t1','t2','t3','t4'].forEach(function(id,i){after(1000+i*140,function(){on(id)})});
-  lines.forEach(function(s,i){after(1100+i*280,function(){pr.textContent=s})});
-  after(2000,function(){on('ai0')});
-  after(2280,function(){on('ai1')});
-  after(2600,function(){on('mg'); addr.textContent='design / merge'});
-  after(3100,function(){
-    document.getElementById('mg').classList.remove('on');
-    document.getElementById('split').style.display='none';
-    document.getElementById('pub').classList.add('on');
-    addr.textContent='design / publisher studio';
-    ['pc0','pc1','pc2','pc3'].forEach(function(id,i){after(i*120,function(){on(id)})});
-    after(520,function(){on('done')});
-  });
+  after(60,function(){on('fig')});
+  ['a0','a1','a2'].forEach(function(id,i){after(280+i*260,function(){on(id); if(id==='a2') document.getElementById(id).classList.add('sel')})});
+  after(900,function(){on('ai')});
+  ['r0','r1','r2'].forEach(function(id,i){after(1000+i*120,function(){on(id)})});
+  ['m0','m1','m2','m3'].forEach(function(id,i){after(1100+i*320,function(){on(id)})});
+  after(2400,function(){on('g0')});
+  after(2800,function(){on('mg')});
 })();
 </script>
 </body></html>
