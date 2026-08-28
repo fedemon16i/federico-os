@@ -86,7 +86,6 @@ PROJECTS.forEach(function(proj,pi){
   tab.innerHTML='<span class="dot"></span>'+proj.name;
   tab.onclick=function(){switchProj(pi)};
   tabsEl.appendChild(tab);
-
   var panel=document.createElement('div');
   panel.className='proj-panel'+(pi===0?' on':'');
   panel.id='panel-'+proj.id;
@@ -94,17 +93,26 @@ PROJECTS.forEach(function(proj,pi){
   panel.innerHTML='<div class="case-hd"><h2>'+proj.name+'</h2><p>'+(proj.lede||'')+'</p></div>';
   var list=document.createElement('div');
   proj.beats.forEach(function(beat,bi){
-    var key=proj.id+'_'+bi;
+    var units=[beat];
+    if(proj.id==='ey' && EY_META[bi]){
+      var m=EY_META[bi];
+      if(m.scenes){
+        units=m.scenes.map(function(sc){
+          return {n:beat.n,name:beat.name+' · '+sc.name,kind:sc.kind,src:sc.src,line:sc.line,cap:sc.cap,under:sc.under,chips:sc.chips,contains:sc.contains,desc:''};
+        });
+      } else {
+        beat.kind=m.kind; beat.src=m.src; beat.line=m.line; beat.cap=m.cap;
+        beat.under=m.under; beat.chips=m.chips; beat.contains=m.contains; beat.desc='';
+        units=[beat];
+      }
+    }
+    units.forEach(function(beat,ui){
+    var key=proj.id+'_'+bi+'_'+ui;
     var row=document.createElement('div');
     row.className='beat';
     var info=document.createElement('div');
     info.className='bi';
     var chips='';
-    if(proj.id==='ey' && EY_META[bi]){
-      var m=EY_META[bi];
-      beat.kind=m.kind; beat.src=m.src; beat.line=m.line; beat.cap=m.cap;
-      beat.under=m.under; beat.chips=m.chips; beat.contains=m.contains; beat.desc='';
-    }
     if(beat.chips) chips='<div class="bi-chips">'+beat.chips.map(function(c){return '<span class="bi-chip">'+c+'</span>'}).join('')+'</div>';
     var has='';
     if(beat.contains) has='<div class="bi-has-lab">En este cuadro</div><ul class="bi-has">'+beat.contains.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>';
@@ -160,20 +168,17 @@ PROJECTS.forEach(function(proj,pi){
     row.appendChild(info);
     row.appendChild(stageWrap);
     list.appendChild(row);
+    });
   });
   panel.appendChild(list);
   panelsEl.appendChild(panel);
 });
-
 function unloadProj(id){
-  PROJECTS.forEach(function(p){
-    if(p.id!==id) return;
-    p.beats.forEach(function(_,bi){
-      var iframe=iframes[p.id+'_'+bi];
-      if(!iframe) return;
-      iframe.classList.remove('loaded');
-      iframe.removeAttribute('src');
-    });
+  var panel=document.getElementById('panel-'+id);
+  if(!panel) return;
+  panel.querySelectorAll('iframe').forEach(function(iframe){
+    iframe.classList.remove('loaded');
+    iframe.removeAttribute('src');
   });
 }
 function mountVisible(){
