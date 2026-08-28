@@ -7,23 +7,31 @@
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
 .stage{position:relative;min-height:360px}
 .br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#0b0c10}
-.bb{height:24px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0;font-family:'IBM Plex Mono',monospace}
+.bb{height:22px;display:flex;align-items:center;gap:8px;padding:0 10px;background:#14151c;border-bottom:1px solid rgba(255,255,255,.08);font-size:8px;color:#9aa0b0;font-family:'IBM Plex Mono',monospace}
 .d{display:flex;gap:5px}.d i{width:7px;height:7px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.app{flex:1;display:grid;grid-template-columns:128px 1fr;min-height:0;background:#12141c}
+.app{flex:1;display:grid;grid-template-columns:118px 1fr;min-height:0;background:#12141c}
 .side{padding:12px 8px;border-right:1px solid rgba(255,255,255,.08);font-size:10px}
 .sh{font-size:11px;font-weight:700;margin-bottom:10px}
 .side a{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;margin-bottom:3px;color:#9aa0b0}
 .side a.on{background:rgba(255,255,255,.07);color:#fff}
 .badge{background:#e24b4b;color:#fff;font-size:8px;padding:1px 6px;border-radius:100px;font-family:'IBM Plex Mono',monospace}
-.main{padding:12px 14px}
+.main{padding:12px 14px;overflow:hidden}
 h3{margin:0 0 8px;font-size:14px}
 .filters{display:flex;gap:6px;margin-bottom:10px}
 .filters i{font-style:normal;font-size:8px;padding:3px 7px;border:1px solid rgba(255,255,255,.1);border-radius:100px;color:#8a8580}
-.filters i.on{color:#fff;border-color:#e8943a;color:#f0de5a}
-table{width:100%;border-collapse:collapse;font-size:10px}
-th,td{text-align:left;padding:5px 4px;border-bottom:1px solid rgba(255,255,255,.06)}
-th{color:#8a8580;font-size:8px;font-family:'IBM Plex Mono',monospace}td{color:#c8c4bc}tr.hot td{color:#ff8a8a}
+.filters i.on{color:#f0de5a;border-color:#e8943a}
+.funs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;opacity:0;transition:.4s}
+.funs.on{opacity:1}
+.fn{border:1px solid rgba(255,255,255,.08);padding:8px}
+.fn .l{font-size:8px;font-family:'IBM Plex Mono',monospace;color:#8a8580;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.bars{display:flex;align-items:flex-end;gap:3px;height:28px}
+.bars b{flex:1;background:#2a2c36;display:block}
+.bars.hot b:last-child{background:#e24b4b}
+.feat{opacity:0;transition:.4s}.feat.on{opacity:1}
+.feat .l{font-size:8px;font-family:'IBM Plex Mono',monospace;color:#8a8580;letter-spacing:.08em;text-transform:uppercase;margin:8px 0 6px}
+.feat div{font-size:10px;color:#c8c4bc;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.feat em{color:#f0de5a;font-style:normal}
 .cursor{position:absolute;z-index:20;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1),opacity .2s}
 .cursor.show{opacity:1}.cursor.click{transform:scale(.88)}
 </style></head>
@@ -57,12 +65,12 @@ th{color:#8a8580;font-size:8px;font-family:'IBM Plex Mono',monospace}td{color:#c
   after(500,function(){
     var al=document.getElementById('al'); place(al); click(function(){
       al.classList.add('on');
-      main.innerHTML='<h3>Alarms</h3><div class="filters"><i>All</i><i id="f1">Catalog</i><i id="f2">Workbench</i><i>Reports</i></div><table><tr><th>Area</th><th>Signal</th></tr><tr><td>Catalog</td><td>held</td></tr><tr id="rw"><td>Workbench · required</td><td>drop growing</td></tr></table>';
+      main.innerHTML='<h3>Alarms</h3><div class="filters"><i>All</i><i>Catalog</i><i id="f2">Workbench</i><i>Reports</i></div><p style="font-size:10px;color:#9aa0b0">Filter the area. Then the evidence opens.</p>';
       after(600,function(){
         var f=document.getElementById('f2'); place(f); click(function(){
           f.classList.add('on');
-          document.getElementById('rw').className='hot';
-          after(400,function(){c1.classList.remove('show')});
+          c1.classList.remove('show');
+          main.innerHTML='<h3>Workbench</h3><div class="filters"><i>All</i><i>Catalog</i><i class="on">Workbench</i></div><div class="funs on" id="funs"><div class="fn"><div class="l">Request funnel</div><div class="bars hot"><b style="height:100%"></b><b style="height:88%"></b><b style="height:54%"></b><b style="height:22%"></b></div></div><div class="fn"><div class="l">Onboard funnel</div><div class="bars"><b style="height:90%"></b><b style="height:70%"></b><b style="height:62%"></b><b style="height:58%"></b></div></div><div class="fn"><div class="l">Help → form</div><div class="bars"><b style="height:40%"></b><b style="height:28%"></b><b style="height:18%"></b><b style="height:12%"></b></div></div><div class="fn"><div class="l">Return path</div><div class="bars"><b style="height:50%"></b><b style="height:44%"></b><b style="height:30%"></b><b style="height:22%"></b></div></div></div><div class="feat on"><div class="l">Features in this area</div><div>Required service <em>field</em></div><div>Order rail</div><div>Onboarding guide</div><div>Requirements chip on the card</div></div>';
         });
       });
     });
