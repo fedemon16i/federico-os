@@ -48,6 +48,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .beat-stage{position:relative;aspect-ratio:560/410;overflow:hidden}
 .beat-stage[data-kind="phone"]{aspect-ratio:9/19.5;max-width:260px;width:100%;justify-self:center}
 .beat-stage[data-kind="diagram"]{aspect-ratio:auto;min-height:340px;overflow:visible}
+.beat-stage[data-kind="window"]{aspect-ratio:16/11;min-height:320px;overflow:visible}
 .beat-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:none;background:transparent;pointer-events:none;opacity:0}
 .beat-stage iframe.loaded{opacity:1;transition:opacity .35s}
 .fld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -73,11 +74,11 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 <div class="proj-tabs" id="projTabs" role="tablist"></div>
 <div id="panels"></div>
 <script src="beats-data.js"></script>
+<script src="ey-meta.js"></script>
 <script>
 var iframes={}, srcs={}, curProj=0;
 var tabsEl=document.getElementById('projTabs');
 var panelsEl=document.getElementById('panels');
-
 PROJECTS.forEach(function(proj,pi){
   var tab=document.createElement('button');
   tab.className='ptab'+(pi===0?' on':'');
@@ -99,16 +100,10 @@ PROJECTS.forEach(function(proj,pi){
     var info=document.createElement('div');
     info.className='bi';
     var chips='';
-    if(proj.id==='ey' && bi===0){
-      beat.kind='diagram';
-      beat.src='projects/ey-01-measure.html';
-      beat.name='Measure';
-      beat.line='Structure before diagnosis.<br><em>Map the product</em>.';
-      beat.cap='Pages, flows, features, and events — tagged end to end.';
-      beat.under='Sitemap + features + events — the instrumentation map.';
-      beat.desc='';
-      beat.chips=['Pendo','GA4','Paths'];
-      beat.contains=['Information architecture: Catalog home → Services / Request form / Workbench / Reports','Features tagged: Explore catalog, Service card, Required field, Submit request','Events: catalog_view · item_open · form_start · form_dropoff'];
+    if(proj.id==='ey' && EY_META[bi]){
+      var m=EY_META[bi];
+      beat.kind=m.kind; beat.src=m.src; beat.line=m.line; beat.cap=m.cap;
+      beat.under=m.under; beat.chips=m.chips; beat.contains=m.contains; beat.desc='';
     }
     if(beat.chips) chips='<div class="bi-chips">'+beat.chips.map(function(c){return '<span class="bi-chip">'+c+'</span>'}).join('')+'</div>';
     var has='';
@@ -121,6 +116,7 @@ PROJECTS.forEach(function(proj,pi){
     var stage=document.createElement('div');
     stage.className='beat-stage';
     if(beat.kind==='diagram') stage.dataset.kind='diagram';
+    else if(beat.kind==='window') stage.dataset.kind='window';
     else if(proj.id==='bc'||proj.id==='chek') stage.dataset.kind='phone';
     var src=beat.src || (proj.src+'?embed=1&beat='+bi+'&once=1');
     srcs[key]=src;
@@ -134,7 +130,7 @@ PROJECTS.forEach(function(proj,pi){
       iframe.classList.add('loaded');
       var fld=stage.querySelector('.fld');
       if(fld) fld.classList.add('gone');
-      if(beat.kind!=='diagram'){
+      if(proj.id!=='ey' && beat.kind!=='diagram'){
         try{
           var doc=iframe.contentDocument;
           if(doc&&doc.documentElement){
