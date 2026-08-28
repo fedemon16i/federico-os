@@ -5,24 +5,29 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
-.nav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.nav .search{width:130px;height:16px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 7px}
+.nav .right{margin-left:auto}
+.nav .search{width:120px;height:16px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 7px}
 .cat{display:grid;grid-template-columns:110px 1fr;flex:1;min-height:0}
 .side{background:var(--ey-side);border-right:1px solid var(--ey-line);padding:10px 8px;font-size:9px;color:var(--ey-muted)}
 .side .sh{font-weight:700;color:#fff;margin-bottom:8px}
 .main{padding:10px 12px;position:relative;overflow:hidden}
 .tools .q{height:20px;border:1px solid var(--ey-line);background:var(--ey-surface);border-radius:5px;font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 8px;margin:6px 0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.card{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px;position:relative}
-.card .t{font-size:11px;font-weight:650}.card .m{font-size:8px;color:var(--ey-faint);margin:3px 0}
-.chip{display:inline-block;font-size:7px;padding:2px 7px;border:1px solid rgba(232,148,58,.5);color:#f0de5a;border-radius:100px}
+.card{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px}
+.card .t{font-size:11px;font-weight:650}.card .m{font-size:8px;color:var(--ey-faint);margin:3px 0 6px}
+.acts{display:flex;gap:5px}
+.acts button{flex:1;height:18px;border-radius:4px;font-size:7.5px;border:1px solid var(--ey-line);background:transparent;color:#d8dbe4}
+.acts button.pri{background:rgba(255,255,255,.08);color:#fff}
+.acts button.info{border-color:var(--ey-new);color:#ffb4b4}
 .ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
-.sheet{width:78%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px}
+.sheet{width:82%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px;position:relative}
+.x{position:absolute;top:8px;right:10px;font-size:11px;color:var(--ey-muted)}
 .sheet h4{margin:0 0 8px;font-size:13px}
 .tabs{display:flex;gap:6px;margin-bottom:8px}
 .tabs i{font-style:normal;font-size:8px;padding:3px 8px;border:1px solid var(--ey-line);border-radius:100px;color:var(--ey-muted)}
 .tabs i.on{color:#fff;border-color:#e8943a}
-.sec{font-size:9px;color:var(--ey-muted);line-height:1.45}.sec b{color:#fff;display:block;margin:6px 0 2px}
+.sec{font-size:9px;color:var(--ey-muted);line-height:1.45;min-height:48px}.sec b{color:#fff;display:block;margin:6px 0 2px}
+.sheet .go{margin-top:10px;background:#fff;color:#111;border:0;border-radius:4px;padding:6px 10px;font-size:9px;font-weight:650}
 .wb{display:grid;grid-template-columns:1.1fr .9fr;flex:1;min-height:0}
 .wb-l{padding:10px 12px}.wb-r{padding:10px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column;gap:7px}
 .fld label{display:block;font-size:8px;color:var(--ey-muted);margin:5px 0 2px}
@@ -30,58 +35,83 @@
 .order,.help,.ob{border:1px solid var(--ey-line);background:var(--ey-card);border-radius:8px;padding:8px;font-size:8px}
 .order h4,.help h4,.ob h4{margin:0 0 5px;font-size:10px}
 .ln{display:flex;justify-content:space-between;margin:3px 0;color:var(--ey-muted)}
-.chat{position:absolute;right:14px;bottom:14px;width:22px;height:22px;border-radius:50%;background:#e8943a;color:#111;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:6}
-.win{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;z-index:8}
-.win.on{opacity:1}.win .mk{width:30px;height:30px;border-radius:50%;background:var(--ey-ok);color:#111;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:6px}
-.uc{position:absolute;z-index:9;pointer-events:none;left:20px;top:40px;transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1)}
-.uc i{display:block;width:0;height:0;border:6px solid transparent;border-top-color:#fff}
-.ey-browser{position:relative}
+.chat{position:absolute;right:18px;bottom:16px;width:22px;height:22px;border-radius:50%;background:#e8943a;color:#111;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:6}
+.winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;z-index:8}
+.winok.on{opacity:1}.winok .mk{width:30px;height:30px;border-radius:50%;background:var(--ey-ok);color:#111;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:6px}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
-<div class="stage">
+<div class="stage" id="stage">
   <div class="ey-browser" id="win">
     <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div>
     <div id="slot"></div>
-    <div class="uc" id="c1"><i></i></div>
+    <div class="uc" id="c1"><svg viewBox="0 0 24 24"><path d="M4 2.5 L4 18.5 L8.6 14.2 L12.2 22 L15 20.7 L11.3 13 L18.5 13 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
   </div>
+  <div class="callout left" id="co" style="display:none"></div>
 </div>
 <script>
 (function(){
-  var slot=document.getElementById('slot'), win=document.getElementById('win'), timers=[];
+  var slot=document.getElementById('slot'), win=document.getElementById('win'), co=document.getElementById('co'), timers=[];
+  var CUR='<svg viewBox="0 0 24 24"><path d="M4 2.5 L4 18.5 L8.6 14.2 L12.2 22 L15 20.7 L11.3 13 L18.5 13 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg>';
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function move(el,ox,oy){
+  function move(el){
     var n=document.getElementById('c1'); if(!n||!el) return;
     var r=el.getBoundingClientRect(), b=win.getBoundingClientRect();
-    n.style.left=Math.max(8,Math.min(b.width-20,r.left-b.left+(ox||6)))+'px';
-    n.style.top=Math.max(24,Math.min(b.height-20,r.top-b.top+(oy||6)))+'px';
+    n.style.left=Math.max(8,Math.min(b.width-18,r.left-b.left+6))+'px';
+    n.style.top=Math.max(22,Math.min(b.height-18,r.top-b.top+4))+'px';
+  }
+  function mark(el,label,side){
+    if(el) el.classList.add('ring');
+    var wr=win.getBoundingClientRect(), st=document.getElementById('stage').getBoundingClientRect();
+    co.style.display='block'; co.textContent=label;
+    if(side==='left'){ co.className='callout left'; co.style.left='4px'; }
+    else { co.className='callout right'; co.style.right='4px'; co.style.left='auto'; }
+    if(el){ var r=el.getBoundingClientRect(); co.style.top=Math.max(4,r.top-st.top-2)+'px'; }
+    move(el);
   }
   var NAV='<div class="nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search products…</div></div></div>';
   var SIDE='<div class="side"><div class="sh">Catalog</div><div>All</div><div>Services</div><div>Licenses</div><div>Kits</div></div>';
+  function market(){
+    return '<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main" id="main"><div class="tools"><div class="q">Filter by layer…</div></div><div class="grid"><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" id="info" type="button">See details</button></div></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div><div class="card"><div class="t">Automation seat</div><div class="m">License</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div><div class="card"><div class="t">Starter kit</div><div class="m">Enablement</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div></div></div></div></div>';
+  }
+  function overlay(reqOn){
+    var main=document.getElementById('main'); if(!main) return;
+    main.insertAdjacentHTML('beforeend','<div class="ov" id="ov"><div class="sheet"><div class="x" id="x">×</div><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i id="tabR">Requirements</i></div><div class="sec" id="sec"><b>Description</b>Shared delivery workspace for a team.</div><button class="go" id="go" type="button">Get started</button></div></div>');
+  }
   function playEnter(){
     document.getElementById('addr').textContent='marketplace';
-    slot.innerHTML='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="tools"><div class="q">Filter by layer…</div></div><div class="grid"><div class="card" id="hit"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><span class="chip" id="chip">See details and requirements</span></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><span class="chip">See details and requirements</span></div><div class="card"><div class="t">Automation seat</div><div class="m">License</div><span class="chip">See details and requirements</span></div><div class="card"><div class="t">Starter kit</div><div class="m">Enablement</div><span class="chip">See details and requirements</span></div></div></div></div></div>';
-    after(400,function(){ move(document.getElementById('chip')); });
-    after(1400,function(){
-      slot.querySelector('.main').insertAdjacentHTML('beforeend','<div class="ov" id="ov"><div class="sheet"><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i class="on" id="tab">Requirements</i></div><div class="sec" id="sec"><b>Description</b>Shared delivery workspace for a team.</div></div></div>');
-      after(200,function(){ move(document.getElementById('tab')); });
-      after(1100,function(){
-        document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account on the tenant. <b>Links</b>Setup guide · Field glossary';
-        document.getElementById('tab').classList.add('on');
+    slot.innerHTML=market();
+    after(400,function(){ mark(document.getElementById('info'),'NEW · details + requirements','left'); });
+    after(1600,function(){
+      overlay();
+      after(200,function(){ mark(document.getElementById('tabR'),'Tabs: Description · Resources · Requirements','left'); });
+      after(1400,function(){
+        document.getElementById('tabR').classList.add('on');
+        document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.<b>Links</b>Setup guide · Field glossary';
+        mark(document.getElementById('go'),'NEW · Get started from here','right');
       });
     });
   }
   function playPedir(){
-    document.getElementById('addr').textContent='request / onboard';
+    document.getElementById('addr').textContent='marketplace / details';
+    slot.innerHTML=market();
+    overlay();
+    document.getElementById('tabR').classList.add('on');
+    document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.';
+    after(300,function(){ mark(document.getElementById('go'),'Get started · opens the form','right'); });
+    after(1400,function(){ runForm(); });
+  }
+  function runForm(){
+    co.style.display='none';
     function form(step,left){
-      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div style="font-size:8px;color:#6d7384;margin-bottom:6px">Step <b style="color:#fff">'+step+'</b></div>'+left+'</div><div class="wb-r"><div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div></div><div class="help"><h4>Help / Requirements</h4>Name · required service · billing account</div><div class="ob" id="ob"><h4>Onboarding</h4></div></div></div><div class="chat">…</div><div class="win" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
+      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div style="font-size:8px;color:#6d7384;margin-bottom:6px">Step <b style="color:#fff">'+step+'</b></div>'+left+'</div><div class="wb-r"><div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div></div><div class="help ring"><h4>Help / Requirements</h4>Name · required service · billing</div><div class="ob"><h4>Onboarding</h4>Requirements seen</div></div></div><div class="chat ring" id="chat">…</div><div class="winok" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
     }
     form('Onboarding','<h3 style="margin:0 0 8px;font-size:14px">Before the form</h3><div class="box" id="q1">Did you read the requirements?</div>');
-    after(300,function(){ move(document.getElementById('q1')); document.getElementById('ob').innerHTML='<h4>Onboarding</h4>Requirements → workspace → team → billing'; });
+    after(200,function(){ mark(document.getElementById('q1'),'Onboard check','left'); });
     after(1400,function(){
       form('1 · Identify','<h3 style="margin:0 0 8px;font-size:14px">Name the instance</h3><div class="fld"><label>Display name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div><div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      after(80,function(){ move(document.getElementById('hit')); co.style.display='none'; });
     });
     after(2800,function(){
       form('2 · Technical','<h3 style="margin:0 0 8px;font-size:14px">Customize technically</h3><div class="fld"><label>Repo</label><div class="box" id="hit">platform/north</div></div><div class="fld"><label>License</label><div class="box">Shared compute</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>');
