@@ -27,17 +27,24 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .case-hd{margin:0 0 22px;max-width:54ch}
 .case-hd h2{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.03em}
 .case-hd p{margin-top:8px;color:var(--muted);font-size:.9rem;line-height:1.65}
-.beat{display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:36px;align-items:start;padding:44px 0;border-top:1px solid var(--border)}
+.beat{display:grid;grid-template-columns:minmax(0,280px) 1fr;gap:40px;align-items:start;padding:48px 0;border-top:1px solid var(--border)}
 .beat:first-child{border-top:none;padding-top:0}
-.bi{display:flex;flex-direction:column;gap:10px;position:sticky;top:64px}
-.bi-n{font-family:var(--fm);font-size:10px;color:var(--accent);opacity:.65;letter-spacing:.1em;text-transform:uppercase}
-.bi-title{font-family:var(--fd);font-size:1.25rem;letter-spacing:-.025em}
-.bi-desc{font-size:.875rem;line-height:1.7;color:var(--muted)}
-.bi-has-lab{font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.bi-has{margin:0;padding:0 0 0 16px;display:flex;flex-direction:column;gap:4px}
-.bi-has li{font-size:.78rem;color:var(--muted);line-height:1.45}
-.bi-chips{display:flex;flex-wrap:wrap;gap:5px}
-.bi-chip{font-family:var(--fm);font-size:9px;padding:3px 8px;border-radius:100px;border:1px solid var(--border);color:var(--muted)}
+.bi{display:flex;flex-direction:column;gap:14px;position:sticky;top:64px}
+.bi-n{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+.bi-title{font-family:var(--fd);font-size:clamp(1.35rem,1.1rem+1vw,1.7rem);letter-spacing:-.03em;line-height:1.15}
+.bi-title em{color:var(--accent);font-style:normal}
+.bi-line{font-family:var(--fd);font-size:1.05rem;line-height:1.4;color:var(--text);letter-spacing:-.02em}
+.bi-line em{color:var(--accent);font-style:normal}
+.bi-desc{font-size:1rem;line-height:1.6;color:var(--text)}
+.bi-cap{font-size:.95rem;line-height:1.55;color:var(--muted)}
+.bi-has-lab{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.bi-has{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.bi-has li{font-size:.92rem;color:var(--text);line-height:1.4;padding-left:14px;border-left:2px solid color-mix(in srgb,var(--accent) 55%,transparent)}
+.bi-chips{display:flex;flex-wrap:wrap;gap:6px}
+.bi-chip{font-family:var(--fm);font-size:11px;padding:5px 10px;border-radius:100px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);color:var(--text);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.stage-col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.stage-cap{font-size:.95rem;line-height:1.5;color:var(--muted)}
+.stage-cap em{color:var(--accent);font-style:normal}
 .beat-stage{position:relative;aspect-ratio:560/410;overflow:hidden}
 .beat-stage[data-kind="phone"]{aspect-ratio:9/19.5;max-width:260px;width:100%;justify-self:center}
 .beat-stage[data-kind="diagram"]{aspect-ratio:auto;min-height:340px;overflow:visible}
@@ -92,13 +99,27 @@ PROJECTS.forEach(function(proj,pi){
     var info=document.createElement('div');
     info.className='bi';
     var chips='';
+    if(proj.id==='ey' && bi===0){
+      beat.kind='diagram';
+      beat.src='projects/ey-01-measure.html';
+      beat.name='Measure';
+      beat.line='Structure before diagnosis.<br><em>Map the product</em>.';
+      beat.cap='Pages, flows, features, and events — tagged end to end.';
+      beat.under='Sitemap + features + events — the instrumentation map.';
+      beat.desc='';
+      beat.chips=['Pendo','GA4','Paths'];
+      beat.contains=['Information architecture: Catalog home → Services / Request form / Workbench / Reports','Features tagged: Explore catalog, Service card, Required field, Submit request','Events: catalog_view · item_open · form_start · form_dropoff'];
+    }
     if(beat.chips) chips='<div class="bi-chips">'+beat.chips.map(function(c){return '<span class="bi-chip">'+c+'</span>'}).join('')+'</div>';
     var has='';
-    if(beat.contains) has='<div class="bi-has-lab">Qué hay en este cuadro</div><ul class="bi-has">'+beat.contains.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>';
-    info.innerHTML='<div class="bi-n">Beat '+beat.n+'</div><h2 class="bi-title">'+beat.name+'</h2><p class="bi-desc">'+beat.desc+'</p>'+chips+has;
+    if(beat.contains) has='<div class="bi-has-lab">En este cuadro</div><ul class="bi-has">'+beat.contains.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>';
+    var line=beat.line ? '<p class="bi-line">'+beat.line+'</p>' : '';
+    var cap=beat.cap ? '<p class="bi-cap">'+beat.cap+'</p>' : '';
+    info.innerHTML='<div class="bi-n">Beat '+beat.n+' · '+beat.name+'</div>'+(line||'<h2 class="bi-title">'+beat.name+'</h2>')+(beat.desc?'<p class="bi-desc">'+beat.desc+'</p>':'')+cap+chips+has;
+    var stageWrap=document.createElement('div');
+    stageWrap.className='stage-col';
     var stage=document.createElement('div');
     stage.className='beat-stage';
-    if(proj.id==='ey' && bi===0){ beat.kind='diagram'; beat.src='projects/ey-01-measure.html'; }
     if(beat.kind==='diagram') stage.dataset.kind='diagram';
     else if(proj.id==='bc'||proj.id==='chek') stage.dataset.kind='phone';
     var src=beat.src || (proj.src+'?embed=1&beat='+bi+'&once=1');
@@ -133,8 +154,15 @@ PROJECTS.forEach(function(proj,pi){
     fld.innerHTML='<div class="fld-dot"></div>';
     stage.appendChild(fld);
     stage.appendChild(iframe);
+    stageWrap.appendChild(stage);
+    if(beat.under){
+      var under=document.createElement('p');
+      under.className='stage-cap';
+      under.innerHTML=beat.under;
+      stageWrap.appendChild(under);
+    }
     row.appendChild(info);
-    row.appendChild(stage);
+    row.appendChild(stageWrap);
     list.appendChild(row);
   });
   panel.appendChild(list);
