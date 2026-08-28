@@ -6,57 +6,40 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#0b0b0b;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
 :root{--y:#FFE600;--line:rgba(255,255,255,.12)}
-.board{padding:12px 14px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 10px}
-.top{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.card{border:1px solid var(--line);padding:10px}
-.tag{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);margin-bottom:6px}
-.q{font-size:12px;line-height:1.35;margin:0}.q em{color:var(--y);font-style:normal}
-.replay{border:1px solid #FFE600;padding:8px 10px 10px;position:relative}
-.replay .tag{color:#111;background:#FFE600;display:inline-block;padding:2px 6px;margin-bottom:8px}
-.win{position:relative;background:#12141c;border:1px solid rgba(255,255,255,.1);height:150px;overflow:hidden}
-.chrome{height:14px;background:#14151c;display:flex;align-items:center;gap:4px;padding:0 7px}
-.chrome i{width:5px;height:5px;border-radius:50%;background:#555;display:block}
-.chrome i:nth-child(1){background:#ff5f57}.chrome i:nth-child(2){background:#febc2e}.chrome i:nth-child(3){background:#28c840}
-.chrome b{margin-left:6px;font-size:7px;color:#8a8580;font-weight:500;font-family:'IBM Plex Mono',monospace}
-.body{display:grid;grid-template-columns:1.2fr .8fr;height:calc(100% - 14px)}
-.l{padding:8px 9px}.r{padding:8px;background:#101218;border-left:1px solid rgba(255,255,255,.08)}
-.h{font-size:11px;font-weight:700;margin:0 0 6px}
-.fld{height:12px;border:1px solid rgba(255,255,255,.12);background:#161821;margin-bottom:5px;width:88%}
-.fld.bad{border-color:#FFE600}
-.ord{font-size:8px;color:#8a8580}.ord b{color:#f0de5a}
-.uc{position:absolute;z-index:3;transition:left .7s ease,top .7s ease}
-.uc em{display:block;font-style:normal;font-size:7px;background:#FFE600;color:#111;padding:1px 4px;margin-bottom:2px;font-weight:700;white-space:nowrap}
-.uc i{display:block;width:0;height:0;border:5px solid transparent;border-top-color:#fff;margin-left:2px}
-.call{position:absolute;right:10px;top:8px;font-size:8px;background:#FFE600;color:#111;padding:3px 6px;font-weight:700}
+.board{padding:18px 16px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{border:1px solid var(--line);padding:12px;min-height:132px}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);margin-bottom:8px}
+.q{font-size:13px;line-height:1.4;margin:0 0 8px}.q em{color:var(--y);font-style:normal}
+.who,.s{font-size:10px;color:#9a968c}
+.scores{display:flex;gap:6px;margin-top:8px}
+.sc{flex:1;border:1px solid var(--line);padding:6px 4px;text-align:center;font-size:9px;color:#c8c4bc}
+.sc b{display:block;color:#fff;font-size:11px;margin-bottom:2px}
+.mini{border:1px solid var(--line);padding:8px;margin-top:6px;font-size:9px;color:#9a968c}
+.mini .row{height:14px;border:1px solid var(--line);margin:4px 0;padding:0 6px;display:flex;align-items:center}
+.leave{background:var(--y);color:#111;font-size:8px;font-weight:700;padding:1px 5px;margin-left:auto}
+.path{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.path i{font-style:normal;font-size:9px;padding:3px 6px;border:1px solid var(--line);color:#8a8580}
+.path i.on{border-color:var(--y);color:var(--y)}
+.card.on{opacity:1} .card{opacity:.35;transition:opacity .35s}
 </style></head>
 <body>
 <div class="board">
   <div class="k">Several studies · same friction</div>
-  <div class="top">
-    <div class="card"><div class="tag">Interviews</div><p class="q">I did not know <em>which service</em> to attach.</p></div>
-    <div class="card"><div class="tag">Task study</div><p class="q">Start → name → <em>required</em> → leave.</p></div>
-  </div>
-  <div class="replay">
-    <div class="tag">Session replay · same Analyze window · 3 users</div>
-    <div class="call" id="call">New</div>
-    <div class="win">
-      <div class="chrome"><i></i><i></i><i></i><b>platform / workbench</b></div>
-      <div class="body"><div class="l"><div class="h">Workbench</div><div class="fld" id="f1"></div><div class="fld" id="f2"></div></div><div class="r"><div class="ord">Your order<br><b>$0 / mo</b></div></div></div>
-      <div class="uc" id="u1" style="left:22px;top:36px"><em>user 1</em><i></i></div>
-      <div class="uc" id="u2" style="left:70px;top:70px"><em>user 2</em><i></i></div>
-      <div class="uc" id="u3" style="left:120px;top:48px"><em>user 3</em><i></i></div>
-    </div>
+  <div class="grid">
+    <div class="card" id="c0"><div class="tag">Interviews</div><p class="q">I did not know <em>which service</em> to attach.</p><div class="who">Second voice: the field does not look required.</div></div>
+    <div class="card" id="c1"><div class="tag">Scores</div><div class="s">After the same request attempt.</div><div class="scores"><div class="sc"><b>CSAT</b>low after form</div><div class="sc"><b>NPS</b>would not return</div><div class="sc"><b>CES</b>too much effort</div></div></div>
+    <div class="card" id="c2"><div class="tag">Session replay</div><div class="mini"><div class="row">Instance name</div><div class="row">Required service <span class="leave">LEAVE</span></div></div></div>
+    <div class="card" id="c3"><div class="tag">Task study</div><p class="q">Request a workspace — stall on the unlabeled field.</p><div class="path"><i id="p0">start</i><i id="p1">name</i><i id="p2">required</i><i id="p3">leave</i></div></div>
   </div>
 </div>
 <script>
 (function(){
   var t=[]; function after(ms,fn){t.push(setTimeout(fn,ms))}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  function go(id,x,y){var n=document.getElementById(id); n.style.left=x+'px'; n.style.top=y+'px'}
-  after(500,function(){go('u1',40,56); go('u2',90,88); go('u3',160,56)});
-  after(1300,function(){document.getElementById('f1').style.width='92%'; go('u1',200,56); go('u2',50,100); go('u3',210,78)});
-  after(2100,function(){document.getElementById('f2').classList.add('bad'); go('u1',260,40); go('u2',80,110); go('u3',220,100); document.getElementById('call').textContent='All three stall here';});
+  [0,1,2,3].forEach(function(i){after(200+i*350,function(){document.getElementById('c'+i).classList.add('on')})});
+  ['p0','p1','p2','p3'].forEach(function(id,i){after(1600+i*280,function(){document.getElementById(id).classList.add('on')})});
 })();
 </script>
 </body></html>
