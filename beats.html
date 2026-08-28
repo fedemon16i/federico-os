@@ -7,1270 +7,182 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#08080b;
-  --border:rgba(255,255,255,.06);
-  --text:#f0eee9;
-  --muted:#8a8580;
-  --dim:#4a4845;
-  --fn:'DM Sans',system-ui,sans-serif;
-  --fm:'Share Tech Mono',ui-monospace,monospace;
-  --fd:'Space Grotesk',system-ui,sans-serif;
-  --ease:cubic-bezier(.65,0,.35,1);
-}
+:root{--bg:#08080b;--border:rgba(255,255,255,.06);--text:#f0eee9;--muted:#8a8580;--dim:#4a4845;
+--fn:'DM Sans',system-ui,sans-serif;--fm:'Share Tech Mono',ui-monospace,monospace;--fd:'Space Grotesk',system-ui,sans-serif}
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--fn)}
-
-.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-.skip-link:focus{left:8px;top:8px;width:auto;height:auto;padding:8px 12px;background:#000;color:#fff;z-index:999}
-
-/* ── Topbar ──────────────────────────────────────── */
-.topbar{
-  position:sticky;top:0;z-index:100;
-  height:48px;display:flex;align-items:center;gap:16px;
-  padding:0 32px;
-  background:rgba(8,8,11,.88);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-}
-.topbar-logo{
-  font-family:var(--fm);font-size:13px;color:var(--text);
-  text-decoration:none;margin-right:auto;opacity:.6;transition:opacity .2s;
-}
-.topbar-logo:hover{opacity:1}
-.topbar-back{
-  font-family:var(--fm);font-size:11px;color:var(--muted);
-  text-decoration:none;display:flex;align-items:center;gap:5px;
-  transition:color .2s;letter-spacing:.04em;
-}
-.topbar-back:hover{color:var(--text)}
-@media(max-width:600px){.topbar{padding:0 16px}}
-
-/* ── Page header ─────────────────────────────────── */
-.pg-hd{padding:40px 32px 0;max-width:980px;margin:0 auto}
-.pg-hd h1{
-  font-family:var(--fd);font-size:clamp(1.6rem,1rem+2.5vw,2.6rem);
-  font-weight:700;letter-spacing:-.035em;line-height:1.08;
-}
-.pg-hd p{margin-top:10px;font-size:.9375rem;color:var(--muted);max-width:46ch;line-height:1.65}
-@media(max-width:600px){.pg-hd{padding:28px 16px 0}}
-
-/* ── Project tabs ─────────────────────────────────── */
-.proj-tabs{
-  display:flex;gap:6px;padding:24px 32px 0;
-  max-width:980px;margin:0 auto;
-  overflow-x:auto;scrollbar-width:none;
-}
-.proj-tabs::-webkit-scrollbar{display:none}
-@media(max-width:600px){.proj-tabs{padding:20px 16px 0}}
-.ptab{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:6px 14px;border-radius:100px;
-  border:1px solid var(--border);background:transparent;
-  font-family:var(--fm);font-size:11px;color:var(--muted);
-  cursor:pointer;white-space:nowrap;flex:0 0 auto;
-  transition:border-color .18s,color .18s,background .18s;
-}
-.ptab .dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--ta,#666);opacity:.38;transition:opacity .18s;flex-shrink:0;
-}
-.ptab.on{
-  color:var(--text);
-  border-color:color-mix(in srgb,var(--ta,#fff) 45%,transparent);
-  background:color-mix(in srgb,var(--ta,#fff) 7%,transparent);
-}
+.topbar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 32px;background:rgba(8,8,11,.88);border-bottom:1px solid var(--border)}
+.topbar a{font-family:var(--fm);font-size:11px;color:var(--muted);text-decoration:none}
+.topbar a.logo{margin-right:auto;color:var(--text);opacity:.6;font-size:13px}
+.pg-hd{padding:36px 32px 0;max-width:980px;margin:0 auto}
+.pg-hd h1{font-family:var(--fd);font-size:clamp(1.6rem,1rem+2.5vw,2.4rem);letter-spacing:-.035em}
+.pg-hd p{margin-top:10px;color:var(--muted);max-width:48ch;line-height:1.65;font-size:.9375rem}
+.proj-tabs{display:flex;gap:6px;padding:24px 32px 0;max-width:980px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.ptab{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:var(--fm);font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.ptab .dot{width:6px;height:6px;border-radius:50%;background:var(--ta,#666);opacity:.38}
+.ptab.on{color:var(--text);border-color:color-mix(in srgb,var(--ta,#fff) 45%,transparent);background:color-mix(in srgb,var(--ta,#fff) 7%,transparent)}
 .ptab.on .dot{opacity:1}
-.ptab:hover:not(.on){color:var(--text);border-color:rgba(255,255,255,.15)}
-
-/* ── Panels ──────────────────────────────────────── */
 #panels{max-width:980px;margin:0 auto}
-.proj-panel{display:none;padding:40px 32px 80px}
+.proj-panel{display:none;padding:36px 32px 80px;--accent:var(--pa,#888)}
 .proj-panel.on{display:block}
-@media(max-width:600px){.proj-panel{padding:28px 16px 60px}}
-
-/* ── Beat list ───────────────────────────────────── */
-.beat-list{display:flex;flex-direction:column}
-
-/* ── Beat row ────────────────────────────────────── */
-.beat{
-  display:grid;
-  grid-template-columns:minmax(0,240px) 1fr;
-  gap:40px;align-items:start;
-  padding:52px 0;
-  border-top:1px solid var(--border);
-}
+.case-hd{margin:0 0 22px;max-width:54ch}
+.case-hd h2{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.03em}
+.case-hd p{margin-top:8px;color:var(--muted);font-size:.9rem;line-height:1.65}
+.try-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 16px;margin:0 0 18px;border-radius:8px;border:1px solid color-mix(in srgb,var(--ta,#fff) 22%,transparent);background:color-mix(in srgb,var(--ta,#fff) 5%,transparent)}
+.try-label{font-family:var(--fm);font-size:10px;color:var(--muted);flex:1}
+.try-link,.try-win{display:inline-flex;align-items:center;padding:5px 12px;border-radius:7px;border:1px solid color-mix(in srgb,var(--accent,#fff) 38%,transparent);font-family:var(--fm);font-size:10px;color:var(--accent,#f0eee9);text-decoration:none}
+.beat{display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:36px;align-items:start;padding:44px 0;border-top:1px solid var(--border)}
 .beat:first-child{border-top:none;padding-top:0}
-@media(max-width:720px){
-  .beat{grid-template-columns:1fr;gap:20px;padding:40px 0}
-  .beat:first-child{padding-top:0}
-}
-
-/* Info col */
-.bi{display:flex;flex-direction:column;gap:12px;position:sticky;top:64px}
-@media(max-width:720px){.bi{position:static}}
-
-.bi-n{
-  font-family:var(--fm);font-size:10px;
-  color:var(--accent,#888);opacity:.65;
-  letter-spacing:.1em;text-transform:uppercase;
-}
-.bi-title{
-  font-family:var(--fd);font-size:1.3rem;font-weight:700;
-  letter-spacing:-.025em;line-height:1.1;color:var(--text);
-}
-.bi-desc{font-size:.875rem;line-height:1.72;color:var(--muted)}
-
-/* Controls */
-.bi-ctrls{display:flex;gap:7px;flex-wrap:wrap;padding-top:4px}
-.ctrl{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:5px 12px;border-radius:7px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.03);
-  font-family:var(--fm);font-size:10px;color:var(--muted);
-  cursor:pointer;transition:border-color .18s,color .18s,background .18s;
-}
-.ctrl svg{flex-shrink:0}
-.ctrl:hover{color:var(--text);border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
-.ctrl.replay{
-  border-color:color-mix(in srgb,var(--accent,#fff) 38%,transparent);
-  color:var(--accent,#f0eee9);
-}
-.ctrl.replay:hover{
-  background:color-mix(in srgb,var(--accent,#fff) 8%,transparent);
-  border-color:color-mix(in srgb,var(--accent,#fff) 60%,transparent);
-}
-
-/* ── Animation stage — frameless ─────────────────── */
-/*
-   No border. No background. No border-radius.
-   The animation lives directly on the page.
-*/
-.beat-stage{
-  position:relative;
-  /* maintain the unit's native 560×410 ratio */
-  aspect-ratio:560/410;
-  overflow:hidden;
-}
-.beat-stage iframe{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  border:none;
-  background:transparent;
-  /* animations are display-only — no clicking into them */
-  pointer-events:none;
-}
-/* instant hide on stop (no fade-out flicker), fade-in on load */
-.beat-stage iframe{opacity:0}
-.beat-stage iframe.loaded{opacity:1;transition:opacity .4s}
-
-/* Loader pulse */
-.fld{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  transition:opacity .5s;pointer-events:none;
-}
+.bi{display:flex;flex-direction:column;gap:10px;position:sticky;top:64px}
+.bi-n{font-family:var(--fm);font-size:10px;color:var(--accent);opacity:.65;letter-spacing:.1em;text-transform:uppercase}
+.bi-title{font-family:var(--fd);font-size:1.25rem;letter-spacing:-.025em}
+.bi-desc{font-size:.875rem;line-height:1.7;color:var(--muted)}
+.bi-has-lab{font-family:var(--fm);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.bi-has{margin:0;padding:0 0 0 16px;display:flex;flex-direction:column;gap:4px}
+.bi-has li{font-size:.78rem;color:var(--muted);line-height:1.45}
+.bi-chips{display:flex;flex-wrap:wrap;gap:5px}
+.bi-chip{font-family:var(--fm);font-size:9px;padding:3px 8px;border-radius:100px;border:1px solid var(--border);color:var(--muted)}
+.beat-stage{position:relative;aspect-ratio:560/410;overflow:hidden}
+.beat-stage[data-kind="phone"]{aspect-ratio:9/19.5;max-width:260px;width:100%;justify-self:center}
+.beat-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:none;background:transparent;pointer-events:none;opacity:0}
+.beat-stage iframe.loaded{opacity:1;transition:opacity .35s}
+.fld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .fld.gone{opacity:0}
-.fld-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--accent,#888);opacity:.3;
-  animation:fldp 1.4s ease-in-out infinite;
-}
-@keyframes fldp{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.35)}}
-
-/* accent per panel */
-.proj-panel{--accent:var(--pa,#888)}
-
-/* ── Try me banner ────────────────────────────────── */
-.try-bar{
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  padding:10px 16px;margin:24px 0 8px;
-  border-radius:8px;
-  border:1px solid color-mix(in srgb,var(--ta,#fff) 22%,transparent);
-  background:color-mix(in srgb,var(--ta,#fff) 5%,transparent);
-}
-.try-label{font-family:var(--fm);font-size:10px;color:var(--muted);flex:1;letter-spacing:.03em}
-.try-link{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:5px 12px;border-radius:6px;
-  border:1px solid color-mix(in srgb,var(--ta,#fff) 40%,transparent);
-  background:color-mix(in srgb,var(--ta,#fff) 8%,transparent);
-  font-family:var(--fm);font-size:10px;
-  color:color-mix(in srgb,var(--ta,#fff) 85%,var(--text));
-  text-decoration:none;white-space:nowrap;flex-shrink:0;
-  transition:background .18s,border-color .18s;
-}
-.try-link:hover{background:color-mix(in srgb,var(--ta,#fff) 14%,transparent)}
-
-/* chips in info col */
-.bi-chips{display:flex;flex-wrap:wrap;gap:5px;padding-top:2px}
-.bi-chip{
-  font-family:var(--fm);font-size:9px;letter-spacing:.04em;
-  padding:3px 8px;border-radius:100px;
-  border:1px solid var(--border);color:var(--muted);
-}
-
-/* ── Reviewer mode ─────────────────────────────────── */
-.rv-btn{
-  font-family:var(--fm);font-size:10px;
-  padding:5px 10px;border-radius:6px;
-  border:1px solid var(--border);background:transparent;
-  color:var(--dim);cursor:pointer;
-  display:flex;align-items:center;gap:5px;
-  transition:color .18s,border-color .18s,background .18s;
-  letter-spacing:.04em;
-}
-.rv-btn:hover{color:var(--muted);border-color:rgba(255,255,255,.18)}
-.rv-btn.active{color:#fbbf24;border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
-.rv-btn .rv-dot{
-  width:5px;height:5px;border-radius:50%;
-  background:rgba(251,191,36,.45);
-  display:none;
-}
-.rv-btn.active .rv-dot{display:block}
-
-/* Password modal */
-.rv-modal-bg{
-  position:fixed;inset:0;z-index:500;
-  background:rgba(0,0,0,.78);
-  display:flex;align-items:center;justify-content:center;
-  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
-}
-.rv-modal-bg.hidden{display:none}
-.rv-modal{
-  background:#161618;border:1px solid rgba(255,255,255,.1);
-  border-radius:16px;padding:28px 28px 22px;
-  width:min(330px,90vw);
-  display:flex;flex-direction:column;gap:14px;
-}
-.rv-modal-title{
-  font-family:var(--fd);font-size:1.05rem;font-weight:700;
-  letter-spacing:-.02em;
-}
-.rv-modal-sub{font-size:.8125rem;color:var(--muted);line-height:1.5;margin-top:-4px}
-.rv-pass{
-  width:100%;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:8px;
-  padding:10px 14px;
-  font-family:var(--fm);font-size:14px;color:var(--text);
-  letter-spacing:.1em;
-}
-.rv-pass:focus{outline:none;border-color:rgba(251,191,36,.55)}
-.rv-err{font-size:.8125rem;color:#f87171;display:none;margin-top:-6px}
-.rv-err.on{display:block}
-.rv-modal-btns{display:flex;gap:8px}
-.rv-cancel,.rv-enter{
-  flex:1;padding:9px;border-radius:8px;
-  font-family:var(--fm);font-size:11px;cursor:pointer;
-  border:1px solid var(--border);letter-spacing:.04em;
-}
-.rv-cancel{background:transparent;color:var(--muted)}
-.rv-cancel:hover{color:var(--text)}
-.rv-enter{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.4);color:#fbbf24}
-.rv-enter:hover{background:rgba(251,191,36,.2)}
-
-/* Comment mode toggle button */
-.cm-toggle-btn{
-  font-family:var(--fm);font-size:10px;
-  padding:5px 10px;border-radius:6px;
-  border:1px solid var(--border);background:transparent;
-  color:var(--dim);cursor:pointer;
-  display:none;align-items:center;gap:5px;
-  transition:color .18s,border-color .18s,background .18s;
-  letter-spacing:.04em;
-}
-body.reviewer .cm-toggle-btn{display:flex}
-.cm-toggle-btn.on{color:#fbbf24;border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
-
-/* Comment count badge */
-.cm-count-row{
-  display:none;align-items:center;gap:6px;
-  font-family:var(--fm);font-size:9px;color:var(--dim);
-}
-body.reviewer .cm-count-row{display:flex}
-.cm-count-badge{
-  border-radius:100px;padding:1px 7px;
-  font-family:var(--fm);font-size:9px;
-  min-width:18px;text-align:center;
-  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--dim);
-  transition:background .2s,border-color .2s,color .2s;
-}
-.cm-count-badge[data-n]:not([data-n="0"]){
-  background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.35);color:#fbbf24;
-}
-
-/* Comment overlay (sits above iframe, pointer-events:none by default) */
-.cm-overlay{
-  position:absolute;inset:0;z-index:10;
-  pointer-events:none;
-}
-body.reviewer.cm-mode .cm-overlay{pointer-events:auto;cursor:crosshair}
-
-/* Comment mode hint */
-.cm-mode-hint{
-  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-  z-index:30;pointer-events:none;
-  font-family:var(--fm);font-size:9px;color:rgba(251,191,36,.75);
-  background:rgba(8,8,11,.8);border:1px solid rgba(251,191,36,.22);
-  border-radius:100px;padding:3px 11px;
-  opacity:0;transition:opacity .3s;white-space:nowrap;
-}
-body.reviewer.cm-mode .cm-mode-hint{opacity:1}
-
-/* Comment pins */
-.cm-pin{
-  position:absolute;z-index:20;
-  transform:translate(-50%,-50%);
-  pointer-events:auto;cursor:pointer;
-}
-.cm-pin-dot{
-  width:22px;height:22px;border-radius:50%;
-  background:#fbbf24;color:#000;
-  font-family:var(--fm);font-size:9px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.5);
-  transition:transform .15s,box-shadow .15s;
-}
-.cm-pin:hover .cm-pin-dot{transform:scale(1.15);box-shadow:0 4px 14px rgba(0,0,0,.6)}
-.cm-pin.active .cm-pin-dot{background:#fff;box-shadow:0 0 0 2px #fbbf24,0 4px 14px rgba(0,0,0,.6)}
-.cm-pin.resolved .cm-pin-dot{background:rgba(52,211,153,.9)}
-
-/* Thread panel in .bi col */
-.cm-thread-panel{
-  display:none;
-  margin-top:10px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:10px;
-  overflow:hidden;
-  background:#0d0d10;
-}
-body.reviewer .cm-thread-panel{display:block}
-
-/* Thread list */
-.cm-thread-list{background:rgba(8,8,11,.5)}
-.cm-thread-item{
-  display:flex;align-items:flex-start;gap:8px;
-  padding:10px 12px;border-bottom:1px solid var(--border);
-  cursor:pointer;transition:background .15s;
-}
-.cm-thread-item:last-child{border-bottom:none}
-.cm-thread-item:hover{background:rgba(255,255,255,.03)}
-.cm-thread-item.resolved{opacity:.4}
-.cm-pin-num{
-  width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;
-  background:#fbbf24;color:#000;
-  font-family:var(--fm);font-size:8px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-}
-.cm-thread-item.resolved .cm-pin-num{background:rgba(52,211,153,.85)}
-.cm-thread-meta{flex:1;min-width:0}
-.cm-thread-comp{
-  font-family:var(--fm);font-size:8px;color:var(--accent,#fbbf24);
-  opacity:.7;letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px;
-}
-.cm-thread-text{
-  font-size:.8125rem;color:var(--text);line-height:1.45;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.cm-thread-ts{font-family:var(--fm);font-size:8px;color:var(--dim);margin-top:3px}
-
-/* Open thread view */
-.cm-open-thread{display:none;flex-direction:column}
-.cm-open-thread.on{display:flex}
-.cm-thread-hd{
-  display:flex;align-items:center;gap:8px;
-  padding:9px 12px;border-bottom:1px solid var(--border);
-  background:rgba(8,8,11,.5);
-}
-.cm-back{
-  background:transparent;border:none;color:var(--muted);cursor:pointer;
-  font-family:var(--fm);font-size:9px;
-  display:flex;align-items:center;gap:4px;padding:2px 0;transition:color .15s;
-}
-.cm-back:hover{color:var(--text)}
-.cm-resolve-btn{
-  margin-left:auto;
-  background:transparent;border:1px solid var(--border);border-radius:6px;
-  padding:4px 9px;font-family:var(--fm);font-size:9px;color:var(--muted);
-  cursor:pointer;letter-spacing:.03em;transition:color .15s,border-color .15s,background .15s;
-}
-.cm-resolve-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
-.cm-resolve-btn.resolved{border-color:rgba(52,211,153,.4);color:rgba(52,211,153,.85);background:rgba(52,211,153,.06)}
-.cm-delete-btn{
-  background:transparent;border:none;color:var(--dim);cursor:pointer;
-  padding:4px;transition:color .15s;
-}
-.cm-delete-btn:hover{color:#f87171}
-.cm-msgs{
-  flex:1;overflow-y:auto;padding:10px 12px;
-  display:flex;flex-direction:column;gap:8px;max-height:180px;
-}
-.cm-msg{display:flex;flex-direction:column;gap:3px}
-.cm-msg-comp{
-  font-family:var(--fm);font-size:8px;color:var(--accent,#fbbf24);
-  opacity:.7;letter-spacing:.05em;text-transform:uppercase;
-}
-.cm-msg-text{font-size:.8125rem;color:var(--text);line-height:1.5}
-.cm-msg-footer{font-family:var(--fm);font-size:8px;color:var(--dim)}
-.cm-reply-row{
-  display:flex;align-items:flex-end;gap:7px;
-  padding:9px 12px;border-top:1px solid var(--border);
-  background:rgba(8,8,11,.5);
-}
-.cm-reply-input{
-  flex:1;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:7px;
-  padding:7px 10px;font-family:var(--fn);font-size:12px;color:var(--text);
-  resize:none;min-height:32px;max-height:80px;line-height:1.45;
-}
-.cm-reply-input:focus{outline:none;border-color:rgba(251,191,36,.35)}
-.cm-reply-input::placeholder{color:var(--dim)}
-.cm-reply-send{
-  flex-shrink:0;padding:7px 11px;border-radius:7px;
-  background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);
-  font-family:var(--fm);font-size:9px;color:#fbbf24;
-  cursor:pointer;letter-spacing:.03em;transition:background .15s;
-}
-.cm-reply-send:hover{background:rgba(251,191,36,.22)}
-.cm-reply-send:disabled{opacity:.35;cursor:default}
-
-/* New comment form */
-.cm-new-form{padding:12px;flex-direction:column;gap:9px;display:none}
-.cm-new-form.on{display:flex}
-.cm-form-hd{font-family:var(--fm);font-size:9px;color:rgba(251,191,36,.6);letter-spacing:.08em;text-transform:uppercase}
-.cm-comp-chips{display:flex;flex-wrap:wrap;gap:5px}
-.cm-comp-chip{
-  font-family:var(--fm);font-size:9px;padding:3px 9px;border-radius:100px;
-  border:1px solid var(--border);color:var(--muted);cursor:pointer;letter-spacing:.03em;
-  transition:color .15s,border-color .15s,background .15s;background:transparent;
-}
-.cm-comp-chip.on{color:#fbbf24;border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.08)}
-.cm-new-textarea{
-  width:100%;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:7px;
-  padding:9px 11px;font-family:var(--fn);font-size:12px;color:var(--text);
-  resize:none;min-height:60px;line-height:1.5;
-}
-.cm-new-textarea:focus{outline:none;border-color:rgba(251,191,36,.35)}
-.cm-new-textarea::placeholder{color:var(--dim)}
-.cm-form-actions{display:flex;gap:6px;justify-content:flex-end}
-.cm-form-cancel{
-  background:transparent;border:1px solid var(--border);border-radius:7px;
-  padding:6px 11px;font-family:var(--fm);font-size:9px;color:var(--muted);
-  cursor:pointer;letter-spacing:.03em;transition:color .15s;
-}
-.cm-form-cancel:hover{color:var(--text)}
-.cm-form-submit{
-  background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);border-radius:7px;
-  padding:6px 13px;font-family:var(--fm);font-size:9px;color:#fbbf24;
-  cursor:pointer;letter-spacing:.03em;transition:background .15s;
-}
-.cm-form-submit:hover{background:rgba(251,191,36,.22)}
-.cm-form-submit:disabled{opacity:.35;cursor:default}
-
-/* Empty state */
-.cm-empty{
-  padding:20px 12px;text-align:center;
-  font-family:var(--fm);font-size:9px;color:var(--dim);letter-spacing:.04em;
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+.fld-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.35}
+@media(max-width:720px){
+.topbar,.pg-hd,.proj-tabs,.proj-panel{padding-left:16px;padding-right:16px}
+.beat{grid-template-columns:1fr;gap:18px}
+.bi{position:static}
 }
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to main content</a>
-
 <div class="topbar">
-  <a href="index.html" class="topbar-logo">FM.OS</a>
-  <a href="index.html" class="topbar-back">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-    Back
-  </a>
-  <button id="cmToggleBtn" class="cm-toggle-btn" aria-label="Toggle comment mode">
-    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-    Comment
-  </button>
-  <button id="rvBtn" class="rv-btn" aria-label="Reviewer mode">
-    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-    Review
-    <span class="rv-dot" aria-hidden="true"></span>
-  </button>
+  <a class="logo" href="index.html">FM.OS</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="index.html">Back</a>
 </div>
-
-<!-- Reviewer password modal -->
-<div class="rv-modal-bg hidden" id="rvModalBg" role="dialog" aria-modal="true" aria-label="Reviewer access">
-  <div class="rv-modal">
-    <div class="rv-modal-title">Reviewer mode</div>
-    <p class="rv-modal-sub">Solo vos podés acceder. Ingresá la contraseña.</p>
-    <input type="password" class="rv-pass" id="rvPass" placeholder="••••••" autocomplete="current-password"/>
-    <p class="rv-err" id="rvErr">Contraseña incorrecta</p>
-    <div class="rv-modal-btns">
-      <button class="rv-cancel" id="rvCancel">Cancelar</button>
-      <button class="rv-enter" id="rvEnter">Entrar</button>
-    </div>
-  </div>
-</div>
-
 <div class="pg-hd">
   <h1>Beats</h1>
-  <p>Every animation sequence, loose — no player chrome, no container. Replay or stop any beat.</p>
+  <p>Página momentánea. Un cuadro = la ventana de producto. El film queda en Try this window.</p>
 </div>
-
-<div class="proj-tabs" role="tablist" aria-label="Projects" id="projTabs"></div>
-
-<div id="panels" id="main"></div>
-
+<div class="proj-tabs" id="projTabs" role="tablist"></div>
+<div id="panels"></div>
+<script src="beats-data.js"></script>
 <script>
-/* ── CSS injected into each player iframe ─────────────
-   Goal: strip ALL chrome, make background transparent,
-   let the animation canvas render free on the page.
-──────────────────────────────────────────────────────── */
-var STRIP_CSS = [
-  /* ── Transparent backgrounds all the way down ───────── */
-  'html,body,.page,.shell,.stage-col,.frame,.unit,.win,.unit-host{background:transparent!important}',
-  /* Stage itself — the main culprit: has --stage-bg color + grid image + border */
-  '.stage{background:transparent!important;background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
-  /* Other frame containers */
-  '.frame,.unit{background-image:none!important;border:none!important;box-shadow:none!important;border-radius:0!important}',
+var iframes={}, srcs={}, curProj=0;
+var tabsEl=document.getElementById('projTabs');
+var panelsEl=document.getElementById('panels');
 
-  /* ── Hide ALL player chrome ─────────────────────────── */
-  /* EY PI / Skills */
-  '.page>.kicker,.page>h1,.page>.lead{display:none!important}',
-  '.tl,#tl,.tl-row,.pill-row{display:none!important}',
-  '.controls,.controls-col{display:none!important}',
-  /* Stage chrome — all players */
-  '.stage-top,.stage-arrows,.stage-chrome,.capbar,.cap,.cap-row,.cap-txt{display:none!important}',
-  /* Outer page chrome */
-  '.page-chrome,.chrome-bar,.chrome-top,.timeline,.note{display:none!important}',
-  '.eyebrow,body>.wrap>h1,.lede{display:none!important}',
-  /* Text phase overlay */
-  '#textPhase,.text-phase,.text-col,.intro-overlay{display:none!important}',
-
-  /* ── Embed layout fixes ──────────────────────────────── */
-  /* Remove body padding — DollarCity/Chek have no embed body rule by default */
-  'html.embed body{padding:0!important;margin:0!important;overflow:hidden!important}',
-  'html.embed .page{padding:0!important;margin:0!important}',
-  /* Outer .wrap (DollarCity/Chek/Blockchain wrapper) */
-  'html.embed .wrap{padding:0!important;margin:0!important;height:100%!important;display:flex!important;flex-direction:column!important;max-width:none!important}',
-  /* EY / Skills shell */
-  'html.embed .shell{gap:0!important}',
-  'html.embed .shell>div:first-child{display:none!important}',
-  /* Stage fills the full space */
-  'html.embed .stage{flex:1!important;min-height:0!important;height:auto!important;width:100%!important}',
-  /* Stage window inner padding (Chek has 64px bottom for capbar — remove it) */
-  '.stage-window{padding:0!important}',
-  /* Unit host (DollarCity centering wrapper) */
-  '.unit-host{width:100%!important;height:100%!important;min-height:0!important}',
-  /* Make .unit fill the full stage */
-  'html.embed .unit,html.embed #unit,.unit{width:100%!important;height:100%!important;position:relative!important;top:auto!important;transform:none!important;max-width:none!important}'
-].join('\n');
-
-/* ── Data ─────────────────────────────────────────── */
-var PROJECTS = [
-  {
-    id:'ey', name:'EY Fabric', accent:'#c9a227',
-    src:'projects/ey-pi-player.html',
-    beats:[
-      {n:'01',name:'Measure',   chips:['Mixpanel','GA4','Hotjar'],   desc:'Analytics snapshot across EY Fabric catalog listings — traffic, engagement, conversion at a glance.',
-       contains:['Dashboard con KPIs de tráfico, engagement y conversión','Gráfico de serie de tiempo','Tabla de top páginas','Filtro de rango de fechas']},
-      {n:'02',name:'Analyze',   chips:['Mixpanel','Optimizely'],      desc:'Funnel analysis revealing where users drop across search, detail, and apply flows.',
-       contains:['Visualización de funnel','Porcentajes de drop-off por paso','Etapas: search → detail → apply','Comparativo de variantes']},
-      {n:'03',name:'Research',  chips:['Maze','Notion'],              desc:'User research synthesis mapped to catalog friction points and unmet needs.',
-       contains:['Grilla de síntesis de research','Tarjetas de friction points','Tags de área de problema','Insights priorizados']},
-      {n:'04',name:'Understand',chips:['Figma','FigJam'],             desc:'Persona map — who uses the catalog, what they need, and what blocks them.',
-       contains:['Mapa de personas','Segmentos de usuario','Pares necesidad / bloqueo','Grilla por rol']},
-      {n:'05',name:'Design',    chips:['Figma','Storybook'],          desc:'Redesigned catalog search and product detail flow — clarity-first information architecture.',
-       contains:['UI de búsqueda rediseñada','Layout de product detail','Jerarquía de información','Comparativo antes / después']},
-      {n:'06',name:'Hub',       chips:['Figma'],                      desc:'Central hub connecting all catalog interactions — a single control surface.',
-       contains:['Hub central de interacciones','Mapa de conexiones entre secciones','Quick-links a acciones','Vista unificada']},
-      {n:'07',name:'User flow', chips:['Pendo','Figma'],              desc:'Guided onboarding: Pendo tooltip → pre-checklist gate → step-by-step form with live cost.',
-       contains:['Tooltip de Pendo (primer paso)','Gate con pre-checklist','Formulario paso a paso','Preview de costo en tiempo real']},
-      {n:'08',name:'Publisher', chips:['Pendo','Figma'],              desc:'Publisher dashboard — add onboarding guides, define checklists, review submissions.',
-       contains:['Dashboard de publisher','Constructor de guía de onboarding','Editor de checklist','Cola de submissions']},
-      {n:'09',name:'Improved',  chips:['Figma'],                      desc:'Before vs after — same form, guided entry, inline context, cost before commit.',
-       contains:['Estado "antes" (form original)','Estado "después" (form guiado)','Contexto inline en campos','Costo visible antes de confirmar']},
-    ]
-  },
-  {
-    id:'skills', name:'Skills', accent:'#d97757',
-    src:'projects/skills-player.html',
-    beats:[
-      {n:'01',name:'Mapping',   desc:'Skills taxonomy mapped across roles, seniority, and org units.',
-       contains:['Grilla de taxonomía de skills','Eje de roles y seniority','Filtro por unidad org','Vista de árbol / mapa']},
-      {n:'02',name:'Usage',     desc:'Which skills are actually used — frequency and recency data surfaced.',
-       contains:['Gráfico de frecuencia de uso','Heatmap de recency','Ranking de top skills','Filtro por período']},
-      {n:'03',name:'Segment',   desc:'Cohort segmentation — clusters of skill patterns by team and level.',
-       contains:['Clusters de cohortes','Filtro por equipo y nivel','Tarjetas de patrón de skills','Vista comparativa']},
-      {n:'04',name:'Research',  desc:'Research synthesis: where skills gap is felt most acutely by managers and ICs.',
-       contains:['Síntesis de research','Vista managers vs ICs','Indicadores de severidad de gap','Insights mapeados por área']},
-      {n:'05',name:'Understand',desc:'Mental models — how people think about skill growth and gap identification.',
-       contains:['Diagramas de modelo mental','Flujos de crecimiento esperado','Cartas de identificación de gap','Comparativo de perspectivas']},
-      {n:'06',name:'Design',    desc:'Redesigned skill profile and endorsement flow — mutual recognition built in.',
-       contains:['Perfil de skill rediseñado','Flujo de endorsement','UI de reconocimiento mutuo','Estado de skill por área']},
-      {n:'07',name:'Hub',       desc:'Skill hub: personal profile, team view, and org-wide leaderboard in one surface.',
-       contains:['Perfil personal de skills','Vista de equipo','Leaderboard org-wide','Navegación entre vistas']},
-      {n:'08',name:'Systems',   desc:'Systems view — skill health across the whole org, filterable by domain.',
-       contains:['Vista sistémica de salud de skills','Filtro por dominio','Score de salud por área','Comparativo de dominios']},
-    ]
-  },
-  {
-    id:'dc', name:'DollarCity', accent:'#00a650',
-    src:'projects/dollarcity-player.html',
-    beats:[
-      {n:'01',name:'Why',      desc:'Reviewers juggling tabs to watch footage and search products — everything moves to one screen.',
-       contains:['Layout split: footage + búsqueda en paralelo','Panel de video izquierdo','Panel de producto derecho','Sin cambio de tab']},
-      {n:'02',name:'Search',   desc:'Flagged transactions surface first — score, exceptions, and one-click path to footage.',
-       contains:['Lista de transacciones flaggeadas','Badge de risk score','Excepciones visibles','Botón directo a footage']},
-      {n:'03',name:'States',   desc:'Every request shows its state up front — queued, downloading, ready — no more wondering.',
-       contains:['Indicadores de estado por request','Labels: queued / downloading / ready','Timeline de estado','Sin ambigüedad']},
-      {n:'04',name:'Review',   desc:'Footage and receipt line up frame-by-frame — classify without leaving the video.',
-       contains:['Video player + recibo sincronizados','Navegación frame-by-frame','Botones de clasificación inline','Sin salir del video']},
-      {n:'05',name:'Expand',   desc:'One click expands footage full-frame — the receipt stays one tab away.',
-       contains:['Vista expandida de footage','Recibo en tab adyacente','Control de minimizar','Transición suave']},
-      {n:'06',name:'Requests', desc:'Every clip a reviewer pulled lives in one place — searchable, filterable, deletable in bulk.',
-       contains:['Lista unificada de clips','Barra de búsqueda + filtros','Selección múltiple','Acción de borrado en bulk']},
-      {n:'07',name:'New',      desc:'Requesting footage is one modal — camera, time range, and quality, nothing hidden.',
-       contains:['Modal de nueva solicitud','Selector de cámara','Picker de rango de tiempo','Opción de calidad']},
-      {n:'08',name:'Queue',    desc:'Downloads process in the background — reviewers keep working instead of watching a spinner.',
-       contains:['Cola de descarga en background','Indicadores de progreso','Labels de estado','Revisores pueden seguir trabajando']},
-      {n:'09',name:'Filters',  desc:'Filters and image-first product search replace memorized SKU lookups.',
-       contains:['Panel de filtros','Búsqueda de producto por imagen','Cards de resultado con foto','Sin memorizacion de SKU']},
-    ]
-  },
-  {
-    id:'bc', name:'Blockchain 3D', accent:'#22d4c8',
-    src:'projects/blockchain-player.html',
-    tryUrl:'projects/blockchain-player.html',
-    beats:[
-      {n:'01',name:'Onboard',desc:'Welcome to your 3D map — content lives on places you own in space.',
-       contains:['Phone mockup (393×852)','Drawer de bienvenida','Mapa 3D al fondo','Dots de pasos (3)','CTA "Continue"']},
-      {n:'02',name:'Place',  desc:'Enter the map, long-press the street, confirm the address, style your pin.',
-       contains:['Mapa 3D (Three.js city)','Gesto de long-press','Tarjeta de confirmación de dirección','Sheet de estilos de pin']},
-      {n:'03',name:'Media',  desc:'Empty feed → choose source → device gallery → upload and publish.',
-       contains:['Estado de feed vacío','Sheet de selección de fuente','Galería iOS (grid de fotos)','Confirmación de upload']},
-      {n:'04',name:'Visitor',desc:'Find MY POI on the map — tap the pin, scroll reels, play full-screen.',
-       contains:['Mapa con POI vivo','Pin tip card con thumbnail','Sheet de reels','Player full-screen']},
-    ]
-  },
-  {
-    id:'chek', name:'Chek', accent:'#7a3be0',
-    src:'projects/chek-player.html',
-    tryUrl:'projects/chek-player.html',
-    beats:[
-      {n:'01',name:'Hub',     desc:'Credit card hub — balance, limit, quick actions, and recent moves at a glance.',
-       contains:['UI de tarjeta de crédito','Balance + límite visibles','Botones de quick actions','Lista de movimientos recientes']},
-      {n:'02',name:'Pay',     desc:'Pay card flow — amount input, date picker, confirmation, all in one modal.',
-       contains:['Modal de pago','Input de monto','Date picker','Pantalla de confirmación']},
-      {n:'03',name:'Limit',   desc:'Credit limit and balance breakdown — available, used, cash advance in one view.',
-       contains:['Vista de desglose de límite','Barra: disponible / usado / cash advance','Detalle de límite','Comparativo visual']},
-      {n:'04',name:'Moves',   desc:'Movements and statements — filterable transaction history with statement export.',
-       contains:['Historial de transacciones','Filtro / búsqueda','Botón de exportar estado de cuenta','Agrupación por fecha']},
-      {n:'05',name:'Security',desc:'Security help — card block and unblock, PIN change, fraud report flow.',
-       contains:['Menú de seguridad','Toggle de bloqueo / desbloqueo','Flujo de cambio de PIN','Opción de reporte de fraude']},
-      {n:'06',name:'Onboard', desc:'Onboarding — step-by-step first-time setup for a new credit card activation.',
-       contains:['Pasos de onboarding','Formulario de activación','Indicador de progreso','Estado de completado']},
-    ]
-  },
-  {
-    id:'customs', name:'Customs ES', accent:'#e05c4a',
-    src:'projects/customs-player.html',
-    beats:[
-      {n:'01',name:'Dashboard', desc:'Home shell — open documents, KPIs, filter and new-document action always visible.',
-       contains:['Lista de documentos abiertos','Tiles de KPIs','Controles de filtro','Botón de nuevo documento']},
-      {n:'02',name:'Select',    desc:'Pick the used-vehicle procedure — the legal path for the import opens.',
-       contains:['Picker de tipo de procedimiento','Opción vehículo usado destacada','Acción de confirmación','Ruta legal visible']},
-      {n:'03',name:'Form',      desc:'Fill operational facts: transport, office, importer, vehicle. Footer actions stay on screen.',
-       contains:['Campo de transporte','Campo de oficina','Campo de importador','Campo de vehículo','Footer de acciones sticky']},
-      {n:'04',name:'Review',    desc:'Review before the document exists — Generate stays in the window footer.',
-       contains:['Resumen de todos los campos','Todos los datos legibles','Botón "Generar" en footer','Sin documento creado aún']},
-      {n:'05',name:'Done',      desc:'Document created, same ID continues — ready for the field hand-off.',
-       contains:['Confirmación de documento creado','ID del documento visible','Estado listo para campo','Hand-off a operativo']},
-      {n:'06',name:'Present',   desc:'Driver presents, officer waits to scan — two devices, one operation.',
-       contains:['Vista de dispositivo del conductor','Vista de dispositivo del oficial','Ambos en modo espera de scan','Una sola operación']},
-      {n:'07',name:'Incident',  desc:'Scan fails — both screens say why. Driver and officer stay in the product.',
-       contains:['Estado de error en ambas pantallas','Razón del error visible','Conductor y oficial en el producto','Sin salir del flujo']},
-      {n:'08',name:'Release',   desc:'Second scan clears the vehicle — phone and tablet flip to approved.',
-       contains:['Segundo scan exitoso','Ambas pantallas flip a "aprobado"','Vehículo liberado','Estado final claro']},
-    ]
-  }
-];
-
-/* ── Icons ────────────────────────────────────────── */
-var IC = {
-  replay:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>',
-  stop:  '<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>'
-};
-
-/* ── Registries ───────────────────────────────────── */
-var iframes = {}; // key projId_bi → iframe
-var srcs    = {}; // key projId_bi → original src
-
-/* ── Build DOM ────────────────────────────────────── */
-var tabsEl   = document.getElementById('projTabs');
-var panelsEl = document.getElementById('panels');
-
-PROJECTS.forEach(function(proj, pi){
-  /* Tab */
-  var tab = document.createElement('button');
-  tab.className = 'ptab'+(pi===0?' on':'');
-  tab.setAttribute('role','tab');
-  tab.setAttribute('aria-selected', pi===0?'true':'false');
-  tab.style.setProperty('--ta', proj.accent);
-  tab.innerHTML = '<span class="dot"></span>'+proj.name;
-  tab.addEventListener('click', function(){ switchProj(pi); });
+PROJECTS.forEach(function(proj,pi){
+  var tab=document.createElement('button');
+  tab.className='ptab'+(pi===0?' on':'');
+  tab.style.setProperty('--ta',proj.accent);
+  tab.innerHTML='<span class="dot"></span>'+proj.name;
+  tab.onclick=function(){switchProj(pi)};
   tabsEl.appendChild(tab);
 
-  /* Panel */
-  var panel = document.createElement('div');
-  panel.className = 'proj-panel'+(pi===0?' on':'');
-  panel.id = 'panel-'+proj.id;
-  panel.setAttribute('role','tabpanel');
-  panel.style.setProperty('--pa', proj.accent);
-
-  /* "Try me" banner — only for interactive projects */
+  var panel=document.createElement('div');
+  panel.className='proj-panel'+(pi===0?' on':'');
+  panel.id='panel-'+proj.id;
+  panel.style.setProperty('--pa',proj.accent);
+  panel.innerHTML='<div class="case-hd"><h2>'+proj.name+'</h2><p>'+(proj.lede||'')+'</p></div>';
   if(proj.tryUrl){
-    var tryBar = document.createElement('div');
-    tryBar.className = 'try-bar';
-    tryBar.style.setProperty('--ta', proj.accent);
-    tryBar.innerHTML =
-      '<span class="try-label">Animations are display-only here.</span>'+
-      '<a class="try-link" href="'+proj.tryUrl+'" target="_blank" rel="noopener">'+
-      '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'+
-      ' Try interactive</a>';
-    panel.appendChild(tryBar);
+    var bar=document.createElement('div');
+    bar.className='try-bar';
+    bar.style.setProperty('--ta',proj.accent);
+    bar.innerHTML='<span class="try-label">Beats muestra la ventana. Try abre esa ventana clickeable.</span><a class="try-link" href="'+proj.tryUrl+'" target="_blank" rel="noopener">Try this window</a>';
+    panel.appendChild(bar);
   }
-
-  var list = document.createElement('div');
-  list.className = 'beat-list';
-
-  proj.beats.forEach(function(beat, bi){
-    var key = proj.id+'_'+bi;
-
-    var row = document.createElement('div');
-    row.className = 'beat';
-
-    /* — Info — */
-    var info = document.createElement('div');
-    info.className = 'bi';
-
-    var bnum = document.createElement('div');
-    bnum.className = 'bi-n';
-    bnum.textContent = 'Beat '+beat.n;
-
-    var btitle = document.createElement('h2');
-    btitle.className = 'bi-title';
-    btitle.textContent = beat.name;
-
-    var bdesc = document.createElement('p');
-    bdesc.className = 'bi-desc';
-    bdesc.textContent = beat.desc;
-
-    /* Optional tool chips */
-    var chipsEl = null;
-    if(beat.chips && beat.chips.length){
-      chipsEl = document.createElement('div');
-      chipsEl.className = 'bi-chips';
-      beat.chips.forEach(function(c){
-        var ch = document.createElement('span');
-        ch.className = 'bi-chip';
-        ch.textContent = c;
-        chipsEl.appendChild(ch);
-      });
-    }
-
-    var ctrls = document.createElement('div');
-    ctrls.className = 'bi-ctrls';
-
-    var btnR = document.createElement('button');
-    btnR.className = 'ctrl replay';
-    btnR.innerHTML = IC.replay+' Replay';
-    btnR.setAttribute('aria-label','Replay '+beat.name);
-    btnR.addEventListener('click', function(){ replay(proj.id, bi); });
-
-    var btnS = document.createElement('button');
-    btnS.className = 'ctrl';
-    btnS.innerHTML = IC.stop+' Stop';
-    btnS.setAttribute('aria-label','Stop '+beat.name);
-    btnS.addEventListener('click', function(){ stop(proj.id, bi); });
-
-    ctrls.appendChild(btnR);
-    ctrls.appendChild(btnS);
-    info.appendChild(bnum);
-    info.appendChild(btitle);
-    info.appendChild(bdesc);
-    if(chipsEl) info.appendChild(chipsEl);
-    /* Count row (reviewer only) */
-    var countRow = document.createElement('div');
-    countRow.className = 'cm-count-row';
-    var countBadge = document.createElement('span');
-    countBadge.className = 'cm-count-badge';
-    countBadge.dataset.cmcount = key;
-    countBadge.dataset.n = '0';
-    countBadge.textContent = '0';
-    countRow.appendChild(countBadge);
-    countRow.appendChild(document.createTextNode('comment' + (0===1?'':'s')));
-    info.appendChild(countRow);
-    info.appendChild(ctrls);
-
-    /* Thread panel (reviewer only) */
-    var threadPanel = document.createElement('div');
-    threadPanel.className = 'cm-thread-panel';
-    threadPanel.dataset.cmthread = key;
-    info.appendChild(threadPanel);
-
-    /* — Stage (frameless) — */
-    var stage = document.createElement('div');
-    stage.className = 'beat-stage';
-    stage.dataset.stage = key;
-
-    var fld = document.createElement('div');
-    fld.className = 'fld';
-    fld.style.setProperty('--accent', proj.accent);
-    fld.innerHTML = '<div class="fld-dot"></div>';
-
-    var src = proj.src+'?embed=1';
-    srcs[key] = src;
-
-    var iframe = document.createElement('iframe');
-    iframe.src = src;
-    iframe.title = proj.name+' — '+beat.name;
+  var list=document.createElement('div');
+  proj.beats.forEach(function(beat,bi){
+    var key=proj.id+'_'+bi;
+    var row=document.createElement('div');
+    row.className='beat';
+    var info=document.createElement('div');
+    info.className='bi';
+    var chips='';
+    if(beat.chips) chips='<div class="bi-chips">'+beat.chips.map(function(c){return '<span class="bi-chip">'+c+'</span>'}).join('')+'</div>';
+    var has='';
+    if(beat.contains) has='<div class="bi-has-lab">Qué hay en este cuadro</div><ul class="bi-has">'+beat.contains.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>';
+    info.innerHTML='<div class="bi-n">Beat '+beat.n+'</div><h2 class="bi-title">'+beat.name+'</h2><p class="bi-desc">'+beat.desc+'</p>'+chips+has+'<a class="try-win" href="try.html?p='+encodeURIComponent(proj.src)+'&beat='+bi+'" target="_blank" rel="noopener">Try this window</a>';
+    var stage=document.createElement('div');
+    stage.className='beat-stage';
+    if(proj.id==='bc'||proj.id==='chek') stage.dataset.kind='phone';
+    var src=proj.src+'?embed=1&window=1&beat='+bi+'&once=1';
+    srcs[key]=src;
+    var iframe=document.createElement('iframe');
+    iframe.title=proj.name+' — '+beat.name;
+    iframe.dataset.src=src;
     iframe.setAttribute('loading','lazy');
-    iframe.setAttribute('allowtransparency','true');
-    iframes[key] = iframe;
-
-    iframe.addEventListener('load', function(){
-      fld.classList.add('gone');
+    iframes[key]=iframe;
+    iframe.addEventListener('load',function(){
+      if(!iframe.getAttribute('src')) return;
       iframe.classList.add('loaded');
-      injectStrip(iframe);
-      /* Auto-play this beat */
+      var fld=stage.querySelector('.fld');
+      if(fld) fld.classList.add('gone');
+      try{
+        var doc=iframe.contentDocument;
+        if(doc&&doc.documentElement){
+          doc.documentElement.classList.add('embed','window');
+          var s=doc.createElement('script');
+          s.src='../fm-once.js';
+          doc.head.appendChild(s);
+        }
+      }catch(e){}
       setTimeout(function(){
-        postMsg(iframe, {type:'playBeat', index:bi});
-      }, 260);
+        try{iframe.contentWindow.postMessage({type:'playBeat',index:bi,once:true},'*')}catch(err){}
+      },280);
     });
-
-    /* Comment overlay */
-    var cmOverlay = document.createElement('div');
-    cmOverlay.className = 'cm-overlay';
-    cmOverlay.dataset.stage = key;
-    (function(k){
-      cmOverlay.addEventListener('click', function(e){
-        if(!document.body.classList.contains('cm-mode')) return;
-        var rect = stage.getBoundingClientRect();
-        var x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
-        var y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
-        pendingClick[k] = {x:parseFloat(x), y:parseFloat(y)};
-        showNewForm(k, parseFloat(y));
-      });
-    })(key);
-
-    var cmHint = document.createElement('div');
-    cmHint.className = 'cm-mode-hint';
-    cmHint.textContent = 'Click to drop a comment';
-
+    var fld=document.createElement('div');
+    fld.className='fld';
+    fld.innerHTML='<div class="fld-dot"></div>';
     stage.appendChild(fld);
     stage.appendChild(iframe);
-    stage.appendChild(cmOverlay);
-    stage.appendChild(cmHint);
     row.appendChild(info);
     row.appendChild(stage);
     list.appendChild(row);
   });
-
   panel.appendChild(list);
   panelsEl.appendChild(panel);
 });
 
-/* ── Project switch ───────────────────────────────── */
-var curProj = 0;
-
+function unloadProj(id){
+  PROJECTS.forEach(function(p){
+    if(p.id!==id) return;
+    p.beats.forEach(function(_,bi){
+      var iframe=iframes[p.id+'_'+bi];
+      if(!iframe) return;
+      iframe.classList.remove('loaded');
+      iframe.removeAttribute('src');
+    });
+  });
+}
+function mountVisible(){
+  var panel=document.getElementById('panel-'+PROJECTS[curProj].id);
+  if(!panel) return;
+  panel.querySelectorAll('iframe[data-src]').forEach(function(iframe){
+    if(iframe.getAttribute('src')) return;
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        iframe.src=iframe.dataset.src;
+        io.disconnect();
+      });
+    },{rootMargin:'200px'});
+    io.observe(iframe);
+  });
+}
 function switchProj(pi){
   if(pi===curProj) return;
+  unloadProj(PROJECTS[curProj].id);
   document.getElementById('panel-'+PROJECTS[curProj].id).classList.remove('on');
-  curProj = pi;
+  curProj=pi;
   document.getElementById('panel-'+PROJECTS[pi].id).classList.add('on');
-  tabsEl.querySelectorAll('.ptab').forEach(function(t,i){
-    t.classList.toggle('on',i===pi);
-    t.setAttribute('aria-selected',i===pi?'true':'false');
-  });
+  tabsEl.querySelectorAll('.ptab').forEach(function(t,i){t.classList.toggle('on',i===pi)});
+  mountVisible();
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
-/* ── Beat controls ────────────────────────────────── */
-function replay(projId, bi){
-  var iframe = iframes[projId+'_'+bi];
-  if(!iframe) return;
-  postMsg(iframe, {type:'playBeat', index:bi});
-}
-
-function stop(projId, bi){
-  var key = projId+'_'+bi;
-  var iframe = iframes[key];
-  if(!iframe) return;
-  /* Remove .loaded first (opacity 0 is already instant — no transition on un-loaded state)
-     then reload so the player chrome never flashes through */
-  iframe.classList.remove('loaded');
-  /* Short delay lets opacity:0 apply before the reload begins */
-  setTimeout(function(){
-    iframe.src = srcs[key];
-  }, 20);
-}
-
-function postMsg(iframe, msg){
-  try{ iframe.contentWindow.postMessage(msg,'*'); }catch(e){}
-}
-
-/* ── Strip player chrome ─────────────────────────── */
-function injectStrip(iframe){
-  try{
-    var doc = iframe.contentDocument;
-    if(!doc || !doc.head) return;
-    var s = doc.createElement('style');
-    s.textContent = STRIP_CSS;
-    doc.head.appendChild(s);
-  }catch(e){}
-}
-
-/* ──────────────────────────────────────────────────
-   COMMENT SYSTEM — Reviewer mode
-   Password: fm2026 (change RV_PASS to update)
-──────────────────────────────────────────────────── */
-var RV_PASS  = 'fm2026';
-var CM_STORE = 'beats-comments-v1';
-
-var rvBtn       = document.getElementById('rvBtn');
-var rvModalBg   = document.getElementById('rvModalBg');
-var rvPassEl    = document.getElementById('rvPass');
-var rvErrEl     = document.getElementById('rvErr');
-var rvEnterEl   = document.getElementById('rvEnter');
-var rvCancelEl  = document.getElementById('rvCancel');
-var cmToggleBtn = document.getElementById('cmToggleBtn');
-
-/* ── localStorage ─────────────────────────────── */
-function cmLoad(){
-  try{ return JSON.parse(localStorage.getItem(CM_STORE)||'{}'); }catch(e){ return {}; }
-}
-function cmWrite(data){
-  try{ localStorage.setItem(CM_STORE, JSON.stringify(data)); }catch(e){}
-}
-
-/* ── Helpers ──────────────────────────────────── */
-function getBeat(key){
-  var parts = key.split('_'), projId=parts[0], bi=parseInt(parts[1],10);
-  for(var i=0;i<PROJECTS.length;i++){
-    if(PROJECTS[i].id===projId) return PROJECTS[i].beats[bi]||null;
-  }
-  return null;
-}
-
-function esc(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function formatTs(ts){
-  var d=Date.now()-ts;
-  if(d<60000) return 'ahora';
-  if(d<3600000) return Math.floor(d/60000)+'min';
-  var dt=new Date(ts), td=new Date();
-  if(dt.toDateString()===td.toDateString()) return dt.getHours()+':'+(dt.getMinutes()<10?'0':'')+dt.getMinutes();
-  return dt.getDate()+'/'+(dt.getMonth()+1);
-}
-
-/* ── Count badge ──────────────────────────────── */
-function updateCount(key){
-  var data=cmLoad(), comments=data[key]||[], n=comments.length;
-  var el=document.querySelector('[data-cmcount="'+key+'"]');
-  if(!el) return;
-  el.textContent=n;
-  el.dataset.n=n;
-  var row=el.parentElement;
-  if(row){
-    var label=row.childNodes[1];
-    if(label) label.textContent=' comment'+(n===1?'':'s');
-  }
-}
-
-/* ── Render pins ──────────────────────────────── */
-function renderPins(key){
-  var overlay=document.querySelector('.cm-overlay[data-stage="'+key+'"]');
-  if(!overlay) return;
-  overlay.querySelectorAll('.cm-pin').forEach(function(p){ p.remove(); });
-  var comments=(cmLoad()[key]||[]);
-  comments.forEach(function(c){
-    var pin=document.createElement('div');
-    pin.className='cm-pin'+(c.resolved?' resolved':'')+(String(activeThread[key])===String(c.id)?' active':'');
-    pin.dataset.cid=c.id;
-    pin.style.left=c.x+'%';
-    pin.style.top=c.y+'%';
-    pin.innerHTML='<div class="cm-pin-dot">'+c.num+'</div>';
-    (function(cid){ pin.addEventListener('click',function(e){ e.stopPropagation(); openThread(key,cid); }); })(c.id);
-    overlay.appendChild(pin);
-  });
-}
-
-/* ── Active thread registry ───────────────────── */
-var activeThread={};
-var pendingClick={};
-
-/* ── Open / close thread ──────────────────────── */
-function openThread(key, commentId){
-  activeThread[key]=commentId;
-  renderPins(key);
-  renderThreadPanel(key);
-}
-function closeThread(key){
-  activeThread[key]=null;
-  pendingClick[key]=null;
-  renderPins(key);
-  renderThreadPanel(key);
-}
-
-/* ── Show new-comment form ────────────────────── */
-function showNewForm(key, yPct){
-  activeThread[key]=null;
-  renderPins(key);
-  /* Suggest component by Y position */
-  var beat=getBeat(key);
-  var components=(beat&&beat.contains)||[];
-  var suggested='';
-  if(components.length){
-    var idx=Math.min(Math.floor((yPct/100)*components.length), components.length-1);
-    suggested=components[idx];
-  }
-  renderThreadPanel(key, suggested);
-}
-
-/* ── Render thread panel ──────────────────────── */
-function renderThreadPanel(key, suggestedComp){
-  var panel=document.querySelector('.cm-thread-panel[data-cmthread="'+key+'"]');
-  if(!panel) return;
-  panel.innerHTML='';
-  var data=cmLoad(), comments=data[key]||[], cid=activeThread[key];
-
-  if(cid!==null && cid!==undefined){
-    var comment=null;
-    for(var i=0;i<comments.length;i++){ if(String(comments[i].id)===String(cid)){ comment=comments[i]; break; } }
-    if(comment){ buildOpenThread(panel,key,comment); return; }
-    activeThread[key]=null;
-  }
-  /* Thread list */
-  if(comments.length){
-    var list=document.createElement('div');
-    list.className='cm-thread-list';
-    comments.forEach(function(c){
-      var item=document.createElement('div');
-      item.className='cm-thread-item'+(c.resolved?' resolved':'');
-      item.innerHTML=
-        '<div class="cm-pin-num">'+c.num+'</div>'+
-        '<div class="cm-thread-meta">'+
-          (c.component?'<div class="cm-thread-comp">'+esc(c.component)+'</div>':'')+
-          '<div class="cm-thread-text">'+esc(c.text)+'</div>'+
-          '<div class="cm-thread-ts">'+formatTs(c.ts)+(c.replies&&c.replies.length?' · '+c.replies.length+' repl'+(c.replies.length===1?'y':'ies'):'')+
-          '</div></div>';
-      (function(cid){ item.addEventListener('click',function(){ openThread(key,cid); }); })(c.id);
-      list.appendChild(item);
-    });
-    panel.appendChild(list);
-  } else {
-    var empty=document.createElement('div');
-    empty.className='cm-empty';
-    empty.textContent='No comments yet — enter comment mode (C) and click the stage.';
-    panel.appendChild(empty);
-  }
-  /* New form */
-  var newForm=document.createElement('div');
-  newForm.className='cm-new-form'+(pendingClick[key]?' on':'');
-  buildNewForm(newForm, key, suggestedComp||'');
-  panel.appendChild(newForm);
-}
-
-function buildOpenThread(panel, key, comment){
-  var isR=comment.resolved;
-  var hd=document.createElement('div'); hd.className='cm-thread-hd';
-  hd.innerHTML=
-    '<button class="cm-back"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg> Threads</button>'+
-    '<button class="cm-resolve-btn'+(isR?' resolved':'')+'">'+( isR?'✓ Resolved':'Resolve')+'</button>'+
-    '<button class="cm-delete-btn" aria-label="Delete"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></button>';
-  hd.querySelector('.cm-back').addEventListener('click',function(){ closeThread(key); });
-  hd.querySelector('.cm-resolve-btn').addEventListener('click',function(){ toggleResolve(key,comment.id); });
-  hd.querySelector('.cm-delete-btn').addEventListener('click',function(){ deleteComment(key,comment.id); });
-  panel.appendChild(hd);
-
-  var msgs=document.createElement('div'); msgs.className='cm-msgs';
-  var first=document.createElement('div'); first.className='cm-msg';
-  first.innerHTML=(comment.component?'<div class="cm-msg-comp">'+esc(comment.component)+'</div>':'')+
-    '<div class="cm-msg-text">'+esc(comment.text)+'</div>'+
-    '<div class="cm-msg-footer">'+formatTs(comment.ts)+'</div>';
-  msgs.appendChild(first);
-  (comment.replies||[]).forEach(function(r){
-    var msg=document.createElement('div'); msg.className='cm-msg';
-    msg.style.cssText='border-left:2px solid rgba(255,255,255,.07);padding-left:9px;margin-left:2px';
-    msg.innerHTML='<div class="cm-msg-text">'+esc(r.text)+'</div><div class="cm-msg-footer">'+formatTs(r.ts)+'</div>';
-    msgs.appendChild(msg);
-  });
-  panel.appendChild(msgs);
-
-  var rr=document.createElement('div'); rr.className='cm-reply-row';
-  var ri=document.createElement('textarea'); ri.className='cm-reply-input'; ri.placeholder='Reply…'; ri.rows=1;
-  var rs=document.createElement('button'); rs.className='cm-reply-send'; rs.textContent='Send'; rs.disabled=true;
-  ri.addEventListener('input',function(){ rs.disabled=!ri.value.trim(); });
-  rs.addEventListener('click',function(){ var t=ri.value.trim(); if(!t) return; addReply(key,comment.id,t); });
-  rr.appendChild(ri); rr.appendChild(rs);
-  panel.appendChild(rr);
-}
-
-function buildNewForm(form, key, suggestedComp){
-  var beat=getBeat(key);
-  var components=(beat&&beat.contains)||[];
-  var selectedComp=suggestedComp||'';
-  form.innerHTML=
-    '<div class="cm-form-hd">+ Nuevo comentario</div>'+
-    (components.length?'<div class="cm-comp-chips"></div>':'')+
-    '<textarea class="cm-new-textarea" placeholder="¿Qué ves? ¿Qué falta?"></textarea>'+
-    '<div class="cm-form-actions">'+
-      '<button class="cm-form-cancel">Cancelar</button>'+
-      '<button class="cm-form-submit" disabled>Comentar</button>'+
-    '</div>';
-
-  if(components.length){
-    var chipsEl=form.querySelector('.cm-comp-chips');
-    components.forEach(function(comp){
-      var chip=document.createElement('button');
-      chip.className='cm-comp-chip'+(comp===selectedComp?' on':'');
-      chip.textContent=comp; chip.type='button';
-      chip.addEventListener('click',function(){
-        chipsEl.querySelectorAll('.cm-comp-chip').forEach(function(c){ c.classList.remove('on'); });
-        if(selectedComp===comp){ selectedComp=''; } else { chip.classList.add('on'); selectedComp=comp; }
-      });
-      chipsEl.appendChild(chip);
-    });
-  }
-
-  var ta=form.querySelector('.cm-new-textarea');
-  var submit=form.querySelector('.cm-form-submit');
-  ta.addEventListener('input',function(){ submit.disabled=!ta.value.trim(); });
-  form.querySelector('.cm-form-cancel').addEventListener('click',function(){
-    form.classList.remove('on');
-    pendingClick[key]=null;
-    closeThread(key);
-  });
-  submit.addEventListener('click',function(){
-    var txt=ta.value.trim(); if(!txt) return;
-    var px=pendingClick[key]||{x:50,y:50};
-    createComment(key, px.x, px.y, txt, selectedComp);
-    form.classList.remove('on');
-    pendingClick[key]=null;
-  });
-  /* Auto-focus textarea */
-  setTimeout(function(){ if(form.classList.contains('on')) ta.focus(); }, 60);
-}
-
-/* ── CRUD ─────────────────────────────────────── */
-function createComment(key, x, y, text, component){
-  var data=cmLoad(), comments=data[key]||[];
-  var num=comments.length+1;
-  comments.push({ id:Date.now()+'_'+Math.random().toString(36).slice(2,7), num:num, x:x, y:y,
-    text:text, component:component||'', ts:Date.now(), replies:[], resolved:false });
-  data[key]=comments; cmWrite(data);
-  renderPins(key); updateCount(key);
-  openThread(key, comments[comments.length-1].id);
-}
-
-function addReply(key, commentId, text){
-  var data=cmLoad(), comments=data[key]||[];
-  for(var i=0;i<comments.length;i++){
-    if(String(comments[i].id)===String(commentId)){
-      comments[i].replies=comments[i].replies||[];
-      comments[i].replies.push({text:text,ts:Date.now()}); break;
-    }
-  }
-  data[key]=comments; cmWrite(data);
-  openThread(key, commentId);
-}
-
-function toggleResolve(key, commentId){
-  var data=cmLoad(), comments=data[key]||[];
-  for(var i=0;i<comments.length;i++){
-    if(String(comments[i].id)===String(commentId)){ comments[i].resolved=!comments[i].resolved; break; }
-  }
-  data[key]=comments; cmWrite(data);
-  renderPins(key); updateCount(key);
-  openThread(key, commentId);
-}
-
-function deleteComment(key, commentId){
-  var data=cmLoad();
-  var comments=(data[key]||[]).filter(function(c){ return String(c.id)!==String(commentId); });
-  comments.forEach(function(c,i){ c.num=i+1; });
-  data[key]=comments; cmWrite(data);
-  renderPins(key); updateCount(key);
-  closeThread(key);
-}
-
-/* ── Comment mode ─────────────────────────────── */
-function enterCmMode(){
-  document.body.classList.add('cm-mode');
-  cmToggleBtn.classList.add('on');
-  cmToggleBtn.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Exit';
-}
-function exitCmMode(){
-  document.body.classList.remove('cm-mode');
-  cmToggleBtn.classList.remove('on');
-  cmToggleBtn.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Comment';
-  document.querySelectorAll('.cm-new-form').forEach(function(f){ f.classList.remove('on'); });
-  Object.keys(pendingClick).forEach(function(k){ pendingClick[k]=null; });
-}
-function toggleCmMode(){
-  if(document.body.classList.contains('cm-mode')) exitCmMode();
-  else enterCmMode();
-}
-
-document.addEventListener('keydown',function(e){
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
-  if(!document.body.classList.contains('reviewer')) return;
-  if(e.key==='c'||e.key==='C'){ toggleCmMode(); }
-  if(e.key==='Escape'){ exitCmMode(); }
-});
-
-cmToggleBtn.addEventListener('click', toggleCmMode);
-
-/* ── Reviewer activate/deactivate ─────────────── */
-function rvActivate(){
-  document.body.classList.add('reviewer');
-  rvBtn.classList.add('active');
-  try{ sessionStorage.setItem('beats-rv','1'); }catch(e){}
-  document.querySelectorAll('[data-cmcount]').forEach(function(el){ updateCount(el.dataset.cmcount); });
-  document.querySelectorAll('.cm-overlay[data-stage]').forEach(function(ov){ renderPins(ov.dataset.stage); });
-  document.querySelectorAll('.cm-thread-panel[data-cmthread]').forEach(function(p){ renderThreadPanel(p.dataset.cmthread); });
-}
-function rvDeactivate(){
-  document.body.classList.remove('reviewer','cm-mode');
-  rvBtn.classList.remove('active');
-  try{ sessionStorage.removeItem('beats-rv'); }catch(e){}
-}
-
-rvBtn.addEventListener('click',function(){
-  if(document.body.classList.contains('reviewer')){ rvDeactivate(); }
-  else {
-    rvModalBg.classList.remove('hidden');
-    rvPassEl.value=''; rvErrEl.classList.remove('on');
-    setTimeout(function(){ rvPassEl.focus(); }, 80);
-  }
-});
-
-function rvTryEnter(){
-  if(rvPassEl.value===RV_PASS){ rvModalBg.classList.add('hidden'); rvActivate(); }
-  else { rvErrEl.classList.add('on'); rvPassEl.select(); }
-}
-rvEnterEl.addEventListener('click', rvTryEnter);
-rvPassEl.addEventListener('keydown',function(e){
-  if(e.key==='Enter') rvTryEnter();
-  if(e.key==='Escape') rvModalBg.classList.add('hidden');
-});
-rvCancelEl.addEventListener('click',function(){ rvModalBg.classList.add('hidden'); });
-rvModalBg.addEventListener('click',function(e){ if(e.target===rvModalBg) rvModalBg.classList.add('hidden'); });
-
-try{ if(sessionStorage.getItem('beats-rv')==='1') rvActivate(); }catch(e){}
+mountVisible();
 </script>
 </body>
 </html>
