@@ -31,11 +31,8 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .beat:first-child{border-top:none;padding-top:0}
 .bi{display:flex;flex-direction:column;gap:14px;position:sticky;top:64px}
 .bi-n{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
-.bi-title{font-family:var(--fd);font-size:clamp(1.35rem,1.1rem+1vw,1.7rem);letter-spacing:-.03em;line-height:1.15}
-.bi-title em{color:var(--accent);font-style:normal}
 .bi-line{font-family:var(--fd);font-size:1.05rem;line-height:1.4;color:var(--text);letter-spacing:-.02em}
 .bi-line em{color:var(--accent);font-style:normal}
-.bi-desc{font-size:1rem;line-height:1.6;color:var(--text)}
 .bi-cap{font-size:.95rem;line-height:1.55;color:var(--muted)}
 .bi-has-lab{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 .bi-has{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
@@ -44,7 +41,9 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .bi-chip{font-family:var(--fm);font-size:11px;padding:5px 10px;border-radius:100px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);color:var(--text);background:color-mix(in srgb,var(--accent) 8%,transparent)}
 .stage-col{display:flex;flex-direction:column;gap:12px;min-width:0}
 .stage-cap{font-size:.95rem;line-height:1.5;color:var(--muted)}
-.stage-cap em{color:var(--accent);font-style:normal}
+.stage-ctrl{display:flex;gap:8px}
+.sc-btn{font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:7px;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--text);cursor:pointer}
+.sc-btn:hover{background:color-mix(in srgb,var(--accent) 16%,transparent)}
 .beat-stage{position:relative;aspect-ratio:560/410;overflow:hidden}
 .beat-stage[data-kind="phone"]{aspect-ratio:9/19.5;max-width:260px;width:100%;justify-self:center}
 .beat-stage[data-kind="diagram"]{aspect-ratio:auto;min-height:340px;overflow:visible}
@@ -118,7 +117,7 @@ PROJECTS.forEach(function(proj,pi){
     if(beat.contains) has='<div class="bi-has-lab">En este cuadro</div><ul class="bi-has">'+beat.contains.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>';
     var line=beat.line ? '<p class="bi-line">'+beat.line+'</p>' : '';
     var cap=beat.cap ? '<p class="bi-cap">'+beat.cap+'</p>' : '';
-    info.innerHTML='<div class="bi-n">Beat '+beat.n+' · '+beat.name+'</div>'+(line||'<h2 class="bi-title">'+beat.name+'</h2>')+(beat.desc?'<p class="bi-desc">'+beat.desc+'</p>':'')+cap+chips+has;
+    info.innerHTML='<div class="bi-n">Beat '+beat.n+' · '+beat.name+'</div>'+(line||'<h2 class="bi-title">'+beat.name+'</h2>')+cap+chips+has;
     var stageWrap=document.createElement('div');
     stageWrap.className='stage-col';
     var stage=document.createElement('div');
@@ -158,6 +157,20 @@ PROJECTS.forEach(function(proj,pi){
     fld.innerHTML='<div class="fld-dot"></div>';
     stage.appendChild(fld);
     stage.appendChild(iframe);
+    var ctrl=document.createElement('div');
+    ctrl.className='stage-ctrl';
+    ctrl.innerHTML='<button type="button" class="sc-btn" data-act="replay">Replay</button><button type="button" class="sc-btn" data-act="stop">Stop</button>';
+    ctrl.addEventListener('click', function(ev){
+      var act=ev.target && ev.target.getAttribute('data-act');
+      if(act==='replay'){
+        iframe.classList.remove('loaded');
+        iframe.src=iframe.dataset.src+(iframe.dataset.src.indexOf('?')>=0?'&':'?')+'r='+Date.now();
+      }
+      if(act==='stop'){
+        try{iframe.contentWindow.postMessage({type:'fm-stop'},'*')}catch(err){}
+      }
+    });
+    stageWrap.appendChild(ctrl);
     stageWrap.appendChild(stage);
     if(beat.under){
       var under=document.createElement('p');
