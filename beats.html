@@ -27,9 +27,6 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .case-hd{margin:0 0 22px;max-width:54ch}
 .case-hd h2{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.03em}
 .case-hd p{margin-top:8px;color:var(--muted);font-size:.9rem;line-height:1.65}
-.try-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 16px;margin:0 0 18px;border-radius:8px;border:1px solid color-mix(in srgb,var(--ta,#fff) 22%,transparent);background:color-mix(in srgb,var(--ta,#fff) 5%,transparent)}
-.try-label{font-family:var(--fm);font-size:10px;color:var(--muted);flex:1}
-.try-link,.try-win{display:inline-flex;align-items:center;padding:5px 12px;border-radius:7px;border:1px solid color-mix(in srgb,var(--accent,#fff) 38%,transparent);font-family:var(--fm);font-size:10px;color:var(--accent,#f0eee9);text-decoration:none}
 .beat{display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:36px;align-items:start;padding:44px 0;border-top:1px solid var(--border)}
 .beat:first-child{border-top:none;padding-top:0}
 .bi{display:flex;flex-direction:column;gap:10px;position:sticky;top:64px}
@@ -43,6 +40,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .bi-chip{font-family:var(--fm);font-size:9px;padding:3px 8px;border-radius:100px;border:1px solid var(--border);color:var(--muted)}
 .beat-stage{position:relative;aspect-ratio:560/410;overflow:hidden}
 .beat-stage[data-kind="phone"]{aspect-ratio:9/19.5;max-width:260px;width:100%;justify-self:center}
+.beat-stage[data-kind="diagram"]{aspect-ratio:auto;min-height:340px;overflow:visible}
 .beat-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:none;background:transparent;pointer-events:none;opacity:0}
 .beat-stage iframe.loaded{opacity:1;transition:opacity .35s}
 .fld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -63,7 +61,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 </div>
 <div class="pg-hd">
   <h1>Beats</h1>
-  <p>Página momentánea. Un cuadro = la ventana de producto. El film queda en Try this window.</p>
+  <p>Disección. Sacamos las piezas del player — no las escondemos.</p>
 </div>
 <div class="proj-tabs" id="projTabs" role="tablist"></div>
 <div id="panels"></div>
@@ -86,13 +84,6 @@ PROJECTS.forEach(function(proj,pi){
   panel.id='panel-'+proj.id;
   panel.style.setProperty('--pa',proj.accent);
   panel.innerHTML='<div class="case-hd"><h2>'+proj.name+'</h2><p>'+(proj.lede||'')+'</p></div>';
-  if(proj.tryUrl){
-    var bar=document.createElement('div');
-    bar.className='try-bar';
-    bar.style.setProperty('--ta',proj.accent);
-    bar.innerHTML='<span class="try-label">Beats muestra la ventana. Try abre esa ventana clickeable.</span><a class="try-link" href="'+proj.tryUrl+'" target="_blank" rel="noopener">Try this window</a>';
-    panel.appendChild(bar);
-  }
   var list=document.createElement('div');
   proj.beats.forEach(function(beat,bi){
     var key=proj.id+'_'+bi;
@@ -104,11 +95,13 @@ PROJECTS.forEach(function(proj,pi){
     if(beat.chips) chips='<div class="bi-chips">'+beat.chips.map(function(c){return '<span class="bi-chip">'+c+'</span>'}).join('')+'</div>';
     var has='';
     if(beat.contains) has='<div class="bi-has-lab">Qué hay en este cuadro</div><ul class="bi-has">'+beat.contains.map(function(c){return '<li>'+c+'</li>'}).join('')+'</ul>';
-    info.innerHTML='<div class="bi-n">Beat '+beat.n+'</div><h2 class="bi-title">'+beat.name+'</h2><p class="bi-desc">'+beat.desc+'</p>'+chips+has+'<a class="try-win" href="try.html?p='+encodeURIComponent(proj.src)+'&beat='+bi+'" target="_blank" rel="noopener">Try this window</a>';
+    info.innerHTML='<div class="bi-n">Beat '+beat.n+'</div><h2 class="bi-title">'+beat.name+'</h2><p class="bi-desc">'+beat.desc+'</p>'+chips+has;
     var stage=document.createElement('div');
     stage.className='beat-stage';
-    if(proj.id==='bc'||proj.id==='chek') stage.dataset.kind='phone';
-    var src=proj.src+'?embed=1&window=1&beat='+bi+'&once=1';
+    if(proj.id==='ey' && bi===0){ beat.kind='diagram'; beat.src='projects/ey-01-measure.html'; }
+    if(beat.kind==='diagram') stage.dataset.kind='diagram';
+    else if(proj.id==='bc'||proj.id==='chek') stage.dataset.kind='phone';
+    var src=beat.src || (proj.src+'?embed=1&beat='+bi+'&once=1');
     srcs[key]=src;
     var iframe=document.createElement('iframe');
     iframe.title=proj.name+' — '+beat.name;
@@ -120,18 +113,20 @@ PROJECTS.forEach(function(proj,pi){
       iframe.classList.add('loaded');
       var fld=stage.querySelector('.fld');
       if(fld) fld.classList.add('gone');
-      try{
-        var doc=iframe.contentDocument;
-        if(doc&&doc.documentElement){
-          doc.documentElement.classList.add('embed','window');
-          var s=doc.createElement('script');
-          s.src='../fm-once.js';
-          doc.head.appendChild(s);
-        }
-      }catch(e){}
-      setTimeout(function(){
-        try{iframe.contentWindow.postMessage({type:'playBeat',index:bi,once:true},'*')}catch(err){}
-      },280);
+      if(beat.kind!=='diagram'){
+        try{
+          var doc=iframe.contentDocument;
+          if(doc&&doc.documentElement){
+            doc.documentElement.classList.add('embed','window');
+            var s=doc.createElement('script');
+            s.src='../fm-once.js';
+            doc.head.appendChild(s);
+          }
+        }catch(e){}
+        setTimeout(function(){
+          try{iframe.contentWindow.postMessage({type:'playBeat',index:bi,once:true},'*')}catch(err){}
+        },280);
+      }
     });
     var fld=document.createElement('div');
     fld.className='fld';
