@@ -11,7 +11,7 @@ Analogía: de Grok, solo el composer (donde escribís / el audio). El resto del 
 | DollarCity | `#win` dentro de `#unit` | textPhase, capbar, hotkeys |
 | Chek | `#ckPhone` | textPhase, stage title/count, cap |
 | Blockchain | `#phone` | textPhase, stage chrome, cap |
-| Customs | (pendiente) | player + typewriting |
+| Customs | `#winMock` / devices in proto unit | textPhase, mode tabs, stage chrome |
 
 ## Query
 
@@ -21,7 +21,7 @@ player.html?embed=1&window=1&beat=N&once=1
 
 - `window=1` → solo la superficie de producto
 - `once=1` → ese beat, no encadena
-- Try me = el player completo, otra pestaña
+- Try me = `?embed=1&window=1&try=1&beat=N` — misma ventana, clickeable, sin película
 
 ## Qué pulir después (la ventana, no el player)
 
