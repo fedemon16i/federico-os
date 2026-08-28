@@ -1,44 +1,48 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Requester marketplace</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<title>Requester</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f3f4f8;font-family:'IBM Plex Sans',system-ui,sans-serif}
 :root{--bg:#12141c;--nav:#0b0c10;--card:#1c1e28;--line:rgba(255,255,255,.08);--or:#e8943a;--gold:#f0de5a;--ok:#7dcea0;--muted:#9aa0b0;--faint:#6d7384;--spring:cubic-bezier(.34,1.32,.64,1)}
 .stage{position:relative;min-height:360px}
 .br{height:360px;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--nav)}
-.bb{height:22px;display:flex;align-items:center;gap:7px;padding:0 10px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.bb{height:20px;display:flex;align-items:center;gap:6px;padding:0 8px;background:#14151c;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
 .d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
 .app{flex:1;display:flex;flex-direction:column;background:var(--bg);min-height:0}
-.nav{height:24px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--nav);border-bottom:1px solid var(--line);font-size:9px;color:var(--muted)}
-.nav .on{color:#fff}
-.body{flex:1;padding:10px 12px;min-height:0;overflow:hidden;position:relative}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px}
-.card .t{font-size:12px;font-weight:650}.card .m{font-size:8px;color:var(--faint);margin:3px 0 8px}
-.chip{display:inline-block;font-size:8px;padding:3px 7px;border:1px solid rgba(232,148,58,.45);color:#f0de5a;border-radius:100px;cursor:default}
-.lay{display:grid;grid-template-columns:1fr 132px;gap:10px;height:100%}
-.prog{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--faint);margin-bottom:6px}.prog b{color:#fff}
-h3{margin:0 0 8px;font-size:14px}
-.fld label{display:block;font-size:8px;color:var(--muted);margin:5px 0 2px}
-.box{height:22px;border:1px solid var(--line);background:#161821;padding:0 8px;display:flex;align-items:center;font-size:10px;color:#c8c4bc}
-.help{font-size:8.5px;color:var(--muted);border:1px solid var(--line);padding:7px;margin-top:6px;background:#161821}
-.order{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:9px}
-.order h4{margin:0 0 6px;font-size:10px}.order .ln{display:flex;justify-content:space-between;margin:3px 0;color:var(--muted)}
-.order .tot{display:flex;justify-content:space-between;margin-top:8px;padding-top:6px;border-top:1px solid var(--line);font-weight:700}
-.order .tot b{color:var(--gold)}
-.wiz{position:absolute;left:12px;right:150px;top:10px;background:#1a1612;border:1px solid rgba(232,148,58,.35);border-radius:8px;padding:8px 10px;font-size:9px;z-index:4}
-.wiz b{color:var(--or)}.wiz .st{margin-top:5px;color:var(--muted)}
-.modal{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:6}
-.modal .in{width:72%;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px}
-.modal h4{margin:0 0 8px;font-size:13px}.modal li{font-size:10px;color:var(--muted);margin:4px 0 4px 14px}
-.win{position:absolute;inset:0;background:#12141c;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .55s;z-index:8}
-.win.on{opacity:1}
-.win .mk{width:34px;height:34px;border-radius:50%;background:var(--ok);color:#0b0b0b;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:8px}
-.win p{margin:0;font-size:13px;font-weight:700}.win span{font-size:9px;color:var(--muted);margin-top:5px}
-.cursor{position:absolute;z-index:20;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .85s var(--spring),top .85s var(--spring),opacity .2s}
+.nav{height:22px;display:flex;align-items:center;gap:8px;padding:0 10px;background:var(--nav);border-bottom:1px solid var(--line);font-size:8px;color:var(--muted)}
+.nav .on{color:#fff}.nav .sp{margin-left:auto;width:90px;height:14px;background:rgba(255,255,255,.05);border-radius:4px;padding:0 6px;display:flex;align-items:center;color:var(--faint)}
+.body{flex:1;padding:8px 10px;min-height:0;overflow:hidden;position:relative}
+.tools{display:flex;gap:6px;margin-bottom:7px;font-size:8px;color:var(--faint)}
+.tools span{border:1px solid var(--line);padding:2px 6px;border-radius:100px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:7px 8px}
+.card .t{font-size:11px;font-weight:650}.card .m{font-size:8px;color:var(--faint);margin:2px 0 5px}
+.reqs{font-size:8px;color:var(--muted);line-height:1.35}.reqs b{color:#f0de5a;font-weight:650}
+.chip{display:inline-block;font-size:7px;padding:2px 6px;border:1px solid rgba(232,148,58,.45);color:#f0de5a;border-radius:100px;margin-top:4px}
+.ring{outline:1px solid #e8943a;outline-offset:2px;animation:pulse 1s ease 2}
+@keyframes pulse{50%{outline-color:transparent}}
+.float{position:absolute;z-index:7;font-size:8px;background:#e8943a;color:#1a1508;padding:3px 7px;border-radius:4px;opacity:0;transition:.3s;font-weight:650}
+.float.on{opacity:1}
+.lay{display:grid;grid-template-columns:1fr 118px 108px;gap:7px;height:100%}
+.prog{font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--faint);margin-bottom:5px}.prog b{color:#fff}
+h3{margin:0 0 6px;font-size:13px}
+.fld{margin-bottom:4px}.fld label{display:block;font-size:7px;color:var(--muted);margin-bottom:2px}
+.box{height:18px;border:1px solid var(--line);background:#161821;padding:0 6px;display:flex;align-items:center;font-size:9px;color:#c8c4bc}
+.order,.chat,.ob{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:7px;font-size:8px}
+.order h4,.chat h4,.ob h4{margin:0 0 5px;font-size:9px}
+.ln{display:flex;justify-content:space-between;margin:3px 0;color:var(--muted)}
+.tot{display:flex;justify-content:space-between;margin-top:6px;padding-top:5px;border-top:1px solid var(--line);font-weight:700}
+.tot b{color:var(--gold)}
+.bub{background:#161821;padding:5px 6px;border-radius:5px;margin:4px 0;color:var(--muted)}
+.bub.me{background:#241c14;color:#f3e6d0}
+.ob .st{color:var(--or);margin-bottom:3px}
+.win{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s;z-index:8}
+.win.on{opacity:1}.win .mk{width:32px;height:32px;border-radius:50%;background:var(--ok);color:#0b0b0b;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:7px}
+.win p{margin:0;font-size:13px;font-weight:700}.win span{font-size:9px;color:var(--muted);margin-top:4px}
+.cursor{position:absolute;z-index:20;width:16px;height:16px;pointer-events:none;opacity:0;transition:left .8s var(--spring),top .8s var(--spring),opacity .2s}
 .cursor.show{opacity:1}.cursor.click{transform:scale(.88)}
 </style></head>
 <body>
@@ -46,40 +50,61 @@ h3{margin:0 0 8px;font-size:14px}
 <div class="cursor" id="c1"><svg viewBox="0 0 18 18"><path d="M2 2 L2 14 L6.2 10.4 L9.6 16.2 L11.4 15.3 L8 9.4 L14 9.4 Z" fill="#fff"/></svg></div>
 <script>
 (function(){
-  var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[],i=0;
+  var stage=document.getElementById('stage'),c1=document.getElementById('c1'),timers=[];
   function after(ms,fn){var t=setTimeout(fn,ms);timers.push(t)}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
   function place(t){if(!t)return;var r=t.getBoundingClientRect(),s=stage.getBoundingClientRect();c1.style.left=(r.left-s.left+8)+'px';c1.style.top=(r.top-s.top+6)+'px';c1.classList.add('show')}
-  function click(cb){after(500,function(){c1.classList.add('click');after(280,function(){c1.classList.remove('click');if(cb)cb()})})}
-  function frame(addr,html){
-    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span class="on">Marketplace</span><span>Help</span></div><div class="body" id="bd">'+html+'</div></div></div>';
+  function click(cb){after(480,function(){c1.classList.add('click');after(260,function(){c1.classList.remove('click');if(cb)cb()})})}
+  function chrome(addr,html){
+    stage.innerHTML='<div class="br"><div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>'+addr+'</div><div class="app"><div class="nav"><span>Overview</span><span class="on">Marketplace</span><span>Recents</span><span class="sp">Search catalog</span></div><div class="body" id="bd">'+html+'</div></div></div>';
     c1.classList.remove('show');
   }
-  var pages=[
-    {a:'marketplace', h:'<h3>Catalog</h3><div class="grid"><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery · Service</div><span class="chip" id="hit">Requirements</span></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute · Service</div><span class="chip">Requirements</span></div><div class="card"><div class="t">Automation seat</div><div class="m">License</div><span class="chip">Requirements</span></div><div class="card"><div class="t">Starter kit</div><div class="m">Enablement</div><span class="chip">Requirements</span></div></div>'},
-    {a:'marketplace · requirements', h:'<h3>Catalog</h3><div class="grid"><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><span class="chip">Requirements</span></div></div><div class="modal"><div class="in" id="hit"><h4>Before you request</h4><ul><li>Workspace name</li><li>One required service</li><li>Billing account on the tenant</li></ul></div></div>'},
-    {a:'product · onboard', h:'<div class="lay"><div><div class="prog">Onboarding · 1 of 3</div><h3>Workbench workspace</h3><div class="help">A workspace is the container. Teams and billing attach after the name.</div></div><div class="order"><h4>Your request</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="ln"><span>Service</span><span>—</span></div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div><div class="wiz" id="hit"><b>Guide</b><div class="st">Workspace → Team → Billing account</div></div>'},
-    {a:'form · 1 Need', h:'<div class="lay"><div><div class="prog">Step <b>1 of 3</b> · Need · substep A</div><h3>Ready?</h3><div class="help" id="hit">Same checklist as the card modal.</div></div><div class="order"><h4>Your request</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div>'},
-    {a:'form · 1 Setup', h:'<div class="lay"><div><div class="prog">Step <b>1 of 3</b> · Setup · substep B</div><h3>Name it</h3><div class="fld"><label>Workspace</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Team</label><div class="box">Platform</div></div><div class="fld"><label>Billing account</label><div class="box">AC-4412</div></div></div><div class="order"><h4>Your request</h4><div class="ln"><span>Workspace</span><span>North studio</span></div><div class="ln"><span>Team</span><span>Platform</span></div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div>'},
-    {a:'form · 2 Service', h:'<div class="lay"><div><div class="prog">Step <b>2 of 3</b> · Service</div><h3>Required service</h3><div class="fld"><label>Attach one</label><div class="box" id="hit">Shared compute</div></div><div class="help">This was the stall. Chat + modal already named it.</div></div><div class="order"><h4>Your request</h4><div class="ln"><span>Service</span><span>Shared compute</span></div><div class="tot"><span>Total</span><b>$12 / mo</b></div></div></div>'},
-    {a:'form · 3 Review', h:'<div class="lay"><div><div class="prog">Step <b>3 of 3</b> · Review</div><h3>Submit</h3><div class="help" id="hit">North studio · Platform · AC-4412 · Shared compute</div></div><div class="order"><h4>Your request</h4><div class="ln"><span>Ready</span><span>Yes</span></div><div class="tot"><span>Total</span><b>$12 / mo</b></div></div></div><div class="win" id="win"><div class="mk">✓</div><p>Request sent</p><span>They cleared the field that used to drop them.</span></div>'}
-  ];
-  function go(){
-    var p=pages[i]; if(!p) return;
-    frame(p.a,p.h);
-    after(420,function(){
+  var NAVF='<div class="tools"><span>All</span><span>Services</span><span>Licenses</span><span>West 2</span><span>Cost ↓</span></div>';
+  function playEnter(){
+    chrome('marketplace / catalog', NAVF+'<div class="grid">'+
+      '<div class="card ring" id="hit"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><div class="reqs"><b>Requires</b> name · one service · billing id</div><span class="chip">Requirements</span></div>'+
+      '<div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><div class="reqs"><b>Requires</b> quota · region</div><span class="chip">Requirements</span></div>'+
+      '<div class="card"><div class="t">Automation seat</div><div class="m">License</div><div class="reqs"><b>Requires</b> owner email</div><span class="chip">Requirements</span></div>'+
+      '<div class="card"><div class="t">Starter kit</div><div class="m">Enablement</div><div class="reqs"><b>Requires</b> team slug</div><span class="chip">Requirements</span></div></div>'+
+      '<div class="float" id="fl" style="left:18px;top:86px">New · requirements live on the card</div>');
+    after(300,function(){document.getElementById('fl').classList.add('on');place(document.getElementById('hit'))});
+    after(1600,function(){document.getElementById('fl').classList.remove('on');click(function(){
+      chrome('marketplace / workbench', '<div class="lay"><div><div class="prog">Product</div><h3>Workbench workspace</h3><div class="reqs">Name, required service, billing account. Same lines as the card.</div></div><div class="order"><h4>Your request</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="tot"><span>Est.</span><b>$0</b></div></div><div><div class="ob"><h4>Guide</h4><div class="st">1 Workspace</div><div>2 Team</div><div>3 Billing</div></div><div class="chat" style="margin-top:6px"><h4>Ask</h4><div class="bub">What is required?</div></div></div></div>');
+      c1.classList.remove('show');
+    })});
+  }
+  function playPedir(){
+    var chat='<div class="chat"><h4>Ask the offering</h4><div class="bub" id="q">Do I need a service now?</div><div class="bub me" id="a" style="opacity:0">Not on Customize. It attaches on Configure.</div></div>';
+    var order='<div class="order"><h4>Your request</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="ln"><span>Bots</span><span id="ob">—</span></div><div class="tot"><span>Est.</span><b id="pr">$0</b></div></div>';
+    var ob='<div class="ob"><h4>Onboarding</h4><div class="st">Now: customize</div><div>Next: bots + envs</div></div>';
+    chrome('request / customize', '<div class="lay"><div><div class="prog">Step <b>1 of 3</b> · Customize</div><h3>Customize</h3>'+
+      '<div class="fld"><label>Display name</label><div class="box">North studio</div></div>'+
+      '<div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div>'+
+      '<div class="fld"><label>Data class</label><div class="box">Internal</div></div>'+
+      '<div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>'+
+      '<div class="fld"><label>Notify channel</label><div class="box" id="hit">#platform</div></div></div>'+order+'<div>'+ob+chat+'</div></div>'+
+      '<div class="win" id="win"><div class="mk">✓</div><p>Configure unlocked</p><span>Reaching step 2 is the win.</span></div>');
+    after(400,function(){
       place(document.getElementById('hit'));
+      document.getElementById('a').style.opacity='1';
       click(function(){
-        i++;
-        if(i<pages.length) after(750,go);
-        else {
-          var w=document.getElementById('win'); if(w) w.classList.add('on');
+        document.getElementById('win').classList.add('on');
+        after(1100,function(){
+          document.getElementById('win').classList.remove('on');
+          chrome('request / configure', '<div class="lay"><div><div class="prog">Step <b>2 of 3</b> · Configure</div><h3>Configure</h3>'+
+            '<div class="fld"><label>Bots</label><div class="box">4</div></div>'+
+            '<div class="fld"><label>Environments</label><div class="box">dev + prod</div></div>'+
+            '<div class="fld"><label>Workspace</label><div class="box">Create “North studio”</div></div>'+
+            '<div class="fld"><label>Required service</label><div class="box">Shared compute</div></div></div>'+
+            '<div class="order"><h4>Your request</h4><div class="ln"><span>Bots</span><span>4</span></div><div class="ln"><span>Envs</span><span>2</span></div><div class="tot"><span>Est.</span><b>$12 / mo</b></div></div>'+
+            '<div><div class="ob"><h4>Onboarding</h4><div class="st">Create the workspace on this step</div></div><div class="chat" style="margin-top:6px"><h4>Ask</h4><div class="bub me">Workspace is created here — not before.</div></div></div></div>');
           c1.classList.remove('show');
-        }
+        });
       });
     });
   }
-  go();
+  var scene=new URLSearchParams(location.search).get('scene');
+  if(scene==='pedir') playPedir(); else playEnter();
 })();
 </script>
 </body></html>
