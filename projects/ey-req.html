@@ -39,20 +39,20 @@
 .winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;z-index:8}
 .winok.on{opacity:1}.winok .mk{width:30px;height:30px;border-radius:50%;background:var(--ey-ok);color:#111;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:6px}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
+.uc img{width:18px;height:18px;display:block}
 </style></head>
 <body>
 <div class="stage" id="stage">
   <div class="ey-browser" id="win">
     <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div>
     <div id="slot"></div>
-    <div class="uc" id="c1"><svg viewBox="0 0 24 24"><path d="M4 2.5 L4 18.5 L8.6 14.2 L12.2 22 L15 20.7 L11.3 13 L18.5 13 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+    <div class="uc" id="c1"><img src="ey-cursor.svg" width="18" height="18" alt=""></div>
   </div>
   <div class="callout left" id="co" style="display:none"></div>
 </div>
 <script>
 (function(){
   var slot=document.getElementById('slot'), win=document.getElementById('win'), co=document.getElementById('co'), timers=[];
-  var CUR='<svg viewBox="0 0 24 24"><path d="M4 2.5 L4 18.5 L8.6 14.2 L12.2 22 L15 20.7 L11.3 13 L18.5 13 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg>';
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
   function move(el){
@@ -63,7 +63,7 @@
   }
   function mark(el,label,side){
     if(el) el.classList.add('ring');
-    var wr=win.getBoundingClientRect(), st=document.getElementById('stage').getBoundingClientRect();
+    var st=document.getElementById('stage').getBoundingClientRect();
     co.style.display='block'; co.textContent=label;
     if(side==='left'){ co.className='callout left'; co.style.left='4px'; }
     else { co.className='callout right'; co.style.right='4px'; co.style.left='auto'; }
@@ -75,7 +75,7 @@
   function market(){
     return '<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main" id="main"><div class="tools"><div class="q">Filter by layer…</div></div><div class="grid"><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" id="info" type="button">See details</button></div></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div><div class="card"><div class="t">Automation seat</div><div class="m">License</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div><div class="card"><div class="t">Starter kit</div><div class="m">Enablement</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div></div></div></div></div>';
   }
-  function overlay(reqOn){
+  function overlay(){
     var main=document.getElementById('main'); if(!main) return;
     main.insertAdjacentHTML('beforeend','<div class="ov" id="ov"><div class="sheet"><div class="x" id="x">×</div><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i id="tabR">Requirements</i></div><div class="sec" id="sec"><b>Description</b>Shared delivery workspace for a team.</div><button class="go" id="go" type="button">Get started</button></div></div>');
   }
