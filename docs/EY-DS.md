@@ -1,29 +1,21 @@
-# Mini design system — EY Fabric (reconstruido)
+# Mini design system — catalog web app (estilo Fabric)
 
 Fecha: 2026-08-28
 
-No hay capturas reales de EY Fabric en este repo. Gallery y Beats **no** llevan UI confidencial.
-Este DS sale del mock del player (`projects/ey-pi-player.html`): catálogo oscuro, acento oro, nav compacta.
+Refs de estilo: locales en el workspace (`docs/refs/ey-fabric/`). **No van al repo público.**
+Copy de producto: inventado. No emails, no títulos literales.
 
-Archivo: `projects/ey-ds.css`
+Archivo de tokens: `projects/ey-ds.css`
 
-## Tokens
-- Fondo `#050508` / surface `#0e0e12` / card `#14141a`
-- Acento `#c9a227` (no EY yellow oficial)
-- Texto IBM Plex Sans; labels 8–10px
-- Radio 7px; nav 26px
+## Tokens (de las fotos)
+- Fondo `#12141c` / nav `#0b0c10` / card `#1c1e28`
+- Iconos naranja `#e8943a` / total `#f0de5a` / ok `#7dcea0`
+- Hero: negro + bokeh naranja/azul/magenta a la derecha
+- Nav: search + AI + Manage + avatar
+- Catálogo: sidebar con counts, tiles con gradiente, no cards planas
+- Services: 2–4 cards, View + Get started
+- Workbench: 2 col, stepper Custom/Billing/Confirm, order $0
 
-## Piezas
-- `.ey-browser` + `.ey-bbar` + dots + `.ey-addr` — solo UI web app
-- `.ey-topnav` `.ey-hero` `.ey-btn-pri` `.ey-btn-sec`
-- `.ey-cat` sidebar + main
-- `.ey-card` `.ey-grid` `.ey-chips` `.ey-banner`
-- `.ey-field` `.ey-box` `.ey-flag`
-
-## Dónde sí / no
-Sí: Path Fabric, Hub, Publisher, User flow, Design si es app web.
-No: Measure, Research, Understand, Funnel, mobile.
-
-## Beats de propuesta
-Hub / User flow / Publisher / Improved deben linkear `ey-ds.css` y usar estas clases.
-No inventar otra paleta.
+## Dónde
+Sí: cualquier UI web de este case.
+No: mobile, diagramas, funnel.
