@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EY · 02 Analyze</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:transparent;color:#f2f0ec;font-family:'IBM Plex Sans',system-ui,sans-serif}
+:root{--accent:#c9a227;--on-accent:#1a1508;--bad:#e0857f;--spring:cubic-bezier(.34,1.32,.64,1)}
+.stage{position:relative;width:100%;min-height:360px;border-radius:10px;overflow:hidden;background:#08080c}
+.app{height:360px;display:flex;flex-direction:column;background:#08080c}
+.fab-topnav{height:26px;display:flex;align-items:center;gap:10px;padding:0 10px;border-bottom:1px solid rgba(255,255,255,.08);font-size:9px;color:rgba(255,255,255,.42);background:#0e0e12;flex-shrink:0}
+.fab-topnav .brand{color:#fff;font-weight:700}
+.fab-topnav .ai{margin-left:auto;font-size:8px;padding:2px 6px;border-radius:100px;border:1px solid rgba(255,255,255,.12)}
+.fab-hero{padding:12px;background:radial-gradient(ellipse at 85% 30%,rgba(255,120,40,.35),transparent 45%),radial-gradient(ellipse at 70% 80%,rgba(80,120,255,.25),transparent 50%),#050508}
+.fab-hero .eyebrow{font-size:9px;color:rgba(255,255,255,.45);margin-bottom:4px}
+.fab-hero h2{margin:0 0 4px;font-size:13px;line-height:1.2;font-weight:700;max-width:78%}
+.fab-hero p{margin:0 0 8px;font-size:9px;color:rgba(255,255,255,.45);max-width:78%;line-height:1.35}
+.fab-hero .btns{display:flex;gap:6px}
+.btn-pri{background:#fff;color:#111;border:0;border-radius:5px;padding:5px 10px;font-size:10px;font-weight:650}
+.btn-sec{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:5px 10px;font-size:10px}
+.fab-band{margin:6px 10px;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);font-size:10px}
+.fab-band h4{margin:0 0 2px;font-size:11px}
+.fab-band p{margin:0;font-size:9px;color:rgba(255,255,255,.4)}
+.cat-layout{display:grid;grid-template-columns:92px 1fr;height:100%;min-height:0;overflow:hidden}
+.cat-side{background:#0c0c10;border-right:1px solid rgba(255,255,255,.07);padding:8px 6px;font-size:9px}
+.cat-side .sh{font-weight:650;color:rgba(255,255,255,.55);margin-bottom:6px;padding:0 4px}
+.cat-side a{display:flex;justify-content:space-between;padding:5px 6px;border-radius:5px;color:rgba(255,255,255,.4);margin-bottom:2px;text-decoration:none}
+.cat-side a.on{background:rgba(201,162,39,.12);color:var(--accent)}
+.cat-main{padding:8px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.cat-banner{height:40px;border-radius:7px;margin-bottom:5px;background:linear-gradient(110deg,rgba(120,40,180,.45),rgba(40,80,200,.35)),#1a1028;padding:8px 10px;display:flex;flex-direction:column;justify-content:center}
+.cat-banner .t{font-size:10.5px;font-weight:650}
+.cat-banner .s{font-size:8.5px;color:rgba(255,255,255,.45)}
+.cat-chips{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px}
+.cat-chips span{font-size:8px;padding:3px 7px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
+.cat-chips span.on{background:rgba(201,162,39,.12);color:var(--accent)}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.svc-grid.three{grid-template-columns:1fr 1fr 1fr}
+.svc-card{background:#14141a;border:1px solid rgba(255,255,255,.08);border-radius:7px;padding:7px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s var(--spring),border-color .25s}
+.svc-card.on{opacity:1;transform:none}
+.svc-card.sel{border-color:rgba(201,162,39,.45);background:rgba(201,162,39,.08)}
+.svc-card .ico{width:18px;height:18px;border-radius:4px;background:rgba(255,140,40,.15);color:#ff9a3c;display:flex;align-items:center;justify-content:center;font-size:10px;margin-bottom:4px}
+.svc-card .t{font-size:10px;font-weight:650;margin-bottom:2px}
+.svc-card .s{font-size:8px;color:rgba(255,255,255,.38);margin-bottom:5px}
+.svc-card .acts{display:flex;gap:4px}
+.svc-card .acts button{flex:1;height:20px;border-radius:4px;font-size:8.5px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.55)}
+.svc-card .acts button.pri{background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.wb-layout{display:grid;grid-template-columns:1.15fr .85fr;height:100%;overflow:hidden}
+.wb-left{padding:8px 10px;border-right:1px solid rgba(255,255,255,.07)}
+.wb-right{padding:8px;background:#0c0c10;display:flex;flex-direction:column;gap:6px}
+.wb-crumb{font-size:8px;color:rgba(255,255,255,.35)}
+.wb-left h3{margin:2px 0 4px;font-size:12px}
+.wb-step-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.wb-step-row .n{width:16px;height:16px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.wb-step-row .lab{font-size:10.5px;font-weight:650}
+.wb-field{margin-bottom:4px}
+.wb-field label{display:block;font-size:8.5px;color:rgba(255,255,255,.4);margin-bottom:2px}
+.wb-field .box{height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.28);padding:0 8px;display:flex;align-items:center;font-size:9.5px;color:rgba(255,255,255,.7)}
+.wb-field .box.ph{color:rgba(255,255,255,.28)}
+.wb-field .box.bad{border-color:var(--bad);box-shadow:0 0 0 2px rgba(224,133,127,.22)}
+.wb-prog{display:flex;align-items:center;gap:4px;font-size:8px;color:rgba(255,255,255,.35)}
+.wb-prog .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2)}
+.wb-prog .dot.on{background:var(--accent)}
+.wb-prog .line{flex:1;height:1px;background:rgba(255,255,255,.1)}
+.wb-disc{font-size:8px;color:rgba(255,255,255,.4);line-height:1.35;padding:6px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.08)}
+.wb-order{flex:1;border-radius:7px;border:1px solid rgba(255,255,255,.08);background:#121218;padding:8px}
+.wb-order h4{margin:0 0 6px;font-size:10.5px}
+.wb-order .empty{color:rgba(255,255,255,.25);font-size:9px}
+.wb-order .total{display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid rgba(255,255,255,.08);margin-top:6px;font-size:11px;font-weight:700}
+.wb-order .total span:last-child{color:var(--accent)}
+.wb-order .foot{display:flex;gap:6px;margin-top:6px}
+.wb-order .foot button{flex:1;height:22px;border-radius:5px;font-size:9px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5)}
+.wb-order .foot button.pri{background:rgba(255,255,255,.1);color:#fff}
+.drop-flag{display:inline-flex;margin-top:4px;font-size:9px;font-weight:650;color:var(--bad);background:rgba(224,133,127,.12);border:1px solid rgba(224,133,127,.35);padding:3px 7px;border-radius:100px;opacity:0}
+.drop-flag.on{opacity:1}
+.funnel{display:flex;flex-direction:column;justify-content:center;padding:16px 20px;height:360px}
+.funnel-note{font-size:12px;color:#ffb4a8;margin-bottom:12px;opacity:0;transition:opacity .35s}
+.funnel-note em{color:#ff6b8a;font-style:normal;font-weight:800}
+.fstep{display:flex;align-items:center;height:0;margin:0 auto 6px;border-radius:5px;background:rgba(255,255,255,.06);font-size:11px;padding:0 10px;overflow:hidden;opacity:0;transition:height .5s var(--spring),width .55s var(--spring),opacity .35s;width:20%}
+.fstep.show{height:26px;opacity:1}
+.fstep span{margin-left:auto;font-size:10px;color:rgba(255,255,255,.35)}
+.fstep.dead{background:rgba(224,85,127,.2);color:#ff8aa3}
+.fstep.dead span{color:var(--bad)}
+.cursor{position:absolute;z-index:50;pointer-events:none;opacity:0;width:16px;height:16px;transition:left .9s var(--spring),top .9s var(--spring),opacity .2s,transform .14s}
+.cursor.show{opacity:1}
+.cursor.click{transform:translate(1px,2px) scale(.88)}
+.cursor svg{display:block;width:16px;height:16px}
+</style>
+</head>
+<body>
+<div class="stage" id="stage"></div>
+<div class="cursor" id="c1"><svg viewBox="0 0 18 18"><path d="M2 2 L2 14 L6.2 10.4 L9.6 16.2 L11.4 15.3 L8 9.4 L14 9.4 Z" fill="#fff"/></svg></div>
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var c1=document.getElementById('c1');
+  function after(ms,fn){ return setTimeout(fn,ms); }
+  function el(id){ return document.getElementById(id); }
+  function hideCur(){ c1.classList.remove('show','click'); }
+  function place(target,ox,oy){
+    if(!target) return;
+    var r=target.getBoundingClientRect(), s=stage.getBoundingClientRect();
+    c1.style.left=(r.left-s.left+(ox||8))+'px';
+    c1.style.top=(r.top-s.top+(oy||8))+'px';
+    c1.classList.add('show');
+  }
+  function clickCur(cb){
+    after(500, function(){
+      c1.classList.add('click');
+      after(280, function(){ c1.classList.remove('click'); if(cb) cb(); });
+    });
+  }
+  function show(html){ stage.innerHTML=html; hideCur(); }
+  var home='<div class="app"><div class="fab-topnav"><span class="brand">◆ Platform</span><span>Overview</span><span>Marketplace</span><span class="ai">Search</span></div><div class="fab-hero"><div class="eyebrow">Unlock technology at speed and scale</div><h2>Platform catalog for shared delivery</h2><p>Reusable components and a shared catalog for teams and clients.</p><div class="btns"><button class="btn-pri" id="exploreCta" type="button">Explore Catalog</button><button class="btn-sec" type="button">Contact</button></div></div><div class="fab-band"><h4>Developer workflow</h4><p>Build and deploy into the shared container platform.</p></div></div>';
+  var catalog='<div class="app" style="background:#0a0a0e"><div class="fab-topnav"><span class="brand">◆ Platform</span><span>Marketplace</span><span class="ai">Search</span></div><div class="cat-layout"><div class="cat-side"><div class="sh">Catalog</div><a class="on" href="#"><span>All</span><span>320</span></a><a href="#"><span>Services</span><span>150</span></a><a href="#"><span>Licenses</span><span>20</span></a><a href="#"><span>Kits</span><span>16</span></a></div><div class="cat-main"><div style="font-size:11px;font-weight:700;margin-bottom:2px">Explore the catalog</div><div style="font-size:8.5px;color:rgba(255,255,255,.4);margin-bottom:6px">Pick a category to continue.</div><div class="svc-grid three"><div class="svc-card on" id="catSvc"><div class="ico">▣</div><div class="t">Services</div><div class="s">Compute, networking &amp; tools</div></div><div class="svc-card on"><div class="ico">◈</div><div class="t">Licenses</div><div class="s">Delivery rights</div></div><div class="svc-card on"><div class="ico">◆</div><div class="t">Starter Kits</div><div class="s">Start faster</div></div><div class="svc-card on"><div class="ico">&lt;/&gt;</div><div class="t">Packages</div><div class="s">Reusable code</div></div><div class="svc-card on"><div class="ico">⇄</div><div class="t">APIs</div><div class="s">Platform blocks</div></div><div class="svc-card on"><div class="ico">⬡</div><div class="t">Explore</div><div class="s">All layers</div></div></div></div></div></div>';
+  var services='<div class="app" style="background:#0a0a0e"><div class="fab-topnav"><span class="brand">◆ Platform</span><span>Marketplace</span><span class="ai">Services</span></div><div class="cat-layout"><div class="cat-side"><div class="sh">Catalog</div><a href="#"><span>All</span><span>320</span></a><a class="on" href="#"><span>Services</span><span>150</span></a><a href="#"><span>Licenses</span><span>20</span></a></div><div class="cat-main"><div class="cat-banner"><div class="t">Services</div><div class="s">Shared infrastructure offerings</div></div><div class="cat-chips"><span class="on">All 150</span><span>Offerings</span><span>Add-ons</span></div><div class="svc-grid"><div class="svc-card" id="sv0"><div class="ico">▣</div><div class="t">Cluster service</div><div class="s">Shared multi-tenant workloads</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Start</button></div></div><div class="svc-card" id="sv1"><div class="ico">▣</div><div class="t">Automation seat</div><div class="s">Provisioning for licenses</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Start</button></div></div><div class="svc-card" id="sv2"><div class="ico">▣</div><div class="t">Workflow · Prod</div><div class="s">Production instance request</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Start</button></div></div><div class="svc-card" id="sv3"><div class="ico">▣</div><div class="t">Workbench</div><div class="s">Configure instance · shared workspace</div><div class="acts"><button type="button">View</button><button class="pri" id="getStart" type="button">Start</button></div></div></div></div></div></div>';
+  var form='<div class="app" style="background:#0a0a0e"><div class="fab-topnav"><span class="brand">◆ Platform</span><span>Marketplace</span><span class="ai">Workbench</span></div><div class="wb-layout"><div class="wb-left"><div class="wb-crumb">Catalog › Services › Workbench</div><h3>Workbench</h3><div class="wb-step-row"><span class="n">1</span><span class="lab">Configure instance</span></div><div class="wb-field"><label>Instance name (required)</label><div class="box ph" id="fName">Enter a name…</div></div><div class="wb-field"><label>Location (required)</label><div class="box" id="fLoc">Region West 2</div></div><div class="wb-field"><label>Point of contact</label><div class="box ph" id="fContact">Search people…</div></div><div class="wb-field"><label>Required service (required)</label><div class="box ph" id="reqFld">Select a service…</div><div class="drop-flag" id="drop">Drop-off · service unclear</div></div></div><div class="wb-right"><div class="wb-prog"><span class="dot on"></span><span>Custom</span><span class="line"></span><span class="dot"></span><span>Billing</span><span class="line"></span><span class="dot"></span><span>Confirm</span></div><div class="wb-disc">Costs are estimates. Formal intake covers platform charges.</div><div class="wb-order"><h4>Your order</h4><div class="empty">No services selected.</div><div class="total"><span>Total</span><span>$0 / mo</span></div><div class="foot"><button type="button">Cancel</button><button class="pri" type="button">Continue</button></div></div></div></div></div>';
+  var funnel='<div class="funnel"><div class="funnel-note" id="funnelNote">Drop-off at <em>Required service</em>.</div><div class="fstep" id="fs0" data-w="100%">Home <span>100%</span></div><div class="fstep" id="fs1" data-w="90%">Catalog categories <span>90%</span></div><div class="fstep" id="fs2" data-w="74%">Services <span>74%</span></div><div class="fstep" id="fs3" data-w="58%">Workbench <span>58%</span></div><div class="fstep" id="fs4" data-w="22%">Form · required <span>22%</span></div></div>';
+  show(home);
+  after(400, function(){
+    place(el('exploreCta'),8,6);
+    clickCur(function(){
+      show(catalog);
+      after(500, function(){
+        place(el('catSvc'),8,8);
+        clickCur(function(){
+          var card=el('catSvc'); if(card) card.classList.add('sel');
+          after(350, function(){
+            show(services);
+            [0,1,2,3].forEach(function(i){ after(i*55, function(){ var n=el('sv'+i); if(n) n.classList.add('on'); }); });
+            after(600, function(){
+              place(el('getStart'),4,3);
+              clickCur(function(){
+                var w=el('sv3'); if(w) w.classList.add('sel');
+                after(350, function(){
+                  show(form);
+                  after(400, function(){
+                    place(el('fName'),6,5);
+                    after(500, function(){
+                      var n=el('fName'); if(n){ n.textContent='Team workspace'; n.classList.remove('ph'); }
+                      place(el('reqFld'),6,5);
+                      after(700, function(){
+                        var f=el('reqFld'); if(f) f.classList.add('bad');
+                        var d=el('drop'); if(d) d.classList.add('on');
+                        hideCur();
+                        after(900, function(){
+                          show(funnel);
+                          var note=el('funnelNote');
+                          if(note) after(80, function(){ note.style.opacity='1'; });
+                          var si=0;
+                          (function grow(){
+                            if(si>4) return;
+                            var n=el('fs'+si);
+                            if(n){ n.classList.add('show'); n.style.width=n.getAttribute('data-w'); if(si===4) n.classList.add('dead'); }
+                            si++; after(540, grow);
+                          })();
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
