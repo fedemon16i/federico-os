@@ -9,20 +9,27 @@
 .board{padding:18px 16px}
 .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.card{border:1px solid var(--line);padding:12px;min-height:132px}
+.card{border:1px solid var(--line);padding:12px;min-height:132px;opacity:.35;transition:opacity .35s}
+.card.on{opacity:1}
 .tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);margin-bottom:8px}
 .q{font-size:13px;line-height:1.4;margin:0 0 8px}.q em{color:var(--y);font-style:normal}
 .who,.s{font-size:10px;color:#9a968c}
 .scores{display:flex;gap:6px;margin-top:8px}
 .sc{flex:1;border:1px solid var(--line);padding:6px 4px;text-align:center;font-size:9px;color:#c8c4bc}
 .sc b{display:block;color:#fff;font-size:11px;margin-bottom:2px}
-.mini{border:1px solid var(--line);padding:8px;margin-top:6px;font-size:9px;color:#9a968c}
-.mini .row{height:14px;border:1px solid var(--line);margin:4px 0;padding:0 6px;display:flex;align-items:center}
-.leave{background:var(--y);color:#111;font-size:8px;font-weight:700;padding:1px 5px;margin-left:auto}
+.mini{position:relative;height:78px;border:1px solid var(--line);background:#12141c;overflow:hidden}
+.mini .bar{height:10px;background:#14151c;display:flex;align-items:center;gap:3px;padding:0 5px}
+.mini .bar i{width:4px;height:4px;border-radius:50%;background:#555}
+.mini .bar i:first-child{background:#ff5f57}.mini .bar i:nth-child(2){background:#febc2e}.mini .bar i:nth-child(3){background:#28c840}
+.mini .bar b{font-size:6px;color:#8a8580;font-weight:500;margin-left:4px;font-family:'IBM Plex Mono',monospace}
+.mini .view{padding:6px 7px;font-size:8px;color:#c8c4bc}
+.mini .cta{display:inline-block;background:#fff;color:#111;font-size:6px;font-weight:700;padding:2px 5px;margin-top:4px}
+.mini .tile{display:inline-block;background:#3a1a6a;padding:4px 6px;font-size:7px;margin-right:3px}
+.mini .fld{height:10px;border:1px solid rgba(255,255,255,.12);width:70%;margin-top:3px}
+.cur{position:absolute;width:0;height:0;border:4px solid transparent;border-top-color:#fff;transition:left .6s ease,top .6s ease}
 .path{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
 .path i{font-style:normal;font-size:9px;padding:3px 6px;border:1px solid var(--line);color:#8a8580}
 .path i.on{border-color:var(--y);color:var(--y)}
-.card.on{opacity:1} .card{opacity:.35;transition:opacity .35s}
 </style></head>
 <body>
 <div class="board">
@@ -30,7 +37,13 @@
   <div class="grid">
     <div class="card" id="c0"><div class="tag">Interviews</div><p class="q">I did not know <em>which service</em> to attach.</p><div class="who">Second voice: the field does not look required.</div></div>
     <div class="card" id="c1"><div class="tag">Scores</div><div class="s">After the same request attempt.</div><div class="scores"><div class="sc"><b>CSAT</b>low after form</div><div class="sc"><b>NPS</b>would not return</div><div class="sc"><b>CES</b>too much effort</div></div></div>
-    <div class="card" id="c2"><div class="tag">Session replay</div><div class="mini"><div class="row">Instance name</div><div class="row">Required service <span class="leave">LEAVE</span></div></div></div>
+    <div class="card" id="c2"><div class="tag">Session replay</div>
+      <div class="mini" id="mini">
+        <div class="bar"><i></i><i></i><i></i><b id="addr">overview</b></div>
+        <div class="view" id="view"><div>Unlock technology at speed</div><span class="cta">Explore Catalog</span></div>
+        <div class="cur" id="cur" style="left:28px;top:40px"></div>
+      </div>
+    </div>
     <div class="card" id="c3"><div class="tag">Task study</div><p class="q">Request a workspace — stall on the unlabeled field.</p><div class="path"><i id="p0">start</i><i id="p1">name</i><i id="p2">required</i><i id="p3">leave</i></div></div>
   </div>
 </div>
@@ -38,8 +51,23 @@
 (function(){
   var t=[]; function after(ms,fn){t.push(setTimeout(fn,ms))}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  [0,1,2,3].forEach(function(i){after(200+i*350,function(){document.getElementById('c'+i).classList.add('on')})});
-  ['p0','p1','p2','p3'].forEach(function(id,i){after(1600+i*280,function(){document.getElementById(id).classList.add('on')})});
+  [0,1,2,3].forEach(function(i){after(200+i*300,function(){document.getElementById('c'+i).classList.add('on')})});
+  var frames=[
+    {addr:'overview', html:'<div>Unlock technology at speed</div><span class="cta">Explore Catalog</span>', x:36, y:48},
+    {addr:'catalog', html:'<span class="tile">Services</span><span class="tile">Licenses</span><span class="tile">Kits</span>', x:22, y:42},
+    {addr:'services', html:'<div>Workbench</div><span class="cta">Get started</span>', x:48, y:50},
+    {addr:'workbench', html:'<div class="fld"></div><div class="fld" style="border-color:#FFE600"></div>', x:70, y:52}
+  ];
+  var i=0;
+  function rec(){
+    var f=frames[i];
+    document.getElementById('addr').textContent=f.addr;
+    document.getElementById('view').innerHTML=f.html;
+    var c=document.getElementById('cur'); c.style.left=f.x+'px'; c.style.top=f.y+'px';
+    i++; if(i<frames.length) after(900,rec);
+  }
+  after(800,rec);
+  ['p0','p1','p2','p3'].forEach(function(id,j){after(1600+j*280,function(){document.getElementById(id).classList.add('on')})});
 })();
 </script>
 </body></html>
