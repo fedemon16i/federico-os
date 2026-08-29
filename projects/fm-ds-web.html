@@ -5,10 +5,12 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="fm-ds.css"/>
 <style>
-.pad{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;height:100%;box-sizing:border-box;overflow:hidden}
-.lab{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--fm-faint);margin-bottom:6px}
-.span{grid-column:1/-1}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pad{padding:18px 20px;height:100%;box-sizing:border-box;overflow:hidden}
+.lab{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fm-faint);margin:0 0 10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.panel{display:none}.panel.on{display:block}
+h3{margin:0 0 8px;font-size:18px}
+.note{color:var(--fm-muted);font-size:12px;margin:0 0 16px;max-width:52ch;line-height:1.45}
 </style></head>
 <body>
 <div class="stage">
@@ -16,49 +18,84 @@
     <div class="fm-shell">
       <div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr">ds / web</div></div>
       <div class="fm-app">
-        <div class="fm-nav"><span class="on">Catalog</span><span>Workbench</span><span>Hub</span></div>
+        <div class="fm-nav" id="topnav"><span class="on" id="navName">Overview</span><span>Workbench</span><span>Hub</span></div>
         <div class="pad">
-          <div class="span">
-            <div class="lab">Search + buttons</div>
+          <section class="panel on" data-comp="overview">
+            <h3>Overview</h3>
+            <p class="note">Mismos componentes. Cambia skin y modo arriba. Elegí un tipo en el catálogo.</p>
             <div class="row">
-              <div class="fm-field" id="search" style="flex:1;min-width:160px">Search</div>
               <button class="fm-btn" id="b1" type="button">Primary</button>
+              <button class="fm-btn secondary" type="button">Secondary</button>
+              <span class="fm-tag ok">Aprobado</span>
+              <span class="fm-chip on">Filter</span>
+            </div>
+            <div class="fm-notice">Notice + table + stepper viven en sus propias vistas.</div>
+          </section>
+          <section class="panel" data-comp="buttons">
+            <div class="lab">Button</div>
+            <p class="note">Ant / PrimeNG / Ripley: primary, secondary, ghost. Altura 32.</p>
+            <div class="row">
+              <button class="fm-btn" type="button">Primary</button>
               <button class="fm-btn secondary" type="button">Secondary</button>
               <button class="fm-btn ghost" type="button">Ghost</button>
             </div>
-          </div>
-          <div class="span">
-            <div class="lab">Tags + filters</div>
             <div class="row">
-              <span class="fm-tag ok">Aprobado</span><span class="fm-tag warn">Revisión</span><span class="fm-tag bad">Rechazado</span>
-              <span class="fm-chip on">All</span><span class="fm-chip">Pending</span>
+              <button class="fm-btn" type="button" style="width:180px">Full action</button>
             </div>
-          </div>
-          <div class="span">
-            <div class="lab">Banner / notice</div>
-            <div class="fm-notice" id="ban">Los campos con * son obligatorios.</div>
-          </div>
-          <div>
+          </section>
+          <section class="panel" data-comp="fields">
+            <div class="lab">Field / Search</div>
+            <p class="note">InputText · IconField · Ant Input.</p>
+            <div class="fm-field" style="max-width:360px;margin-bottom:10px">⌕ Buscar documento</div>
+            <div class="row">
+              <div class="fm-field" style="width:200px">San Bartolo</div>
+              <div class="fm-field" style="width:160px">2024-08-20</div>
+            </div>
+          </section>
+          <section class="panel" data-comp="tags">
+            <div class="lab">Tags + chips</div>
+            <div class="row">
+              <span class="fm-tag ok">Aprobado</span>
+              <span class="fm-tag warn">Revisión</span>
+              <span class="fm-tag bad">Rechazado</span>
+              <span class="fm-tag neutral">Borrador</span>
+            </div>
+            <div class="row">
+              <span class="fm-chip on">All</span>
+              <span class="fm-chip">Pending</span>
+              <span class="fm-chip">Live</span>
+            </div>
+          </section>
+          <section class="panel" data-comp="notice">
+            <div class="lab">Banner / Message</div>
+            <div class="fm-notice" style="margin-bottom:10px">Los campos con * son obligatorios.</div>
+            <div class="fm-banner"><b>Shared delivery</b><span>Mismo chrome. Skin del producto.</span></div>
+          </section>
+          <section class="panel" data-comp="stepper">
             <div class="lab">Stepper</div>
-            <div class="fm-stepper"><b>1</b> Selección · 2 Info · 3 Revisión</div>
-          </div>
-          <div>
-            <div class="lab">KPIs</div>
-            <div class="fm-kpis" style="grid-template-columns:1fr 1fr">
-              <div class="fm-kpi"><i>Pending</i><b>3</b></div>
-              <div class="fm-kpi"><i>Live</i><b>11</b></div>
-            </div>
-          </div>
-          <div class="span">
+            <p class="note">PrimeNG Stepper. ARIVU: selección → info → revisión → éxito.</p>
+            <div class="fm-stepper"><b>1</b> Selección &nbsp;<b>2</b> Información &nbsp;<b>3</b> Revisión &nbsp;<b>4</b> Listo</div>
+          </section>
+          <section class="panel" data-comp="table">
             <div class="lab">Table</div>
-            <table class="fm-table" id="tbl">
-              <thead><tr><th>Item</th><th>Estado</th></tr></thead>
+            <table class="fm-table">
+              <thead><tr><th>Documento</th><th>Estado</th><th></th></tr></thead>
               <tbody>
-                <tr><td>ARIVU-715912</td><td><span class="fm-tag ok">Aprobado</span></td></tr>
-                <tr><td>Workbench</td><td><span class="fm-tag warn">Revisión</span></td></tr>
+                <tr><td>ARIVU-715912</td><td><span class="fm-tag ok">Aprobado</span></td><td>Ver →</td></tr>
+                <tr><td>Workbench</td><td><span class="fm-tag warn">Revisión</span></td><td>Ver →</td></tr>
+                <tr><td>Cluster</td><td><span class="fm-tag bad">Observado</span></td><td>Ver →</td></tr>
               </tbody>
             </table>
-          </div>
+          </section>
+          <section class="panel" data-comp="kpis">
+            <div class="lab">KPIs / tiles</div>
+            <div class="fm-kpis">
+              <div class="fm-kpi"><i>Pending</i><b>3</b></div>
+              <div class="fm-kpi"><i>Live</i><b>11</b></div>
+              <div class="fm-kpi"><i>Drop-off</i><b>22</b></div>
+              <div class="fm-kpi"><i>Guides</i><b>4</b></div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -66,8 +103,8 @@
       <div class="iphone">
         <div class="sb"><div class="t">9:41</div><div class="island"></div><div class="sys"></div></div>
         <div class="body">
-          <div class="fm-notice">Boarding pass</div>
-          <button class="fm-btn" style="margin-top:10px;width:100%" type="button">Escanear</button>
+          <div class="fm-notice">Device = Phone. El catálogo mobile está en la tab Mobile.</div>
+          <button class="fm-btn" style="margin-top:10px;width:100%" type="button">Primary</button>
         </div>
         <div class="home"></div>
       </div>
@@ -81,14 +118,16 @@
   var skin=q.get('skin')||'ey';
   var device=q.get('device')||'desktop';
   var mode=q.get('mode')||'light';
+  var comp=q.get('comp')||'overview';
   FM.skin(skin); FM.mode(mode);
   document.documentElement.setAttribute('data-device', device);
-  document.getElementById('addr').textContent='ds / '+device+' / '+skin+' / '+mode;
+  document.getElementById('addr').textContent='ds / '+comp+' / '+skin+' / '+mode;
+  document.getElementById('navName').textContent=comp;
+  document.querySelectorAll('.panel').forEach(function(p){
+    p.classList.toggle('on', p.getAttribute('data-comp')===comp);
+  });
   var unit=document.getElementById('unit');
-  if(device!=='phone'){
-    FM.cursors(unit,1);
-    FM.after(400, function(){ FM.move('u1', document.getElementById('b1')); });
-  }
+  if(device!=='phone') FM.cursors(unit,1);
 })();
 </script>
 </body></html>

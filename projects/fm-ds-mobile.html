@@ -1,40 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" data-skin="chek" data-mode="light"><head>
+<html lang="en" data-skin="cus" data-mode="light"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DS Mobile</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="fm-ds.css"/>
 <style>
 .stage-pad{height:100%;display:flex;align-items:center;justify-content:center}
-.iphone .body h2{margin:4px 0 6px;font-size:20px}
+.iphone .body h2{margin:4px 0 8px;font-size:20px}
 .iphone .body p{margin:0 0 12px;font-size:12px;color:var(--fm-muted);line-height:1.4}
 .stack{display:flex;flex-direction:column;gap:8px}
+.panel{display:none}.panel.on{display:block}
 </style></head>
 <body>
 <div class="stage">
   <div class="fm-unit" id="unit">
     <div class="stage-pad">
-      <div class="iphone" id="ph">
+      <div class="iphone">
         <div class="sb">
           <div class="t">9:41</div>
           <div class="island"></div>
-          <div class="sys">
-            <svg width="17" height="12" viewBox="0 0 17 12" fill="#fff"><rect x="0" y="7" width="3" height="5" rx="0.6"/><rect x="4.5" y="5" width="3" height="7" rx="0.6"/><rect x="9" y="2.5" width="3" height="9.5" rx="0.6"/><rect x="13.5" y="0" width="3" height="12" rx="0.6" opacity=".35"/></svg>
-            <svg width="15" height="12" viewBox="0 0 15 12" fill="#fff"><path d="M7.5 2.2c2.1 0 4 0.8 5.4 2.2l-1.1 1.1A5.6 5.6 0 0 0 7.5 4.1 5.6 5.6 0 0 0 3.2 5.5L2.1 4.4A7.6 7.6 0 0 1 7.5 2.2zm0 3.2c1.2 0 2.3.5 3.1 1.3L9.5 7.8A2.7 2.7 0 0 0 7.5 7a2.7 2.7 0 0 0-2 .8L4.4 6.7A4.5 4.5 0 0 1 7.5 5.4zM7.5 9.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
-            <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.6" y="2" width="21" height="8" rx="2" stroke="#fff" fill="none" stroke-width="1.2"/><rect x="2" y="3.4" width="16" height="5.2" rx="1" fill="#fff"/><rect x="22.2" y="4.2" width="1.6" height="3.6" rx="0.6" fill="#fff"/></svg>
-          </div>
+          <div class="sys"></div>
         </div>
         <div class="body">
-          <div class="fm-filters" style="margin-bottom:10px">
-            <span class="fm-chip on">Hub</span><span class="fm-chip">Pay</span><span class="fm-chip">Pase</span>
-          </div>
-          <h2>Operación</h2>
-          <p>Toque tipo Figma. Tokens del producto.</p>
-          <div class="fm-notice" id="ban" style="margin-bottom:10px">Listo para escanear</div>
-          <div class="stack">
-            <button class="fm-btn" id="hit" type="button">Escanear</button>
-            <button class="fm-btn secondary" type="button">Detalle</button>
-          </div>
+          <section class="panel on" data-comp="overview">
+            <h2>Mobile kit</h2>
+            <p>Toque Figma. Elegí un tipo en el catálogo.</p>
+            <button class="fm-btn" id="hit" type="button" style="width:100%">Primary</button>
+          </section>
+          <section class="panel" data-comp="buttons">
+            <h2>Buttons</h2>
+            <div class="stack">
+              <button class="fm-btn" id="hit" type="button">Primary</button>
+              <button class="fm-btn secondary" type="button">Secondary</button>
+              <button class="fm-btn ghost" type="button">Ghost</button>
+            </div>
+          </section>
+          <section class="panel" data-comp="fields">
+            <h2>Fields</h2>
+            <div class="stack">
+              <div class="fm-field">Buscar pase</div>
+              <div class="fm-field">San Bartolo</div>
+            </div>
+          </section>
+          <section class="panel" data-comp="pass">
+            <p style="font-size:11px;letter-spacing:.08em;color:var(--fm-faint)">VEHÍCULOS / INGRESO</p>
+            <h2>Boarding pass</h2>
+            <div class="fm-banner" style="margin:10px 0"><b>Mazda CX-5</b><span>BP · SV-240821-0068</span></div>
+            <span class="fm-tag ok">Habilitado</span>
+          </section>
+          <section class="panel" data-comp="scan">
+            <h2>Escaneo</h2>
+            <div class="fm-notice" style="margin:10px 0">Listo para escanear</div>
+            <button class="fm-btn" type="button" style="width:100%">Simular escaneo</button>
+          </section>
         </div>
         <div class="home"></div>
       </div>
@@ -45,13 +63,13 @@
 <script>
 (function(){
   var q=new URLSearchParams(location.search);
-  FM.skin(q.get('skin')||'chek');
+  FM.skin(q.get('skin')||'cus');
   FM.mode(q.get('mode')||'light');
-  FM.cursors(document.getElementById('unit'), 1, 'touch');
-  FM.after(400, function(){
-    FM.move('u1', document.getElementById('hit'));
-    FM.ring(document.getElementById('hit'), true);
+  var comp=q.get('comp')||'overview';
+  document.querySelectorAll('.panel').forEach(function(p){
+    p.classList.toggle('on', p.getAttribute('data-comp')===comp);
   });
+  FM.cursors(document.getElementById('unit'), 1, 'touch');
 })();
 </script>
 </body></html>
