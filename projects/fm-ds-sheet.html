@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" data-skin="ey" data-mode="light" data-sheet="1"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DS sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="fm-ds.css"/>
+<style>
+html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!important;color:var(--fm-text)}
+.sheet{padding:28px 24px 80px;max-width:760px}
+.sec{margin:0 0 36px}
+.sec h2{margin:0 0 6px;font-size:15px}
+.sec p{margin:0 0 12px;color:var(--fm-muted);font-size:12px;line-height:1.45}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+</style></head>
+<body>
+<div class="sheet">
+  <section class="sec" id="buttons">
+    <h2>Buttons</h2>
+    <p>Primary · Secondary · Ghost. Altura 32. Ant / PrimeNG / Ripley.</p>
+    <div class="row">
+      <button class="fm-btn" type="button">Primary</button>
+      <button class="fm-btn secondary" type="button">Secondary</button>
+      <button class="fm-btn ghost" type="button">Ghost</button>
+    </div>
+  </section>
+  <section class="sec" id="fields">
+    <h2>Fields</h2>
+    <p>InputText · IconField · Ant Input · Date / Select.</p>
+    <div class="fm-field" style="max-width:360px;margin-bottom:10px">⌕ Buscar documento</div>
+    <div class="row">
+      <div class="fm-field" style="width:200px">San Bartolo</div>
+      <div class="fm-field" style="width:160px">2024-08-20</div>
+    </div>
+  </section>
+  <section class="sec" id="tags">
+    <h2>Tags + chips</h2>
+    <p>Estados de trámite y filtros.</p>
+    <div class="row">
+      <span class="fm-tag ok">Aprobado</span>
+      <span class="fm-tag warn">Revisión</span>
+      <span class="fm-tag bad">Rechazado</span>
+      <span class="fm-tag neutral">Borrador</span>
+    </div>
+    <div class="row">
+      <span class="fm-chip on">All</span>
+      <span class="fm-chip">Pending</span>
+      <span class="fm-chip">Live</span>
+    </div>
+  </section>
+  <section class="sec" id="notice">
+    <h2>Notice / Banner</h2>
+    <div class="fm-notice" style="margin-bottom:10px">Los campos con * son obligatorios.</div>
+    <div class="fm-banner"><b>Shared delivery</b><span>Mismo chrome. Skin del producto.</span></div>
+  </section>
+  <section class="sec" id="stepper">
+    <h2>Stepper</h2>
+    <p>PrimeNG Stepper. ARIVU: 4 pasos.</p>
+    <div class="fm-stepper"><b>1</b> Selección &nbsp;<b>2</b> Información &nbsp;<b>3</b> Revisión &nbsp;<b>4</b> Listo</div>
+  </section>
+  <section class="sec" id="table">
+    <h2>Table</h2>
+    <table class="fm-table">
+      <thead><tr><th>Documento</th><th>Estado</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>ARIVU-715912</td><td><span class="fm-tag ok">Aprobado</span></td><td>Ver →</td></tr>
+        <tr><td>Workbench</td><td><span class="fm-tag warn">Revisión</span></td><td>Ver →</td></tr>
+        <tr><td>Cluster</td><td><span class="fm-tag bad">Observado</span></td><td>Ver →</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="sec" id="kpis">
+    <h2>KPIs</h2>
+    <div class="fm-kpis">
+      <div class="fm-kpi"><i>Pending</i><b>3</b></div>
+      <div class="fm-kpi"><i>Live</i><b>11</b></div>
+      <div class="fm-kpi"><i>Drop-off</i><b>22</b></div>
+      <div class="fm-kpi"><i>Guides</i><b>4</b></div>
+    </div>
+  </section>
+  <section class="sec" id="pass">
+    <h2>Boarding pass (mobile)</h2>
+    <div class="fm-banner"><b>Mazda CX-5</b><span>BP · SV-240821-0068 · Habilitado</span></div>
+  </section>
+</div>
+<script src="fm-engine.js"></script>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  FM.skin(q.get('skin')||'ey');
+  FM.mode(q.get('mode')||'light');
+})();
+</script>
+</body></html>
