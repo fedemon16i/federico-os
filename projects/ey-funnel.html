@@ -3,43 +3,44 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Funnel</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="ey-ds.css"/>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--y:#FFE600;--ink:#0b0b0b}
-.board{padding:20px 18px 16px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 8px}
-.note{font-size:16px;font-weight:700;letter-spacing:-.03em;margin:0 0 16px;opacity:0;transform:translateY(8px);transition:.4s}
-.note.on{opacity:1;transform:none}
-.note em{color:var(--y);font-style:normal}
-.row{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;margin:0 0 8px;opacity:0;transform:translateX(-8px);transition:.4s}
+html,body{background:transparent}
+.ey-unit.board{overflow:visible}
+.pad{padding:40px 48px;height:100%;box-sizing:border-box}
+.k{font-family:var(--ey-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ey-yellow);margin:0 0 10px}
+.note{font-size:22px;font-weight:700;letter-spacing:-.03em;margin:0 0 22px;opacity:0;transform:translateY(8px);transition:.4s}
+.note.on{opacity:1;transform:none}.note em{color:var(--ey-yellow);font-style:normal}
+.row{display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:center;margin:0 0 10px;opacity:0;transform:translateX(-8px);transition:.4s}
 .row.on{opacity:1;transform:none}
-.lbl{font-size:11px;color:#b8b4ac}
-.bar{height:26px;background:#171717;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:700;width:16%;min-width:72px;transition:width .55s cubic-bezier(.2,.8,.2,1)}
-.bar span{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8a8580}
-.row.dead .bar{background:var(--y);color:var(--ink)}
-.row.dead .bar span{color:var(--ink)}
+.lbl{font-size:13px;color:#b8b4ac}
+.bar{height:32px;background:#171717;display:flex;align-items:center;padding:0 12px;font-size:13px;font-weight:700;width:16%;min-width:80px;transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.bar span{margin-left:auto;font-family:var(--ey-mono);font-size:11px;color:#8a8580}
+.row.dead .bar{background:var(--ey-yellow);color:#0b0b0b}
+.row.dead .bar span{color:#0b0b0b}
 </style></head>
 <body>
-<div class="board">
-  <div class="k">Drop-off</div>
-  <p class="note" id="note">The path holds until <em>required service</em>.</p>
-  <div class="row" id="r0"><div class="lbl">Home</div><div class="bar" data-w="100%">Home <span>100</span></div></div>
-  <div class="row" id="r1"><div class="lbl">Catalog</div><div class="bar" data-w="88%">Catalog <span>88</span></div></div>
-  <div class="row" id="r2"><div class="lbl">Services</div><div class="bar" data-w="72%">Services <span>72</span></div></div>
-  <div class="row" id="r3"><div class="lbl">Workbench</div><div class="bar" data-w="54%">Workbench <span>54</span></div></div>
-  <div class="row dead" id="r4"><div class="lbl">Required</div><div class="bar" data-w="22%">Required <span>22</span></div></div>
+<div class="stage">
+  <div class="ey-unit board">
+    <div class="pad">
+      <div class="k">Drop-off</div>
+      <p class="note" id="note">The path holds until <em>required service</em>.</p>
+      <div class="row" id="r0"><div class="lbl">Home</div><div class="bar" data-w="100%">Home <span>100</span></div></div>
+      <div class="row" id="r1"><div class="lbl">Catalog</div><div class="bar" data-w="88%">Catalog <span>88</span></div></div>
+      <div class="row" id="r2"><div class="lbl">Services</div><div class="bar" data-w="72%">Services <span>72</span></div></div>
+      <div class="row" id="r3"><div class="lbl">Workbench</div><div class="bar" data-w="54%">Workbench <span>54</span></div></div>
+      <div class="row dead" id="r4"><div class="lbl">Required</div><div class="bar" data-w="22%">Required <span>22</span></div></div>
+    </div>
+  </div>
 </div>
+<script src="ey-engine.js"></script>
 <script>
-(function(){
-  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  after(60,function(){document.getElementById('note').classList.add('on')});
-  [0,1,2,3,4].forEach(function(i){
-    after(240+i*360,function(){
-      var row=document.getElementById('r'+i); row.classList.add('on');
-      var b=row.querySelector('.bar'); b.style.width=b.getAttribute('data-w');
-    });
+EY.after(60, function(){ document.getElementById('note').classList.add('on'); });
+[0,1,2,3,4].forEach(function(i){
+  EY.after(240+i*360, function(){
+    var row=document.getElementById('r'+i); row.classList.add('on');
+    var b=row.querySelector('.bar'); b.style.width=b.getAttribute('data-w');
   });
-})();
+});
 </script>
 </body></html>
