@@ -1,5 +1,5 @@
 /* FM DS. Light default. data-mode=dark overrides.
-   --fm-on-accent / --fm-on-mark = ink that sits ON yellow/gold/teal.
+   Yellow #FFE600 is FILL on dark only. Text on light = ink or #6B5200.
 */
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Regular.woff') format('woff');font-weight:400;font-display:swap}
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Bold.woff') format('woff');font-weight:700;font-display:swap}
@@ -15,16 +15,16 @@
   --fm-font:'EYInterstate','Source Sans 3',Arial Narrow,sans-serif;
   --fm-bg:#f6f6f4; --fm-nav:#2e2e38; --fm-card:#fff; --fm-side:#eeeee8;
   --fm-text:#2e2e38; --fm-muted:#5c5c66; --fm-faint:#8a8a94;
-  --fm-line:#d8d8d0; --fm-accent:#ffe600; --fm-mark:#ffe600;
-  --fm-on-accent:#2e2e38; --fm-on-mark:#2e2e38; --fm-ghost:#2e2e38;
+  --fm-line:#d8d8d0; --fm-accent:#2e2e38; --fm-mark:#eeeee8;
+  --fm-on-accent:#fff; --fm-on-mark:#2e2e38; --fm-ghost:#2e2e38;
   --fm-ok:#0b8a4a; --fm-bad:#d92727; --fm-new:#c0392b;
-  --fm-btn:#2e2e38; --fm-btn-ink:#ffe600;
+  --fm-btn:#2e2e38; --fm-btn-ink:#fff;
 }
 [data-skin="ey"][data-mode="dark"]{
   --fm-bg:#12141c; --fm-nav:#0b0c10; --fm-card:#1c1e28; --fm-side:#101218;
   --fm-text:#f3f4f8; --fm-muted:#9aa0b0; --fm-faint:#6d7384;
-  --fm-line:rgba(255,255,255,.12); --fm-accent:#ffe600; --fm-mark:#ffe600;
-  --fm-on-accent:#111; --fm-on-mark:#111; --fm-ghost:#f3f4f8;
+  --fm-line:rgba(255,255,255,.12); --fm-accent:#ffe600; --fm-mark:#1c1e28;
+  --fm-on-accent:#111; --fm-on-mark:#f3f4f8; --fm-ghost:#f3f4f8;
   --fm-ok:#7dcea0; --fm-bad:#e0857f; --fm-new:#e24b4b;
   --fm-btn:#fff; --fm-btn-ink:#111;
 }
@@ -51,7 +51,7 @@
   --fm-font:Inter,system-ui,sans-serif;
   --fm-bg:#f7f5fa; --fm-nav:#543379; --fm-card:#fff; --fm-side:#f1ecf6;
   --fm-text:#202124; --fm-muted:#5c5666; --fm-faint:#8a8490;
-  --fm-line:#ddd6e6; --fm-accent:#543379; --fm-mark:#ffb81c;
+  --fm-line:#ddd6e6; --fm-accent:#543379; --fm-mark:#fff4d6;
   --fm-on-accent:#fff; --fm-on-mark:#202124; --fm-ghost:#543379;
   --fm-ok:#0b8a4a; --fm-bad:#d92727; --fm-new:#543379;
   --fm-btn:#543379; --fm-btn-ink:#fff;
@@ -59,8 +59,8 @@
 [data-skin="chek"][data-mode="dark"]{
   --fm-bg:#160814; --fm-nav:#2a1840; --fm-card:#24102e; --fm-side:#120814;
   --fm-text:#fbf4f8; --fm-muted:#c9b0d4; --fm-faint:#8a708c;
-  --fm-line:rgba(255,255,255,.12); --fm-accent:#543379; --fm-mark:#ffb81c;
-  --fm-on-accent:#fff; --fm-on-mark:#202124; --fm-ghost:#e8d0ff;
+  --fm-line:rgba(255,255,255,.12); --fm-accent:#543379; --fm-mark:#3a2a10;
+  --fm-on-accent:#fff; --fm-on-mark:#ffd18d; --fm-ghost:#e8d0ff;
   --fm-ok:#9ee0c0; --fm-bad:#ff9a9a; --fm-new:#c4a2ff;
   --fm-btn:#543379; --fm-btn-ink:#fff;
 }
@@ -69,8 +69,8 @@
   --fm-font:'IBM Plex Sans',sans-serif;
   --fm-bg:#0b1416; --fm-nav:#071011; --fm-card:#122022; --fm-side:#0a1517;
   --fm-text:#eef8f7; --fm-muted:#8eb8b4; --fm-faint:#5d7e7b;
-  --fm-line:rgba(255,255,255,.12); --fm-accent:#22d4c8; --fm-mark:#7af0e6;
-  --fm-on-accent:#04221f; --fm-on-mark:#04221f; --fm-ghost:#7af0e6;
+  --fm-line:rgba(255,255,255,.12); --fm-accent:#22d4c8; --fm-mark:#0e2a28;
+  --fm-on-accent:#04221f; --fm-on-mark:#7af0e6; --fm-ghost:#7af0e6;
   --fm-ok:#7af0e6; --fm-bad:#e0857f; --fm-new:#ff7a4a;
   --fm-btn:#22d4c8; --fm-btn-ink:#04221f;
 }
@@ -124,6 +124,16 @@ html,body{margin:0;height:100%;background:transparent;color:var(--fm-text);font-
 .fm-banner,.fm-notice{border-radius:var(--fm-r);border:1px solid var(--fm-line);padding:10px 12px;font-size:12px}
 .fm-banner{background:var(--fm-card)}.fm-banner b{display:block;margin-bottom:2px}
 .fm-notice{background:var(--fm-mark);color:var(--fm-on-mark);display:flex;gap:8px}
+.fm-hero{border-radius:var(--fm-r);padding:18px 16px;color:#fff;background:linear-gradient(105deg,#1b1028 0%,#5b2f88 46%,#2f4ec8 100%)}
+.fm-hero b{display:block;font-size:16px;margin-bottom:6px}
+.fm-hero span{font-size:12px;opacity:.82;line-height:1.4}
+.fm-photo{min-height:78px;border-radius:var(--fm-r);padding:10px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;background:linear-gradient(180deg,transparent 20%,#0b0b10),linear-gradient(135deg,#3a2a55,#1a1430)}
+.fm-photo b{font-size:12px}.fm-photo span{font-size:10px;opacity:.75}
+.fm-offer{border:1px solid var(--fm-line);border-radius:var(--fm-r);padding:12px;background:var(--fm-card)}
+.fm-offer .kind{font-size:10px;color:var(--fm-faint);margin-bottom:4px}
+.fm-disclaimer{border:1px solid var(--fm-line);border-radius:var(--fm-r);padding:10px 12px;font-size:11px;color:var(--fm-muted);background:var(--fm-card);line-height:1.45}
+.fm-total{font-weight:700;color:#6b5200}
+[data-mode="dark"] .fm-total{color:#ffe600}
 .fm-filters{display:flex;gap:6px;flex-wrap:wrap}
 .fm-table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px;border:1px solid var(--fm-line);border-radius:var(--fm-r);overflow:hidden;background:var(--fm-card)}
 .fm-table th{text-align:left;font-weight:650;color:var(--fm-faint);padding:8px 10px;background:var(--fm-side);border-bottom:1px solid var(--fm-line)}
