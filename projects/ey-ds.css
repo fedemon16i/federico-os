@@ -18,6 +18,8 @@
   --ey-bad:#e0857f;
   --ey-new:#e24b4b;
   --ey-yellow:#FFE600;
+  --ey-accent-ink:#FFE600;
+  --ey-plate:#171717;
   --ey-font:'EYInterstate','Source Sans 3','IBM Plex Sans',Arial Narrow,sans-serif;
   --ey-mono:'IBM Plex Mono',ui-monospace,monospace;
   --ey-radius:10px;
@@ -27,18 +29,20 @@
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Regular.woff') format('woff');font-weight:400;font-display:swap}
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Bold.woff') format('woff');font-weight:700;font-display:swap}
 [data-mode="light"]{
-  --ey-bg:#f4f4f1;
+  --ey-bg:#e8e6df;
   --ey-nav:#ffffff;
-  --ey-surface:#ffffff;
+  --ey-surface:#f4f3ee;
   --ey-card:#ffffff;
-  --ey-side:#eceae4;
+  --ey-side:#dddacd;
   --ey-text:#2e2e38;
   --ey-muted:#5c5c66;
-  --ey-faint:#8a8a94;
-  --ey-line:#d8d8d0;
+  --ey-faint:#6e6e78;
+  --ey-line:#c4c1b5;
   --ey-on-nav:#2e2e38;
-  --ey-hero:#eceae3;
-  --ey-bar:#eceae4;
+  --ey-hero:#dddacd;
+  --ey-bar:#dddacd;
+  --ey-accent-ink:#6b5200;
+  --ey-plate:#dddacd;
 }
 html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font);overflow:hidden}
 .stage{position:relative;width:100%;height:100%;overflow:hidden}
@@ -97,24 +101,50 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 [data-mode="light"] .svc .t,
 [data-mode="light"] .svc .acts button.pri{color:var(--ey-text)!important}
 [data-mode="light"] .side a.on{background:rgba(0,0,0,.06)!important}
-[data-mode="light"] .bars b{background:#d8d8d0!important}
+[data-mode="light"] .bars b{background:#c4c1b5!important}
 
-/* Diagrams: invert the charcoal plates */
+/* Diagrams — no yellow text on cream, no white plate on white */
+[data-mode="light"] .k,
+[data-mode="light"] .tag,
+[data-mode="light"] .mh,
+[data-mode="light"] .q em,
+[data-mode="light"] .note em,
+[data-mode="light"] .arr,
+[data-mode="light"] .feat em,
+[data-mode="light"] .filters i.on{
+  color:var(--ey-accent-ink)!important;
+}
 [data-mode="light"] .node.arm,
 [data-mode="light"] .own,
 [data-mode="light"] .bar,
 [data-mode="light"] .tile,
 [data-mode="light"] .pendo,
 [data-mode="light"] .card,
-[data-mode="light"] .find{background:#fff!important;color:var(--ey-text)!important;border-color:var(--ey-line)!important}
+[data-mode="light"] .find,
+[data-mode="light"] .sc,
+[data-mode="light"] .cta{
+  background:var(--ey-plate)!important;
+  color:var(--ey-text)!important;
+  border:1px solid var(--ey-line)!important;
+}
 [data-mode="light"] .node.leaf,
 [data-mode="light"] .row2,
 [data-mode="light"] .lbl,
 [data-mode="light"] .s,
 [data-mode="light"] .who,
-[data-mode="light"] .sc,
-[data-mode="light"] .tools span{color:var(--ey-muted)!important}
+[data-mode="light"] .tools span,
+[data-mode="light"] .bar span{
+  color:var(--ey-muted)!important;
+}
 [data-mode="light"] .sc b,
 [data-mode="light"] .t,
-[data-mode="light"] .note{color:var(--ey-text)!important}
-[data-mode="light"] .row.dead .bar{background:var(--ey-yellow)!important;color:#111!important}
+[data-mode="light"] .note,
+[data-mode="light"] .q{
+  color:var(--ey-text)!important;
+}
+[data-mode="light"] .node.root,
+[data-mode="light"] .row.dead .bar{
+  background:#FFE600!important;
+  color:#111!important;
+}
+[data-mode="light"] .row.dead .bar span{color:#111!important}
