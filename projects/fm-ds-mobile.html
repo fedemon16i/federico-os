@@ -29,11 +29,12 @@
             <span class="fm-chip on">Hub</span><span class="fm-chip">Pay</span><span class="fm-chip">Moves</span>
           </div>
           <h2>Cards</h2>
-          <p>Same kit as web. Touch stays inside the phone.</p>
+          <p>Touch stays inside the phone. Skin comes from the live product.</p>
           <div class="fm-banner" id="ban" style="margin-bottom:10px"><b>Limit ready</b><span>Protected this month.</span></div>
           <div class="stack">
             <button class="fm-btn" id="hit" type="button">Pay</button>
             <button class="fm-btn ghost" type="button">Limit</button>
+            <div class="fm-field">Search</div>
           </div>
         </div>
         <div class="home"></div>
@@ -44,16 +45,13 @@
 <script src="fm-engine.js"></script>
 <script>
 (function(){
-  var unit=document.getElementById('unit');
-  FM.skin('chek');
-  FM.cursors(unit, 1, 'touch');
+  var skin=new URLSearchParams(location.search).get('skin')||'chek';
+  FM.skin(skin);
+  FM.cursors(document.getElementById('unit'), 1, 'touch');
   FM.after(400, function(){
     FM.move('u1', document.getElementById('hit'));
     FM.ring(document.getElementById('hit'), true);
-    FM.tip(document.getElementById('hit'), 'Figma touch');
-  });
-  ['dc','bc','cus','ey','chek'].forEach(function(sk,i){
-    FM.after(1400+i*800, function(){ FM.skin(sk); });
+    FM.tip(document.getElementById('hit'), 'Touch');
   });
 })();
 </script>
