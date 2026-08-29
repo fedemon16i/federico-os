@@ -1,6 +1,4 @@
-/* Notebook window. Interior 960×600 (16/10). Scale uniform.
-   Displayed in a capped stage — not page-full-bleed.
-*/
+/* Notebook 960×600. Pointer = 22px SVG inside .uc only. */
 :root{
   --ey-bg:#12141c;
   --ey-nav:#0b0c10;
@@ -39,7 +37,7 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
   background:var(--ey-nav);
   box-shadow:0 18px 40px rgba(0,0,0,.45);
 }
-.ey-unit.board{background:transparent;color:#f5f4ef}
+.ey-unit.board{background:transparent;color:#f5f4ef;overflow:visible}
 .ey-bbar{
   height:26px;display:flex;align-items:center;gap:8px;padding:0 12px;
   background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0;
@@ -58,14 +56,20 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 .nav .on{color:#fff}
 .uc{
   position:absolute;z-index:30;pointer-events:none;
-  width:24px;height:24px;line-height:0;overflow:visible;
+  width:22px;height:22px;margin:0;padding:0;line-height:0;overflow:visible;
   transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1);
 }
-.uc img{display:block;width:24px;height:24px}
+.uc svg,.uc img{
+  display:block;
+  width:22px !important;
+  height:22px !important;
+  max-width:22px !important;
+  max-height:22px !important;
+}
 .uc em{
-  position:absolute;left:0;top:-18px;
-  font-style:normal;font-size:11px;font-weight:700;
-  padding:2px 7px;border-radius:3px;color:#111;white-space:nowrap;
+  position:absolute;left:18px;top:-4px;
+  font-style:normal;font-size:10px;font-weight:700;
+  padding:1px 6px;border-radius:3px;color:#111;white-space:nowrap;
 }
 .u1 em{background:#FFE600}.u2 em{background:#7dc4ff}.u3 em{background:#e8943a}
 .callout{
