@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
 .nav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.nav .search{width:140px;height:16px;border-radius:4px;background:rgba(255,255,255,.05);font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 7px}
-.nav .ai{padding:2px 7px;border-radius:100px;border:1px solid rgba(255,255,255,.14);font-size:8px}
-.nav .av{width:15px;height:15px;border-radius:50%;background:#3a3d4a;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.nav .search{width:188px;height:22px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid var(--ey-line);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 10px}
+.nav .ai{height:22px;padding:0 10px;border-radius:100px;border:1px solid var(--ey-line);font-size:11px;display:inline-flex;align-items:center}
+.nav .av{width:22px;height:22px;border-radius:50%;background:#3a3d4a;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .nav .mark{font-weight:800;color:#fff}
 .hero{padding:16px 16px 14px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a}
 .hero .k{font-size:9px;color:rgba(255,255,255,.55);margin-bottom:6px}
@@ -79,7 +79,7 @@
     EY.after(120, function(){ EY.move('u2', el, 26, 18); });
     EY.after(240, function(){ EY.move('u3', el, -8, 22); });
   }
-  var NAV='<div class="nav"><span class="mark">◆</span><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search products…</div><span class="ai">AI</span><span class="av">FM</span></div></div>';
+  var NAV='<div class="nav"><span class="mark">◆</span><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search</div><span class="ai">AI</span><span class="av">FM</span></div></div>';
   var SIDE='<div class="side"><div class="sh">Catalog</div><a class="on" href="#"><span>All</span><span class="n">284</span></a><a href="#"><span>Services</span><span class="n">118</span></a><a href="#"><span>Licenses</span><span class="n">19</span></a><a href="#"><span>Kits</span><span class="n">14</span></a></div>';
   var home='<div class="app">'+NAV+'<div class="hero"><div class="k">Shared delivery for teams and clients</div><h2>Unlock technology at speed and scale</h2><p>Reusable components and a request path that should be obvious.</p><div><button class="btn-w" id="go" type="button">Explore Catalog</button> <button class="btn-o" type="button">Talk to us</button></div></div><div class="band"><h4>Developer workflow</h4><p>Build and deploy into the shared container platform.</p></div></div>';
   var catalog='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="crumb">Home › Catalog</div><h3 style="margin:0 0 8px;font-size:13px">Make the path through the catalog obvious.</h3><div class="tools"><div class="q">Filter by layer…</div></div><div class="tiles"><div class="tile t1" id="go"><div class="t">Services</div><div class="s">Compute and shared tools</div></div><div class="tile t2"><div class="t">Licenses</div><div class="s">Delivery rights</div></div><div class="tile t3"><div class="t">Starter kits</div><div class="s">Packaged starts</div></div><div class="tile t4"><div class="t">Packages</div><div class="s">Reusable modules</div></div><div class="tile t5"><div class="t">APIs</div><div class="s">Platform blocks</div></div><div class="tile t6"><div class="t">Explore</div><div class="s">All layers</div></div></div></div></div></div>';
