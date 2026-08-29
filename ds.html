@@ -36,7 +36,7 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
 </div>
 <div class="wrap">
   <h1>DS projects</h1>
-  <p class="lede">Primero el proyecto. Después el preview. Abajo, todas las secciones con el mismo skin.</p>
+  <p class="lede">Un DS por proyecto. Preview arriba. Abajo: Componentes o Diagramas de ese case.</p>
 
   <p class="lbl">Proyecto</p>
   <div class="row proj" id="skins">
@@ -61,7 +61,11 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
   </div>
   <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
-  <h2>Todas las secciones</h2>
+  <p class="lbl">Catálogo</p>
+  <div class="row">
+    <button class="dev on" data-cat="comp" type="button">Componentes</button>
+    <button class="dev" data-cat="diag" type="button">Diagramas</button>
+  </div>
   <div class="jump" id="jumps">
     <button type="button" data-jump="buttons">Buttons</button>
     <button type="button" data-jump="fields">Fields</button>
@@ -72,13 +76,14 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
     <button type="button" data-jump="kpis">KPIs</button>
     <button type="button" data-jump="pass">Pass</button>
   </div>
-  <div class="sheet"><iframe id="sheet" title="All sections"></iframe></div>
+  <div class="sheet"><iframe id="sheet" title="Catalog"></iframe></div>
 </div>
 <script>
-var skin='ey', view='web', mode='light', dev='desktop';
+var skin='ey', view='web', mode='light', dev='desktop', cat='comp';
 var preview=document.getElementById('preview');
 var sheet=document.getElementById('sheet');
 function sheetUrl(hash){
+  if(cat==='diag') return 'projects/fm-ds-diagrams.html?skin='+skin+'&mode='+mode;
   return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
 }
 function load(){
@@ -86,6 +91,7 @@ function load(){
   preview.src=(view==='mobile'?'projects/fm-ds-mobile.html?':'projects/fm-ds-web.html?')+q+'&r='+Date.now();
   sheet.src=sheetUrl();
   document.getElementById('devs').style.display = view==='web' ? 'flex' : 'none';
+  document.getElementById('jumps').style.display = cat==='comp' ? 'flex' : 'none';
 }
 function mark(group, el){
   document.querySelectorAll(group).forEach(function(x){ x.classList.toggle('on', x===el); });
@@ -101,6 +107,9 @@ document.querySelectorAll('[data-mode]').forEach(function(b){
 });
 document.querySelectorAll('#devs .dev').forEach(function(b){
   b.onclick=function(){ dev=b.dataset.dev; mark('#devs .dev', b); load(); };
+});
+document.querySelectorAll('[data-cat]').forEach(function(b){
+  b.onclick=function(){ cat=b.dataset.cat; mark('[data-cat]', b); load(); };
 });
 document.querySelectorAll('[data-jump]').forEach(function(b){
   b.onclick=function(){ sheet.src=sheetUrl(b.dataset.jump); };
