@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" data-skin="ey" data-mode="light"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DS diagrams</title>
+<link rel="stylesheet" href="fm-ds.css"/>
+<style>
+html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!important;color:var(--fm-text)}
+.wrap{padding:24px;max-width:860px}
+.card{border:1px solid var(--fm-line);border-radius:12px;background:var(--fm-card);margin:0 0 18px;overflow:hidden}
+.card h2{margin:0;padding:12px 14px;font-size:14px;border-bottom:1px solid var(--fm-line)}
+.card p{margin:0;padding:8px 14px;font-size:12px;color:var(--fm-muted)}
+.card iframe{width:100%;height:280px;border:0;background:transparent;display:block}
+.miss{padding:14px;color:var(--fm-muted);font-size:13px}
+</style></head>
+<body>
+<div class="wrap" id="root"></div>
+<script src="fm-engine.js"></script>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var skin=q.get('skin')||'ey';
+  FM.skin(skin); FM.mode(q.get('mode')||'light');
+  var MAP={
+    ey:[
+      {t:'Measure', s:'ey-01-measure.html', n:'Eventos y sitemap. No es ventana.'},
+      {t:'Research', s:'ey-research.html', n:'Cuadrantes CSAT / NPS / interviews.'},
+      {t:'Understand', s:'ey-understand.html', n:'Mapa de capabilities.'},
+      {t:'Funnel', s:'ey-funnel.html', n:'Grafico de funnel, no chrome de browser.'}
+    ],
+    dc:[{t:'Why / Search / States', s:'dollarcity-player.html', n:'Beats DollarCity en el player.'}],
+    chek:[{t:'Hub flows', s:'chek-player.html', n:'Chek es telefono. El player es la fuente.'}],
+    cus:[{t:'Viaje ARIVU', s:'customs.html', n:'Story + boarding pass.'}],
+    bc:[{t:'Mapa 3D', s:'blockchain-player.html', n:'La ventana es el telefono sobre el mapa.'}]
+  };
+  var list=MAP[skin]||[];
+  var root=document.getElementById('root');
+  if(!list.length){ root.innerHTML='<p class="miss">Sin diagramas sueltos.</p>'; return; }
+  list.forEach(function(item){
+    var c=document.createElement('article');
+    c.className='card';
+    c.innerHTML='<h2>'+item.t+'</h2><p>'+item.n+'</p><iframe src="'+item.s+'" title="'+item.t+'"></iframe>';
+    root.appendChild(c);
+  });
+})();
+</script>
+</body></html>
