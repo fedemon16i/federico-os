@@ -7,37 +7,34 @@
 <style>
 html,body{background:transparent}
 .ey-unit.board{overflow:visible}
-.pad{padding:28px 32px;height:100%;box-sizing:border-box}
-.k{font-family:var(--ey-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ey-yellow);margin:0 0 14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;height:calc(100% - 28px)}
-.card,.pendo{border:1px solid var(--ey-line);padding:12px;opacity:0;transition:opacity .35s}
+.pad{padding:22px 28px;height:100%;box-sizing:border-box}
+.k{font-family:var(--ey-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ey-yellow);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr) minmax(0,1.35fr);gap:10px;height:calc(100% - 26px)}
+.card,.pendo{border:1px solid var(--ey-line);padding:12px;opacity:0;transition:opacity .35s;min-height:0}
 .card.on,.pendo.on{opacity:1}
 .tag{font-family:var(--ey-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ey-yellow);margin-bottom:8px}
 .q{font-size:14px;line-height:1.35;margin:0 0 8px}.q em{color:var(--ey-yellow);font-style:normal}
-.who,.s{font-size:11px;color:#9a968c}
+.who,.s{font-size:11px;color:var(--ey-muted)}
 .scores{display:flex;gap:6px;margin-top:8px}
-.sc{flex:1;border:1px solid var(--ey-line);padding:6px 4px;text-align:center;font-size:9px;color:#c8c4bc}
-.sc b{display:block;color:#fff;font-size:11px;margin-bottom:2px}
+.sc{flex:1;border:1px solid var(--ey-line);padding:6px 4px;text-align:center;font-size:9px;color:var(--ey-muted);background:var(--ey-plate)}
+.sc b{display:block;color:var(--ey-text);font-size:11px;margin-bottom:2px}
 .path{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
-.path i{font-style:normal;font-size:9px;padding:3px 7px;border:1px solid var(--ey-line);color:#8a8580}
+.path i{font-style:normal;font-size:9px;padding:3px 7px;border:1px solid var(--ey-line);color:var(--ey-muted)}
 .path i.on{border-color:var(--ey-yellow);color:var(--ey-yellow)}
-.pendo{padding:0;display:flex;flex-direction:column}
-.ph{display:flex;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--ey-line);font-size:10px}
-.ph b{color:#fff}.ph span{color:#8a8580}
-.body{display:grid;grid-template-columns:88px 1fr;flex:1;min-height:0}
+.pendo{padding:0;display:flex;flex-direction:column;grid-column:1 / -1}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid var(--ey-line);font-size:10px}
+.ph b{color:var(--ey-text)}.ph span{color:var(--ey-muted)}
+.body{display:grid;grid-template-columns:96px 1fr;flex:1;min-height:0}
 .list{border-right:1px solid var(--ey-line);padding:8px}
-.it{padding:5px 6px;border-radius:4px;font-size:9px;color:#8a8580;margin-bottom:3px}
-.it.on{background:rgba(255,230,0,.12);color:#FFE600}
-.player{padding:8px}
-.ctrl{display:flex;align-items:center;gap:6px;font-size:9px;color:#8a8580;margin-bottom:6px}
-.play{width:14px;height:14px;background:#FFE600;color:#111;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
-.tl{flex:1;height:3px;background:#2a2a2a}.tl i{display:block;height:100%;width:0;background:#FFE600;transition:width .8s}
-.frame{border:1px solid var(--ey-line);background:#12141c;height:88px;position:relative;overflow:hidden;border-radius:6px}
-.bar{height:14px;display:flex;align-items:center;gap:4px;padding:0 6px;font-size:8px;color:#8a8580;border-bottom:1px solid var(--ey-line)}
-.bar i{width:5px;height:5px;border-radius:50%;background:#3a3d4a}
-.view{padding:8px;font-size:10px}
-.cta{display:inline-block;margin-top:6px;background:#fff;color:#111;font-size:8px;padding:3px 7px;border-radius:3px}
-.tile{display:inline-block;margin-right:4px;padding:4px 6px;background:#1c1e28;font-size:8px}
+.it{padding:5px 6px;border-radius:4px;font-size:9px;color:var(--ey-muted);margin-bottom:3px}
+.it.on{background:rgba(107,82,0,.12);color:var(--ey-yellow)}
+.player{padding:8px;display:flex;flex-direction:column;min-width:0;min-height:0}
+.ctrl{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--ey-muted);margin-bottom:6px}
+.play{width:14px;height:14px;background:var(--ey-yellow);color:#111;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700}
+.tl{flex:1;height:3px;background:var(--ey-line)}.tl i{display:block;height:100%;width:38%;background:var(--ey-yellow)}
+.frame{flex:1;min-height:0;border:1px solid var(--ey-line);background:#0b0c10;position:relative;overflow:hidden;border-radius:6px}
+.mini{position:absolute;left:0;top:0;width:960px;height:600px;transform-origin:0 0;pointer-events:none}
+.mini iframe{width:960px;height:600px;border:0;background:transparent}
 </style></head>
 <body>
 <div class="stage">
@@ -48,41 +45,42 @@ html,body{background:transparent}
         <div class="card" id="c0"><div class="tag">Interviews</div><p class="q">I did not know <em>which service</em> to attach.</p><div class="who">Second voice: the field does not look required.</div></div>
         <div class="card" id="c1"><div class="tag">Scores</div><div class="s">After the same request attempt.</div><div class="scores"><div class="sc"><b>CSAT</b>low</div><div class="sc"><b>NPS</b>detractor</div><div class="sc"><b>CES</b>too much effort</div></div></div>
         <div class="pendo" id="c2">
-          <div class="ph"><b>Replay sessions</b><span>1× · 0:18</span></div>
+          <div class="ph"><b>Replay sessions</b><span>Analyze · 1× · 0:18</span></div>
           <div class="body">
-            <div class="list"><div class="it on">user 1 · 0:18</div><div class="it">user 2 · 0:22</div><div class="it">user 3 · 0:14</div></div>
+            <div class="list">
+              <div class="it on">user 1 · 0:18</div>
+              <div class="it">user 2 · 0:22</div>
+              <div class="it">user 3 · 0:14</div>
+            </div>
             <div class="player">
               <div class="ctrl"><div class="play">▶</div><div class="tl"><i id="scrub"></i></div>0:18</div>
-              <div class="frame">
-                <div class="bar"><i></i><i></i><i></i><b id="addr">overview</b></div>
-                <div class="view" id="view"><div>Unlock technology at speed</div><span class="cta">Explore Catalog</span></div>
+              <div class="frame" id="frame">
+                <div class="mini" id="mini"><iframe id="tape" title="Analyze session"></iframe></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card" id="c3"><div class="tag">Task study</div><p class="q">Request a workspace — stall on the unlabeled field.</p><div class="path"><i id="p0">start</i><i id="p1">name</i><i id="p2">required</i><i id="p3">leave</i></div></div>
       </div>
     </div>
   </div>
 </div>
 <script src="ey-engine.js"></script>
 <script>
-[0,1,2,3].forEach(function(i){ EY.after(160+i*220, function(){ document.getElementById('c'+i).classList.add('on'); }); });
-var frames=[
-  {addr:'overview', html:'<div>Unlock technology at speed</div><span class="cta">Explore Catalog</span>', w:'28%'},
-  {addr:'catalog', html:'<span class="tile">Services</span><span class="tile">Licenses</span>', w:'52%'},
-  {addr:'services', html:'<div>Workbench</div><span class="cta">Get started</span>', w:'74%'},
-  {addr:'workbench', html:'<div>Required service</div>', w:'100%'}
-];
-var i=0;
-function rec(){
-  var f=frames[i];
-  document.getElementById('addr').textContent=f.addr;
-  document.getElementById('view').innerHTML=f.html;
-  document.getElementById('scrub').style.width=f.w;
-  i++; if(i<frames.length) EY.after(900, rec);
-}
-EY.after(700, rec);
-['p0','p1','p2','p3'].forEach(function(id,j){ EY.after(1400+j*240, function(){ document.getElementById(id).classList.add('on'); }); });
+(function(){
+  [0,1,2].forEach(function(i){
+    EY.after(160+i*220, function(){ document.getElementById('c'+i).classList.add('on'); });
+  });
+  var mode=new URLSearchParams(location.search).get('mode')||'';
+  var tape=document.getElementById('tape');
+  tape.src='ey-02-analyze.html'+(mode?('?mode='+mode):'');
+  function fit(){
+    var box=document.getElementById('frame');
+    if(!box) return;
+    var s=Math.min(box.clientWidth/960, box.clientHeight/600);
+    document.getElementById('mini').style.transform='scale('+s+')';
+  }
+  EY.after(80, fit);
+  window.addEventListener('resize', fit);
+})();
 </script>
 </body></html>
