@@ -35,37 +35,23 @@ h3{margin:0 0 6px;font-size:13px}
 </style></head>
 <body>
 <div class="stage">
-  <div class="ey-browser" id="win">
+  <div class="ey-unit window" id="unit">
     <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div>
     <div id="slot"></div>
-    <div class="uc" id="c1"><svg viewBox="0 0 24 24"><path d="M4 2.5 L4 18.5 L8.6 14.2 L12.2 22 L15 20.7 L11.3 13 L18.5 13 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
   </div>
 </div>
+<script src="ey-engine.js"></script>
 <script>
 (function(){
-  var slot=document.getElementById('slot'), win=document.getElementById('win'), timers=[];
+  var slot=document.getElementById('slot'), win=document.getElementById('unit'), timers=[];
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
+  EY.cursors(win,1); EY.fit();
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function move(el){
-    var n=document.getElementById('c1'); if(!n||!el) return;
-    var r=el.getBoundingClientRect(), b=win.getBoundingClientRect();
-    n.style.left=Math.max(8,Math.min(b.width-18,r.left-b.left+6))+'px';
-    n.style.top=Math.max(22,Math.min(b.height-18,r.top-b.top+4))+'px';
-  }
+  function move(el){ EY.move('u1', el); }
   function shell(on,html){
     slot.innerHTML='<div class="app"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Artifacts</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div></div>';
   }
-  var CATS=[
-    ['Service','A requestable offering.','Cluster compute'],
-    ['License','A right a team can hold.','Automation seat'],
-    ['Artifact','A reusable file or image.','Base container'],
-    ['Starter kit','A packaged first run.','Team workspace kit'],
-    ['API','A callable platform block.','Billing API'],
-    ['Package','A bundle of offerings.','Delivery pack'],
-    ['Dataset','A governed data source.','Usage ledger'],
-    ['Playbook','A guided runbook.','Incident path'],
-    ['Seat','A named access unit.','Editor seat']
-  ];
+  var CATS=[['Service','A requestable offering.','Cluster compute'],['License','A right a team can hold.','Automation seat'],['Artifact','A reusable file or image.','Base container'],['Starter kit','A packaged first run.','Team workspace kit'],['API','A callable platform block.','Billing API'],['Package','A bundle of offerings.','Delivery pack'],['Dataset','A governed data source.','Usage ledger'],['Playbook','A guided runbook.','Incident path'],['Seat','A named access unit.','Editor seat']];
   function catGrid(sel){
     return '<div class="cats">'+CATS.map(function(c,i){
       return '<div class="cat'+(i===sel?' sel':'')+'" id="c'+i+'"><div class="t">'+c[0]+'</div><div class="d">'+c[1]+'</div><div class="e">e.g. '+c[2]+'</div></div>';
@@ -79,9 +65,7 @@ h3{margin:0 0 6px;font-size:13px}
       document.getElementById('addr').textContent='workspace / type';
       shell('n','<h3>What are you publishing?</h3>'+catGrid(-1));
       after(200,function(){ move(document.getElementById('c0')); });
-      after(1100,function(){
-        document.getElementById('c0').classList.add('sel');
-      });
+      after(1100,function(){ document.getElementById('c0').classList.add('sel'); });
     });
   }
   function playArmar(){
