@@ -13,67 +13,66 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
 .sec p{margin:0 0 12px;color:var(--fm-muted);font-size:12px;line-height:1.45}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .meta{font-size:11px;color:var(--fm-muted)}
+.box{border:1px solid var(--fm-line);border-radius:var(--fm-r);padding:12px;background:var(--fm-card)}
 </style></head>
 <body>
 <div class="sheet">
+
 <div class="kit on" data-kit="ey">
-  <section class="sec">
-    <h2>Tipo</h2>
-    <p>EY Interstate. En light el amarillo no es texto. Total del order usa #6B5200.</p>
+  <section class="sec"><h2>Tipo</h2><p>EY Interstate. Amarillo no es texto en light.</p></section>
+  <section class="sec"><h2>Nav</h2><div class="fm-nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span></div></section>
+  <section class="sec"><h2>Hero</h2><div class="fm-hero"><b>Make your vision a reality with Fabric solutions.</b><span>Catalog of services and kits.</span></div></section>
+  <section class="sec"><h2>Category tiles</h2><div class="fm-tiles"><div class="fm-photo"><b>Services</b><span>Compute</span></div><div class="fm-photo"><b>Licenses</b><span>Rights</span></div><div class="fm-photo"><b>Kits</b><span>Start</span></div></div></section>
+  <section class="sec"><h2>Offering</h2><div class="fm-offer"><div class="kind">Services</div><b>Cluster workspace</b><div class="row" style="margin-top:8px"><button class="fm-btn secondary" type="button">View more</button><button class="fm-btn" type="button">Get started</button></div></div></section>
+  <section class="sec"><h2>Disclaimer + order</h2><div class="fm-disclaimer" style="margin-bottom:8px">Costs are estimates.</div><div class="fm-offer"><b>Your order</b><div class="row"><span>Total</span><span class="fm-total">$0 / month</span></div></div></section>
+</div>
+
+<div class="kit" data-kit="dc">
+  <section class="sec"><h2>Tipo</h2><p>Ant Design + verde #0B7A3C. Player: POS Search → flags → video.</p></section>
+  <section class="sec"><h2>POS Search</h2><div class="fm-field" style="margin-bottom:8px">Buscar producto</div>
+    <div class="row"><span class="fm-chip on">All</span><span class="fm-chip">Flagged</span><span class="fm-chip">Reviewed</span><span class="fm-chip">High score</span></div>
   </section>
-  <section class="sec" id="nav">
-    <h2>Nav</h2>
-    <div class="fm-nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span></div>
-    <div class="row" style="margin-top:10px"><div class="fm-field" style="flex:1">Search for products</div><span class="fm-chip">AI</span></div>
+  <section class="sec"><h2>Result row</h2>
+    <table class="fm-table"><thead><tr><th>Store</th><th>Score</th><th></th></tr></thead>
+    <tbody><tr><td>Store 1187 · ON</td><td><span class="fm-tag warn">High</span></td><td>Details</td></tr>
+    <tr><td>Store 204 · GT</td><td><span class="fm-tag ok">Clear</span></td><td>Details</td></tr></tbody></table>
   </section>
-  <section class="sec" id="hero">
-    <h2>Hero banner</h2>
-    <div class="fm-hero"><b>Make your vision a reality with Fabric solutions.</b><span>Catalog of services, kits and APIs. Copy inventado.</span></div>
+  <section class="sec"><h2>Request states</h2>
+    <div class="row"><span class="fm-tag neutral">Queued</span><span class="fm-tag warn">Downloading</span><span class="fm-tag ok">Ready</span></div>
   </section>
-  <section class="sec" id="photos">
-    <h2>Category tiles</h2>
-    <div class="fm-tiles">
-      <div class="fm-photo"><b>Services</b><span>Compute and tools</span></div>
-      <div class="fm-photo"><b>Licenses</b><span>Delivery rights</span></div>
-      <div class="fm-photo"><b>Starter kits</b><span>Packaged starts</span></div>
-    </div>
-  </section>
-  <section class="sec" id="filters">
-    <h2>Filters</h2>
-    <div class="row"><span class="fm-chip on">All services</span><span class="fm-chip">Offerings</span><span class="fm-chip">Add-ons</span><span class="fm-chip">Environments</span></div>
-  </section>
-  <section class="sec" id="offer">
-    <h2>Offering card</h2>
-    <div class="fm-offer">
-      <div class="kind">Services · Offerings</div>
-      <b>Cluster workspace</b>
-      <p class="meta">Shared tools for a team. Copy inventado.</p>
-      <div class="row" style="margin-top:10px">
-        <button class="fm-btn secondary" type="button">View more</button>
-        <button class="fm-btn" type="button">Get started</button>
-      </div>
-    </div>
-  </section>
-  <section class="sec" id="form">
-    <h2>Workbench form</h2>
-    <div class="fm-stepper" style="margin-bottom:12px"><b>1</b> Customization &nbsp;<b>2</b> Billing &nbsp;<b>3</b> Confirmation</div>
-    <div class="fm-field" style="margin-bottom:8px">Friendly instance name</div>
-    <div class="fm-field" style="margin-bottom:8px">Location · US West 2</div>
-  </section>
-  <section class="sec" id="disclaimer">
-    <h2>Disclaimer + order</h2>
-    <div class="fm-disclaimer" style="margin-bottom:10px">Displayed costs are estimates and exclude platform service charges.</div>
-    <div class="fm-offer"><b>Your order</b><p class="meta">Empty until configure completes.</p><div class="row" style="margin-top:8px;justify-content:space-between"><span>Total</span><span class="fm-total">$0 / month</span></div></div>
-  </section>
-  <section class="sec" id="done">
-    <h2>Completed step</h2>
-    <div class="fm-offer"><span class="fm-tag ok">Done</span> <b>Configure your instance</b><p class="meta">westus2 · workspace ready</p><button class="fm-btn secondary" type="button">Edit</button></div>
+  <section class="sec"><h2>Video review</h2>
+    <div class="box"><b>PLAYING · Store 1187</b><p class="meta">Sep 05 · 09:00 · Exceptions triggered</p><div class="row"><span class="fm-chip">Tax</span><span class="fm-chip">Items</span><span class="fm-chip on">Video</span></div><button class="fm-btn" type="button">Open footage</button></div>
   </section>
 </div>
-<div class="kit" data-kit="dc"><section class="sec"><h2>DollarCity</h2><button class="fm-btn" type="button">Comprar</button></section></div>
-<div class="kit" data-kit="chek"><section class="sec"><h2>Chek</h2><button class="fm-btn" type="button">Pagar</button></section></div>
-<div class="kit" data-kit="cus"><section class="sec"><h2>Aduanas</h2><div class="fm-stepper"><b>1</b> Selección</div></section></div>
-<div class="kit" data-kit="bc"><section class="sec"><h2>Blockchain</h2><button class="fm-btn" type="button">Explore</button></section></div>
+
+<div class="kit" data-kit="chek">
+  <section class="sec"><h2>Tipo</h2><p>Ripley #543379. Oro solo como marca, no como texto blanco-sobre-oro.</p></section>
+  <section class="sec"><h2>Hub</h2>
+    <div class="fm-kpis"><div class="fm-kpi"><i>Available</i><b>$1.000.000</b></div><div class="fm-kpi"><i>Used</i><b>$1.500</b></div></div>
+  </section>
+  <section class="sec"><h2>Pay</h2>
+    <div class="box"><b>Payment amount</b><p class="meta">Minimum · Sep 25</p><div class="row"><button class="fm-btn" type="button">Confirm & Pay</button><button class="fm-btn ghost" type="button">Cancel</button></div></div>
+  </section>
+  <section class="sec"><h2>Success</h2>
+    <div class="box"><span class="fm-tag ok">Sent</span> <b>$50.000</b><p class="meta">Back to my card · View movements</p></div>
+  </section>
+</div>
+
+<div class="kit" data-kit="cus">
+  <section class="sec"><h2>Tipo</h2><p>PrimeNG + Inter #1071E5. ARIVU y boarding pass.</p></section>
+  <section class="sec"><h2>Stepper</h2><div class="fm-stepper"><b>1</b> Selección &nbsp;<b>2</b> Información &nbsp;<b>3</b> Revisión &nbsp;<b>4</b> Listo</div></section>
+  <section class="sec"><h2>Fields</h2><div class="fm-field" style="margin-bottom:8px">Aduana · San Bartolo</div><div class="fm-field">Fecha</div></section>
+  <section class="sec"><h2>Estados</h2><div class="row"><span class="fm-tag ok">Aprobado</span><span class="fm-tag warn">Revisión</span><span class="fm-tag bad">Rechazado</span></div></section>
+  <section class="sec"><h2>Boarding pass</h2><div class="fm-banner"><b>Mazda CX-5</b><span>SV-240821-0068 · Habilitado</span></div></section>
+</div>
+
+<div class="kit" data-kit="bc">
+  <section class="sec"><h2>Tipo</h2><p>IBM Plex. Teal + tinta #04221F. Touch en iPhone, no cursor.</p></section>
+  <section class="sec"><h2>Onboard</h2><div class="box"><b>Welcome to your 3D map</b><p class="meta">SPACE MAP</p><button class="fm-btn" type="button">Continue</button></div></section>
+  <section class="sec"><h2>Place</h2><div class="box"><b>Use this place?</b><p class="meta">1847 Oak Ave</p><div class="row"><button class="fm-btn ghost" type="button">Cancel</button><button class="fm-btn" type="button">Confirm</button></div></div></section>
+  <section class="sec"><h2>Media</h2><div class="row"><span class="fm-chip on">From my device</span><span class="fm-chip">Add a link</span><span class="fm-chip">Live capture</span></div></section>
+</div>
+
 </div>
 <script src="fm-engine.js"></script>
 <script>
