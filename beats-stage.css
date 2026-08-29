@@ -1,7 +1,4 @@
-/* Display frame. Not page-full-bleed.
-   Windows: 16/10, max 840px — laptop sitting in the page.
-   Diagrams: fill the right column only.
-*/
+/* Windows: capped 16/10 laptop. Diagrams: free, no plate, no extra box. */
 .beat-stage{
   position:relative !important;
   width:100% !important;
@@ -13,10 +10,16 @@
 }
 .beat[data-kind="diagram"] .beat-stage{
   max-width:none !important;
+  overflow:visible !important;
+  background:transparent !important;
 }
 .beat-stage iframe{
   position:absolute !important;
   inset:0 !important;
   width:100% !important;
   height:100% !important;
+  background:transparent !important;
+}
+.beat[data-kind="diagram"] iframe{
+  background:transparent !important;
 }
