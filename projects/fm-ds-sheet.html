@@ -21,111 +21,28 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
 .icon-btn{width:28px;height:28px;border:0;border-radius:50%;display:grid;place-items:center;background:var(--fm-text);color:var(--fm-bg)}
 .icon-btn svg{width:11px;height:11px;fill:currentColor}
 .icon-btn.line{background:transparent;color:var(--fm-text);border:1px solid var(--fm-line)}
+.fm-hero,.fm-photo{color:#fff!important}
+.fm-hero b,.fm-hero span,.fm-photo b,.fm-photo span{color:#fff!important}
+.rail a{display:flex;justify-content:space-between;padding:6px 8px;border-radius:6px;font-size:12px;color:var(--fm-muted);text-decoration:none}
+.rail a.on{background:rgba(127,127,127,.12);color:var(--fm-text)}
+.rail .n{font-size:10px}
 </style></head>
 <body>
 <div class="sheet">
-
-<section class="sec" id="tokens">
-  <h2>Tokens</h2>
-  <p id="token-note">Skin tokens. Contrast: text ≥ 4.5:1, chrome ≥ 3:1.</p>
-  <div class="row" id="swatches"></div>
-</section>
-
-<section class="sec" id="type">
-  <h2>Type</h2>
-  <p class="box" style="font-size:28px;letter-spacing:-.03em" id="type-sample">Heading<span class="meta" style="display:block;font-size:13px;letter-spacing:0;margin-top:6px">Body and labels use the project face.</span></p>
-</section>
-
-<section class="sec" id="buttons">
-  <h2>Buttons</h2>
-  <div class="row">
-    <button class="fm-btn" type="button">Primary</button>
-    <button class="fm-btn secondary" type="button">Secondary</button>
-    <button class="fm-btn ghost" type="button">Ghost</button>
-  </div>
-</section>
-
-<section class="sec" id="bars">
-  <h2>Bars</h2>
-  <p>Browser chrome + product nav.</p>
-  <div class="fm-bbar" style="border:1px solid var(--fm-line);border-radius:8px 8px 0 0"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr">product.local</div></div>
-  <div class="fm-nav" style="border:1px solid var(--fm-line);border-top:0;border-radius:0 0 8px 8px"><span class="on">Overview</span><span>Catalog</span><span>Tools</span></div>
-</section>
-
-<section class="sec" id="banners">
-  <h2>Banners</h2>
-  <div class="fm-hero" style="margin-bottom:10px"><b>Hero banner</b><span>Photographic plate. Stays dark on purpose.</span></div>
-  <div class="fm-banner"><b>Inline banner</b><span class="meta">Quiet surface message.</span></div>
-</section>
-
-<section class="sec" id="chips">
-  <h2>Chips / tags / filters</h2>
-  <div class="row"><span class="fm-chip on">All</span><span class="fm-chip">Services</span><span class="fm-chip">Licenses</span></div>
-  <div class="row"><span class="fm-tag ok">Ready</span><span class="fm-tag warn">Pending</span><span class="fm-tag bad">Drop-off</span><span class="fm-tag neutral">Queued</span></div>
-</section>
-
-<section class="sec" id="cards">
-  <h2>Cards</h2>
-  <div class="fm-tiles" style="margin-bottom:10px">
-    <div class="fm-photo"><b>Category</b><span>Photo tile</span></div>
-    <div class="fm-tile"><b>Tile</b><span>Quiet</span></div>
-    <div class="fm-tile"><b>Tile</b><span>Quiet</span></div>
-  </div>
-  <div class="fm-offer"><div class="kind">Offering</div><b>Cluster workspace</b><p class="meta">Invented copy.</p>
-    <div class="row" style="margin-top:8px"><button class="fm-btn secondary" type="button">View more</button><button class="fm-btn" type="button">Get started</button></div>
-  </div>
-</section>
-
-<section class="sec" id="forms">
-  <h2>Forms</h2>
-  <div class="fm-stepper" style="margin-bottom:12px"><b>1</b> Customize &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Confirm</div>
-  <div class="fm-field" style="margin-bottom:8px">Friendly name</div>
-  <div class="fm-field">Location</div>
-</section>
-
-<section class="sec" id="tables">
-  <h2>Tables</h2>
-  <table class="fm-table"><thead><tr><th>Area</th><th>State</th></tr></thead>
-  <tbody><tr><td>Checkout step 2</td><td><span class="fm-tag bad">Drop-off</span></td></tr>
-  <tr><td>Onboard guide</td><td><span class="fm-tag warn">Unused</span></td></tr></tbody></table>
-</section>
-
-<section class="sec" id="kpis">
-  <h2>KPIs</h2>
-  <div class="fm-kpis">
-    <div class="fm-kpi"><i>Alarms</i><b>3</b></div>
-    <div class="fm-kpi"><i>Live</i><b>11</b></div>
-    <div class="fm-kpi"><i>Pending</i><b>2</b></div>
-    <div class="fm-kpi"><i>Ready</i><b>4</b></div>
-  </div>
-</section>
-
-<section class="sec" id="alerts">
-  <h2>Alerts</h2>
-  <div class="fm-notice" style="margin-bottom:8px">Required field. Workspace is missing.</div>
-  <div class="fm-disclaimer">Displayed costs are estimates.</div>
-</section>
-
-<section class="sec" id="icons">
-  <h2>Icons</h2>
-  <p>Shared SVG. No emoji in chrome.</p>
-  <div class="row">
-    <button class="icon-btn" type="button" aria-label="Play"><svg viewBox="0 0 12 12"><path d="M3 1.6v8.8L11 6z"/></svg></button>
-    <button class="icon-btn line" type="button" aria-label="Stop"><svg viewBox="0 0 12 12"><rect x="2.2" y="2.2" width="7.6" height="7.6" rx="1"/></svg></button>
-  </div>
-</section>
-
-<section class="sec" id="reference">
-  <h2>Reference beat</h2>
-  <p id="ref-note">Canonical motion + UI for this project.</p>
-  <div class="ref"><iframe id="ref" title="Reference beat"></iframe></div>
-</section>
-
-<section class="sec" id="extras">
-  <h2>Project extras</h2>
-  <div id="extras-body"></div>
-</section>
-
+<section class="sec" id="tokens"><h2>Tokens</h2><p id="token-note"></p><div class="row" id="swatches"></div></section>
+<section class="sec" id="type"><h2>Type</h2><p class="box" style="font-size:28px" id="type-sample">Heading<span class="meta" style="display:block;font-size:13px;margin-top:6px">Project face</span></p></section>
+<section class="sec" id="buttons"><h2>Buttons</h2><div class="row"><button class="fm-btn" type="button">Get started</button><button class="fm-btn secondary" type="button">View more</button><button class="fm-btn ghost" type="button">Talk to us</button></div></section>
+<section class="sec" id="bars"><h2>Bars</h2><div class="fm-bbar" style="border:1px solid var(--fm-line);border-radius:8px 8px 0 0"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr">platform / catalog</div></div><div class="fm-nav" style="border:1px solid var(--fm-line);border-top:0"><span class="on">Marketplace</span><span>Tools</span><span>Learn</span></div><div class="row" style="margin-top:10px"><div class="fm-field" style="flex:1">Search products</div><span class="fm-chip">AI</span></div></section>
+<section class="sec" id="banners"><h2>Banners</h2><p>Colored plates stay dark. Type on them is white. Never ink on a dark wash.</p><div class="fm-hero" style="margin-bottom:10px"><b>Make your vision a reality with Fabric solutions.</b><span>Catalog of services, kits and APIs.</span></div><div class="fm-banner"><b>Inline banner</b><span class="meta">Quiet card — ink on surface, not on the photo plate.</span></div></section>
+<section class="sec" id="chips"><h2>Chips</h2><div class="row"><span class="fm-chip on">All</span><span class="fm-chip">Services</span><span class="fm-chip">Licenses</span><span class="fm-chip">Kits</span></div><div class="row"><span class="fm-tag ok">AI pass</span><span class="fm-tag warn">Pending</span><span class="fm-tag bad">Drop-off</span></div></section>
+<section class="sec" id="cards"><h2>Cards</h2><div class="fm-tiles" style="margin-bottom:10px"><div class="fm-photo"><b>Services</b><span>Compute</span></div><div class="fm-photo"><b>Licenses</b><span>Rights</span></div><div class="fm-photo"><b>Kits</b><span>Start</span></div></div><div class="fm-offer"><div class="kind">Services · Offerings</div><b>Cluster workspace</b><div class="row" style="margin-top:8px"><button class="fm-btn secondary" type="button">View more</button><button class="fm-btn" type="button">Get started</button></div></div></section>
+<section class="sec" id="forms"><h2>Forms</h2><div class="fm-stepper" style="margin-bottom:12px"><b>1</b> Customization &nbsp;<b>2</b> Billing &nbsp;<b>3</b> Confirmation</div><div class="fm-field" style="margin-bottom:8px">Friendly instance name</div><div class="fm-field" style="margin-bottom:8px">Location · US West 2</div><p class="meta">Add admin users? Yes / No</p></section>
+<section class="sec" id="tables"><h2>Tables</h2><table class="fm-table"><thead><tr><th>Alarm</th><th></th></tr></thead><tbody><tr><td>Workbench required field</td><td><span class="fm-tag bad">hot</span></td></tr></tbody></table></section>
+<section class="sec" id="kpis"><h2>KPIs</h2><div class="fm-kpis"><div class="fm-kpi"><i>Request drop</i><b>22</b></div><div class="fm-kpi"><i>Onboard stall</i><b>3</b></div><div class="fm-kpi"><i>Help unused</i><b>4</b></div><div class="fm-kpi"><i>Live</i><b>11</b></div></div></section>
+<section class="sec" id="alerts"><h2>Alerts</h2><div class="fm-notice" style="margin-bottom:8px">Required field. Workspace is missing.</div><div class="fm-disclaimer">Displayed costs are estimates.</div></section>
+<section class="sec" id="icons"><h2>Icons</h2><div class="row"><button class="icon-btn" type="button" aria-label="Play"><svg viewBox="0 0 12 12"><path d="M3 1.6v8.8L11 6z"/></svg></button><button class="icon-btn line" type="button" aria-label="Stop"><svg viewBox="0 0 12 12"><rect x="2.2" y="2.2" width="7.6" height="7.6" rx="1"/></svg></button></div></section>
+<section class="sec" id="reference"><h2>Reference beat</h2><p id="ref-note"></p><div class="ref"><iframe id="ref" title="Reference beat"></iframe></div></section>
+<section class="sec" id="extras"><h2>Project extras</h2><div id="extras-body"></div></section>
 </div>
 <script src="fm-engine.js"></script>
 <script>
@@ -134,50 +51,26 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
   var skin=q.get('skin')||'ey';
   var mode=q.get('mode')||'light';
   FM.skin(skin); FM.mode(mode);
-
-  var REF={
-    ey:'ey-02-analyze.html',
-    dc:'dollarcity-player.html',
-    chek:'chek-player.html',
-    cus:'customs.html',
-    bc:'blockchain-player.html'
-  };
-  var NOTE={
-    ey:'EY Interstate. Analyze is the reference window.',
-    dc:'Ant Design + green. POS Search is the reference.',
-    chek:'Ripley purple. Card hub + pay is the reference.',
-    cus:'PrimeNG + Inter. ARIVU stepper is the reference.',
-    bc:'IBM Plex. Space map on phone is the reference.'
-  };
-  var TYPE={
-    ey:'EY Interstate',
-    dc:'Inter · Ant',
-    chek:'Inter · Ripley',
-    cus:'Inter · PrimeNG',
-    bc:'IBM Plex Sans'
-  };
+  var REF={ey:'ey-02-analyze.html',dc:'dollarcity-player.html',chek:'chek-player.html',cus:'customs.html',bc:'blockchain-player.html'};
+  var NOTE={ey:'EY Interstate. Colored banners stay dark + white type.',dc:'Ant + green.',chek:'Ripley.',cus:'PrimeNG.',bc:'IBM Plex.'};
+  var TYPE={ey:'EY Interstate',dc:'Inter · Ant',chek:'Inter · Ripley',cus:'Inter · PrimeNG',bc:'IBM Plex Sans'};
   var EXTRA={
-    ey:'<div class="fm-offer"><b>Your order</b><div class="row" style="margin-top:8px;justify-content:space-between"><span>Total</span><span class="fm-total">$0 / month</span></div></div>',
-    dc:'<div class="box"><b>Video review</b><p class="meta">Queued · Downloading · Ready</p><div class="row"><span class="fm-chip">Tax</span><span class="fm-chip">Items</span><span class="fm-chip on">Video</span></div></div>',
-    chek:'<div class="box"><b>Confirm &amp; Pay</b><p class="meta">Minimum · account · success</p></div>',
+    ey:'<div class="box rail" style="margin-bottom:10px"><a class="on" href="#">All items <span class="n">317</span></a><a href="#">Services <span class="n">157</span></a><a href="#">Licenses <span class="n">21</span></a></div><div class="box" style="margin-bottom:10px"><div class="row"><span class="fm-chip on">Description</span><span class="fm-chip">Resources</span><span class="fm-chip">Requirements</span></div><p class="meta">Modal. Close or Get started.</p></div><div class="fm-offer"><b>Your order</b><div class="row" style="margin-top:8px;justify-content:space-between"><span>Total</span><span class="fm-total">$0 / month</span></div></div>',
+    dc:'<div class="box"><b>Video review</b><p class="meta">Queued · Downloading · Ready</p></div>',
+    chek:'<div class="box"><b>Confirm & Pay</b></div>',
     cus:'<div class="fm-banner"><b>Boarding pass</b><span>SV-240821-0068</span></div>',
-    bc:'<div class="box"><b>Use this place?</b><div class="row" style="margin-top:8px"><button class="fm-btn ghost" type="button">Cancel</button><button class="fm-btn" type="button">Confirm</button></div></div>'
+    bc:'<div class="box"><b>Use this place?</b></div>'
   };
-
-  document.getElementById('token-note').textContent = NOTE[skin];
-  document.getElementById('type-sample').firstChild.nodeValue = TYPE[skin];
-  document.getElementById('ref-note').textContent = 'Reference: '+REF[skin];
-  document.getElementById('ref').src = REF[skin] + (mode?('?mode='+mode):'');
-  document.getElementById('extras-body').innerHTML = EXTRA[skin]||'';
-
-  var keys=['bg','card','text','accent','btn','ok','bad'];
+  document.getElementById('token-note').textContent=NOTE[skin];
+  document.getElementById('type-sample').firstChild.nodeValue=TYPE[skin];
+  document.getElementById('ref-note').textContent='Reference: '+REF[skin];
+  document.getElementById('ref').src=REF[skin]+(mode?('?mode='+mode):'');
+  document.getElementById('extras-body').innerHTML=EXTRA[skin]||'';
   var box=document.getElementById('swatches');
-  keys.forEach(function(k){
+  ['bg','card','text','accent','btn','ok','bad'].forEach(function(k){
     var val=getComputedStyle(document.documentElement).getPropertyValue('--fm-'+k).trim();
-    var el=document.createElement('div');
-    el.className='sw';
-    el.innerHTML='<i style="background:'+val+'"></i><b>'+k+'</b>';
-    box.appendChild(el);
+    var el=document.createElement('div'); el.className='sw';
+    el.innerHTML='<i style="background:'+val+'"></i><b>'+k+'</b>'; box.appendChild(el);
   });
 })();
 </script>
