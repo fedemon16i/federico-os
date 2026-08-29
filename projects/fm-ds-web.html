@@ -5,36 +5,64 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="fm-ds.css"/>
 <style>
-.body{padding:22px 28px;display:flex;flex-direction:column;gap:16px;height:100%;box-sizing:border-box}
-h1{margin:0;font-size:22px;letter-spacing:-.03em}
+.pad{padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;height:100%;box-sizing:border-box;overflow:hidden}
+.lab{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--fm-faint);margin-bottom:8px}
+.span{grid-column:1/-1}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.skins .fm-chip{cursor:default}
-.card{border:1px solid var(--fm-line);background:var(--fm-card);border-radius:10px;padding:14px;max-width:420px}
-.card p{margin:0 0 10px;font-size:12px;color:var(--fm-muted);line-height:1.45}
 </style></head>
 <body>
 <div class="stage">
   <div class="fm-unit window" id="unit">
     <div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr">ds / web / ey</div></div>
     <div class="fm-app">
-      <div class="fm-nav"><span class="on">Web DS</span><span>Buttons</span><span>Cursor</span></div>
-      <div class="body">
-        <h1>One window. Five skins.</h1>
-        <div class="row skins">
-          <span class="fm-chip on" id="s-ey">EY</span>
-          <span class="fm-chip" id="s-dc">DollarCity</span>
-          <span class="fm-chip" id="s-chek">Chek</span>
-          <span class="fm-chip" id="s-bc">Blockchain</span>
-          <span class="fm-chip" id="s-cus">Customs</span>
+      <div class="fm-nav"><span class="on">Components</span><span>Buttons</span><span>Data</span></div>
+      <div class="pad">
+        <div class="span">
+          <div class="lab">Skin</div>
+          <div class="row">
+            <span class="fm-chip on" id="s-ey">EY</span>
+            <span class="fm-chip" id="s-dc">DollarCity</span>
+            <span class="fm-chip" id="s-chek">Chek</span>
+            <span class="fm-chip" id="s-bc">Blockchain</span>
+            <span class="fm-chip" id="s-cus">Customs</span>
+          </div>
         </div>
-        <div class="row">
-          <button class="fm-btn" id="b1" type="button">Primary</button>
-          <button class="fm-btn ghost" id="b2" type="button">Ghost</button>
-          <button class="fm-btn accent" id="b3" type="button">Accent</button>
+        <div>
+          <div class="lab">Buttons</div>
+          <div class="row">
+            <button class="fm-btn" id="b1" type="button">Primary</button>
+            <button class="fm-btn ghost" type="button">Ghost</button>
+            <button class="fm-btn accent" type="button">Accent</button>
+          </div>
         </div>
-        <div class="card" id="card">
-          <p>Cursor and tooltip stay inside this window. Scale is uniform — the layout never reflows for mobile.</p>
-          <button class="fm-btn" id="hit" type="button">Mark this</button>
+        <div>
+          <div class="lab">Filters</div>
+          <div class="fm-filters" id="filters">
+            <span class="fm-chip on">All</span><span class="fm-chip">Pending</span><span class="fm-chip">Live</span><span class="fm-chip">Review</span>
+          </div>
+        </div>
+        <div class="span">
+          <div class="lab">Banner</div>
+          <div class="fm-banner" id="ban"><b>Shared delivery</b><span>Reusable path. Same chrome, new skin.</span></div>
+        </div>
+        <div class="span">
+          <div class="lab">KPIs</div>
+          <div class="fm-kpis">
+            <div class="fm-kpi"><i>Pending</i><b>3</b></div>
+            <div class="fm-kpi"><i>Live</i><b>11</b></div>
+            <div class="fm-kpi"><i>Drop-off</i><b>22</b></div>
+            <div class="fm-kpi"><i>Guides</i><b>4</b></div>
+          </div>
+        </div>
+        <div class="span">
+          <div class="lab">Table</div>
+          <table class="fm-table" id="tbl">
+            <thead><tr><th>Item</th><th>Area</th><th>State</th></tr></thead>
+            <tbody>
+              <tr><td>Workbench</td><td>Catalog</td><td>Pending</td></tr>
+              <tr><td>Cluster</td><td>Compute</td><td>Live</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -45,30 +73,33 @@ h1{margin:0;font-size:22px;letter-spacing:-.03em}
 (function(){
   var unit=document.getElementById('unit');
   var skins=['ey','dc','chek','bc','cus'];
-  var names={ey:'EY',dc:'DollarCity',chek:'Chek',bc:'Blockchain',cus:'Customs'};
   FM.cursors(unit,1);
   function paint(sk){
     FM.skin(sk);
     document.getElementById('addr').textContent='ds / web / '+sk;
-    skins.forEach(function(s){
-      var n=document.getElementById('s-'+s);
-      if(n) n.classList.toggle('on', s===sk);
-    });
+    skins.forEach(function(s){ var n=document.getElementById('s-'+s); if(n) n.classList.toggle('on', s===sk); });
   }
   paint('ey');
-  FM.after(400, function(){ FM.move('u1', document.getElementById('s-ey')); FM.tip(document.getElementById('s-ey'), 'Skin tokens'); });
+  FM.after(350, function(){ FM.move('u1', document.getElementById('s-ey')); FM.tip(document.getElementById('s-ey'), 'Tokens');
+  });
   skins.forEach(function(sk,i){
-    FM.after(1200+i*900, function(){
+    FM.after(1100+i*800, function(){
       paint(sk);
       FM.move('u1', document.getElementById('s-'+sk));
-      FM.tip(document.getElementById('s-'+sk), names[sk]);
     });
   });
-  FM.after(1200+skins.length*900, function(){
-    var hit=document.getElementById('hit');
-    FM.ring(hit, true);
-    FM.move('u1', hit);
-    FM.tip(hit, 'Signal stays in the unit');
+  FM.after(1100+skins.length*800, function(){
+    FM.move('u1', document.getElementById('b1'));
+    FM.tip(document.getElementById('b1'), 'Primary');
+    FM.ring(document.getElementById('b1'), true);
+  });
+  FM.after(1100+skins.length*800+900, function(){
+    FM.move('u1', document.getElementById('ban'));
+    FM.tip(document.getElementById('ban'), 'Banner');
+  });
+  FM.after(1100+skins.length*800+1700, function(){
+    FM.move('u1', document.getElementById('tbl'));
+    FM.tip(document.getElementById('tbl'), 'Table');
   });
 })();
 </script>
