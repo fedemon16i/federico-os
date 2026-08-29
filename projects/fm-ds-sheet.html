@@ -11,12 +11,15 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
 .sec h2{margin:0 0 6px;font-size:15px}
 .sec p{margin:0 0 12px;color:var(--fm-muted);font-size:12px;line-height:1.45}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.svc{flex:1;min-width:220px;border:1px solid var(--fm-line);border-radius:var(--fm-r);padding:12px;background:var(--fm-card)}
+.svc .meta{font-size:11px;color:var(--fm-muted)}
+.rail{border:1px solid var(--fm-line);border-radius:var(--fm-r);padding:12px;background:var(--fm-card)}
 </style></head>
 <body>
 <div class="sheet">
   <section class="sec" id="buttons">
     <h2>Buttons</h2>
-    <p>Primary · Secondary · Ghost. Altura 32. Ant / PrimeNG / Ripley.</p>
+    <p>Primary · Secondary · Ghost. Altura 32.</p>
     <div class="row">
       <button class="fm-btn" type="button">Primary</button>
       <button class="fm-btn secondary" type="button">Secondary</button>
@@ -25,61 +28,88 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
   </section>
   <section class="sec" id="fields">
     <h2>Fields</h2>
-    <p>InputText · IconField · Ant Input · Date / Select.</p>
-    <div class="fm-field" style="max-width:360px;margin-bottom:10px">⌕ Buscar documento</div>
+    <div class="fm-field" style="max-width:360px;margin-bottom:10px">⌕ Search products</div>
     <div class="row">
-      <div class="fm-field" style="width:200px">San Bartolo</div>
-      <div class="fm-field" style="width:160px">2024-08-20</div>
+      <div class="fm-field" style="width:200px">Workspace</div>
+      <div class="fm-chip">Search products AI</div>
     </div>
   </section>
   <section class="sec" id="tags">
     <h2>Tags + chips</h2>
-    <p>Estados de trámite y filtros.</p>
     <div class="row">
       <span class="fm-tag ok">Aprobado</span>
       <span class="fm-tag warn">Revisión</span>
       <span class="fm-tag bad">Rechazado</span>
-      <span class="fm-tag neutral">Borrador</span>
-    </div>
-    <div class="row">
       <span class="fm-chip on">All</span>
       <span class="fm-chip">Pending</span>
-      <span class="fm-chip">Live</span>
     </div>
   </section>
   <section class="sec" id="notice">
     <h2>Notice / Banner</h2>
     <div class="fm-notice" style="margin-bottom:10px">Los campos con * son obligatorios.</div>
-    <div class="fm-banner"><b>Shared delivery</b><span>Mismo chrome. Skin del producto.</span></div>
+    <div class="fm-banner"><b>Shared delivery</b><span>Catalog tile + hero band from Analyze.</span></div>
+  </section>
+  <section class="sec" id="analyze">
+    <h2>Analyze · catalog + service</h2>
+    <p>Tiles, card de servicio, Get started / See requirements.</p>
+    <div class="fm-tiles" style="margin-bottom:12px">
+      <div class="fm-tile"><b>Services</b><span>Compute</span></div>
+      <div class="fm-tile"><b>Licenses</b><span>Seats</span></div>
+      <div class="fm-tile"><b>Kits</b><span>Start</span></div>
+    </div>
+    <div class="svc">
+      <div class="meta">SERVICE</div>
+      <b>Platform / Workbench</b>
+      <p class="meta">Requirements before launch.</p>
+      <div class="row" style="margin-top:10px">
+        <button class="fm-btn" type="button">Get started</button>
+        <button class="fm-btn secondary" type="button">See details and requirements</button>
+      </div>
+    </div>
+  </section>
+  <section class="sec" id="form">
+    <h2>Analyze · form + order</h2>
+    <div class="fm-field" style="margin-bottom:8px">Instance name</div>
+    <div class="fm-field" style="margin-bottom:8px">Repo / license</div>
+    <div class="rail"><b>Your order</b><p class="meta" style="margin:6px 0 0">Workbench · 1 instance</p></div>
+  </section>
+  <section class="sec" id="hub">
+    <h2>Hub · KPIs + alarms</h2>
+    <div class="fm-kpis" style="margin-bottom:12px">
+      <div class="fm-kpi"><i>Drop-off</i><b>22</b></div>
+      <div class="fm-kpi"><i>Pending</i><b>3</b></div>
+      <div class="fm-kpi"><i>Live</i><b>11</b></div>
+    </div>
+    <div class="fm-filters" style="margin-bottom:10px">
+      <span class="fm-chip on">Alarms</span>
+      <span class="fm-chip">Catalog</span>
+      <span class="fm-chip">Workbench</span>
+    </div>
+    <table class="fm-table">
+      <thead><tr><th>Area</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr><td>Checkout step 2</td><td><span class="fm-tag bad">Drop-off</span></td></tr>
+        <tr><td>Onboarding</td><td><span class="fm-tag warn">Watch</span></td></tr>
+      </tbody>
+    </table>
   </section>
   <section class="sec" id="stepper">
     <h2>Stepper</h2>
-    <p>PrimeNG Stepper. ARIVU: 4 pasos.</p>
-    <div class="fm-stepper"><b>1</b> Selección &nbsp;<b>2</b> Información &nbsp;<b>3</b> Revisión &nbsp;<b>4</b> Listo</div>
+    <div class="fm-stepper"><b>1</b> Customize &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Workspace</div>
   </section>
   <section class="sec" id="table">
     <h2>Table</h2>
     <table class="fm-table">
-      <thead><tr><th>Documento</th><th>Estado</th><th></th></tr></thead>
+      <thead><tr><th>Item</th><th>Estado</th></tr></thead>
       <tbody>
-        <tr><td>ARIVU-715912</td><td><span class="fm-tag ok">Aprobado</span></td><td>Ver →</td></tr>
-        <tr><td>Workbench</td><td><span class="fm-tag warn">Revisión</span></td><td>Ver →</td></tr>
-        <tr><td>Cluster</td><td><span class="fm-tag bad">Observado</span></td><td>Ver →</td></tr>
+        <tr><td>Workbench</td><td><span class="fm-tag warn">Revisión</span></td></tr>
+        <tr><td>Cluster</td><td><span class="fm-tag ok">Live</span></td></tr>
       </tbody>
     </table>
   </section>
-  <section class="sec" id="kpis">
-    <h2>KPIs</h2>
-    <div class="fm-kpis">
-      <div class="fm-kpi"><i>Pending</i><b>3</b></div>
-      <div class="fm-kpi"><i>Live</i><b>11</b></div>
-      <div class="fm-kpi"><i>Drop-off</i><b>22</b></div>
-      <div class="fm-kpi"><i>Guides</i><b>4</b></div>
-    </div>
-  </section>
   <section class="sec" id="pass">
-    <h2>Boarding pass (mobile)</h2>
-    <div class="fm-banner"><b>Mazda CX-5</b><span>BP · SV-240821-0068 · Habilitado</span></div>
+    <h2>Boarding pass</h2>
+    <div class="fm-banner"><b>Mazda CX-5</b><span>BP · SV-240821-0068</span></div>
   </section>
 </div>
 <script src="fm-engine.js"></script>
