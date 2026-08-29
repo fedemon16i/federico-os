@@ -1,3 +1,4 @@
+(function(){if(document.querySelector('link[href="beats-stage.css"]'))return;var l=document.createElement('link');l.rel='stylesheet';l.href='beats-stage.css';document.head.appendChild(l);})();
 var EY_META=[
   {kind:'diagram',src:'projects/ey-01-measure.html',
    line:'Structure before diagnosis.<br><em>Map the product</em>.',
