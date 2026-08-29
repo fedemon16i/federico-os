@@ -1,10 +1,10 @@
-/* EY animation engine
-   Unit 1280×720. Uniform scale into .stage. No internal scroll.
+/* Unit = 13" notebook content: 960×600 (16/10).
+   Scale uniformly into .stage. Never stretch.
 */
 (function (w) {
   var T = [];
-  var UNIT_W = 1280;
-  var UNIT_H = 720;
+  var UNIT_W = 960;
+  var UNIT_H = 600;
   var ro = null;
 
   function after(ms, fn) {
@@ -20,20 +20,15 @@
     if (e.data && e.data.type === 'fm-stop') stop();
   });
 
-  function measure() {
-    var host = document.querySelector('.stage') || document.body;
-    var r = host.getBoundingClientRect();
-    var wdt = r.width || host.clientWidth || w.innerWidth || UNIT_W;
-    var hgt = r.height || host.clientHeight || w.innerHeight || UNIT_H;
-    return { w: wdt, h: hgt };
-  }
-
   function fit() {
     var unit = document.querySelector('.ey-unit');
+    var host = document.querySelector('.stage') || document.body;
     if (!unit) return 1;
-    var m = measure();
-    if (m.w < 8 || m.h < 8) return 1;
-    var s = Math.min(m.w / UNIT_W, m.h / UNIT_H);
+    var r = host.getBoundingClientRect();
+    var wdt = r.width || host.clientWidth || UNIT_W;
+    var hgt = r.height || host.clientHeight || UNIT_H;
+    if (wdt < 8 || hgt < 8) return 1;
+    var s = Math.min(wdt / UNIT_W, hgt / UNIT_H);
     if (!isFinite(s) || s <= 0) s = 1;
     unit.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
     return s;
@@ -64,8 +59,8 @@
       d.innerHTML =
         (n > 1 ? '<em>user ' + (i + 1) + '</em>' : '') +
         '<img src="ey-cursor.svg" width="24" height="24" alt="">';
-      d.style.left = 32 + i * 22 + 'px';
-      d.style.top = 48 + i * 20 + 'px';
+      d.style.left = 28 + i * 20 + 'px';
+      d.style.top = 40 + i * 18 + 'px';
       host.appendChild(d);
       nodes.push(d);
     }
@@ -80,28 +75,16 @@
     var b = unit.getBoundingClientRect();
     var s = b.width / UNIT_W;
     if (!s) s = 1;
-    var x = (r.left - b.left) / s + (ox || 10);
-    var y = (r.top - b.top) / s + (oy || 8);
-    n.style.left = Math.max(12, Math.min(UNIT_W - 48, x)) + 'px';
-    n.style.top = Math.max(12, Math.min(UNIT_H - 48, y)) + 'px';
+    var x = (r.left - b.left) / s + (ox || 8);
+    var y = (r.top - b.top) / s + (oy || 6);
+    n.style.left = Math.max(8, Math.min(UNIT_W - 40, x)) + 'px';
+    n.style.top = Math.max(8, Math.min(UNIT_H - 40, y)) + 'px';
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
   w.addEventListener('load', fit);
   w.addEventListener('resize', fit);
 
-  w.EY = {
-    UNIT_W: UNIT_W,
-    UNIT_H: UNIT_H,
-    after: after,
-    stop: stop,
-    fit: fit,
-    boot: boot,
-    cursors: cursors,
-    move: move
-  };
+  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move };
 })(window);
