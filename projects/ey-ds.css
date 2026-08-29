@@ -1,7 +1,5 @@
-/* EY DS + scale unit.
-   .ey-unit is 800×450. Engine scales it uniformly into .stage.
-   Diagrams and windows share the unit. Host background stays transparent.
-   Cursor is ey-cursor.svg at 24px inside .uc — never a CSS triangle.
+/* Unit 1280×720. Engine scales uniformly into .stage.
+   Host beats-stage.css is 16/9 full width. No inner scroll.
 */
 :root{
   --ey-bg:#12141c;
@@ -22,63 +20,52 @@
   --ey-font:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
   --ey-mono:'IBM Plex Mono',ui-monospace,monospace;
   --ey-radius:10px;
-  --ey-unit-w:800px;
-  --ey-unit-h:450px;
+  --ey-unit-w:1280px;
+  --ey-unit-h:720px;
 }
-html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font)}
-.stage{
-  position:relative;width:100%;height:100%;
-  overflow:hidden;
-}
+html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font);overflow:hidden}
+.stage{position:relative;width:100%;height:100%;overflow:hidden}
 .ey-unit{
   position:absolute;left:50%;top:50%;
   width:var(--ey-unit-w);height:var(--ey-unit-h);
   transform-origin:center center;
   transform:translate(-50%,-50%) scale(1);
+  overflow:hidden;
 }
 .ey-unit.window{
   display:flex;flex-direction:column;
   border-radius:var(--ey-radius);
-  overflow:hidden;
   border:1px solid var(--ey-line);
   background:var(--ey-nav);
-  box-shadow:0 14px 36px rgba(0,0,0,.45);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
 }
-.ey-unit.board{
-  background:transparent;
-  color:#f5f4ef;
-}
-.ey-browser,.br,.browser{
-  flex:1;min-height:0;display:flex;flex-direction:column;
-  background:var(--ey-nav);
-}
-.ey-bbar,.bb{
-  height:22px;display:flex;align-items:center;gap:8px;padding:0 10px;
+.ey-unit.board{background:transparent;color:#f5f4ef}
+.ey-bbar{
+  height:28px;display:flex;align-items:center;gap:8px;padding:0 12px;
   background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0;
-  font-size:8px;color:var(--ey-muted);
+  font-size:10px;color:var(--ey-muted);
 }
-.ey-dots{display:flex;gap:5px}
-.ey-dots i{width:7px;height:7px;border-radius:50%;display:block}
+.ey-dots{display:flex;gap:6px}
+.ey-dots i{width:8px;height:8px;border-radius:50%;display:block}
 .ey-dots .r{background:#ff5f57}.ey-dots .y{background:#febc2e}.ey-dots .g{background:#28c840}
-.ey-addr{flex:1;height:14px;border-radius:4px;background:rgba(255,255,255,.05);display:flex;align-items:center;padding:0 8px}
-.app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--ey-bg)}
+.ey-addr{flex:1;height:16px;border-radius:4px;background:rgba(255,255,255,.05);display:flex;align-items:center;padding:0 8px}
+.app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--ey-bg);overflow:hidden}
 .nav{
-  height:24px;display:flex;align-items:center;gap:10px;padding:0 12px;
+  height:32px;display:flex;align-items:center;gap:12px;padding:0 14px;
   background:var(--ey-nav);border-bottom:1px solid var(--ey-line);
-  font-size:9px;color:var(--ey-muted);flex-shrink:0;
+  font-size:11px;color:var(--ey-muted);flex-shrink:0;
 }
 .nav .on{color:#fff}
 .uc{
   position:absolute;z-index:30;pointer-events:none;
-  width:24px;height:24px;margin:0;padding:0;line-height:0;overflow:visible;
+  width:24px;height:24px;line-height:0;overflow:visible;
   transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1);
 }
-.uc img{display:block;width:24px;height:24px;max-width:24px;max-height:24px}
+.uc img{display:block;width:24px;height:24px}
 .uc em{
-  position:absolute;left:22px;top:-4px;
-  font-style:normal;font-size:11px;font-weight:700;letter-spacing:.01em;
+  position:absolute;left:22px;top:-6px;
+  font-style:normal;font-size:11px;font-weight:700;
   padding:2px 7px;border-radius:3px;color:#111;white-space:nowrap;
-  box-shadow:0 1px 0 rgba(0,0,0,.35);
 }
 .u1 em{background:#FFE600}.u2 em{background:#7dc4ff}.u3 em{background:#e8943a}
 .callout{
