@@ -1,6 +1,5 @@
-/* Notebook 960×600. Dark default. data-mode=light inverts surfaces.
-   Light: --ey-yellow becomes #6B5200 so labels/lines stay readable.
-   Bright #FFE600 only as fill on dark or as fill + #111 ink.
+/* Notebook 960×600. Dark default. data-mode=light inverts app surfaces only.
+   Photographic banners stay dark + white type in both modes.
 */
 :root{
   --ey-bg:#12141c;
@@ -42,8 +41,8 @@
   --ey-faint:#6a7382;
   --ey-line:#b7c0cb;
   --ey-on-nav:#1f2430;
-  --ey-hero:#d5dde6;
-  --ey-bar:#d5dde6;
+  --ey-hero:#07070a;
+  --ey-bar:#eceff3;
   --ey-yellow:#6B5200;
   --ey-gold:#6B5200;
   --ey-orange:#8a4b00;
@@ -94,13 +93,27 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 .callout{position:absolute;z-index:40;font-size:11px;font-weight:700;color:#fff;background:var(--ey-new);padding:4px 8px;border-radius:3px;white-space:nowrap;pointer-events:none}
 .ring{outline:2px solid var(--ey-new);outline-offset:2px}
 
-[data-mode="light"] .hero{
-  background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.22),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.14),transparent 42%),var(--ey-hero) !important;
+/* Colored / photo banners: always dark plate + light type */
+.hero,
+.fm-hero,
+.fm-photo{
+  color:#fff !important;
 }
-[data-mode="light"] .hero .k,
-[data-mode="light"] .hero p{color:var(--ey-muted)!important}
-[data-mode="light"] .hero h2{color:var(--ey-text)}
-[data-mode="light"] .btn-o{color:var(--ey-text)!important;border-color:var(--ey-line)!important}
+.hero h2,
+.hero .k,
+.hero p,
+.fm-hero b,
+.fm-hero span,
+.fm-photo b,
+.fm-photo span{
+  color:#fff !important;
+}
+.hero .btn-o{color:#fff !important;border-color:rgba(255,255,255,.4) !important}
+.hero .btn-w{background:#fff;color:#111}
+
+[data-mode="light"] .hero{
+  background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a !important;
+}
 [data-mode="light"] .side .sh,
 [data-mode="light"] .side a.on,
 [data-mode="light"] .kpi b,
@@ -126,8 +139,7 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 [data-mode="light"] .pendo,
 [data-mode="light"] .card,
 [data-mode="light"] .find,
-[data-mode="light"] .sc,
-[data-mode="light"] .cta{
+[data-mode="light"] .sc{
   background:var(--ey-plate)!important;
   color:var(--ey-text)!important;
   border:1px solid var(--ey-line)!important;
