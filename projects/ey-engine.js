@@ -15,12 +15,6 @@
     T.forEach(clearTimeout);
     T = [];
   }
-  w.addEventListener('message', function (e) {
-    if (!e.data) return;
-    if (e.data.type === 'fm-stop') stop();
-    if (e.data.type === 'fm-mode') applyMode(e.data.mode);
-  });
-
   function applyMode(m) {
     if (!m) {
       try { m = new URLSearchParams(location.search).get('mode'); } catch (err) { m = null; }
@@ -28,6 +22,12 @@
     if (!m) m = 'dark';
     document.documentElement.setAttribute('data-mode', m);
   }
+  applyMode();
+  w.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'fm-stop') stop();
+    if (e.data.type === 'fm-mode') applyMode(e.data.mode);
+  });
 
   function fit() {
     var unit = document.querySelector('.ey-unit');
