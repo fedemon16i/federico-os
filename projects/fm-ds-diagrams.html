@@ -9,7 +9,7 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
 .card{border:1px solid var(--fm-line);border-radius:12px;background:var(--fm-card);margin:0 0 18px;overflow:hidden}
 .card h2{margin:0;padding:12px 14px;font-size:14px;border-bottom:1px solid var(--fm-line)}
 .card p{margin:0;padding:8px 14px;font-size:12px;color:var(--fm-muted)}
-.card iframe{width:100%;height:280px;border:0;background:transparent;display:block}
+.card iframe{width:100%;height:320px;border:0;background:transparent;display:block}
 .miss{padding:14px;color:var(--fm-muted);font-size:13px}
 </style></head>
 <body>
@@ -19,26 +19,32 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
 (function(){
   var q=new URLSearchParams(location.search);
   var skin=q.get('skin')||'ey';
-  FM.skin(skin); FM.mode(q.get('mode')||'light');
+  var mode=q.get('mode')||'light';
+  FM.skin(skin); FM.mode(mode);
   var MAP={
     ey:[
-      {t:'Measure', s:'ey-01-measure.html', n:'Eventos y sitemap. No es ventana.'},
-      {t:'Research', s:'ey-research.html', n:'Cuadrantes CSAT / NPS / interviews.'},
-      {t:'Understand', s:'ey-understand.html', n:'Mapa de capabilities.'},
-      {t:'Funnel', s:'ey-funnel.html', n:'Grafico de funnel, no chrome de browser.'}
+      {t:'Measure', s:'ey-01-measure.html', n:'Eventos y sitemap.'},
+      {t:'Analyze', s:'ey-02-analyze.html', n:'Marketplace + workbench.'},
+      {t:'Research', s:'ey-research.html', n:'CSAT / NPS / interviews.'},
+      {t:'Understand', s:'ey-understand.html', n:'Capabilities.'},
+      {t:'Funnel', s:'ey-funnel.html', n:'Grafico, no browser.'},
+      {t:'Hub', s:'ey-hub.html', n:'Dashboard + alarms.'},
+      {t:'User / forms', s:'ey-req.html', n:'Requirements overlay + form.'},
+      {t:'Publisher', s:'ey-pub.html', n:'Workspace publish.'}
     ],
-    dc:[{t:'Why / Search / States', s:'dollarcity-player.html', n:'Beats DollarCity en el player.'}],
-    chek:[{t:'Hub flows', s:'chek-player.html', n:'Chek es telefono. El player es la fuente.'}],
-    cus:[{t:'Viaje ARIVU', s:'customs.html', n:'Story + boarding pass.'}],
-    bc:[{t:'Mapa 3D', s:'blockchain-player.html', n:'La ventana es el telefono sobre el mapa.'}]
+    dc:[{t:'DollarCity player', s:'dollarcity-player.html', n:'Beats en el player.'}],
+    chek:[{t:'Chek player', s:'chek-player.html', n:'Telefono.'}],
+    cus:[{t:'Customs', s:'customs.html', n:'ARIVU + boarding pass.'}],
+    bc:[{t:'Blockchain', s:'blockchain-player.html', n:'Telefono sobre mapa.'}]
   };
   var list=MAP[skin]||[];
   var root=document.getElementById('root');
-  if(!list.length){ root.innerHTML='<p class="miss">Sin diagramas sueltos.</p>'; return; }
+  if(!list.length){ root.innerHTML='<p class="miss">Sin piezas.</p>'; return; }
   list.forEach(function(item){
+    var src=item.s+(item.s.indexOf('?')>=0?'&':'?')+'mode='+mode;
     var c=document.createElement('article');
     c.className='card';
-    c.innerHTML='<h2>'+item.t+'</h2><p>'+item.n+'</p><iframe src="'+item.s+'" title="'+item.t+'"></iframe>';
+    c.innerHTML='<h2>'+item.t+'</h2><p>'+item.n+'</p><iframe src="'+src+'" title="'+item.t+'"></iframe>';
     root.appendChild(c);
   });
 })();
