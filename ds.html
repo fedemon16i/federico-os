@@ -19,9 +19,9 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:8px 16px;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer}
 .chip.on,.dev.on{color:var(--text);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
-.stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden;margin:8px 0 18px}
+.stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden;margin:8px 0 18px;border:1px solid var(--border);border-radius:16px}
 .stage iframe,.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.sheet{width:100%;max-width:920px;height:920px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
+.sheet{width:100%;max-width:920px;height:960px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
 .jump{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
 .jump button{border:0;background:transparent;color:#c9a227;font:12px 'DM Sans',sans-serif;cursor:pointer}
 </style>
@@ -30,11 +30,11 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 <div class="top">
   <a class="logo" href="index.html">FM.OS</a>
   <a href="beats.html">Beats</a>
-  <a href="docs/DS-HANDOFF-CLAUDE.md">Handoff</a>
+  <a href="docs/DS-LIBRARY.md">Library spec</a>
 </div>
 <div class="wrap">
   <h1>Component library</h1>
-  <p class="lede">One kit per project. Preview on Web, Tablet, or Mobile. Light and Dark. Library and Diagrams stay separate — product windows are not diagrams.</p>
+  <p class="lede">Tokens and categories per project. Preview is the reference beat. Library lists every control class. Diagrams stay on their own tab.</p>
 
   <p class="lbl">Project</p>
   <div class="row" id="skins">
@@ -45,7 +45,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
     <button class="chip" data-skin="bc" type="button">Blockchain</button>
   </div>
 
-  <p class="lbl">Preview</p>
+  <p class="lbl">Preview · reference beat</p>
   <div class="row">
     <button class="dev on" data-mode="light" type="button">Light</button>
     <button class="dev" data-mode="dark" type="button">Dark</button>
@@ -55,7 +55,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
     <button class="dev" data-dev="tablet" type="button">Tablet</button>
     <button class="dev" data-dev="phone" type="button">Mobile</button>
   </div>
-  <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
+  <div class="stage"><iframe id="preview" title="Reference beat"></iframe></div>
 
   <p class="lbl">Catalog</p>
   <div class="row">
@@ -69,26 +69,26 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 var skin='ey', mode='light', dev='desktop', cat='lib';
 var preview=document.getElementById('preview');
 var sheet=document.getElementById('sheet');
-var JUMP={
-  ey:['hero','photos','filters','offer','form','disclaimer','done'],
-  dc:['search','results','states','video'],
-  chek:['hub','pay','success'],
-  cus:['stepper','fields','status','pass'],
-  bc:['onboard','place','media']
+var REF={
+  ey:'projects/ey-02-analyze.html',
+  dc:'projects/dollarcity-player.html',
+  chek:'projects/chek-player.html',
+  cus:'projects/customs.html',
+  bc:'projects/blockchain-player.html'
 };
+var JUMP=['tokens','type','buttons','bars','banners','chips','cards','forms','tables','kpis','alerts','icons','reference','extras'];
 function sheetUrl(hash){
   if(cat==='diag') return 'projects/fm-ds-diagrams.html?skin='+skin+'&mode='+mode;
   return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
 }
 function previewUrl(){
-  var q='skin='+skin+'&mode='+mode+'&device='+dev+'&comp=overview';
-  return (dev==='phone' ? 'projects/fm-ds-mobile.html?' : 'projects/fm-ds-web.html?')+q+'&r='+Date.now();
+  return REF[skin]+'?mode='+mode+'&device='+dev+'&r='+Date.now();
 }
 function jumps(){
   var box=document.getElementById('jumps');
   box.innerHTML='';
   box.style.display = cat==='lib' ? 'flex' : 'none';
-  (JUMP[skin]||[]).forEach(function(name){
+  JUMP.forEach(function(name){
     var b=document.createElement('button');
     b.type='button';
     b.textContent=name;
