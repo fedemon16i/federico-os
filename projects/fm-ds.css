@@ -1,6 +1,4 @@
-/* FM DS. Light is default (product sites). data-mode=dark overrides.
-   Fonts: EY Interstate (ey.com) · Inter (Customs) · system for Ripley.
-*/
+/* FM DS. Light default. data-mode=dark overrides. */
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Regular.woff') format('woff');font-weight:400;font-display:swap}
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Bold.woff') format('woff');font-weight:700;font-display:swap}
 
@@ -10,7 +8,6 @@
   --fm-font:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
 }
 
-/* EY — yellow / near-black. Light = ey.com page. Dark = product window. */
 [data-skin="ey"]{
   --fm-font:'EYInterstate','Source Sans 3',Arial Narrow,sans-serif;
   --fm-bg:#f6f6f4; --fm-nav:#2e2e38; --fm-card:#fff; --fm-side:#eeeee8;
@@ -27,24 +24,23 @@
   --fm-btn:#fff; --fm-btn-ink:#111;
 }
 
-/* DollarCity / Dollarama family — red + yellow, light storefront */
+/* DollarCity — #00a650 + white type */
 [data-skin="dc"]{
   --fm-font:Inter,Arial,sans-serif;
-  --fm-bg:#f7f7f7; --fm-nav:#b1121a; --fm-card:#fff; --fm-side:#fff4f4;
-  --fm-text:#1a1a1a; --fm-muted:#5c5c5c; --fm-faint:#8a8a8a;
-  --fm-line:#e6d0d0; --fm-accent:#e31c23; --fm-mark:#ffd200;
-  --fm-ok:#2e7d32; --fm-bad:#e31c23; --fm-new:#e31c23;
-  --fm-btn:#e31c23; --fm-btn-ink:#fff;
+  --fm-bg:#f3faf6; --fm-nav:#00a650; --fm-card:#fff; --fm-side:#e7f6ee;
+  --fm-text:#143322; --fm-muted:#4a6b58; --fm-faint:#7a9a86;
+  --fm-line:#cfe6d8; --fm-accent:#00a650; --fm-mark:#d8f3e4;
+  --fm-ok:#00a650; --fm-bad:#c0392b; --fm-new:#00a650;
+  --fm-btn:#00a650; --fm-btn-ink:#fff;
 }
 [data-skin="dc"][data-mode="dark"]{
-  --fm-bg:#1a0c0c; --fm-nav:#3a1012; --fm-card:#2a1414; --fm-side:#140808;
-  --fm-text:#f6f0f0; --fm-muted:#c9a0a0; --fm-faint:#8a6565;
-  --fm-line:rgba(255,255,255,.12); --fm-accent:#e31c23; --fm-mark:#ffd200;
-  --fm-ok:#7dffb0; --fm-bad:#ff8a8a; --fm-new:#e31c23;
-  --fm-btn:#e31c23; --fm-btn-ink:#fff;
+  --fm-bg:#07140c; --fm-nav:#0b2416; --fm-card:#0f2a1a; --fm-side:#0a1c12;
+  --fm-text:#e8f6ee; --fm-muted:#8fbf9e; --fm-faint:#5e8a6e;
+  --fm-line:rgba(255,255,255,.10); --fm-accent:#3ddc84; --fm-mark:#123d24;
+  --fm-ok:#3ddc84; --fm-bad:#ff8a8a; --fm-new:#3ddc84;
+  --fm-btn:#00a650; --fm-btn-ink:#fff;
 }
 
-/* Chek / Banco Ripley CL — #543379 + gold */
 [data-skin="chek"]{
   --fm-font:Inter,system-ui,sans-serif;
   --fm-bg:#f7f5fa; --fm-nav:#543379; --fm-card:#fff; --fm-side:#f1ecf6;
@@ -61,7 +57,6 @@
   --fm-btn:#543379; --fm-btn-ink:#fff;
 }
 
-/* Blockchain — unchanged teal, dark first */
 [data-skin="bc"]{
   --fm-font:'IBM Plex Sans',sans-serif;
   --fm-bg:#0b1416; --fm-nav:#071011; --fm-card:#122022; --fm-side:#0a1517;
@@ -77,7 +72,6 @@
   --fm-btn:#128a82; --fm-btn-ink:#fff;
 }
 
-/* Customs SV — kit + sitio.aduana.gob.sv */
 [data-skin="cus"]{
   --fm-font:Inter,Arial,sans-serif;
   --fm-bg:#f6f8fb; --fm-nav:#fff; --fm-card:#fff; --fm-side:#fff;
