@@ -118,7 +118,22 @@ locked to the chrome is the discipline that keeps this one from reading that way
 - [x] E-Ink shell, narrative spine, refresh flash
 - [x] Session monitor with real PostHog detection
 - [x] Responsive verified at 1440 / 768 / 375, no horizontal overflow, no JS errors
+- [x] `beats.html` — all 47 beats across 6 projects, iframe-based showcase
+- [x] `beats.html` — Figma-style comment system (reviewer mode, pins, threads, localStorage)
+- [ ] `beats.html` — timing fix: postMessage handshake (Option A) or native beats (Option B)
+- [ ] DS Projects page — design system showcase (separate page, in scope)
 - [ ] Cases and Capabilities routes built out (currently stubs)
 - [ ] Résumé and Contact ported from the live portfolio
-- [ ] Design system route
 - [ ] GitHub Pages
+
+---
+
+## Context folder
+
+`context/` contains working docs for AI sessions — read these before touching anything:
+
+| File | What it covers |
+|------|---------------|
+| `context/BEATS-LOG.md` | Full beat inventory (47 beats), known bugs, fix options |
+| `context/ANIMATE-UI.md` | Motion resources, vocabulary, what to use vs skip |
+| `REFERENCES.md` | Visual references and design guardrails for FM.OS |
