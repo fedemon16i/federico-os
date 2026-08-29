@@ -1,4 +1,4 @@
-/* EY engine. Unit 960×600. Cursor is inline SVG — never a CSS triangle, never a raw <img> that can blow up. */
+/* EY engine. Unit 960×600. Cursor is inline SVG. */
 (function (w) {
   var T = [];
   var UNIT_W = 960;
@@ -16,8 +16,18 @@
     T = [];
   }
   w.addEventListener('message', function (e) {
-    if (e.data && e.data.type === 'fm-stop') stop();
+    if (!e.data) return;
+    if (e.data.type === 'fm-stop') stop();
+    if (e.data.type === 'fm-mode') applyMode(e.data.mode);
   });
+
+  function applyMode(m) {
+    if (!m) {
+      try { m = new URLSearchParams(location.search).get('mode'); } catch (err) { m = null; }
+    }
+    if (!m) m = 'dark';
+    document.documentElement.setAttribute('data-mode', m);
+  }
 
   function fit() {
     var unit = document.querySelector('.ey-unit');
@@ -34,6 +44,7 @@
   }
 
   function boot() {
+    applyMode();
     fit();
     w.requestAnimationFrame(function () {
       fit();
@@ -85,5 +96,5 @@
   w.addEventListener('load', fit);
   w.addEventListener('resize', fit);
 
-  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move };
+  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, mode: applyMode };
 })(window);
