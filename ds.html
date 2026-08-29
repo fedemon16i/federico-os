@@ -14,16 +14,13 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'D
 .top .logo{margin-right:auto;color:var(--text);opacity:.65}
 .wrap{max-width:1080px;margin:0 auto;padding:28px 28px 80px}
 h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
-.lede{color:var(--muted);max-width:62ch;margin:8px 0 22px;line-height:1.55}
+.lede{color:var(--muted);max-width:64ch;margin:8px 0 22px;line-height:1.55}
 .lbl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
-h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:8px 16px;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer}
 .chip.on,.dev.on{color:var(--text);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
-.proj .chip{padding:10px 18px;font-size:13px}
-.stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden;margin-bottom:8px}
-.stage iframe,.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
-.sheet{width:100%;max-width:920px;height:920px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
+.sheet{width:100%;max-width:920px;height:960px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
+.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .jump{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
 .jump button{border:0;background:transparent;color:#c9a227;font:12px 'DM Sans',sans-serif;cursor:pointer}
 </style>
@@ -32,14 +29,14 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
 <div class="top">
   <a class="logo" href="index.html">FM.OS</a>
   <a href="beats.html">Beats</a>
-  <a href="docs/DS-PROJECTS.md">Reglas</a>
+  <a href="docs/DS-HANDOFF-CLAUDE.md">Handoff</a>
 </div>
 <div class="wrap">
-  <h1>DS projects</h1>
-  <p class="lede">Un DS por proyecto. Preview arriba. Abajo: Componentes o Diagramas de ese case.</p>
+  <h1>Component library</h1>
+  <p class="lede">Un kit por proyecto. Light / Dark. Library y Diagramas separados. Las ventanas UI no van en Diagramas.</p>
 
   <p class="lbl">Proyecto</p>
-  <div class="row proj" id="skins">
+  <div class="row" id="skins">
     <button class="chip on" data-skin="ey" type="button">EY Fabric</button>
     <button class="chip" data-skin="dc" type="button">DollarCity</button>
     <button class="chip" data-skin="chek" type="button">Chek / Ripley</button>
@@ -47,72 +44,58 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
     <button class="chip" data-skin="bc" type="button">Blockchain</button>
   </div>
 
-  <p class="lbl">Preview</p>
+  <p class="lbl">Modo</p>
   <div class="row">
-    <button class="dev on" data-view="web" type="button">Web</button>
-    <button class="dev" data-view="mobile" type="button">Mobile</button>
     <button class="dev on" data-mode="light" type="button">Light</button>
     <button class="dev" data-mode="dark" type="button">Dark</button>
   </div>
-  <div class="row" id="devs">
-    <button class="dev on" data-dev="desktop" type="button">Desktop</button>
-    <button class="dev" data-dev="tablet" type="button">Tablet</button>
-    <button class="dev" data-dev="phone" type="button">Phone</button>
-  </div>
-  <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
-  <p class="lbl">Catálogo</p>
+  <p class="lbl">Vista</p>
   <div class="row">
-    <button class="dev on" data-cat="comp" type="button">Componentes</button>
+    <button class="dev on" data-cat="lib" type="button">Library</button>
     <button class="dev" data-cat="diag" type="button">Diagramas</button>
   </div>
-  <div class="jump" id="jumps">
-    <button type="button" data-jump="buttons">Buttons</button>
-    <button type="button" data-jump="fields">Fields</button>
-    <button type="button" data-jump="tags">Tags</button>
-    <button type="button" data-jump="notice">Notice</button>
-    <button type="button" data-jump="stepper">Stepper</button>
-    <button type="button" data-jump="table">Table</button>
-    <button type="button" data-jump="kpis">KPIs</button>
-    <button type="button" data-jump="pass">Pass</button>
-  </div>
-  <div class="sheet"><iframe id="sheet" title="Catalog"></iframe></div>
+  <div class="jump" id="jumps"></div>
+  <div class="sheet"><iframe id="sheet" title="Library"></iframe></div>
 </div>
 <script>
-var skin='ey', view='web', mode='light', dev='desktop', cat='comp';
-var preview=document.getElementById('preview');
+var skin='ey', mode='light', cat='lib';
 var sheet=document.getElementById('sheet');
-function sheetUrl(hash){
+var JUMP={
+  ey:['hero','photos','filters','offer','form','disclaimer','done'],
+  dc:['POS Search','Result row','Request states','Video review'],
+  chek:['Hub','Pay','Success'],
+  cus:['Stepper','Fields','Estados','Boarding pass'],
+  bc:['Onboard','Place','Media']
+};
+function url(hash){
   if(cat==='diag') return 'projects/fm-ds-diagrams.html?skin='+skin+'&mode='+mode;
   return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
 }
-function load(){
-  var q='skin='+skin+'&mode='+mode+'&device='+dev+'&comp=overview';
-  preview.src=(view==='mobile'?'projects/fm-ds-mobile.html?':'projects/fm-ds-web.html?')+q+'&r='+Date.now();
-  sheet.src=sheetUrl();
-  document.getElementById('devs').style.display = view==='web' ? 'flex' : 'none';
-  document.getElementById('jumps').style.display = cat==='comp' ? 'flex' : 'none';
+function jumps(){
+  var box=document.getElementById('jumps');
+  box.innerHTML='';
+  box.style.display = cat==='lib' ? 'flex' : 'none';
+  (JUMP[skin]||[]).forEach(function(name){
+    var b=document.createElement('button');
+    b.type='button';
+    b.textContent=name;
+    b.onclick=function(){ sheet.src=url(name.toLowerCase().split(' ')[0]); };
+    box.appendChild(b);
+  });
 }
-function mark(group, el){
-  document.querySelectorAll(group).forEach(function(x){ x.classList.toggle('on', x===el); });
+function load(){ sheet.src=url(); jumps(); }
+function mark(sel, el){
+  document.querySelectorAll(sel).forEach(function(x){ x.classList.toggle('on', x===el); });
 }
 document.querySelectorAll('#skins .chip').forEach(function(b){
   b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); load(); };
 });
-document.querySelectorAll('[data-view]').forEach(function(b){
-  b.onclick=function(){ view=b.dataset.view; mark('[data-view]', b); load(); };
-});
 document.querySelectorAll('[data-mode]').forEach(function(b){
   b.onclick=function(){ mode=b.dataset.mode; mark('[data-mode]', b); load(); };
 });
-document.querySelectorAll('#devs .dev').forEach(function(b){
-  b.onclick=function(){ dev=b.dataset.dev; mark('#devs .dev', b); load(); };
-});
 document.querySelectorAll('[data-cat]').forEach(function(b){
   b.onclick=function(){ cat=b.dataset.cat; mark('[data-cat]', b); load(); };
-});
-document.querySelectorAll('[data-jump]').forEach(function(b){
-  b.onclick=function(){ sheet.src=sheetUrl(b.dataset.jump); };
 });
 load();
 </script>
