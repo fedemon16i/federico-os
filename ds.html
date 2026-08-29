@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>DS — Federico Monroy</title>
+<title>DS projects — Federico Monroy</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -14,7 +14,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'D
 .top .logo{margin-right:auto;color:var(--text);opacity:.65}
 .wrap{max-width:1080px;margin:0 auto;padding:28px 28px 80px}
 h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
-.lede{color:var(--muted);max-width:58ch;margin:8px 0 22px;line-height:1.55}
+.lede{color:var(--muted);max-width:62ch;margin:8px 0 22px;line-height:1.55}
 .tabs,.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .tab,.chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:7px 14px;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer}
 .tab.on,.chip.on,.dev.on{color:var(--text);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
@@ -22,26 +22,33 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 .refs a{color:#c9a227}
 .stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden}
 .stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.docs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.doc{border:1px solid var(--border);border-radius:14px;padding:16px}
+.doc h2{font-size:14px;margin-bottom:6px}
+.doc p,.doc li{color:var(--muted);font-size:13px;line-height:1.5}
+.doc code{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text)}
+.doc ul{margin:8px 0 0 16px}
+@media(max-width:720px){.docs{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="top">
   <a class="logo" href="index.html">FM.OS</a>
   <a href="beats.html">Beats</a>
-  <a href="gallery.html">Gallery</a>
+  <a href="docs/DS-PROJECTS.md">Reglas</a>
 </div>
 <div class="wrap">
-  <h1>Design system</h1>
-  <p class="lede">Tokens de las páginas reales. Light y dark. Web, tablet y iPhone 17. Customs usa el kit ARIVU (·1071E5 + Inter).</p>
+  <h1>DS projects</h1>
+  <p class="lede">Cada case trae su kit. DollarCity = Ant Design con primary verde. Aduanas = PrimeNG + foundation. EY = Interstate + amarillo de ey.com. Chek = Ripley. Tokens en <a href="docs/DS-PROJECTS.md" style="color:#c9a227">docs/DS-PROJECTS.md</a>.</p>
   <div class="tabs">
     <button class="tab on" data-view="web" type="button">Web</button>
     <button class="tab" data-view="mobile" type="button">Mobile</button>
   </div>
   <div class="row" id="skins">
     <button class="chip on" data-skin="ey" type="button">EY</button>
-    <button class="chip" data-skin="dc" type="button">DollarCity</button>
+    <button class="chip" data-skin="dc" type="button">DollarCity / Ant</button>
     <button class="chip" data-skin="chek" type="button">Ripley / Chek</button>
-    <button class="chip" data-skin="cus" type="button">Aduanas SV</button>
+    <button class="chip" data-skin="cus" type="button">Aduanas / PrimeNG</button>
     <button class="chip" data-skin="bc" type="button">Blockchain</button>
   </div>
   <div class="row" id="modes">
@@ -55,11 +62,31 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
   </div>
   <div class="refs">
     <a href="https://www.ey.com/en_gl" target="_blank" rel="noreferrer">ey.com</a>
+    <a href="https://ant.design/" target="_blank" rel="noreferrer">ant.design</a>
     <a href="https://dollarcity.com/?pais=gt" target="_blank" rel="noreferrer">dollarcity.com</a>
     <a href="https://www.bancoripley.cl/" target="_blank" rel="noreferrer">bancoripley.cl</a>
+    <a href="https://primeng.dev/components" target="_blank" rel="noreferrer">primeng.dev</a>
     <a href="https://sitio.aduana.gob.sv/" target="_blank" rel="noreferrer">aduana.gob.sv</a>
   </div>
   <div class="stage"><iframe id="frame" title="DS preview"></iframe></div>
+  <div class="docs">
+    <article class="doc">
+      <h2>EY</h2>
+      <p>Tipo <code>EY Interstate</code>. Amarillo <code>#FFE600</code>. Ink <code>#2E2E38</code>. Fotos de producto para densidad, no para copy.</p>
+    </article>
+    <article class="doc">
+      <h2>DollarCity · Ant Design</h2>
+      <p>Seed Ant: radio 6, control 32, font system. <code>colorPrimary #00A650</code> + texto blanco. Dark: <code>#07140C</code> / <code>#3DDC84</code>.</p>
+    </article>
+    <article class="doc">
+      <h2>Chek · Ripley</h2>
+      <p>Primary <code>#543379</code>, oro <code>#FFB81C</code>, ink <code>#202124</code>. Misma UI del case. Inter como proxy del sitio.</p>
+    </article>
+    <article class="doc">
+      <h2>Aduanas · PrimeNG</h2>
+      <p>Primary <code>#1071E5</code>, Inter, canvas <code>#F6F8FB</code>. Button / InputText / Tag / Table / Stepper / Dialog. Dark del kit <code>#212630</code>.</p>
+    </article>
+  </div>
 </div>
 <script>
 var view='web', skin='ey', dev='desktop', mode='light';
