@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DS projects — Federico Monroy</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#08080b;--border:rgba(255,255,255,.08);--text:#f0eee9;--muted:#8a8580;--bar:rgba(8,8,11,.92)}
@@ -15,14 +15,17 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'D
 .wrap{max-width:1080px;margin:0 auto;padding:28px 28px 80px}
 h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 .lede{color:var(--muted);max-width:62ch;margin:8px 0 22px;line-height:1.55}
-.tabs,.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.tab,.chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:7px 14px;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer}
-.tab.on,.chip.on,.dev.on{color:var(--text);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
-.lbl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
-.refs{display:flex;flex-wrap:wrap;gap:10px 16px;margin:8px 0 18px;font-size:12px}
-.refs a{color:#c9a227}
-.stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden}
-.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.lbl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:8px 16px;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer}
+.chip.on,.dev.on{color:var(--text);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
+.proj .chip{padding:10px 18px;font-size:13px}
+.stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden;margin-bottom:8px}
+.stage iframe,.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.sheet{width:100%;max-width:920px;height:920px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px;font-size:12px}
+.jump a{color:#c9a227;text-decoration:none}
 </style>
 </head>
 <body>
@@ -33,25 +36,21 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 </div>
 <div class="wrap">
   <h1>DS projects</h1>
-  <p class="lede">1. Kit (Web o Mobile). 2. Marca. 3. Light/Dark. 4. Tipo de componente. El preview cambia; no es una sola página estática.</p>
+  <p class="lede">Primero el proyecto. Después el preview de ventana. Abajo, todas las secciones del kit con el mismo skin.</p>
 
-  <p class="lbl">1 · Kit</p>
-  <div class="tabs">
-    <button class="tab on" data-view="web" type="button">Web</button>
-    <button class="tab" data-view="mobile" type="button">Mobile</button>
-  </div>
-
-  <p class="lbl">2 · Marca</p>
-  <div class="row" id="skins">
-    <button class="chip on" data-skin="ey" type="button">EY</button>
-    <button class="chip" data-skin="dc" type="button">DollarCity / Ant</button>
-    <button class="chip" data-skin="chek" type="button">Ripley / Chek</button>
-    <button class="chip" data-skin="cus" type="button">Aduanas / PrimeNG</button>
+  <p class="lbl">Proyecto</p>
+  <div class="row proj" id="skins">
+    <button class="chip on" data-skin="ey" type="button">EY Fabric</button>
+    <button class="chip" data-skin="dc" type="button">DollarCity</button>
+    <button class="chip" data-skin="chek" type="button">Chek / Ripley</button>
+    <button class="chip" data-skin="cus" type="button">Aduanas SV</button>
     <button class="chip" data-skin="bc" type="button">Blockchain</button>
   </div>
 
-  <p class="lbl">3 · Modo y marco</p>
-  <div class="row" id="modes">
+  <p class="lbl">Preview</p>
+  <div class="row">
+    <button class="dev on" data-view="web" type="button">Web</button>
+    <button class="dev" data-view="mobile" type="button">Mobile</button>
     <button class="dev on" data-mode="light" type="button">Light</button>
     <button class="dev" data-mode="dark" type="button">Dark</button>
   </div>
@@ -60,75 +59,47 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
     <button class="dev" data-dev="tablet" type="button">Tablet</button>
     <button class="dev" data-dev="phone" type="button">Phone</button>
   </div>
+  <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
-  <p class="lbl">4 · Componente</p>
-  <div class="row" id="comps-web">
-    <button class="chip on" data-comp="overview" type="button">Overview</button>
-    <button class="chip" data-comp="buttons" type="button">Buttons</button>
-    <button class="chip" data-comp="fields" type="button">Fields</button>
-    <button class="chip" data-comp="tags" type="button">Tags</button>
-    <button class="chip" data-comp="notice" type="button">Notice</button>
-    <button class="chip" data-comp="stepper" type="button">Stepper</button>
-    <button class="chip" data-comp="table" type="button">Table</button>
-    <button class="chip" data-comp="kpis" type="button">KPIs</button>
+  <h2>Todas las secciones</h2>
+  <div class="jump">
+    <a href="projects/fm-ds-sheet.html#buttons" target="sheet">Buttons</a>
+    <a href="projects/fm-ds-sheet.html#fields" target="sheet">Fields</a>
+    <a href="projects/fm-ds-sheet.html#tags" target="sheet">Tags</a>
+    <a href="projects/fm-ds-sheet.html#notice" target="sheet">Notice</a>
+    <a href="projects/fm-ds-sheet.html#stepper" target="sheet">Stepper</a>
+    <a href="projects/fm-ds-sheet.html#table" target="sheet">Table</a>
+    <a href="projects/fm-ds-sheet.html#kpis" target="sheet">KPIs</a>
+    <a href="projects/fm-ds-sheet.html#pass" target="sheet">Pass</a>
   </div>
-  <div class="row" id="comps-mob" style="display:none">
-    <button class="chip on" data-comp="overview" type="button">Overview</button>
-    <button class="chip" data-comp="buttons" type="button">Buttons</button>
-    <button class="chip" data-comp="fields" type="button">Fields</button>
-    <button class="chip" data-comp="pass" type="button">Boarding pass</button>
-    <button class="chip" data-comp="scan" type="button">Scan</button>
-  </div>
-
-  <div class="refs">
-    <a href="https://ant.design/" target="_blank" rel="noreferrer">ant.design</a>
-    <a href="https://primeng.dev/components" target="_blank" rel="noreferrer">primeng.dev</a>
-    <a href="docs/DS-PROJECTS.md">tokens</a>
-  </div>
-  <div class="stage"><iframe id="frame" title="DS preview"></iframe></div>
+  <div class="sheet"><iframe id="sheet" name="sheet" title="All sections"></iframe></div>
 </div>
 <script>
-var view='web', skin='ey', dev='desktop', mode='light', comp='overview';
-var frame=document.getElementById('frame');
-function src(){
-  var q='skin='+skin+'&mode='+mode+'&device='+dev+'&comp='+comp;
-  return (view==='mobile' ? 'projects/fm-ds-mobile.html?' : 'projects/fm-ds-web.html?')+q+'&r='+Date.now();
-}
-function load(){ frame.src=src(); }
-function sync(){
+var skin='ey', view='web', mode='light', dev='desktop';
+var preview=document.getElementById('preview');
+var sheet=document.getElementById('sheet');
+function load(){
+  var q='skin='+skin+'&mode='+mode+'&device='+dev+'&comp=overview';
+  preview.src=(view==='mobile'?'projects/fm-ds-mobile.html?':'projects/fm-ds-web.html?')+q+'&r='+Date.now();
+  sheet.src='projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+'&r='+Date.now();
   document.getElementById('devs').style.display = view==='web' ? 'flex' : 'none';
-  document.getElementById('comps-web').style.display = view==='web' ? 'flex' : 'none';
-  document.getElementById('comps-mob').style.display = view==='mobile' ? 'flex' : 'none';
 }
-function mark(sel, el){
-  document.querySelectorAll(sel).forEach(function(x){ x.classList.toggle('on', x===el); });
+function mark(group, el){
+  document.querySelectorAll(group).forEach(function(x){ x.classList.toggle('on', x===el); });
 }
-document.querySelectorAll('.tab').forEach(function(b){
-  b.onclick=function(){
-    view=b.dataset.view;
-    comp='overview';
-    mark('.tab', b);
-    document.querySelectorAll('#comps-web .chip, #comps-mob .chip').forEach(function(x){ x.classList.toggle('on', x.dataset.comp==='overview'); });
-    sync(); load();
-  };
-});
 document.querySelectorAll('#skins .chip').forEach(function(b){
   b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); load(); };
 });
-document.querySelectorAll('#modes .dev').forEach(function(b){
-  b.onclick=function(){ mode=b.dataset.mode; mark('#modes .dev', b); load(); };
+document.querySelectorAll('[data-view]').forEach(function(b){
+  b.onclick=function(){ view=b.dataset.view; mark('[data-view]', b); load(); };
+});
+document.querySelectorAll('[data-mode]').forEach(function(b){
+  b.onclick=function(){ mode=b.dataset.mode; mark('[data-mode]', b); load(); };
 });
 document.querySelectorAll('#devs .dev').forEach(function(b){
   b.onclick=function(){ dev=b.dataset.dev; mark('#devs .dev', b); load(); };
 });
-document.querySelectorAll('#comps-web .chip, #comps-mob .chip').forEach(function(b){
-  b.onclick=function(){
-    comp=b.dataset.comp;
-    mark(view==='web' ? '#comps-web .chip' : '#comps-mob .chip', b);
-    load();
-  };
-});
-sync(); load();
+load();
 </script>
 </body>
 </html>
