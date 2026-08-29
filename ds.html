@@ -24,8 +24,8 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
 .stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden;margin-bottom:8px}
 .stage iframe,.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
 .sheet{width:100%;max-width:920px;height:920px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
-.jump{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px;font-size:12px}
-.jump a{color:#c9a227;text-decoration:none}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.jump button{border:0;background:transparent;color:#c9a227;font:12px 'DM Sans',sans-serif;cursor:pointer}
 </style>
 </head>
 <body>
@@ -36,7 +36,7 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
 </div>
 <div class="wrap">
   <h1>DS projects</h1>
-  <p class="lede">Primero el proyecto. Después el preview de ventana. Abajo, todas las secciones del kit con el mismo skin.</p>
+  <p class="lede">Primero el proyecto. Después el preview. Abajo, todas las secciones con el mismo skin.</p>
 
   <p class="lbl">Proyecto</p>
   <div class="row proj" id="skins">
@@ -62,26 +62,29 @@ h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:28px 0 10px}
   <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
   <h2>Todas las secciones</h2>
-  <div class="jump">
-    <a href="projects/fm-ds-sheet.html#buttons" target="sheet">Buttons</a>
-    <a href="projects/fm-ds-sheet.html#fields" target="sheet">Fields</a>
-    <a href="projects/fm-ds-sheet.html#tags" target="sheet">Tags</a>
-    <a href="projects/fm-ds-sheet.html#notice" target="sheet">Notice</a>
-    <a href="projects/fm-ds-sheet.html#stepper" target="sheet">Stepper</a>
-    <a href="projects/fm-ds-sheet.html#table" target="sheet">Table</a>
-    <a href="projects/fm-ds-sheet.html#kpis" target="sheet">KPIs</a>
-    <a href="projects/fm-ds-sheet.html#pass" target="sheet">Pass</a>
+  <div class="jump" id="jumps">
+    <button type="button" data-jump="buttons">Buttons</button>
+    <button type="button" data-jump="fields">Fields</button>
+    <button type="button" data-jump="tags">Tags</button>
+    <button type="button" data-jump="notice">Notice</button>
+    <button type="button" data-jump="stepper">Stepper</button>
+    <button type="button" data-jump="table">Table</button>
+    <button type="button" data-jump="kpis">KPIs</button>
+    <button type="button" data-jump="pass">Pass</button>
   </div>
-  <div class="sheet"><iframe id="sheet" name="sheet" title="All sections"></iframe></div>
+  <div class="sheet"><iframe id="sheet" title="All sections"></iframe></div>
 </div>
 <script>
 var skin='ey', view='web', mode='light', dev='desktop';
 var preview=document.getElementById('preview');
 var sheet=document.getElementById('sheet');
+function sheetUrl(hash){
+  return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
+}
 function load(){
   var q='skin='+skin+'&mode='+mode+'&device='+dev+'&comp=overview';
   preview.src=(view==='mobile'?'projects/fm-ds-mobile.html?':'projects/fm-ds-web.html?')+q+'&r='+Date.now();
-  sheet.src='projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+'&r='+Date.now();
+  sheet.src=sheetUrl();
   document.getElementById('devs').style.display = view==='web' ? 'flex' : 'none';
 }
 function mark(group, el){
@@ -98,6 +101,9 @@ document.querySelectorAll('[data-mode]').forEach(function(b){
 });
 document.querySelectorAll('#devs .dev').forEach(function(b){
   b.onclick=function(){ dev=b.dataset.dev; mark('#devs .dev', b); load(); };
+});
+document.querySelectorAll('[data-jump]').forEach(function(b){
+  b.onclick=function(){ sheet.src=sheetUrl(b.dataset.jump); };
 });
 load();
 </script>
