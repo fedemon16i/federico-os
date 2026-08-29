@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-skin="ey" data-device="desktop"><head>
+<html lang="en" data-skin="ey" data-device="desktop" data-mode="light"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DS Web</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="fm-ds.css"/>
 <style>
 .pad{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;height:100%;box-sizing:border-box;overflow:hidden}
@@ -21,27 +21,26 @@
           <div class="span">
             <div class="lab">Search + buttons</div>
             <div class="row">
-              <div class="fm-field" id="search" style="flex:1;min-width:180px">Search products</div>
+              <div class="fm-field" id="search" style="flex:1;min-width:160px">Search</div>
               <button class="fm-btn" id="b1" type="button">Primary</button>
+              <button class="fm-btn secondary" type="button">Secondary</button>
               <button class="fm-btn ghost" type="button">Ghost</button>
-              <button class="fm-btn accent" type="button">Accent</button>
             </div>
           </div>
           <div class="span">
-            <div class="lab">Filters</div>
-            <div class="fm-filters"><span class="fm-chip on">All</span><span class="fm-chip">Pending</span><span class="fm-chip">Live</span><span class="fm-chip">Review</span></div>
-          </div>
-          <div class="span">
-            <div class="lab">Banner</div>
-            <div class="fm-banner" id="ban"><b>Shared delivery</b><span>Same chrome. Skin from the live product site.</span></div>
-          </div>
-          <div class="span">
-            <div class="lab">Tiles</div>
-            <div class="fm-tiles">
-              <div class="fm-tile"><b>Services</b><span>Compute</span></div>
-              <div class="fm-tile"><b>Licenses</b><span>Seats</span></div>
-              <div class="fm-tile"><b>Kits</b><span>Start</span></div>
+            <div class="lab">Tags + filters</div>
+            <div class="row">
+              <span class="fm-tag ok">Aprobado</span><span class="fm-tag warn">Revisión</span><span class="fm-tag bad">Rechazado</span>
+              <span class="fm-chip on">All</span><span class="fm-chip">Pending</span>
             </div>
+          </div>
+          <div class="span">
+            <div class="lab">Banner / notice</div>
+            <div class="fm-notice" id="ban">Los campos con * son obligatorios.</div>
+          </div>
+          <div>
+            <div class="lab">Stepper</div>
+            <div class="fm-stepper"><b>1</b> Selección · 2 Info · 3 Revisión</div>
           </div>
           <div>
             <div class="lab">KPIs</div>
@@ -50,20 +49,13 @@
               <div class="fm-kpi"><i>Live</i><b>11</b></div>
             </div>
           </div>
-          <div>
-            <div class="lab">Sheet</div>
-            <div class="fm-sheet">
-              <div class="fm-tabs"><span class="fm-chip on">Description</span><span class="fm-chip">Requirements</span></div>
-              <div style="font-size:11px;color:var(--fm-muted)">Workspace name. One required service.</div>
-            </div>
-          </div>
           <div class="span">
             <div class="lab">Table</div>
             <table class="fm-table" id="tbl">
-              <thead><tr><th>Item</th><th>Area</th><th>State</th></tr></thead>
+              <thead><tr><th>Item</th><th>Estado</th></tr></thead>
               <tbody>
-                <tr><td>Workbench</td><td>Catalog</td><td>Pending</td></tr>
-                <tr><td>Cluster</td><td>Compute</td><td>Live</td></tr>
+                <tr><td>ARIVU-715912</td><td><span class="fm-tag ok">Aprobado</span></td></tr>
+                <tr><td>Workbench</td><td><span class="fm-tag warn">Revisión</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -74,8 +66,8 @@
       <div class="iphone">
         <div class="sb"><div class="t">9:41</div><div class="island"></div><div class="sys"></div></div>
         <div class="body">
-          <div class="fm-banner"><b>Phone preview</b><span>Same tokens inside iPhone 17.</span></div>
-          <button class="fm-btn" style="margin-top:10px;width:100%" type="button">Primary</button>
+          <div class="fm-notice">Boarding pass</div>
+          <button class="fm-btn" style="margin-top:10px;width:100%" type="button">Escanear</button>
         </div>
         <div class="home"></div>
       </div>
@@ -88,15 +80,14 @@
   var q=new URLSearchParams(location.search);
   var skin=q.get('skin')||'ey';
   var device=q.get('device')||'desktop';
-  FM.skin(skin);
+  var mode=q.get('mode')||'light';
+  FM.skin(skin); FM.mode(mode);
   document.documentElement.setAttribute('data-device', device);
-  document.getElementById('addr').textContent='ds / '+device+' / '+skin;
+  document.getElementById('addr').textContent='ds / '+device+' / '+skin+' / '+mode;
   var unit=document.getElementById('unit');
   if(device!=='phone'){
     FM.cursors(unit,1);
-    FM.after(400, function(){ FM.move('u1', document.getElementById('b1')); FM.tip(document.getElementById('b1'), 'Primary'); });
-    FM.after(1400, function(){ FM.move('u1', document.getElementById('ban')); });
-    FM.after(2200, function(){ FM.move('u1', document.getElementById('tbl')); });
+    FM.after(400, function(){ FM.move('u1', document.getElementById('b1')); });
   }
 })();
 </script>
