@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-skin="chek"><head>
+<html lang="en" data-skin="chek" data-mode="light"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DS Mobile</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="fm-ds.css"/>
 <style>
 .stage-pad{height:100%;display:flex;align-items:center;justify-content:center}
@@ -26,15 +26,14 @@
         </div>
         <div class="body">
           <div class="fm-filters" style="margin-bottom:10px">
-            <span class="fm-chip on">Hub</span><span class="fm-chip">Pay</span><span class="fm-chip">Moves</span>
+            <span class="fm-chip on">Hub</span><span class="fm-chip">Pay</span><span class="fm-chip">Pase</span>
           </div>
-          <h2>Cards</h2>
-          <p>Touch stays inside the phone. Skin comes from the live product.</p>
-          <div class="fm-banner" id="ban" style="margin-bottom:10px"><b>Limit ready</b><span>Protected this month.</span></div>
+          <h2>Operación</h2>
+          <p>Toque tipo Figma. Tokens del producto.</p>
+          <div class="fm-notice" id="ban" style="margin-bottom:10px">Listo para escanear</div>
           <div class="stack">
-            <button class="fm-btn" id="hit" type="button">Pay</button>
-            <button class="fm-btn ghost" type="button">Limit</button>
-            <div class="fm-field">Search</div>
+            <button class="fm-btn" id="hit" type="button">Escanear</button>
+            <button class="fm-btn secondary" type="button">Detalle</button>
           </div>
         </div>
         <div class="home"></div>
@@ -45,13 +44,13 @@
 <script src="fm-engine.js"></script>
 <script>
 (function(){
-  var skin=new URLSearchParams(location.search).get('skin')||'chek';
-  FM.skin(skin);
+  var q=new URLSearchParams(location.search);
+  FM.skin(q.get('skin')||'chek');
+  FM.mode(q.get('mode')||'light');
   FM.cursors(document.getElementById('unit'), 1, 'touch');
   FM.after(400, function(){
     FM.move('u1', document.getElementById('hit'));
     FM.ring(document.getElementById('hit'), true);
-    FM.tip(document.getElementById('hit'), 'Touch');
   });
 })();
 </script>
