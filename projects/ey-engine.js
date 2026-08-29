@@ -1,10 +1,11 @@
-/* EY animation engine — scenes are data. Motion lives here.
-   Unit 800×450, uniform scale into the host. One cursor asset.
+/* EY animation engine
+   Unit 1280×720. Uniform scale into .stage. No internal scroll.
 */
 (function (w) {
   var T = [];
-  var UNIT_W = 800;
-  var UNIT_H = 450;
+  var UNIT_W = 1280;
+  var UNIT_H = 720;
+  var ro = null;
 
   function after(ms, fn) {
     var id = setTimeout(fn, ms);
@@ -19,15 +20,37 @@
     if (e.data && e.data.type === 'fm-stop') stop();
   });
 
-  function fit(unit) {
-    unit = unit || document.querySelector('.ey-unit');
-    if (!unit) return 1;
-    var host = unit.parentElement || document.body;
+  function measure() {
+    var host = document.querySelector('.stage') || document.body;
     var r = host.getBoundingClientRect();
-    var s = Math.min(r.width / UNIT_W, r.height / UNIT_H);
+    var wdt = r.width || host.clientWidth || w.innerWidth || UNIT_W;
+    var hgt = r.height || host.clientHeight || w.innerHeight || UNIT_H;
+    return { w: wdt, h: hgt };
+  }
+
+  function fit() {
+    var unit = document.querySelector('.ey-unit');
+    if (!unit) return 1;
+    var m = measure();
+    if (m.w < 8 || m.h < 8) return 1;
+    var s = Math.min(m.w / UNIT_W, m.h / UNIT_H);
     if (!isFinite(s) || s <= 0) s = 1;
     unit.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
     return s;
+  }
+
+  function boot() {
+    fit();
+    w.requestAnimationFrame(function () {
+      fit();
+      w.requestAnimationFrame(fit);
+    });
+    var host = document.querySelector('.stage');
+    if (host && w.ResizeObserver) {
+      if (ro) ro.disconnect();
+      ro = new ResizeObserver(function () { fit(); });
+      ro.observe(host);
+    }
   }
 
   function cursors(host, n) {
@@ -41,8 +64,8 @@
       d.innerHTML =
         (n > 1 ? '<em>user ' + (i + 1) + '</em>' : '') +
         '<img src="ey-cursor.svg" width="24" height="24" alt="">';
-      d.style.left = 24 + i * 18 + 'px';
-      d.style.top = 36 + i * 16 + 'px';
+      d.style.left = 32 + i * 22 + 'px';
+      d.style.top = 48 + i * 20 + 'px';
       host.appendChild(d);
       nodes.push(d);
     }
@@ -57,21 +80,27 @@
     var b = unit.getBoundingClientRect();
     var s = b.width / UNIT_W;
     if (!s) s = 1;
-    var x = (r.left - b.left) / s + (ox || 8);
-    var y = (r.top - b.top) / s + (oy || 6);
-    x = Math.max(8, Math.min(UNIT_W - 36, x));
-    y = Math.max(8, Math.min(UNIT_H - 36, y));
-    n.style.left = x + 'px';
-    n.style.top = y + 'px';
+    var x = (r.left - b.left) / s + (ox || 10);
+    var y = (r.top - b.top) / s + (oy || 8);
+    n.style.left = Math.max(12, Math.min(UNIT_W - 48, x)) + 'px';
+    n.style.top = Math.max(12, Math.min(UNIT_H - 48, y)) + 'px';
   }
 
-  w.addEventListener('resize', function () { fit(); });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+  w.addEventListener('load', fit);
+  w.addEventListener('resize', fit);
+
   w.EY = {
     UNIT_W: UNIT_W,
     UNIT_H: UNIT_H,
     after: after,
     stop: stop,
     fit: fit,
+    boot: boot,
     cursors: cursors,
     move: move
   };

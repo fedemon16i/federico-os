@@ -3,31 +3,47 @@
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Understand</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="ey-ds.css"/>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent;color:#f5f4ef;font-family:'IBM Plex Sans',system-ui,sans-serif}
-:root{--y:#FFE600;--line:rgba(255,255,255,.12)}
-.board{padding:22px 20px}
-.k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--y);margin:0 0 16px}
-.row{display:grid;grid-template-columns:1.35fr 28px 1fr;gap:10px;align-items:stretch;margin-bottom:10px;opacity:0;transform:translateY(8px);transition:.4s}
+.board{padding:28px 32px;height:100%;box-sizing:border-box}
+.k{font-family:var(--ey-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ey-yellow);margin:0 0 18px}
+.row{display:grid;grid-template-columns:1.2fr 36px 1fr;gap:12px;align-items:stretch;margin-bottom:12px;opacity:0;transform:translateY(8px);transition:.4s}
 .row.on{opacity:1;transform:none}
-.find,.own{border:1px solid var(--line);padding:14px 16px}
+.find,.own{border:1px solid var(--ey-line);padding:16px 18px}
 .own{background:#171717;border-color:rgba(255,230,0,.35)}
-.t{font-size:13px;font-weight:700;letter-spacing:-.02em}
-.s{font-size:11px;color:#9a968c;margin-top:4px}
-.arr{display:flex;align-items:center;justify-content:center;color:var(--y);font-size:18px;font-weight:700}
+.t{font-size:15px;font-weight:700}
+.s{font-size:12px;color:#9a968c;margin-top:4px}
+.arr{display:flex;align-items:center;justify-content:center;color:var(--ey-yellow);font-size:20px;font-weight:700}
+.tools{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tools span{font-size:10px;font-family:var(--ey-mono);padding:3px 8px;border:1px solid var(--ey-line);border-radius:100px;color:#d8dbe4}
 </style></head>
 <body>
-<div class="board">
-  <div class="k">Evidence becomes work</div>
-  <div class="row" id="r0"><div class="find"><div class="t">No checklist before the form</div><div class="s">People arrive cold</div></div><div class="arr">→</div><div class="own"><div class="t">Design</div><div class="s">Gate + copy</div></div></div>
-  <div class="row" id="r1"><div class="find"><div class="t">Required service is unlabeled</div><div class="s">Looks optional, is not</div></div><div class="arr">→</div><div class="own"><div class="t">Content + product</div><div class="s">Field + help</div></div></div>
-  <div class="row" id="r2"><div class="find"><div class="t">No onboarding on first request</div><div class="s">A tooltip is not a path</div></div><div class="arr">→</div><div class="own"><div class="t">Analytics + design</div><div class="s">Guide + event</div></div></div>
+<div class="stage">
+  <div class="ey-unit board">
+    <div class="board">
+      <div class="k">Evidence becomes work</div>
+      <div class="row" id="r0">
+        <div class="find"><div class="t">No checklist before the form</div><div class="s">People arrive cold</div></div>
+        <div class="arr">→</div>
+        <div class="own"><div class="t">Design</div><div class="s">Gate + copy</div><div class="tools"><span>Figma</span><span>Claude Code</span><span>Cursor</span><span>Factory.ai</span></div></div>
+      </div>
+      <div class="row" id="r1">
+        <div class="find"><div class="t">Required service is unlabeled</div><div class="s">Looks optional, is not</div></div>
+        <div class="arr">→</div>
+        <div class="own"><div class="t">Content + product</div><div class="s">Field + help</div><div class="tools"><span>Figma</span><span>Notion</span><span>Pendo</span></div></div>
+      </div>
+      <div class="row" id="r2">
+        <div class="find"><div class="t">No onboarding on first request</div><div class="s">A tooltip is not a path</div></div>
+        <div class="arr">→</div>
+        <div class="own"><div class="t">Analytics + design</div><div class="s">Guide + event</div><div class="tools"><span>Pendo</span><span>Factory.ai</span><span>Figma</span></div></div>
+      </div>
+    </div>
+  </div>
 </div>
+<script src="ey-engine.js"></script>
 <script>
-(function(){
-  var t=[]; function after(ms,fn){var x=setTimeout(fn,ms);t.push(x)}
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')t.forEach(clearTimeout)});
-  [0,1,2].forEach(function(i){after(140+i*240,function(){document.getElementById('r'+i).classList.add('on')})});
-})();
+EY.after(140, function(){ document.getElementById('r0').classList.add('on'); });
+EY.after(380, function(){ document.getElementById('r1').classList.add('on'); });
+EY.after(620, function(){ document.getElementById('r2').classList.add('on'); });
 </script>
 </body></html>
