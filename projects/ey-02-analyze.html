@@ -51,46 +51,33 @@
 .box{height:22px;border-radius:5px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9.5px}
 .box.ph{color:var(--ey-faint)}.box.drop{border-color:var(--ey-bad)}
 .note{font-size:8px;color:var(--ey-muted);background:var(--ey-surface);border:1px solid var(--ey-line);border-radius:5px;padding:6px 8px;margin:6px 0}
-.flag{display:inline-flex;margin-top:4px;font-size:8px;font-weight:650;color:#111;background:#FFE600;padding:2px 7px;border-radius:100px;opacity:0}.flag.on{opacity:1}
+.flag{display:inline-flex;margin-top:4px;font-size:10px;font-weight:650;color:#111;background:#FFE600;padding:2px 7px;border-radius:100px;opacity:0}.flag.on{opacity:1}
 .prog{display:flex;justify-content:space-between;font-size:7.5px;color:var(--ey-faint);margin-bottom:8px}
 .disc{font-size:8px;color:var(--ey-muted);padding:7px 8px;border-radius:7px;border:1px solid var(--ey-line);background:var(--ey-card);margin-bottom:8px}
 .order{border-radius:8px;border:1px solid var(--ey-line);background:var(--ey-card);padding:10px;flex:1}
 .order h4{margin:0 0 8px;font-size:11px}.order .empty{color:var(--ey-faint);font-size:9px}
 .order .tot{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--ey-line);font-size:11px;font-weight:700}
 .order .tot b{color:var(--ey-gold)}
-.uc{position:absolute;z-index:8;pointer-events:none;left:24px;top:48px;transition:left .9s cubic-bezier(.34,1.32,.64,1),top .9s cubic-bezier(.34,1.32,.64,1)}
-.uc em{display:block;font-style:normal;font-size:7px;font-weight:700;padding:1px 5px;color:#111;white-space:nowrap}
-.uc i{display:block;width:0;height:0;border:5px solid transparent;border-top-color:#fff;margin-left:3px}
-.u1 em{background:#FFE600}.u2 em{background:#7dc4ff}.u3 em{background:#e8943a}
-.ey-browser{position:relative}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
 <div class="stage">
-  <div class="ey-browser" id="win">
+  <div class="ey-unit window" id="unit">
     <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr">platform / overview</div></div>
     <div id="slot"></div>
-    <div class="uc u1" id="u1"><em>user 1</em><i></i></div>
-    <div class="uc u2" id="u2" style="left:40px;top:64px"><em>user 2</em><i></i></div>
-    <div class="uc u3" id="u3" style="left:16px;top:80px"><em>user 3</em><i></i></div>
   </div>
 </div>
+<script src="ey-engine.js"></script>
 <script>
 (function(){
-  var slot=document.getElementById('slot'), win=document.getElementById('win'), timers=[];
-  function after(ms,fn){timers.push(setTimeout(fn,ms))}
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function move(id,el,ox,oy){
-    var n=document.getElementById(id); if(!n||!el) return;
-    var r=el.getBoundingClientRect(), b=win.getBoundingClientRect();
-    n.style.left=Math.max(10,Math.min(b.width-56,r.left-b.left+(ox||0)))+'px';
-    n.style.top=Math.max(26,Math.min(b.height-30,r.top-b.top+(oy||0)))+'px';
-  }
+  var unit=document.getElementById('unit'), slot=document.getElementById('slot');
+  EY.cursors(unit, 3);
+  EY.fit();
   function pack(el){
     if(!el) return;
-    move('u1',el,8,4);
-    after(120,function(){move('u2',el,24,18)});
-    after(240,function(){move('u3',el,-10,22)});
+    EY.move('u1', el, 8, 4);
+    EY.after(120, function(){ EY.move('u2', el, 26, 18); });
+    EY.after(240, function(){ EY.move('u3', el, -8, 22); });
   }
   var NAV='<div class="nav"><span class="mark">◆</span><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search products…</div><span class="ai">AI</span><span class="av">FM</span></div></div>';
   var SIDE='<div class="side"><div class="sh">Catalog</div><a class="on" href="#"><span>All</span><span class="n">284</span></a><a href="#"><span>Services</span><span class="n">118</span></a><a href="#"><span>Licenses</span><span class="n">19</span></a><a href="#"><span>Kits</span><span class="n">14</span></a></div>';
@@ -100,17 +87,19 @@
   var form='<div class="app">'+NAV+'<div class="wb"><div class="wb-l"><div class="crumb">Catalog › Workbench</div><h3>Workbench</h3><div class="fld"><label>Instance name (required)</label><div class="box ph" id="f1">Enter a name…</div><div class="flag" id="d1">user 1 · drop-off</div></div><div class="fld"><label>Location (required)</label><div class="box" id="f2">Region West 2</div><div class="flag" id="d2">user 2 · drop-off</div></div><div class="note">Choose at least one service required for this instance.</div><div class="fld"><label>Required service (required)</label><div class="box ph" id="f3">Select a service…</div><div class="flag" id="d3">user 3 · drop-off</div></div></div><div class="wb-r"><div class="prog"><span>Custom</span><span>Billing</span><span>Confirm</span></div><div class="disc">Costs are estimates. Formal intake covers platform charges.</div><div class="order"><h4>Your order</h4><div class="empty">No services selected.</div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div></div></div>';
   function set(html,url){ document.getElementById('addr').textContent=url; slot.innerHTML=html; }
   set(home,'platform / overview');
-  after(300,function(){ pack(document.getElementById('go')); });
-  after(1600,function(){ set(catalog,'platform / catalog'); after(80,function(){ pack(document.getElementById('go')); }); });
-  after(3200,function(){ set(services,'platform / catalog / services'); after(80,function(){ pack(document.getElementById('go')); }); });
-  after(4800,function(){
+  EY.after(300, function(){ pack(document.getElementById('go')); });
+  EY.after(1600, function(){ set(catalog,'platform / catalog'); EY.after(80, function(){ pack(document.getElementById('go')); }); });
+  EY.after(3200, function(){ set(services,'platform / catalog / services'); EY.after(80, function(){ pack(document.getElementById('go')); }); });
+  EY.after(4800, function(){
     set(form,'platform / workbench');
-    after(80,function(){
-      var a=document.getElementById('f1'),b=document.getElementById('f2'),c=document.getElementById('f3');
-      move('u1',a,10,2); after(140,function(){move('u2',a,26,18)}); after(260,function(){move('u3',a,-8,22)});
-      after(1000,function(){ a.classList.add('drop'); document.getElementById('d1').classList.add('on'); move('u2',b,8,2); });
-      after(2000,function(){ b.classList.add('drop'); document.getElementById('d2').classList.add('on'); move('u3',c,8,2); });
-      after(3000,function(){ c.classList.add('drop'); document.getElementById('d3').classList.add('on'); });
+    EY.after(80, function(){
+      var a=document.getElementById('f1'), b=document.getElementById('f2'), c=document.getElementById('f3');
+      EY.move('u1', a, 10, 2);
+      EY.after(140, function(){ EY.move('u2', a, 26, 18); });
+      EY.after(260, function(){ EY.move('u3', a, -8, 22); });
+      EY.after(1000, function(){ a.classList.add('drop'); document.getElementById('d1').classList.add('on'); EY.move('u2', b, 8, 2); });
+      EY.after(2000, function(){ b.classList.add('drop'); document.getElementById('d2').classList.add('on'); EY.move('u3', c, 8, 2); });
+      EY.after(3000, function(){ c.classList.add('drop'); document.getElementById('d3').classList.add('on'); });
     });
   });
 })();
