@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="ey"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DS Web</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="fm-ds.css"/>
+<style>
+.body{padding:22px 28px;display:flex;flex-direction:column;gap:16px;height:100%;box-sizing:border-box}
+h1{margin:0;font-size:22px;letter-spacing:-.03em}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.skins .fm-chip{cursor:default}
+.card{border:1px solid var(--fm-line);background:var(--fm-card);border-radius:10px;padding:14px;max-width:420px}
+.card p{margin:0 0 10px;font-size:12px;color:var(--fm-muted);line-height:1.45}
+</style></head>
+<body>
+<div class="stage">
+  <div class="fm-unit window" id="unit">
+    <div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr">ds / web / ey</div></div>
+    <div class="fm-app">
+      <div class="fm-nav"><span class="on">Web DS</span><span>Buttons</span><span>Cursor</span></div>
+      <div class="body">
+        <h1>One window. Five skins.</h1>
+        <div class="row skins">
+          <span class="fm-chip on" id="s-ey">EY</span>
+          <span class="fm-chip" id="s-dc">DollarCity</span>
+          <span class="fm-chip" id="s-chek">Chek</span>
+          <span class="fm-chip" id="s-bc">Blockchain</span>
+          <span class="fm-chip" id="s-cus">Customs</span>
+        </div>
+        <div class="row">
+          <button class="fm-btn" id="b1" type="button">Primary</button>
+          <button class="fm-btn ghost" id="b2" type="button">Ghost</button>
+          <button class="fm-btn accent" id="b3" type="button">Accent</button>
+        </div>
+        <div class="card" id="card">
+          <p>Cursor and tooltip stay inside this window. Scale is uniform — the layout never reflows for mobile.</p>
+          <button class="fm-btn" id="hit" type="button">Mark this</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="fm-engine.js"></script>
+<script>
+(function(){
+  var unit=document.getElementById('unit');
+  var skins=['ey','dc','chek','bc','cus'];
+  var names={ey:'EY',dc:'DollarCity',chek:'Chek',bc:'Blockchain',cus:'Customs'};
+  FM.cursors(unit,1);
+  function paint(sk){
+    FM.skin(sk);
+    document.getElementById('addr').textContent='ds / web / '+sk;
+    skins.forEach(function(s){
+      var n=document.getElementById('s-'+s);
+      if(n) n.classList.toggle('on', s===sk);
+    });
+  }
+  paint('ey');
+  FM.after(400, function(){ FM.move('u1', document.getElementById('s-ey')); FM.tip(document.getElementById('s-ey'), 'Skin tokens'); });
+  skins.forEach(function(sk,i){
+    FM.after(1200+i*900, function(){
+      paint(sk);
+      FM.move('u1', document.getElementById('s-'+sk));
+      FM.tip(document.getElementById('s-'+sk), names[sk]);
+    });
+  });
+  FM.after(1200+skins.length*900, function(){
+    var hit=document.getElementById('hit');
+    FM.ring(hit, true);
+    FM.move('u1', hit);
+    FM.tip(hit, 'Signal stays in the unit');
+  });
+})();
+</script>
+</body></html>

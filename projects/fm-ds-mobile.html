@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="chek"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DS Mobile</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="fm-ds.css"/>
+<style>
+.wrap{height:100%;display:flex;align-items:center;justify-content:center;gap:28px}
+.note{width:220px;font-size:13px;color:var(--fm-muted);line-height:1.45}
+.note b{display:block;color:var(--fm-text);font-size:16px;margin-bottom:6px}
+.phone .body h2{margin:0 0 8px;font-size:18px}
+.phone .body p{margin:0 0 12px;font-size:12px;color:var(--fm-muted)}
+.stack{display:flex;flex-direction:column;gap:8px}
+</style></head>
+<body>
+<div class="stage">
+  <div class="fm-unit" id="unit" style="display:flex;align-items:center;justify-content:center;background:transparent">
+    <div class="wrap">
+      <div class="note"><b>Mobile is a device, not a breakpoint.</b>The phone is drawn at a fixed size and the whole unit scales.</div>
+      <div class="phone" id="ph">
+        <div class="notch"><i></i></div>
+        <div class="body">
+          <h2>Hub</h2>
+          <p>Same tokens as web. Skin changes color, not structure.</p>
+          <div class="stack">
+            <button class="fm-btn" id="hit" type="button">Pay</button>
+            <button class="fm-btn ghost" type="button">Limit</button>
+            <button class="fm-btn accent" type="button">Moves</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="fm-engine.js"></script>
+<script>
+(function(){
+  var unit=document.getElementById('unit');
+  FM.skin('chek');
+  FM.cursors(unit,1);
+  FM.after(400, function(){
+    FM.move('u1', document.getElementById('hit'));
+    FM.ring(document.getElementById('hit'), true);
+    FM.tip(document.getElementById('hit'), 'Inside the phone');
+  });
+  var skins=['chek','dc','bc','cus','ey'];
+  skins.forEach(function(sk,i){
+    FM.after(1400+i*800, function(){ FM.skin(sk); });
+  });
+})();
+</script>
+</body></html>
