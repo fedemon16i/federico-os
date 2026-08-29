@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Beats — Federico Monroy</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="beats-stage.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#08080b;--border:rgba(255,255,255,.06);--text:#f0eee9;--muted:#8a8580;--dim:#4a4845;--bar:rgba(8,8,11,.88);
@@ -14,47 +15,43 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 .topbar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 32px;background:var(--bar);border-bottom:1px solid var(--border)}
 .topbar a{font-family:var(--fm);font-size:11px;color:var(--muted);text-decoration:none}
 .topbar a.logo{margin-right:auto;color:var(--text);opacity:.6;font-size:13px}
-.pg-hd{padding:36px 32px 0;max-width:980px;margin:0 auto}
+.pg-hd{padding:36px 32px 0;max-width:1120px;margin:0 auto}
 .pg-hd h1{font-family:var(--fd);font-size:clamp(1.6rem,1rem+2.5vw,2.4rem);letter-spacing:-.035em}
 .pg-hd p{margin-top:10px;color:var(--muted);max-width:48ch;line-height:1.65;font-size:.9375rem}
-.proj-tabs{display:flex;gap:6px;padding:24px 32px 0;max-width:980px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.proj-tabs{display:flex;gap:6px;padding:24px 32px 0;max-width:1120px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
 .ptab{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:var(--fm);font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap}
 .ptab .dot{width:6px;height:6px;border-radius:50%;background:var(--ta,#666);opacity:.38}
 .ptab.on{color:var(--text);border-color:color-mix(in srgb,var(--ta,#fff) 45%,transparent);background:color-mix(in srgb,var(--ta,#fff) 7%,transparent)}
 .ptab.on .dot{opacity:1}
-#panels{max-width:980px;margin:0 auto}
-.proj-panel{display:none;padding:36px 32px 80px;--accent:var(--pa,#888)}
+#panels{max-width:1120px;margin:0 auto}
+.proj-panel{display:none;padding:28px 32px 80px;--accent:var(--pa,#888)}
 .proj-panel.on{display:block}
-.case-hd{margin:0 0 22px;max-width:54ch}
+.case-hd{margin:0 0 18px;max-width:54ch}
 .case-hd h2{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.03em}
 .case-hd p{margin-top:8px;color:var(--muted);font-size:.9rem;line-height:1.65}
-.beat{display:grid;grid-template-columns:minmax(0,280px) 1fr;gap:40px;align-items:start;padding:48px 0;border-top:1px solid var(--border)}
+.beat{display:flex;flex-direction:column;gap:14px;padding:36px 0;border-top:1px solid var(--border)}
 .beat:first-child{border-top:none;padding-top:0}
-.bi{display:flex;flex-direction:column;gap:14px;position:sticky;top:64px}
+.bi{display:flex;flex-direction:column;gap:8px;position:static}
 .bi-n{font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
-.bi-line{font-family:var(--fd);font-size:1.05rem;line-height:1.4;color:var(--text);letter-spacing:-.02em}
+.bi-line{font-family:var(--fd);font-size:1.15rem;line-height:1.35;color:var(--text);letter-spacing:-.02em}
 .bi-line em{color:var(--accent);font-style:normal}
-.bi-cap{font-size:.95rem;line-height:1.55;color:var(--muted)}
+.bi-cap{font-size:.92rem;line-height:1.5;color:var(--muted)}
 .bi-has-lab{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.bi-has{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
-.bi-has li{font-size:.92rem;color:var(--text);line-height:1.4;padding-left:14px;border-left:2px solid color-mix(in srgb,var(--accent) 55%,transparent)}
+.bi-has{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px 16px}
+.bi-has li{font-size:.88rem;color:var(--text);padding-left:10px;border-left:2px solid color-mix(in srgb,var(--accent) 55%,transparent)}
 .bi-chips{display:flex;flex-wrap:wrap;gap:6px}
 .bi-chip{font-family:var(--fm);font-size:11px;padding:5px 10px;border-radius:100px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);color:var(--text);background:color-mix(in srgb,var(--accent) 8%,transparent)}
-.stage-col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.stage-col{display:flex;flex-direction:column;gap:8px;min-width:0;width:100%}
 .stage-ctrl{display:flex;gap:8px}
 .sc-btn{font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:7px;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--text);cursor:pointer}
-.beat-stage{position:relative;aspect-ratio:16/11;min-height:320px;overflow:hidden}
-.beat-stage[data-kind="diagram"]{aspect-ratio:auto;min-height:340px;background:#0b0b0b;border-radius:8px}
+.beat-stage{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:transparent}
 .beat-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:none;background:transparent;pointer-events:none;opacity:0}
-.beat-stage[data-kind="diagram"] iframe{position:relative;height:340px}
 .beat-stage iframe.loaded{opacity:1;transition:opacity .35s}
 .fld{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .fld.gone{opacity:0}
 .fld-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.35}
 @media(max-width:720px){
 .topbar,.pg-hd,.proj-tabs,.proj-panel{padding-left:16px;padding-right:16px}
-.beat{grid-template-columns:1fr;gap:18px}
-.bi{position:static}
 }
 </style>
 </head>
@@ -67,7 +64,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:va
 </div>
 <div class="pg-hd">
   <h1>Beats</h1>
-  <p>Disección. Sacamos las piezas del player — no las escondemos.</p>
+  <p>Animación full bleed. El texto de arriba es lo que sacamos del cuadro — no una columna.</p>
 </div>
 <div class="proj-tabs" id="projTabs" role="tablist"></div>
 <div id="panels"></div>
@@ -169,7 +166,7 @@ PROJECTS.forEach(function(proj,pi){
     ctrl.innerHTML='<button type="button" class="sc-btn" data-act="replay">Replay</button><button type="button" class="sc-btn" data-act="stop">Stop</button>';
     ctrl.addEventListener('click', function(ev){
       var act=ev.target && ev.target.getAttribute('data-act');
-      if(act==='replay'){ iframe.classList.remove('loaded'); iframe.src=src+'?r='+Date.now(); }
+      if(act==='replay'){ iframe.classList.remove('loaded'); iframe.src=src+(src.indexOf('?')>=0?'&':'?')+'r='+Date.now(); }
       if(act==='stop'){ try{iframe.contentWindow.postMessage({type:'fm-stop'},'*')}catch(err){} }
     });
     stageWrap.appendChild(ctrl);
