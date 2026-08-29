@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-skin="ey" data-mode="light"><head>
+<html lang="en" data-skin="ey" data-mode="light"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DS diagrams</title>
 <link rel="stylesheet" href="fm-ds.css"/>
@@ -23,16 +23,16 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
   FM.skin(skin); FM.mode(mode);
   var MAP={
     ey:[
-      {t:'Measure', s:'ey-01-measure.html', n:'Eventos y sitemap. Board, no ventana.'},
+      {t:'Measure', s:'ey-01-measure.html', n:'Events and sitemap. Board, not a window.'},
       {t:'Research', s:'ey-research.html', n:'CSAT / NPS / interviews.'},
-      {t:'Understand', s:'ey-understand.html', n:'Capabilities.'},
-      {t:'Funnel', s:'ey-funnel.html', n:'Grafico.'}
+      {t:'Understand', s:'ey-understand.html', n:'Capabilities map.'},
+      {t:'Funnel', s:'ey-funnel.html', n:'Chart, not browser chrome.'}
     ]
   };
   var list=MAP[skin];
   var root=document.getElementById('root');
   if(!list){
-    root.innerHTML='<p class="miss">Este proyecto no tiene diagramas sueltos. La UI vive en Library y en Beats.</p>';
+    root.innerHTML='<p class="miss">This project has no standalone diagrams. Product UI lives in Library and Beats.</p>';
     return;
   }
   list.forEach(function(item){
