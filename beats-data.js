@@ -1,23 +1,5 @@
 var PROJECTS = [
   {
-    id:'ds', name:'DS',
-    accent:'#f0eee9',
-    src:'projects/fm-ds-web.html',
-    lede:'Un sistema. Cinco skins. Escala uniforme. Cursor y tooltip viven dentro de la ventana.',
-    beats:[
-      {n:'W',name:'Web',kind:'window',src:'projects/fm-ds-web.html',
-       line:'Ventana notebook. Cambia el skin, no el layout.',
-       cap:'EY · DollarCity · Chek · Blockchain · Customs.',
-       chips:['960×600','scale only'],
-       contains:['Botones + chips','Cursor locked','Tooltip inside unit']},
-      {n:'M',name:'Mobile',kind:'window',src:'projects/fm-ds-mobile.html',
-       line:'Teléfono dentro de la misma unidad. No se hace responsive.',
-       cap:'El device se escala entero.',
-       chips:['phone chrome','scale only'],
-       contains:['Notch + body','Mismos tokens','Cursor inside phone']}
-    ]
-  },
-  {
     id:'ey', name:'EY Fabric', accent:'#c9a227',
     src:'projects/ey-pi-player.html',
     lede:'Research signals to a catalog people can actually publish into.',
