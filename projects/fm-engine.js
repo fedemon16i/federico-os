@@ -93,12 +93,13 @@
   }
   function ring(el, on) { if (el) el.classList.toggle('fm-ring', on !== false); }
   function skin(name) { document.documentElement.setAttribute('data-skin', name); }
+  function mode(name) { document.documentElement.setAttribute('data-mode', name || 'light'); }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
   w.addEventListener('load', fit);
   w.addEventListener('resize', fit);
 
-  w.FM = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, tip: tip, ring: ring, skin: skin };
+  w.FM = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, tip: tip, ring: ring, skin: skin, mode: mode };
   w.EY = w.EY || w.FM;
 })(window);
