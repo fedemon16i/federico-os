@@ -1,11 +1,10 @@
-/* Unit = 13" notebook content: 960×600 (16/10).
-   Scale uniformly into .stage. Never stretch.
-*/
+/* EY engine. Unit 960×600. Cursor is inline SVG — never a CSS triangle, never a raw <img> that can blow up. */
 (function (w) {
   var T = [];
   var UNIT_W = 960;
   var UNIT_H = 600;
   var ro = null;
+  var PTR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
 
   function after(ms, fn) {
     var id = setTimeout(fn, ms);
@@ -51,16 +50,16 @@
   function cursors(host, n) {
     host = host || document.querySelector('.ey-unit');
     n = n || 1;
+    var existing = host.querySelectorAll('.uc');
+    existing.forEach(function (el) { el.remove(); });
     var nodes = [];
     for (var i = 0; i < n; i++) {
       var d = document.createElement('div');
       d.className = 'uc u' + (i + 1);
       d.id = 'u' + (i + 1);
-      d.innerHTML =
-        (n > 1 ? '<em>user ' + (i + 1) + '</em>' : '') +
-        '<img src="ey-cursor.svg" width="24" height="24" alt="">';
-      d.style.left = 28 + i * 20 + 'px';
-      d.style.top = 40 + i * 18 + 'px';
+      d.innerHTML = (n > 1 ? '<em>user ' + (i + 1) + '</em>' : '') + PTR;
+      d.style.left = 28 + i * 22 + 'px';
+      d.style.top = 42 + i * 20 + 'px';
       host.appendChild(d);
       nodes.push(d);
     }
@@ -75,10 +74,10 @@
     var b = unit.getBoundingClientRect();
     var s = b.width / UNIT_W;
     if (!s) s = 1;
-    var x = (r.left - b.left) / s + (ox || 8);
-    var y = (r.top - b.top) / s + (oy || 6);
-    n.style.left = Math.max(8, Math.min(UNIT_W - 40, x)) + 'px';
-    n.style.top = Math.max(8, Math.min(UNIT_H - 40, y)) + 'px';
+    var x = (r.left - b.left) / s + (ox || 6);
+    var y = (r.top - b.top) / s + (oy || 4);
+    n.style.left = Math.max(6, Math.min(UNIT_W - 36, x)) + 'px';
+    n.style.top = Math.max(6, Math.min(UNIT_H - 36, y)) + 'px';
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
