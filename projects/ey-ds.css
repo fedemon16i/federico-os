@@ -1,4 +1,4 @@
-/* Notebook 960×600. Pointer = 22px SVG inside .uc only. */
+/* Notebook 960×600. Dark default. data-mode=light inverts surfaces. */
 :root{
   --ey-bg:#12141c;
   --ey-nav:#0b0c10;
@@ -9,6 +9,9 @@
   --ey-muted:#9aa0b0;
   --ey-faint:#6d7384;
   --ey-line:rgba(255,255,255,.10);
+  --ey-on-nav:#fff;
+  --ey-hero:#07070a;
+  --ey-bar:#14151c;
   --ey-orange:#e8943a;
   --ey-gold:#f0de5a;
   --ey-ok:#7dcea0;
@@ -20,6 +23,20 @@
   --ey-radius:10px;
   --ey-unit-w:960px;
   --ey-unit-h:600px;
+}
+[data-mode="light"]{
+  --ey-bg:#f4f4f1;
+  --ey-nav:#ffffff;
+  --ey-surface:#ffffff;
+  --ey-card:#ffffff;
+  --ey-side:#eceae4;
+  --ey-text:#2e2e38;
+  --ey-muted:#5c5c66;
+  --ey-faint:#8a8a94;
+  --ey-line:#d8d8d0;
+  --ey-on-nav:#2e2e38;
+  --ey-hero:#eceae3;
+  --ey-bar:#eceae4;
 }
 html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-family:var(--ey-font);overflow:hidden}
 .stage{position:relative;width:100%;height:100%;overflow:hidden}
@@ -35,25 +52,25 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
   border-radius:var(--ey-radius);
   border:1px solid var(--ey-line);
   background:var(--ey-nav);
-  box-shadow:0 18px 40px rgba(0,0,0,.45);
+  box-shadow:0 18px 40px rgba(0,0,0,.18);
 }
-.ey-unit.board{background:transparent;color:#f5f4ef;overflow:visible}
+.ey-unit.board{background:transparent;color:var(--ey-text);overflow:visible}
 .ey-bbar{
   height:26px;display:flex;align-items:center;gap:8px;padding:0 12px;
-  background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0;
+  background:var(--ey-bar);border-bottom:1px solid var(--ey-line);flex-shrink:0;
   font-size:10px;color:var(--ey-muted);
 }
 .ey-dots{display:flex;gap:6px}
 .ey-dots i{width:8px;height:8px;border-radius:50%;display:block}
 .ey-dots .r{background:#ff5f57}.ey-dots .y{background:#febc2e}.ey-dots .g{background:#28c840}
-.ey-addr{flex:1;height:16px;border-radius:4px;background:rgba(255,255,255,.05);display:flex;align-items:center;padding:0 8px}
+.ey-addr{flex:1;height:16px;border-radius:4px;background:rgba(127,127,127,.12);display:flex;align-items:center;padding:0 8px}
 .app{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--ey-bg);overflow:hidden}
 .nav{
   height:30px;display:flex;align-items:center;gap:12px;padding:0 14px;
   background:var(--ey-nav);border-bottom:1px solid var(--ey-line);
   font-size:11px;color:var(--ey-muted);flex-shrink:0;
 }
-.nav .on{color:#fff}
+.nav .on,.nav .mark{color:var(--ey-on-nav)}
 .uc{
   position:absolute;z-index:30;pointer-events:none;
   width:22px;height:22px;margin:0;padding:0;line-height:0;overflow:visible;
@@ -78,3 +95,19 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
   white-space:nowrap;pointer-events:none;
 }
 .ring{outline:2px solid var(--ey-new);outline-offset:2px}
+
+/* Inverse hardcoded product chrome when the page is light */
+[data-mode="light"] .hero{
+  background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.28),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.16),transparent 42%),var(--ey-hero) !important;
+}
+[data-mode="light"] .hero .k,
+[data-mode="light"] .hero p{color:var(--ey-muted)!important}
+[data-mode="light"] .hero h2{color:var(--ey-text)}
+[data-mode="light"] .btn-o{color:var(--ey-text)!important;border-color:var(--ey-line)!important}
+[data-mode="light"] .side .sh,
+[data-mode="light"] .side a.on,
+[data-mode="light"] .kpi b,
+[data-mode="light"] .svc .t,
+[data-mode="light"] .svc .acts button.pri{color:var(--ey-text)!important}
+[data-mode="light"] .side a.on{background:rgba(0,0,0,.06)!important}
+[data-mode="light"] .bars b{background:#d8d8d0!important}
