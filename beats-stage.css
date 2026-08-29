@@ -1,0 +1,25 @@
+/* Host contract. Link from beats.html after the inline style to win.
+   Stage = 16/9, full width of the column. Iframe fills it. No plate color.
+*/
+.beat-stage{
+  position:relative !important;
+  width:100% !important;
+  aspect-ratio:16/9 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  background:transparent !important;
+}
+.beat-stage[data-kind="diagram"],
+.beat-stage[data-kind="window"]{
+  aspect-ratio:16/9 !important;
+  min-height:0 !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+.beat-stage iframe,
+.beat-stage[data-kind="diagram"] iframe{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+}
