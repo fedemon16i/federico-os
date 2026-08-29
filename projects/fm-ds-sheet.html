@@ -2,7 +2,7 @@
 <html lang="es" data-skin="ey" data-mode="light"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DS sheet</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=Inter:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="fm-ds.css"/>
 <style>
 html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!important;color:var(--fm-text)}
@@ -12,132 +12,68 @@ html,body{overflow:auto!important;height:auto!important;background:var(--fm-bg)!
 .sec h2{margin:0 0 6px;font-size:15px}
 .sec p{margin:0 0 12px;color:var(--fm-muted);font-size:12px;line-height:1.45}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-.svc,.rail,.ov,.panel{border:1px solid var(--fm-line);border-radius:var(--fm-r);padding:12px;background:var(--fm-card)}
 .meta{font-size:11px;color:var(--fm-muted)}
-.type{font-size:28px;letter-spacing:-.03em;margin:0 0 8px}
-.type span{display:block;font-size:13px;color:var(--fm-muted);letter-spacing:0;margin-top:4px}
-.check{font-size:12px;color:var(--fm-muted);line-height:1.7}
-.check b{color:var(--fm-text)}
 </style></head>
 <body>
 <div class="sheet">
 <div class="kit on" data-kit="ey">
-  <section class="sec" id="check">
-    <h2>Checklist EY UI</h2>
-    <p class="check"><b>Analyze</b> nav · search · AI chip · filters All/Services/Licenses/Kits · hero banner · tiles · service card · Get started / See details<br><b>Requester</b> overlay tabs Description/Resources/Requirements · modal close · form 3 steps · order rail · help · chat<br><b>Hub</b> side Overview/Alarms/Paths/Guides · KPI · alarm rows · area filters · funnels<br><b>Publisher</b> workspace rail · pending/corrections · 9 categories · load file / by hand · AI review<br><b>Design</b> Figma frame · agent frame · design-ready</p>
-  </section>
-  <section class="sec" id="type">
+  <section class="sec">
     <h2>Tipo</h2>
-    <p class="type">EY Interstate<span>#FFE600 solo como fill. Texto sobre claro = ink #2E2E38 o oro #6B5200.</span></p>
-  </section>
-  <section class="sec" id="buttons">
-    <h2>Buttons</h2>
-    <div class="row">
-      <button class="fm-btn" type="button">Get started</button>
-      <button class="fm-btn secondary" type="button">See details</button>
-      <button class="fm-btn ghost" type="button">Talk to us</button>
-      <button class="fm-btn" type="button">Publish new item</button>
-    </div>
+    <p>EY Interstate. En light el amarillo no es texto. Total del order usa #6B5200.</p>
   </section>
   <section class="sec" id="nav">
-    <h2>Nav + search + AI</h2>
-    <div class="fm-nav"><span class="on">Catalog</span><span>Workbench</span><span>Hub</span></div>
-    <div class="row" style="margin-top:10px"><div class="fm-field" style="flex:1;max-width:280px">Search products</div><span class="fm-chip">Search products AI</span></div>
-    <div class="row"><span class="fm-chip on">All</span><span class="fm-chip">Services</span><span class="fm-chip">Licenses</span><span class="fm-chip">Kits</span></div>
+    <h2>Nav</h2>
+    <div class="fm-nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span></div>
+    <div class="row" style="margin-top:10px"><div class="fm-field" style="flex:1">Search for products</div><span class="fm-chip">AI</span></div>
   </section>
-  <section class="sec" id="banner">
-    <h2>Banner / hero</h2>
-    <div class="fm-banner"><b>Shared delivery for teams and clients</b><span>Unlock technology at speed and scale.</span></div>
+  <section class="sec" id="hero">
+    <h2>Hero banner</h2>
+    <div class="fm-hero"><b>Make your vision a reality with Fabric solutions.</b><span>Catalog of services, kits and APIs. Copy inventado.</span></div>
   </section>
-  <section class="sec" id="alerts">
-    <h2>Alerts</h2>
-    <div class="fm-notice" style="margin-bottom:8px">Required field. Workbench needs a workspace.</div>
-    <div class="row"><span class="fm-tag bad">Drop-off</span><span class="fm-tag warn">Correction</span><span class="fm-tag ok">AI pass</span><span class="fm-tag warn">Pending</span></div>
-  </section>
-  <section class="sec" id="tiles">
-    <h2>Catalog tiles</h2>
+  <section class="sec" id="photos">
+    <h2>Category tiles</h2>
     <div class="fm-tiles">
-      <div class="fm-tile"><b>Services</b><span>Compute</span></div>
-      <div class="fm-tile"><b>Licenses</b><span>Seats</span></div>
-      <div class="fm-tile"><b>Kits</b><span>Start here</span></div>
+      <div class="fm-photo"><b>Services</b><span>Compute and tools</span></div>
+      <div class="fm-photo"><b>Licenses</b><span>Delivery rights</span></div>
+      <div class="fm-photo"><b>Starter kits</b><span>Packaged starts</span></div>
     </div>
   </section>
-  <section class="sec" id="card">
-    <h2>Service card</h2>
-    <div class="svc">
-      <div class="meta">SERVICE</div>
-      <b>Cluster service</b>
-      <p class="meta">Shared infrastructure offerings.</p>
+  <section class="sec" id="filters">
+    <h2>Filters</h2>
+    <div class="row"><span class="fm-chip on">All services</span><span class="fm-chip">Offerings</span><span class="fm-chip">Add-ons</span><span class="fm-chip">Environments</span></div>
+  </section>
+  <section class="sec" id="offer">
+    <h2>Offering card</h2>
+    <div class="fm-offer">
+      <div class="kind">Services · Offerings</div>
+      <b>Cluster workspace</b>
+      <p class="meta">Shared tools for a team. Copy inventado.</p>
       <div class="row" style="margin-top:10px">
+        <button class="fm-btn secondary" type="button">View more</button>
         <button class="fm-btn" type="button">Get started</button>
-        <button class="fm-btn secondary" type="button">See details and requirements</button>
       </div>
     </div>
   </section>
-  <section class="sec" id="modal">
-    <h2>Modal / overlay</h2>
-    <div class="ov">
-      <div class="row"><span class="fm-chip on">Description</span><span class="fm-chip">Resources</span><span class="fm-chip">Requirements</span></div>
-      <p class="meta">Workspace, team, billing account.</p>
-      <div class="row"><button class="fm-btn" type="button">Get started</button><button class="fm-btn ghost" type="button">Close</button></div>
-    </div>
-  </section>
-  <section class="sec" id="panel">
-    <h2>Panels</h2>
-    <div class="row">
-      <div class="panel" style="flex:1"><b>Order rail</b><p class="meta">Workbench · 1 instance</p><p class="meta">Help / Requirements</p></div>
-      <div class="panel" style="flex:1"><b>Chat</b><p class="meta">Did you see the requirements?</p></div>
-    </div>
-  </section>
   <section class="sec" id="form">
-    <h2>Form</h2>
-    <div class="fm-stepper" style="margin-bottom:12px"><b>1</b> Customize &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Workspace</div>
-    <div class="fm-field" style="margin-bottom:8px">Instance name</div>
-    <div class="fm-field" style="margin-bottom:8px">Repo / license</div>
+    <h2>Workbench form</h2>
+    <div class="fm-stepper" style="margin-bottom:12px"><b>1</b> Customization &nbsp;<b>2</b> Billing &nbsp;<b>3</b> Confirmation</div>
+    <div class="fm-field" style="margin-bottom:8px">Friendly instance name</div>
+    <div class="fm-field" style="margin-bottom:8px">Location · US West 2</div>
   </section>
-  <section class="sec" id="hub">
-    <h2>Hub</h2>
-    <div class="fm-kpis" style="margin-bottom:10px">
-      <div class="fm-kpi"><i>Request drop</i><b>22</b></div>
-      <div class="fm-kpi"><i>Onboard stall</i><b>3</b></div>
-      <div class="fm-kpi"><i>Help unused</i><b>4</b></div>
-    </div>
-    <div class="row"><span class="fm-chip on">Alarms</span><span class="fm-chip">Paths</span><span class="fm-chip">Guides</span><span class="fm-chip">Signals</span></div>
-    <table class="fm-table"><thead><tr><th>Alarm</th><th></th></tr></thead><tbody><tr><td>Workbench required field</td><td><span class="fm-tag bad">hot</span></td></tr></tbody></table>
+  <section class="sec" id="disclaimer">
+    <h2>Disclaimer + order</h2>
+    <div class="fm-disclaimer" style="margin-bottom:10px">Displayed costs are estimates and exclude platform service charges.</div>
+    <div class="fm-offer"><b>Your order</b><p class="meta">Empty until configure completes.</p><div class="row" style="margin-top:8px;justify-content:space-between"><span>Total</span><span class="fm-total">$0 / month</span></div></div>
   </section>
-  <section class="sec" id="pub">
-    <h2>Publisher</h2>
-    <div class="row"><span class="fm-chip on">Items</span><span class="fm-chip">Queue</span><span class="fm-chip">Teams</span><span class="fm-chip">Licenses</span></div>
-    <div class="fm-kpis" style="margin:10px 0">
-      <div class="fm-kpi"><i>Pending</i><b>2</b></div>
-      <div class="fm-kpi"><i>Corrections</i><b>1</b></div>
-      <div class="fm-kpi"><i>AI pass</i><b>4</b></div>
-    </div>
-    <button class="fm-btn" type="button">Publish new item</button>
-    <div class="fm-tiles" style="margin-top:10px">
-      <div class="fm-tile"><b>Service</b><span>Offering</span></div>
-      <div class="fm-tile"><b>License</b><span>Keys</span></div>
-      <div class="fm-tile"><b>Artifact</b><span>Package</span></div>
-    </div>
-    <div class="row" style="margin-top:10px"><span class="fm-chip">From product file</span><span class="fm-chip">Add by hand</span></div>
+  <section class="sec" id="done">
+    <h2>Completed step</h2>
+    <div class="fm-offer"><span class="fm-tag ok">Done</span> <b>Configure your instance</b><p class="meta">westus2 · workspace ready</p><button class="fm-btn secondary" type="button">Edit</button></div>
   </section>
 </div>
-<div class="kit" data-kit="dc">
-  <section class="sec"><h2>Tipo</h2><p class="type">Ant + Inter<span>#0B7A3C.</span></p></section>
-  <section class="sec"><h2>Buttons</h2><div class="row"><button class="fm-btn" type="button">Comprar</button></div></section>
-  <section class="sec"><h2>Search</h2><div class="fm-field">Buscar en DollarCity</div></section>
-</div>
-<div class="kit" data-kit="chek">
-  <section class="sec"><h2>Tipo</h2><p class="type">Ripley / Inter<span>#543379.</span></p></section>
-  <section class="sec"><h2>Buttons</h2><div class="row"><button class="fm-btn" type="button">Pagar</button></div></section>
-</div>
-<div class="kit" data-kit="cus">
-  <section class="sec"><h2>Tipo</h2><p class="type">Inter · PrimeNG<span>#1071E5.</span></p></section>
-  <section class="sec"><h2>Stepper</h2><div class="fm-stepper"><b>1</b> Selección &nbsp;<b>2</b> Info &nbsp;<b>3</b> Revisión</div></section>
-</div>
-<div class="kit" data-kit="bc">
-  <section class="sec"><h2>Tipo</h2><p class="type">IBM Plex<span>Teal + #04221F.</span></p></section>
-</div>
+<div class="kit" data-kit="dc"><section class="sec"><h2>DollarCity</h2><button class="fm-btn" type="button">Comprar</button></section></div>
+<div class="kit" data-kit="chek"><section class="sec"><h2>Chek</h2><button class="fm-btn" type="button">Pagar</button></section></div>
+<div class="kit" data-kit="cus"><section class="sec"><h2>Aduanas</h2><div class="fm-stepper"><b>1</b> Selección</div></section></div>
+<div class="kit" data-kit="bc"><section class="sec"><h2>Blockchain</h2><button class="fm-btn" type="button">Explore</button></section></div>
 </div>
 <script src="fm-engine.js"></script>
 <script>
