@@ -1,5 +1,5 @@
-/* Notebook 960×600. Dark default. data-mode=light inverts app surfaces only.
-   Photographic banners stay dark + white type in both modes.
+/* Notebook 960×600. Dark default. Light inverts APP surfaces only.
+   Photo / colored plates always dark + #fff. Quiet cards always ink on plate.
 */
 :root{
   --ey-bg:#12141c;
@@ -93,34 +93,43 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 .callout{position:absolute;z-index:40;font-size:11px;font-weight:700;color:#fff;background:var(--ey-new);padding:4px 8px;border-radius:3px;white-space:nowrap;pointer-events:none}
 .ring{outline:2px solid var(--ey-new);outline-offset:2px}
 
-/* Colored / photo banners: always dark plate + light type */
-.hero,
-.fm-hero,
-.fm-photo{
+/* Photo plates: always dark + white type */
+.hero,.banner,.fm-hero,.fm-photo,
+.tile.t1,.tile.t2,.tile.t3,.tile.t4,.tile.t5,.tile.t6{
   color:#fff !important;
 }
-.hero h2,
-.hero .k,
-.hero p,
-.fm-hero b,
-.fm-hero span,
-.fm-photo b,
-.fm-photo span{
+.hero h2,.hero .k,.hero p,
+.banner .t,.banner .s,
+.tile.t1 .t,.tile.t2 .t,.tile.t3 .t,.tile.t4 .t,.tile.t5 .t,.tile.t6 .t,
+.tile.t1 .s,.tile.t2 .s,.tile.t3 .s,.tile.t4 .s,.tile.t5 .s,.tile.t6 .s,
+.fm-hero b,.fm-hero span,.fm-photo b,.fm-photo span{
   color:#fff !important;
 }
-.hero .btn-o{color:#fff !important;border-color:rgba(255,255,255,.4) !important}
+.hero .btn-o{color:#fff !important;border-color:rgba(255,255,255,.55) !important}
 .hero .btn-w{background:#fff;color:#111}
 
 [data-mode="light"] .hero{
   background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a !important;
 }
+[data-mode="light"] .band{
+  background:var(--ey-card) !important;
+  color:var(--ey-text) !important;
+}
+[data-mode="light"] .band p{color:var(--ey-muted)!important}
 [data-mode="light"] .side .sh,
 [data-mode="light"] .side a.on,
 [data-mode="light"] .kpi b,
 [data-mode="light"] .svc .t,
-[data-mode="light"] .svc .acts button.pri{color:var(--ey-text)!important}
+[data-mode="light"] .svc .acts button,
+[data-mode="light"] .svc .acts button.pri{
+  color:var(--ey-text)!important;
+}
 [data-mode="light"] .side a.on{background:rgba(0,0,0,.06)!important}
-[data-mode="light"] .bars b{background:#b7c0cb!important}
+[data-mode="light"] .svc .acts button.pri{
+  background:var(--ey-text)!important;
+  color:#fff!important;
+}
+[data-mode="light"] .bars b{background:#8a93a0!important}
 
 [data-mode="light"] .k,
 [data-mode="light"] .tag,
@@ -135,7 +144,6 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 [data-mode="light"] .node.arm,
 [data-mode="light"] .own,
 [data-mode="light"] .bar,
-[data-mode="light"] .tile,
 [data-mode="light"] .pendo,
 [data-mode="light"] .card,
 [data-mode="light"] .find,
@@ -147,14 +155,12 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 [data-mode="light"] .node.leaf,
 [data-mode="light"] .row2,
 [data-mode="light"] .lbl,
-[data-mode="light"] .s,
 [data-mode="light"] .who,
 [data-mode="light"] .tools span,
 [data-mode="light"] .bar span{
   color:var(--ey-muted)!important;
 }
 [data-mode="light"] .sc b,
-[data-mode="light"] .t,
 [data-mode="light"] .note,
 [data-mode="light"] .q{
   color:var(--ey-text)!important;
