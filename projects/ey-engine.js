@@ -1,8 +1,8 @@
-/* EY engine. Unit 960×600. Cursor is inline SVG. */
+/* EY engine. Unit 840×560 — Hub proportion. */
 (function (w) {
   var T = [];
-  var UNIT_W = 960;
-  var UNIT_H = 600;
+  var UNIT_W = 840;
+  var UNIT_H = 560;
   var ro = null;
   var PTR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
 
@@ -61,8 +61,7 @@
   function cursors(host, n) {
     host = host || document.querySelector('.ey-unit');
     n = n || 1;
-    var existing = host.querySelectorAll('.uc');
-    existing.forEach(function (el) { el.remove(); });
+    host.querySelectorAll('.uc').forEach(function (el) { el.remove(); });
     var nodes = [];
     for (var i = 0; i < n; i++) {
       var d = document.createElement('div');
@@ -87,8 +86,8 @@
     if (!s) s = 1;
     var x = (r.left - b.left) / s + (ox || 6);
     var y = (r.top - b.top) / s + (oy || 4);
-    n.style.left = Math.max(6, Math.min(UNIT_W - 36, x)) + 'px';
-    n.style.top = Math.max(6, Math.min(UNIT_H - 36, y)) + 'px';
+    n.style.left = Math.max(8, Math.min(UNIT_W - 88, x)) + 'px';
+    n.style.top = Math.max(8, Math.min(UNIT_H - 36, y)) + 'px';
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
