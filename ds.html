@@ -34,7 +34,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 </div>
 <div class="wrap">
   <h1>Component library</h1>
-  <p class="lede">Tokens and categories per project. Preview is the reference beat. Library lists every control class. Diagrams stay on their own tab.</p>
+  <p class="lede">EY kit is the handoff baseline. Preview: Web, Tablet, Mobile wrap the reference beat. Next project: DollarCity.</p>
 
   <p class="lbl">Project</p>
   <div class="row" id="skins">
@@ -45,7 +45,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
     <button class="chip" data-skin="bc" type="button">Blockchain</button>
   </div>
 
-  <p class="lbl">Preview · reference beat</p>
+  <p class="lbl">Preview</p>
   <div class="row">
     <button class="dev on" data-mode="light" type="button">Light</button>
     <button class="dev" data-mode="dark" type="button">Dark</button>
@@ -55,7 +55,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
     <button class="dev" data-dev="tablet" type="button">Tablet</button>
     <button class="dev" data-dev="phone" type="button">Mobile</button>
   </div>
-  <div class="stage"><iframe id="preview" title="Reference beat"></iframe></div>
+  <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
   <p class="lbl">Catalog</p>
   <div class="row">
@@ -69,20 +69,13 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 var skin='ey', mode='light', dev='desktop', cat='lib';
 var preview=document.getElementById('preview');
 var sheet=document.getElementById('sheet');
-var REF={
-  ey:'projects/ey-02-analyze.html',
-  dc:'projects/dollarcity-player.html',
-  chek:'projects/chek-player.html',
-  cus:'projects/customs.html',
-  bc:'projects/blockchain-player.html'
-};
 var JUMP=['tokens','type','buttons','bars','banners','chips','cards','forms','tables','kpis','alerts','icons','reference','extras'];
 function sheetUrl(hash){
   if(cat==='diag') return 'projects/fm-ds-diagrams.html?skin='+skin+'&mode='+mode;
   return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
 }
 function previewUrl(){
-  return REF[skin]+'?mode='+mode+'&device='+dev+'&r='+Date.now();
+  return 'projects/fm-ds-preview.html?skin='+skin+'&mode='+mode+'&device='+dev+'&r='+Date.now();
 }
 function jumps(){
   var box=document.getElementById('jumps');
@@ -90,20 +83,13 @@ function jumps(){
   box.style.display = cat==='lib' ? 'flex' : 'none';
   JUMP.forEach(function(name){
     var b=document.createElement('button');
-    b.type='button';
-    b.textContent=name;
+    b.type='button'; b.textContent=name;
     b.onclick=function(){ sheet.src=sheetUrl(name); };
     box.appendChild(b);
   });
 }
-function load(){
-  preview.src=previewUrl();
-  sheet.src=sheetUrl();
-  jumps();
-}
-function mark(sel, el){
-  document.querySelectorAll(sel).forEach(function(x){ x.classList.toggle('on', x===el); });
-}
+function load(){ preview.src=previewUrl(); sheet.src=sheetUrl(); jumps(); }
+function mark(sel, el){ document.querySelectorAll(sel).forEach(function(x){ x.classList.toggle('on', x===el); }); }
 document.querySelectorAll('#skins .chip').forEach(function(b){
   b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); load(); };
 });
