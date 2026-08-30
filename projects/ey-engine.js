@@ -3,6 +3,7 @@
   var T = [];
   var UNIT_W = 840;
   var UNIT_H = 560;
+  var PAD = 16;
   var ro = null;
   var PTR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
 
@@ -34,8 +35,8 @@
     var host = document.querySelector('.stage') || document.body;
     if (!unit) return 1;
     var r = host.getBoundingClientRect();
-    var wdt = r.width || host.clientWidth || UNIT_W;
-    var hgt = r.height || host.clientHeight || UNIT_H;
+    var wdt = (r.width || host.clientWidth || UNIT_W) - PAD * 2;
+    var hgt = (r.height || host.clientHeight || UNIT_H) - PAD * 2;
     if (wdt < 8 || hgt < 8) return 1;
     var s = Math.min(wdt / UNIT_W, hgt / UNIT_H);
     if (!isFinite(s) || s <= 0) s = 1;
