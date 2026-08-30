@@ -34,7 +34,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 </div>
 <div class="wrap">
   <h1>Component library</h1>
-  <p class="lede">EY kit is the handoff baseline. Preview: Web, Tablet, Mobile wrap the reference beat. Next project: DollarCity.</p>
+  <p class="lede">Web preview = window beat. Mobile preview = phone beat in iPhone chrome. No responsive shrink of a desktop UI.</p>
 
   <p class="lbl">Project</p>
   <div class="row" id="skins">
@@ -50,11 +50,7 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
     <button class="dev on" data-mode="light" type="button">Light</button>
     <button class="dev" data-mode="dark" type="button">Dark</button>
   </div>
-  <div class="row">
-    <button class="dev on" data-dev="desktop" type="button">Web</button>
-    <button class="dev" data-dev="tablet" type="button">Tablet</button>
-    <button class="dev" data-dev="phone" type="button">Mobile</button>
-  </div>
+  <div class="row" id="devs"></div>
   <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
   <p class="lbl">Catalog</p>
@@ -69,13 +65,28 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
 var skin='ey', mode='light', dev='desktop', cat='lib';
 var preview=document.getElementById('preview');
 var sheet=document.getElementById('sheet');
+var PHONE=['chek','bc'];
 var JUMP=['tokens','type','buttons','bars','banners','chips','cards','forms','tables','kpis','alerts','icons','reference','extras'];
+function isPhone(){ return PHONE.indexOf(skin)>=0; }
 function sheetUrl(hash){
   if(cat==='diag') return 'projects/fm-ds-diagrams.html?skin='+skin+'&mode='+mode;
   return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
 }
 function previewUrl(){
   return 'projects/fm-ds-preview.html?skin='+skin+'&mode='+mode+'&device='+dev+'&r='+Date.now();
+}
+function deviceRow(){
+  var box=document.getElementById('devs');
+  box.innerHTML='';
+  var opts=isPhone() ? [['phone','Mobile']] : [['desktop','Web']];
+  if(isPhone()) dev='phone'; else if(dev==='phone'||dev==='tablet') dev='desktop';
+  opts.forEach(function(pair){
+    var b=document.createElement('button');
+    b.type='button'; b.className='dev'+(dev===pair[0]?' on':'');
+    b.dataset.dev=pair[0]; b.textContent=pair[1];
+    b.onclick=function(){ dev=pair[0]; deviceRow(); load(); };
+    box.appendChild(b);
+  });
 }
 function jumps(){
   var box=document.getElementById('jumps');
@@ -91,18 +102,15 @@ function jumps(){
 function load(){ preview.src=previewUrl(); sheet.src=sheetUrl(); jumps(); }
 function mark(sel, el){ document.querySelectorAll(sel).forEach(function(x){ x.classList.toggle('on', x===el); }); }
 document.querySelectorAll('#skins .chip').forEach(function(b){
-  b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); load(); };
+  b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); deviceRow(); load(); };
 });
 document.querySelectorAll('[data-mode]').forEach(function(b){
   b.onclick=function(){ mode=b.dataset.mode; mark('[data-mode]', b); load(); };
 });
-document.querySelectorAll('[data-dev]').forEach(function(b){
-  b.onclick=function(){ dev=b.dataset.dev; mark('[data-dev]', b); load(); };
-});
 document.querySelectorAll('[data-cat]').forEach(function(b){
   b.onclick=function(){ cat=b.dataset.cat; mark('[data-cat]', b); load(); };
 });
-load();
+deviceRow(); load();
 </script>
 </body>
 </html>
