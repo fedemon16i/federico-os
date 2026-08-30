@@ -1,36 +1,31 @@
 # Design system library — handoff
 
-Page: `ds.html`. Sheet: `projects/fm-ds-sheet.html`. Tokens: `projects/fm-ds.css`.
+Page: `ds.html`. Sheet: `projects/fm-ds-sheet.html`.
+Tokens: `projects/fm-ds.css` + `projects/ey-ds.css`.
 
-## Reference beat (do not invent a new one)
+## Process
 
-| Project | File | Why |
-|---|---|---|
-| EY Fabric | `projects/ey-02-analyze.html` | Full product window + cursors |
-| DollarCity | `projects/dollarcity-player.html` | POS → flag → video |
-| Chek | `projects/chek-player.html` | Phone card + pay |
-| Customs | `projects/customs.html` | ARIVU + pass |
-| Blockchain | `projects/blockchain-player.html` | Phone map + POI |
+A visual fix is a **token or class in the DS**, then every beat that links that file inherits it.
+Do not patch a single HTML beat and leave Hub / Req / Pub / Research / preview / sheet behind.
+If a beat still hardcodes `#fff` / `#FFE600`, ask before stripping — then strip **all** copies.
 
-## Token contract
+Analyze is the reference window. Research embeds it. Preview hosts it. Req / Hub / Pub reuse the same nav + marketplace language.
 
-Skins: `ey` `dc` `chek` `cus` `bc` via `data-skin`. Mode via `data-mode`.
+## Contrast law
 
-| Token | Role |
+- Photo / colored plate (`.hero` `.banner` `.tile.t1–t6` `.fm-hero` `.fm-photo`): dark fill + **white** type, both modes.
+- Quiet surface (nav, rail, card, field, band in light): **ink** on plate. No white type on white. No ink on navy.
+- `#FFE600` is fill only (flag, root node). Text on light = `#6B5200` or `#2E2E38`.
+- Yellow fill always carries `#111` ink.
+
+## Reference beat
+
+| Project | File |
 |---|---|
-| `--fm-bg` `--fm-card` `--fm-side` `--fm-nav` | Surfaces |
-| `--fm-text` `--fm-muted` `--fm-faint` `--fm-line` | Type + hairlines |
-| `--fm-accent` `--fm-on-accent` | Selected chip / stepper |
-| `--fm-btn` `--fm-btn-ink` | Primary button |
-| `--fm-ghost` | Ghost label |
-| `--fm-ok` `--fm-bad` `--fm-new` | Status |
-| `--fm-mark` `--fm-on-mark` | Notice plate |
+| EY Fabric | `projects/ey-02-analyze.html` |
+| DollarCity | `projects/dollarcity-player.html` |
+| Chek | `projects/chek-player.html` |
+| Customs | `projects/customs.html` |
+| Blockchain | `projects/blockchain-player.html` |
 
-EY light: never use `#FFE600` as text. Ink on light = `#2E2E38` or `#6B5200`.
-DC button = `#0B7A3C` + white. Chek gold is mark, not white-on-gold.
-
-Unit: 960×600, uniform scale. Web window radius 24. Phone = iPhone 17 chrome + touch disc.
-
-## Categories in the sheet
-
-Tokens · Type · Buttons · Bars · Banners · Chips · Cards · Forms · Tables · KPIs · Alerts · Icons · Reference beat · Project extras
+Preview: Web = window beat. Mobile = phone beat in iPhone chrome. Never shrink a desktop UI.
