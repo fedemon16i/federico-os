@@ -1,4 +1,4 @@
-/* Notebook 960×600. Dark default. Light inverts APP surfaces only.
+/* Notebook 840×560. Dark default. Light inverts APP surfaces only.
    Photo / colored plates always dark + #fff. Quiet cards always ink on plate.
 */
 :root{
@@ -25,8 +25,8 @@
   --ey-font:'EYInterstate','Source Sans 3','IBM Plex Sans',Arial Narrow,sans-serif;
   --ey-mono:'IBM Plex Mono',ui-monospace,monospace;
   --ey-radius:10px;
-  --ey-unit-w:960px;
-  --ey-unit-h:600px;
+  --ey-unit-w:840px;
+  --ey-unit-h:560px;
 }
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Regular.woff') format('woff');font-weight:400;font-display:swap}
 @font-face{font-family:'EYInterstate';src:url('https://www.ey.com/etc.clientlibs/ey-unified-site/clientlibs/webpack.bundles/resources/fonts/EYInterstate-Bold.woff') format('woff');font-weight:700;font-display:swap}
@@ -88,49 +88,38 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
   transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1);
 }
 .uc svg,.uc img{display:block;width:22px !important;height:22px !important;max-width:22px !important;max-height:22px !important}
-.uc em{position:absolute;left:18px;top:-4px;font-style:normal;font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;color:#111;white-space:nowrap}
+.uc em{
+  position:absolute;left:20px;top:-6px;font-style:normal;font-size:11px;font-weight:700;
+  line-height:1.25;padding:3px 7px;border-radius:4px;color:#111;white-space:nowrap;
+}
 .u1 em{background:#FFE600}.u2 em{background:#7dc4ff}.u3 em{background:#e8943a}
 .callout{position:absolute;z-index:40;font-size:11px;font-weight:700;color:#fff;background:var(--ey-new);padding:4px 8px;border-radius:3px;white-space:nowrap;pointer-events:none}
 .ring{outline:2px solid var(--ey-new);outline-offset:2px}
 
-/* Photo plates: always dark + white type */
 .hero,.banner,.fm-hero,.fm-photo,
-.tile.t1,.tile.t2,.tile.t3,.tile.t4,.tile.t5,.tile.t6{
-  color:#fff !important;
-}
+.tile.t1,.tile.t2,.tile.t3,.tile.t4,.tile.t5,.tile.t6{color:#fff !important}
 .hero h2,.hero .k,.hero p,
 .banner .t,.banner .s,
 .tile.t1 .t,.tile.t2 .t,.tile.t3 .t,.tile.t4 .t,.tile.t5 .t,.tile.t6 .t,
 .tile.t1 .s,.tile.t2 .s,.tile.t3 .s,.tile.t4 .s,.tile.t5 .s,.tile.t6 .s,
-.fm-hero b,.fm-hero span,.fm-photo b,.fm-photo span{
-  color:#fff !important;
-}
+.fm-hero b,.fm-hero span,.fm-photo b,.fm-photo span{color:#fff !important}
 .hero .btn-o{color:#fff !important;border-color:rgba(255,255,255,.55) !important}
 .hero .btn-w{background:#fff;color:#111}
 
 [data-mode="light"] .hero{
   background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a !important;
 }
-[data-mode="light"] .band{
-  background:var(--ey-card) !important;
-  color:var(--ey-text) !important;
-}
+[data-mode="light"] .band{background:var(--ey-card) !important;color:var(--ey-text) !important}
 [data-mode="light"] .band p{color:var(--ey-muted)!important}
 [data-mode="light"] .side .sh,
 [data-mode="light"] .side a.on,
 [data-mode="light"] .kpi b,
 [data-mode="light"] .svc .t,
 [data-mode="light"] .svc .acts button,
-[data-mode="light"] .svc .acts button.pri{
-  color:var(--ey-text)!important;
-}
+[data-mode="light"] .svc .acts button.pri{color:var(--ey-text)!important}
 [data-mode="light"] .side a.on{background:rgba(0,0,0,.06)!important}
-[data-mode="light"] .svc .acts button.pri{
-  background:var(--ey-text)!important;
-  color:#fff!important;
-}
+[data-mode="light"] .svc .acts button.pri{background:var(--ey-text)!important;color:#fff!important}
 [data-mode="light"] .bars b{background:#8a93a0!important}
-
 [data-mode="light"] .k,
 [data-mode="light"] .tag,
 [data-mode="light"] .mh,
@@ -138,9 +127,7 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 [data-mode="light"] .note em,
 [data-mode="light"] .arr,
 [data-mode="light"] .feat em,
-[data-mode="light"] .filters i.on{
-  color:var(--ey-accent-ink)!important;
-}
+[data-mode="light"] .filters i.on{color:var(--ey-accent-ink)!important}
 [data-mode="light"] .node.arm,
 [data-mode="light"] .own,
 [data-mode="light"] .bar,
@@ -148,27 +135,18 @@ html,body{margin:0;height:100%;background:transparent;color:var(--ey-text);font-
 [data-mode="light"] .card,
 [data-mode="light"] .find,
 [data-mode="light"] .sc{
-  background:var(--ey-plate)!important;
-  color:var(--ey-text)!important;
-  border:1px solid var(--ey-line)!important;
+  background:var(--ey-plate)!important;color:var(--ey-text)!important;border:1px solid var(--ey-line)!important;
 }
 [data-mode="light"] .node.leaf,
 [data-mode="light"] .row2,
 [data-mode="light"] .lbl,
 [data-mode="light"] .who,
 [data-mode="light"] .tools span,
-[data-mode="light"] .bar span{
-  color:var(--ey-muted)!important;
-}
+[data-mode="light"] .bar span{color:var(--ey-muted)!important}
 [data-mode="light"] .sc b,
 [data-mode="light"] .note,
-[data-mode="light"] .q{
-  color:var(--ey-text)!important;
-}
+[data-mode="light"] .q{color:var(--ey-text)!important}
 [data-mode="light"] .node.root,
-[data-mode="light"] .row.dead .bar{
-  background:#C9A800!important;
-  color:#111!important;
-}
+[data-mode="light"] .row.dead .bar{background:#C9A800!important;color:#111!important}
 [data-mode="light"] .row.dead .bar span{color:#111!important}
 [data-mode="light"] .line{background:var(--ey-yellow)!important}
