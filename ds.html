@@ -7,50 +7,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#08080b;--border:rgba(255,255,255,.08);--text:#f0eee9;--muted:#8a8580;--bar:rgba(8,8,11,.92)}
+:root{--bg:#08080b;--border:rgba(255,255,255,.12);--text:#f0eee9;--muted:#9a958c;--bar:#0c0c10}
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif}
-.top{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 28px;background:var(--bar);border-bottom:1px solid var(--border)}
+.top{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--bar);border-bottom:1px solid var(--border)}
 .top a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none}
-.top .logo{margin-right:auto;color:var(--text);opacity:.65}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 28px 80px}
-h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
-.lede{color:var(--muted);max-width:64ch;margin:8px 0 22px;line-height:1.55}
-.lbl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:8px 16px;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer}
-.chip.on,.dev.on{color:var(--text);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
-.stage{width:100%;max-width:920px;aspect-ratio:16/10;position:relative;overflow:hidden;margin:8px 0 18px;border:1px solid var(--border);border-radius:16px}
+.top .logo{margin-right:auto;color:var(--text)}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 20px 80px}
+h1{font-family:'Space Grotesk',system-ui;font-size:clamp(1.6rem,5vw,2rem);letter-spacing:-.03em}
+.lede{color:var(--muted);max-width:64ch;margin:8px 0 20px;line-height:1.55;font-size:14px}
+.lbl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.chip,.dev{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:8px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;cursor:pointer}
+.chip.on,.dev.on{color:#111;background:#e8e4dc;border-color:#e8e4dc}
+.meta{font-size:12px;color:var(--muted);margin:0 0 10px}
+.stage{width:100%;aspect-ratio:16/10;position:relative;overflow:hidden;margin:0 0 8px;background:#050506}
 .stage iframe,.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.sheet{width:100%;max-width:920px;height:960px;position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#0b0b0e}
-.jump{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
-.jump button{border:0;background:transparent;color:#c9a227;font:12px 'DM Sans',sans-serif;cursor:pointer}
+.sheet{width:100%;height:min(920px,140vw);position:relative;border:1px solid var(--border);overflow:hidden;background:#0b0b0e}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.jump button{border:0;background:transparent;color:#e8d48a;font:12px 'DM Sans',sans-serif;cursor:pointer}
+@media (max-width:720px){
+  .wrap{padding:16px 0 64px}
+  .wrap > h1,.wrap > .lede,.wrap > .lbl,.wrap > .row,.wrap > .meta,.wrap > .jump,.wrap > .sheet{padding-left:16px;padding-right:16px}
+  .stage{width:100%;border-radius:0}
+}
 </style>
 </head>
 <body>
 <div class="top">
   <a class="logo" href="index.html">FM.OS</a>
-  <a href="beats.html">Beats</a>
-  <a href="docs/DS-LIBRARY.md">Library spec</a>
+  <a href="beats.html">Beats page</a>
+  <a href="docs/DS-LIBRARY.md">Spec</a>
 </div>
 <div class="wrap">
-  <h1>Component library</h1>
-  <p class="lede">Web preview = window beat. Mobile preview = phone beat in iPhone chrome. No responsive shrink of a desktop UI.</p>
+  <h1>Design system</h1>
+  <p class="lede">Unit is 960×600. The window scales as one piece to the stage width — phone, tablet, or desk. No layout reflow.</p>
 
   <p class="lbl">Project</p>
   <div class="row" id="skins">
     <button class="chip on" data-skin="ey" type="button">EY Fabric</button>
     <button class="chip" data-skin="dc" type="button">DollarCity</button>
-    <button class="chip" data-skin="chek" type="button">Chek / Ripley</button>
-    <button class="chip" data-skin="cus" type="button">Customs SV</button>
+    <button class="chip" data-skin="chek" type="button">Chek</button>
+    <button class="chip" data-skin="cus" type="button">Customs</button>
     <button class="chip" data-skin="bc" type="button">Blockchain</button>
   </div>
 
-  <p class="lbl">Preview</p>
+  <p class="lbl">Mode</p>
   <div class="row">
     <button class="dev on" data-mode="light" type="button">Light</button>
     <button class="dev" data-mode="dark" type="button">Dark</button>
   </div>
-  <div class="row" id="devs"></div>
+
+  <p class="lbl">Beats</p>
+  <div class="row" id="beats"></div>
+  <p class="meta" id="scale">Unit 960 × 600 · uniform scale to stage width</p>
   <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
 
   <p class="lbl">Catalog</p>
@@ -62,10 +71,27 @@ h1{font-family:'Space Grotesk',system-ui;font-size:2rem;letter-spacing:-.03em}
   <div class="sheet"><iframe id="sheet" title="Library"></iframe></div>
 </div>
 <script>
-var skin='ey', mode='light', dev='desktop', cat='lib';
+var skin='ey', mode='light', cat='lib', beat='ey-02-analyze.html';
 var preview=document.getElementById('preview');
 var sheet=document.getElementById('sheet');
 var PHONE=['chek','bc'];
+var BEATS={
+  ey:[
+    ['Measure','ey-01-measure.html'],
+    ['Analyze','ey-02-analyze.html'],
+    ['Funnel','ey-funnel.html'],
+    ['Research','ey-research.html'],
+    ['Understand','ey-understand.html'],
+    ['Design','ey-design.html'],
+    ['Hub','ey-hub.html'],
+    ['Requester','ey-req.html'],
+    ['Publisher','ey-pub.html']
+  ],
+  dc:[['POS','dollarcity-player.html']],
+  chek:[['Card','chek-player.html']],
+  cus:[['ARIVU','customs.html']],
+  bc:[['Map','blockchain-player.html']]
+};
 var JUMP=['tokens','type','buttons','bars','banners','chips','cards','forms','tables','kpis','alerts','icons','reference','extras'];
 function isPhone(){ return PHONE.indexOf(skin)>=0; }
 function sheetUrl(hash){
@@ -73,18 +99,20 @@ function sheetUrl(hash){
   return 'projects/fm-ds-sheet.html?skin='+skin+'&mode='+mode+(hash?('#'+hash):'');
 }
 function previewUrl(){
-  return 'projects/fm-ds-preview.html?skin='+skin+'&mode='+mode+'&device='+dev+'&r='+Date.now();
+  if(isPhone()) return 'projects/fm-ds-preview.html?skin='+skin+'&mode='+mode+'&device=phone&r='+Date.now();
+  return 'projects/'+beat+'?mode='+mode+'&r='+Date.now();
 }
-function deviceRow(){
-  var box=document.getElementById('devs');
+function beatsRow(){
+  var box=document.getElementById('beats');
   box.innerHTML='';
-  var opts=isPhone() ? [['phone','Mobile']] : [['desktop','Web']];
-  if(isPhone()) dev='phone'; else if(dev==='phone'||dev==='tablet') dev='desktop';
-  opts.forEach(function(pair){
+  var list=BEATS[skin]||[];
+  if(!list.some(function(x){ return x[1]===beat; })) beat=list[0][1];
+  list.forEach(function(pair){
     var b=document.createElement('button');
-    b.type='button'; b.className='dev'+(dev===pair[0]?' on':'');
-    b.dataset.dev=pair[0]; b.textContent=pair[1];
-    b.onclick=function(){ dev=pair[0]; deviceRow(); load(); };
+    b.type='button';
+    b.className='chip'+(beat===pair[1]?' on':'');
+    b.textContent=pair[0];
+    b.onclick=function(){ beat=pair[1]; beatsRow(); loadPreview(); };
     box.appendChild(b);
   });
 }
@@ -99,18 +127,19 @@ function jumps(){
     box.appendChild(b);
   });
 }
-function load(){ preview.src=previewUrl(); sheet.src=sheetUrl(); jumps(); }
+function loadPreview(){ preview.src=previewUrl(); }
+function load(){ beatsRow(); loadPreview(); sheet.src=sheetUrl(); jumps(); }
 function mark(sel, el){ document.querySelectorAll(sel).forEach(function(x){ x.classList.toggle('on', x===el); }); }
 document.querySelectorAll('#skins .chip').forEach(function(b){
-  b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); deviceRow(); load(); };
+  b.onclick=function(){ skin=b.dataset.skin; mark('#skins .chip', b); load(); };
 });
 document.querySelectorAll('[data-mode]').forEach(function(b){
   b.onclick=function(){ mode=b.dataset.mode; mark('[data-mode]', b); load(); };
 });
 document.querySelectorAll('[data-cat]').forEach(function(b){
-  b.onclick=function(){ cat=b.dataset.cat; mark('[data-cat]', b); load(); };
+  b.onclick=function(){ cat=b.dataset.cat; mark('[data-cat]', b); sheet.src=sheetUrl(); jumps(); };
 });
-deviceRow(); load();
+load();
 </script>
 </body>
 </html>
