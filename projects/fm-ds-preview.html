@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="ey" data-device="desktop" data-mode="light"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DS preview</title>
+<link rel="stylesheet" href="fm-ds.css"/>
+<style>
+.fm-app{background:#0b0c10}
+.fm-app iframe{flex:1;width:100%;height:100%;border:0;background:transparent;min-height:0}
+.iphone .body{padding:0;background:#0b0c10}
+.iphone .body iframe{width:100%;height:100%;border:0}
+</style></head>
+<body>
+<div class="stage">
+  <div class="fm-unit" id="unit">
+    <div class="fm-shell" id="web">
+      <div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr">preview</div></div>
+      <div class="fm-app"><iframe id="frame" title="Beat"></iframe></div>
+    </div>
+    <div class="phone-slot">
+      <div class="iphone">
+        <div class="sb"><div class="t">9:41</div><div class="island"></div><div class="sys"></div></div>
+        <div class="body"><iframe id="phoneFrame" title="Beat mobile"></iframe></div>
+        <div class="home"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="fm-engine.js"></script>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var skin=q.get('skin')||'ey';
+  var mode=q.get('mode')||'light';
+  var device=q.get('device')||'desktop';
+  var REF={ey:'ey-02-analyze.html',dc:'dollarcity-player.html',chek:'chek-player.html',cus:'customs.html',bc:'blockchain-player.html'};
+  FM.skin(skin); FM.mode(mode);
+  document.documentElement.setAttribute('data-device', device);
+  var src=(REF[skin]||REF.ey)+'?mode='+mode;
+  document.getElementById('addr').textContent=skin+' · '+device+' · '+mode;
+  document.getElementById('frame').src=src;
+  document.getElementById('phoneFrame').src=src;
+})();
+</script>
+</body></html>
