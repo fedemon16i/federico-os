@@ -1,0 +1,9 @@
+.acts button:hover,.svc .acts button:hover,.ey-btn:hover,.btn-w:hover,.sheet .go:hover,.btn:hover{
+  background:var(--ey-text)!important;color:var(--ey-bg)!important;border-color:transparent!important;
+}
+.acts button:active,.ey-btn:active,.btn-w:active,.btn:active{transform:scale(.97)}
+.ey-radio,.choice{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--ey-text);margin:3px 0}
+.ey-radio i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ey-line);flex-shrink:0;box-sizing:border-box}
+.ey-radio.on i{border-color:var(--ey-text);box-shadow:inset 0 0 0 3px var(--ey-bg),inset 0 0 0 6px var(--ey-text)}
+.ey-check i{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ey-line);flex-shrink:0}
+.ey-check.on i{background:var(--ey-text);border-color:var(--ey-text)}
