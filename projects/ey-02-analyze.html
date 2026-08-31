@@ -6,59 +6,43 @@
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
 .nav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.nav .search{width:188px;height:22px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid var(--ey-line);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 10px}
-.nav .ai{height:22px;padding:0 10px;border-radius:100px;border:1px solid var(--ey-line);font-size:11px;display:inline-flex;align-items:center}
-.nav .av{width:22px;height:22px;border-radius:50%;background:#3a3d4a;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.nav .mark{font-weight:800;color:#fff}
-.hero{padding:16px 16px 14px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a}
-.hero .k{font-size:9px;color:rgba(255,255,255,.55);margin-bottom:6px}
+.nav .search{width:188px;height:22px;border-radius:6px;background:var(--ey-card);border:1px solid var(--ey-line);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 10px}
+.nav .ai{height:22px;padding:0 10px;border-radius:100px;border:1px solid var(--ey-line);font-size:11px}
+.nav .av{width:22px;height:22px;border-radius:50%;background:var(--ey-text);color:var(--ey-bg);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.nav .mark{font-weight:800;color:var(--ey-on-nav)}
+.hero{padding:16px 16px 14px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.55),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.4),transparent 42%),#07070a;color:#fff}
 .hero h2{margin:0 0 6px;font-size:18px;max-width:70%}
 .hero p{margin:0 0 12px;font-size:9.5px;color:rgba(255,255,255,.5);max-width:62%}
-.btn-w{background:#fff;color:#111;border:0;border-radius:5px;padding:6px 12px;font-size:10px;font-weight:650}
-.btn-o{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:5px;padding:6px 12px;font-size:10px}
-.band{margin:10px 14px;padding:10px 12px;border-radius:8px;border:1px solid var(--ey-line);background:linear-gradient(90deg,#1a1c26,rgba(40,50,90,.25))}
-.band h4{margin:0 0 3px;font-size:12px}.band p{margin:0;font-size:9px;color:var(--ey-muted)}
+.band{margin:10px 14px;padding:10px 12px;border-radius:8px;border:1px solid var(--ey-line);background:var(--ey-card)}
+.band h4{margin:0 0 3px;font-size:12px;color:var(--ey-text)}.band p{margin:0;font-size:9px;color:var(--ey-muted)}
 .cat{display:grid;grid-template-columns:120px 1fr;flex:1;min-height:0;overflow:hidden}
 .side{background:var(--ey-side);border-right:1px solid var(--ey-line);padding:10px 8px;font-size:9px}
-.side .sh{font-weight:700;color:#fff;margin-bottom:8px;padding:0 6px;font-size:10px}
-.side a{display:flex;justify-content:space-between;padding:5px 7px;border-radius:6px;color:var(--ey-muted);margin-bottom:2px;text-decoration:none}
-.side a .n{font-size:8px;background:rgba(255,255,255,.06);padding:1px 6px;border-radius:100px}
-.side a.on{background:rgba(255,255,255,.07);color:#fff}
+.side .sh{font-weight:700;color:var(--ey-text);margin-bottom:8px;padding:0 6px}
+.side a{display:flex;justify-content:space-between;padding:5px 7px;border-radius:6px;color:var(--ey-muted);text-decoration:none}
+.side a.on{background:rgba(127,127,127,.12);color:var(--ey-text)}
 .main{padding:10px 12px;overflow:hidden}
-.crumb{font-size:8px;color:var(--ey-faint);margin-bottom:6px}
-.tools .q{height:22px;border-radius:5px;border:1px solid var(--ey-line);background:var(--ey-surface);font-size:8.5px;color:var(--ey-faint);display:flex;align-items:center;padding:0 8px;margin-bottom:8px}
-.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
-.tile{height:72px;border-radius:7px;padding:8px;display:flex;flex-direction:column;justify-content:flex-end}
-.tile .t{font-size:10.5px;font-weight:650}.tile .s{font-size:7.5px;color:rgba(255,255,255,.62)}
-.t1{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.55)),linear-gradient(120deg,#6b2bb8,#3a1a6a)}
-.t2{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.6)),linear-gradient(120deg,#2a4a8a,#1a2038)}
-.t3{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.55)),linear-gradient(120deg,#1a4a6a,#123040)}
-.t4{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.65)),linear-gradient(120deg,#1a3a4a,#0e1a22)}
-.t5{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.6)),linear-gradient(120deg,#3a2a6a,#1a1438)}
-.t6{background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.65)),linear-gradient(120deg,#5a1a5a,#2a1030)}
-.banner{height:48px;border-radius:7px;margin-bottom:7px;padding:8px 10px;background:linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.55)),linear-gradient(110deg,#6b2bb8,#2a1048);display:flex;flex-direction:column;justify-content:flex-end}
-.banner .t{font-size:11px;font-weight:650}.banner .s{font-size:8px;color:rgba(255,255,255,.6)}
+.banner{height:48px;border-radius:7px;margin-bottom:7px;padding:8px 10px;background:linear-gradient(110deg,#6b2bb8,#2a1048);color:#fff}
 .svcs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.svc{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px}
-.svc .t{font-size:10px;font-weight:650}.svc .meta{font-size:7.5px;color:var(--ey-faint)}
-.svc .acts{display:flex;gap:5px;margin-top:6px}
-.svc .acts button{flex:1;height:18px;border-radius:4px;font-size:8px;border:1px solid var(--ey-line);background:transparent;color:#d8dbe4}
-.svc .acts button.pri{background:rgba(255,255,255,.08);color:#fff}
+.svc{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px;display:grid;grid-template-columns:22px 1fr;gap:6px}
+.svc .ico{width:22px;height:22px;border-radius:5px;background:var(--ey-side);display:grid;place-items:center;font-size:11px}
+.svc .t{font-size:10px;font-weight:650;color:var(--ey-text)}
+.svc .desc{font-size:8px;color:var(--ey-muted);margin:2px 0 4px;grid-column:2}
+.svc .meta{font-size:7.5px;color:var(--ey-faint);grid-column:2}
+.svc .acts{display:flex;gap:5px;margin-top:4px;grid-column:2}
 .wb{display:grid;grid-template-columns:1.15fr .85fr;flex:1;min-height:0}
-.wb-l{padding:10px 12px}.wb-r{padding:10px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column}
-.wb-l h3{margin:2px 0 8px;font-size:16px}
-.fld{margin-bottom:8px}.fld label{display:block;font-size:8px;color:var(--ey-muted);margin-bottom:2px}
-.box{height:22px;border-radius:5px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9.5px}
+.wb-l{padding:10px 12px}.wb-r{padding:10px;background:var(--ey-side);border-left:1px solid var(--ey-line)}
+.fld{margin-bottom:8px}.fld label{display:flex;align-items:center;gap:6px;font-size:8px;color:var(--ey-muted);margin-bottom:2px}
+.qtip{width:14px;height:14px;border-radius:50%;border:1px solid var(--ey-line);display:grid;place-items:center;font-size:9px;color:var(--ey-text)}
+.hint{display:none;font-size:9px;color:var(--ey-muted);margin-top:3px;padding:4px 6px;border:1px solid var(--ey-line);border-radius:4px;background:var(--ey-card)}
+.hint.on{display:block}
+.box{height:22px;border-radius:5px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9.5px;color:var(--ey-text)}
 .box.ph{color:var(--ey-faint)}.box.drop{border-color:var(--ey-bad)}
-.note{font-size:8px;color:var(--ey-muted);background:var(--ey-surface);border:1px solid var(--ey-line);border-radius:5px;padding:6px 8px;margin:6px 0}
-.flag{display:inline-flex;margin-top:4px;font-size:10px;font-weight:650;color:#111;background:#FFE600;padding:2px 7px;border-radius:100px;opacity:0}.flag.on{opacity:1}
-.prog{display:flex;justify-content:space-between;font-size:7.5px;color:var(--ey-faint);margin-bottom:8px}
-.disc{font-size:8px;color:var(--ey-muted);padding:7px 8px;border-radius:7px;border:1px solid var(--ey-line);background:var(--ey-card);margin-bottom:8px}
-.order{border-radius:8px;border:1px solid var(--ey-line);background:var(--ey-card);padding:10px;flex:1}
-.order h4{margin:0 0 8px;font-size:11px}.order .empty{color:var(--ey-faint);font-size:9px}
-.order .tot{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--ey-line);font-size:11px;font-weight:700}
-.order .tot b{color:var(--ey-gold)}
+.flag{display:inline-flex;margin-top:4px;font-size:10px;font-weight:650;color:#8b1e1e;background:#fde8e8;padding:2px 7px;border-radius:100px;opacity:0}.flag.on{opacity:1}
+.order{border-radius:8px;border:1px solid var(--ey-line);background:var(--ey-card);padding:10px}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.tile{height:72px;border-radius:7px;padding:8px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
+.t1{background:linear-gradient(120deg,#6b2bb8,#3a1a6a)}.t2{background:linear-gradient(120deg,#2a4a8a,#1a2038)}.t3{background:linear-gradient(120deg,#1a4a6a,#123040)}.t4{background:linear-gradient(120deg,#1a3a4a,#0e1a22)}.t5{background:linear-gradient(120deg,#3a2a6a,#1a1438)}.t6{background:linear-gradient(120deg,#5a1a5a,#2a1030)}
 </style></head>
 <body>
 <div class="stage">
@@ -71,8 +55,7 @@
 <script>
 (function(){
   var unit=document.getElementById('unit'), slot=document.getElementById('slot');
-  EY.cursors(unit, 3);
-  EY.fit();
+  EY.cursors(unit, 3); EY.fit();
   function pack(el){
     if(!el) return;
     EY.move('u1', el, 8, 4);
@@ -81,10 +64,13 @@
   }
   var NAV='<div class="nav"><span class="mark">◆</span><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search</div><span class="ai">AI</span><span class="av">FM</span></div></div>';
   var SIDE='<div class="side"><div class="sh">Catalog</div><a class="on" href="#"><span>All</span><span class="n">284</span></a><a href="#"><span>Services</span><span class="n">118</span></a><a href="#"><span>Licenses</span><span class="n">19</span></a><a href="#"><span>Kits</span><span class="n">14</span></a></div>';
-  var home='<div class="app">'+NAV+'<div class="hero"><div class="k">Shared delivery for teams and clients</div><h2>Unlock technology at speed and scale</h2><p>Reusable components and a request path that should be obvious.</p><div><button class="btn-w" id="go" type="button">Explore Catalog</button> <button class="btn-o" type="button">Talk to us</button></div></div><div class="band"><h4>Developer workflow</h4><p>Build and deploy into the shared container platform.</p></div></div>';
-  var catalog='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="crumb">Home › Catalog</div><h3 style="margin:0 0 8px;font-size:13px">Make the path through the catalog obvious.</h3><div class="tools"><div class="q">Filter by layer…</div></div><div class="tiles"><div class="tile t1" id="go"><div class="t">Services</div><div class="s">Compute and shared tools</div></div><div class="tile t2"><div class="t">Licenses</div><div class="s">Delivery rights</div></div><div class="tile t3"><div class="t">Starter kits</div><div class="s">Packaged starts</div></div><div class="tile t4"><div class="t">Packages</div><div class="s">Reusable modules</div></div><div class="tile t5"><div class="t">APIs</div><div class="s">Platform blocks</div></div><div class="tile t6"><div class="t">Explore</div><div class="s">All layers</div></div></div></div></div></div>';
-  var services='<div class="app">'+NAV+'<div class="cat"><div class="side"><div class="sh">Catalog</div><a href="#"><span>All</span><span class="n">284</span></a><a class="on" href="#"><span>Services</span><span class="n">118</span></a></div><div class="main"><div class="crumb">Home › Catalog › Services</div><div class="banner"><div class="t">Services</div><div class="s">Shared infrastructure offerings</div></div><div class="svcs"><div class="svc"><div class="t">Cluster service</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc"><div class="t">Automation seat</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc"><div class="t">Workflow · Prod</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div><div class="svc" id="go"><div class="t">Workbench</div><div class="meta">Services › Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div></div></div></div></div>';
-  var form='<div class="app">'+NAV+'<div class="wb"><div class="wb-l"><div class="crumb">Catalog › Workbench</div><h3>Workbench</h3><div class="fld"><label>Instance name (required)</label><div class="box ph" id="f1">Enter a name…</div><div class="flag" id="d1">user 1 · drop-off</div></div><div class="fld"><label>Location (required)</label><div class="box" id="f2">Region West 2</div><div class="flag" id="d2">user 2 · drop-off</div></div><div class="note">Choose at least one service required for this instance.</div><div class="fld"><label>Required service (required)</label><div class="box ph" id="f3">Select a service…</div><div class="flag" id="d3">user 3 · drop-off</div></div></div><div class="wb-r"><div class="prog"><span>Custom</span><span>Billing</span><span>Confirm</span></div><div class="disc">Costs are estimates. Formal intake covers platform charges.</div><div class="order"><h4>Your order</h4><div class="empty">No services selected.</div><div class="tot"><span>Total</span><b>$0 / mo</b></div></div></div></div></div>';
+  function card(name,desc,id){
+    return '<div class="svc" '+(id?'id="'+id+'"':'')+'><div class="ico">▣</div><div><div class="t">'+name+'</div><div class="desc">'+desc+'</div><div class="meta">Services · Offerings</div><div class="acts"><button type="button">View</button><button class="pri" type="button">Get started</button></div></div></div>';
+  }
+  var home='<div class="app">'+NAV+'<div class="hero"><div class="k">Shared delivery</div><h2>Unlock technology at speed and scale</h2><p>Reusable components and a request path that should be obvious.</p><div><button class="btn-w" id="go" type="button">Explore Catalog</button> <button class="btn-o" type="button">Talk to us</button></div></div><div class="band"><h4>Developer workflow</h4><p>Build and deploy into the shared container platform.</p></div></div>';
+  var catalog='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="crumb">Home › Catalog</div><div class="tools"><div class="q">Filter by layer…</div></div><div class="tiles"><div class="tile t1" id="go"><div class="t">Services</div></div><div class="tile t2"><div class="t">Licenses</div></div><div class="tile t3"><div class="t">Starter kits</div></div><div class="tile t4"><div class="t">Packages</div></div><div class="tile t5"><div class="t">APIs</div></div><div class="tile t6"><div class="t">Explore</div></div></div></div></div></div>';
+  var services='<div class="app">'+NAV+'<div class="cat"><div class="side"><div class="sh">Catalog</div><a href="#"><span>All</span></a><a class="on" href="#"><span>Services</span></a></div><div class="main"><div class="banner"><div class="t">Services</div><div class="s">Shared infrastructure offerings</div></div><div class="svcs">'+card('Cluster service','Compute for a shared team')+card('Automation seat','A named right to run jobs')+card('Workflow · Prod','Production path for a service')+card('Workbench','Shared delivery workspace for a team.','go')+card('Observability pack','Logs and traces for a service')+card('Identity broker','Sign-in for the workspace')+'</div></div></div></div>';
+  var form='<div class="app">'+NAV+'<div class="wb"><div class="wb-l"><div class="crumb">Catalog › Workbench</div><h3>Workbench</h3><div class="fld"><label>Instance name (required) <i class="qtip" id="t1">?</i></label><div class="box ph" id="f1">Enter a name…</div><div class="hint" id="h1">Need a unique name.<br>2–40 characters.</div><div class="flag" id="d1">user 1 · drop-off</div></div><div class="fld"><label>Location (required) <i class="qtip" id="t2">?</i></label><div class="box" id="f2">Region West 2</div><div class="hint" id="h2">Region cannot change later.<br>Pick the closest one.</div><div class="flag" id="d2">user 2 · drop-off</div></div><div class="fld"><label>Required service (required) <i class="qtip" id="t3">?</i></label><div class="box ph" id="f3">Select a service…</div><div class="hint" id="h3">At least one service.<br>No default is selected.</div><div class="flag" id="d3">user 3 · drop-off</div></div></div><div class="wb-r"><div class="order"><h4>Your order</h4><div class="empty">No services selected.</div></div></div></div></div>';
   function set(html,url){ document.getElementById('addr').textContent=url; slot.innerHTML=html; }
   set(home,'platform / overview');
   EY.after(300, function(){ pack(document.getElementById('go')); });
@@ -93,13 +79,13 @@
   EY.after(4800, function(){
     set(form,'platform / workbench');
     EY.after(80, function(){
-      var a=document.getElementById('f1'), b=document.getElementById('f2'), c=document.getElementById('f3');
-      EY.move('u1', a, 10, 2);
-      EY.after(140, function(){ EY.move('u2', a, 26, 18); });
-      EY.after(260, function(){ EY.move('u3', a, -8, 22); });
-      EY.after(1000, function(){ a.classList.add('drop'); document.getElementById('d1').classList.add('on'); EY.move('u2', b, 8, 2); });
-      EY.after(2000, function(){ b.classList.add('drop'); document.getElementById('d2').classList.add('on'); EY.move('u3', c, 8, 2); });
-      EY.after(3000, function(){ c.classList.add('drop'); document.getElementById('d3').classList.add('on'); });
+      EY.move('u1', document.getElementById('t1'));
+      EY.after(500, function(){ document.getElementById('h1').classList.add('on'); });
+      EY.after(1100, function(){ document.getElementById('f1').classList.add('drop'); document.getElementById('d1').classList.add('on'); EY.move('u2', document.getElementById('t2')); });
+      EY.after(1600, function(){ document.getElementById('h2').classList.add('on'); });
+      EY.after(2200, function(){ document.getElementById('f2').classList.add('drop'); document.getElementById('d2').classList.add('on'); EY.move('u3', document.getElementById('t3')); });
+      EY.after(2700, function(){ document.getElementById('h3').classList.add('on'); });
+      EY.after(3300, function(){ document.getElementById('f3').classList.add('drop'); document.getElementById('d3').classList.add('on'); });
     });
   });
 })();
