@@ -7,8 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#08080b;--border:rgba(255,255,255,.1);--text:#f0eee9;--muted:#8a8580;--bar:#0c0c10;--side:#0a0a0d;--row:#101014}
-html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--text:#1c1b18;--muted:#5c5c66;--bar:#fff;--side:#f0efe9;--row:#fff}
+:root{--bg:#08080b;--border:rgba(255,255,255,.1);--text:#f0eee9;--muted:#8a8580;--bar:#0c0c10;--row:#101014}
+html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--text:#1c1b18;--muted:#5c5c66;--bar:#fff;--row:#fff}
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif}
 .topbar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bar);border-bottom:1px solid var(--border)}
 .topbar a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none}
@@ -19,23 +19,23 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'D
 .ptabs{display:flex;gap:6px;padding:16px 24px 0;max-width:1180px;margin:0 auto;flex-wrap:wrap}
 .ptab{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer}
 .ptab.on{color:var(--text);border-color:var(--text)}
-.shell{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;max-width:1180px;margin:0 auto;padding:20px 24px 80px}
+.shell{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;max-width:1180px;margin:0 auto;padding:20px 24px 80px}
 .side a{display:block;padding:8px 10px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:13px}
 .side a.on{background:var(--row);color:var(--text);border:1px solid var(--border)}
-.side .g{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:16px 10px 6px}
 .main h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:0 0 8px}
 .main .lede{color:var(--muted);font-size:13px;margin-bottom:16px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border)}
 th{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
 code{font-family:'Share Tech Mono',monospace;font-size:11px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
 .chip{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
 .chip.on{color:var(--text);border-color:var(--text)}
 .stage{width:100%;aspect-ratio:840/560;position:relative;overflow:visible;background:transparent}
-.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
-.live{width:100%;min-height:720px;border:0;background:transparent}
-@media(max-width:800px){.shell{grid-template-columns:1fr}.side{display:flex;flex-wrap:wrap;gap:4px}}
+.stage iframe,.live{border:0;background:transparent}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%}
+.live{width:100%;min-height:720px}
+@media(max-width:800px){.shell{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -49,7 +49,7 @@ code{font-family:'Share Tech Mono',monospace;font-size:11px}
 </div>
 <div class="pg">
   <h1>Design system</h1>
-  <p>Project first. Then a library index — tokens, components, patterns. Beats are a section, not the chrome.</p>
+  <p>Same categories as the sheet. Project, then library. Beats are the last item.</p>
 </div>
 <div class="ptabs" id="projects"></div>
 <div class="shell">
@@ -57,40 +57,24 @@ code{font-family:'Share Tech Mono',monospace;font-size:11px}
   <div class="main" id="main"></div>
 </div>
 <script>
-var SKINS=[
-  {id:'ey',name:'EY Fabric'},
-  {id:'dc',name:'DollarCity'},
-  {id:'chek',name:'Chek'},
-  {id:'cus',name:'Customs'},
-  {id:'bc',name:'Blockchain'}
-];
-var BEATS={
-  ey:[['Measure','ey-01-measure.html'],['Analyze','ey-02-analyze.html'],['Funnel','ey-funnel.html'],['Research','ey-research.html'],['Understand','ey-understand.html'],['Design','ey-design.html'],['Hub','ey-hub.html'],['Requester','ey-req.html'],['Publisher','ey-pub.html']],
-  dc:[['POS','dollarcity-player.html']],
-  chek:[['Card','chek-player.html']],
-  cus:[['ARIVU','customs.html']],
-  bc:[['Map','blockchain-player.html']]
-};
-var COMPS=[
-  {id:'tokens',g:'Foundation',n:'Tokens',cls:'--fm-* / --ey-*',use:'Every beat',note:'Surfaces, ink, accent, bad, btn'},
-  {id:'type',g:'Foundation',n:'Type',cls:'project face',use:'All windows',note:'EY Interstate · Inter · IBM Plex'},
-  {id:'buttons',g:'Actions',n:'Buttons',cls:'.fm-btn .fm-btn.ghost',use:'Analyze, Hub, Req, Pub',note:'Two classes only'},
-  {id:'search',g:'Actions',n:'Search field',cls:'.fm-field .nav .search',use:'Analyze, Req, Hub',note:'Same bar everywhere'},
-  {id:'bars',g:'Chrome',n:'Browser bar',cls:'.ey-bbar .fm-bbar',use:'All windows',note:'Dots + address'},
-  {id:'nav',g:'Chrome',n:'App nav',cls:'.nav .fm-nav',use:'Analyze → Pub',note:'Marketplace / Tools'},
-  {id:'banners',g:'Content',n:'Hero / banner',cls:'.hero .fm-hero',use:'Analyze home',note:'Dark plate + white type'},
-  {id:'chips',g:'Content',n:'Chips',cls:'.fm-chip .ey-chip',use:'Hub filters, modal tabs',note:'Idle outline · on = ink plate'},
-  {id:'tags',g:'Content',n:'Status tags',cls:'.fm-tag.ok/.warn/.bad',use:'Hub, Analyze drop-off',note:'Bad = drop icon'},
-  {id:'cards',g:'Content',n:'Offer cards',cls:'.svc .fm-offer',use:'Marketplace',note:'View ghost + Get started'},
-  {id:'photos',g:'Content',n:'Photo tiles',cls:'.tile .fm-photo',use:'Catalog',note:'White type on color'},
-  {id:'forms',g:'Input',n:'Fields + stepper',cls:'.box .fm-field .fm-stepper',use:'Workbench form',note:'Same field chrome'},
-  {id:'tables',g:'Data',n:'Tables',cls:'.fm-table',use:'Hub alarms',note:''},
-  {id:'kpis',g:'Data',n:'KPI tiles',cls:'.fm-kpi',use:'Hub overview',note:''},
-  {id:'alerts',g:'Feedback',n:'Notices',cls:'.fm-notice .flag',use:'Form drop-off',note:'Bad color only'},
-  {id:'icons',g:'Feedback',n:'Icons',cls:'.icon-btn',use:'Replay, chat',note:'Play / stop'},
-  {id:'logos',g:'Feedback',n:'Marks',cls:'.mark',use:'Library',note:'Emulated, not official'},
-  {id:'cursors',g:'Motion',n:'Cursors',cls:'.uc',use:'Analyze, Hub, Req, Pub',note:'Pointer SVG + user label'},
-  {id:'beats',g:'Beats',n:'Reference beats',cls:'840×560 unit',use:'Preview',note:'Loose on the page'}
+var SKINS=[{id:'ey',name:'EY Fabric'},{id:'dc',name:'DollarCity'},{id:'chek',name:'Chek'},{id:'cus',name:'Customs'},{id:'bc',name:'Blockchain'}];
+var BEATS={ey:[['Measure','ey-01-measure.html'],['Analyze','ey-02-analyze.html'],['Funnel','ey-funnel.html'],['Research','ey-research.html'],['Understand','ey-understand.html'],['Design','ey-design.html'],['Hub','ey-hub.html'],['Requester','ey-req.html'],['Publisher','ey-pub.html']],dc:[['POS','dollarcity-player.html']],chek:[['Card','chek-player.html']],cus:[['ARIVU','customs.html']],bc:[['Map','blockchain-player.html']]};
+var NAV=[
+  ['index','Index'],
+  ['tokens','Tokens'],
+  ['type','Type'],
+  ['buttons','Buttons'],
+  ['bars','Bars'],
+  ['banners','Banners'],
+  ['chips','Chips'],
+  ['cards','Cards'],
+  ['forms','Forms'],
+  ['tables','Tables'],
+  ['kpis','KPIs'],
+  ['alerts','Alerts'],
+  ['icons','Icons'],
+  ['extras','Extras'],
+  ['beats','Beats']
 ];
 var skin='ey', beat='ey-02-analyze.html', section='index';
 function theme(){ return document.documentElement.getAttribute('data-theme')||'dark'; }
@@ -105,7 +89,8 @@ function applyTheme(th){
   applyTheme(saved==='light'?'light':'dark');
   document.getElementById('themeBtn').onclick=function(e){ e.preventDefault(); applyTheme(theme()==='light'?'dark':'light'); draw(); };
 })();
-function projects(){
+function modeQ(){ return '?mode='+theme()+'&skin='+skin+'&r='+Date.now(); }
+function draw(){
   var box=document.getElementById('projects'); box.innerHTML='';
   SKINS.forEach(function(s){
     var b=document.createElement('button');
@@ -114,53 +99,34 @@ function projects(){
     b.onclick=function(){ skin=s.id; beat=(BEATS[skin][0]||[])[1]; draw(); };
     box.appendChild(b);
   });
-}
-function side(){
-  var box=document.getElementById('side'); box.innerHTML='';
-  var last='';
-  box.appendChild(link('index','All components'));
-  COMPS.forEach(function(c){
-    if(c.g!==last){ var g=document.createElement('div'); g.className='g'; g.textContent=c.g; box.appendChild(g); last=c.g; }
-    box.appendChild(link(c.id,c.n));
+  var side=document.getElementById('side'); side.innerHTML='';
+  NAV.forEach(function(pair){
+    var a=document.createElement('a'); a.href='#'; a.className=section===pair[0]?'on':''; a.textContent=pair[1];
+    a.onclick=function(e){ e.preventDefault(); section=pair[0]; draw(); };
+    side.appendChild(a);
   });
-}
-function link(id,label){
-  var a=document.createElement('a');
-  a.href='#'; a.className=section===id?'on':''; a.textContent=label;
-  a.onclick=function(e){ e.preventDefault(); section=id; draw(); };
-  return a;
-}
-function modeQ(){ return '?mode='+theme()+'&skin='+skin+'&r='+Date.now(); }
-function draw(){
-  projects(); side();
   var main=document.getElementById('main');
   if(section==='index'){
-    main.innerHTML='<h2>Component index</h2><p class="lede">'+SKINS.filter(function(s){return s.id===skin})[0].name+' · same classes in every beat except Publisher / Requester flow extras.</p>';
-    var t='<table><thead><tr><th>Component</th><th>Class</th><th>Used in</th><th>Rule</th></tr></thead><tbody>';
-    COMPS.forEach(function(c){
-      t+='<tr><td><a href="#" data-go="'+c.id+'">'+c.n+'</a></td><td><code>'+c.cls+'</code></td><td>'+c.use+'</td><td>'+c.note+'</td></tr>';
-    });
-    t+='</tbody></table>';
-    main.insertAdjacentHTML('beforeend', t);
-    main.querySelectorAll('[data-go]').forEach(function(a){
-      a.onclick=function(e){ e.preventDefault(); section=a.dataset.go; draw(); };
-    });
+    main.innerHTML='<h2>Index</h2><p class="lede">'+SKINS.filter(function(s){return s.id===skin})[0].name+'</p><table><thead><tr><th>Category</th><th>Class</th></tr></thead><tbody>'+
+      '<tr><td>Buttons</td><td><code>.fm-btn .fm-btn.ghost</code></td></tr>'+
+      '<tr><td>Bars</td><td><code>.ey-bbar .nav .search</code></td></tr>'+
+      '<tr><td>Banners</td><td><code>.hero .fm-hero</code></td></tr>'+
+      '<tr><td>Chips</td><td><code>.ey-chip .tabs i</code></td></tr>'+
+      '<tr><td>Cards</td><td><code>.svc .fm-offer</code></td></tr>'+
+      '<tr><td>Forms</td><td><code>.box .fm-field</code></td></tr>'+
+      '<tr><td>Tags</td><td><code>.fm-tag.ok .warn .bad</code></td></tr>'+
+      '</tbody></table>';
     return;
   }
   if(section==='beats'){
     var chips='<div class="chips">';
-    (BEATS[skin]||[]).forEach(function(p){
-      chips+='<button class="chip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>';
-    });
+    (BEATS[skin]||[]).forEach(function(p){ chips+='<button class="chip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
     chips+='</div>';
-    main.innerHTML='<h2>Reference beats</h2><p class="lede">Loose 840×560 unit. Theme follows the site switch.</p>'+chips+'<div class="stage"><iframe title="Beat" src="projects/'+beat+modeQ()+'"></iframe></div>';
-    main.querySelectorAll('[data-b]').forEach(function(b){
-      b.onclick=function(){ beat=b.dataset.b; draw(); };
-    });
+    main.innerHTML='<h2>Beats</h2><p class="lede">840×560. Theme follows the site switch.</p>'+chips+'<div class="stage"><iframe title="Beat" src="projects/'+beat+modeQ()+'"></iframe></div>';
+    main.querySelectorAll('[data-b]').forEach(function(b){ b.onclick=function(){ beat=b.dataset.b; draw(); }; });
     return;
   }
-  var c=COMPS.filter(function(x){return x.id===section})[0];
-  main.innerHTML='<h2>'+(c?c.n:section)+'</h2><p class="lede"><code>'+(c?c.cls:'')+'</code> · '+(c?c.use:'')+' · '+(c?c.note:'')+'</p><iframe class="live" title="Specimen" src="projects/fm-ds-sheet.html'+modeQ()+'#'+(section==='search'?'bars':section)+'"></iframe>';
+  main.innerHTML='<h2>'+(NAV.filter(function(x){return x[0]===section})[0]||['',section])[1]+'</h2><iframe class="live" title="Specimen" src="projects/fm-ds-sheet.html'+modeQ()+'#'+section+'"></iframe>';
 }
 draw();
 </script>
