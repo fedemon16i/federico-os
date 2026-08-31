@@ -25,21 +25,34 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 .item h2{margin:0 0 4px;font-family:'Space Grotesk',system-ui;font-size:1.05rem;color:var(--ink)}
 .item .desc{margin:0 0 12px;color:var(--dim);font-size:13px;line-height:1.5}
 .item code{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim)}
-.states{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end}
+.states{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:flex-end}
 .state{display:flex;flex-direction:column;gap:6px}
 .state span{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.row-btns{display:flex;flex-direction:row;gap:8px;align-items:center}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.order{border:1px solid var(--fm-line);border-radius:10px;padding:12px;background:var(--fm-card);max-width:280px}
+.order h4{margin:0 0 8px;font-size:12px;color:var(--fm-text)}
+.order .ln{display:flex;justify-content:space-between;font-size:12px;color:var(--fm-muted);padding:4px 0;border-bottom:1px solid var(--fm-line)}
+.order .tot{display:flex;justify-content:space-between;padding-top:8px;font-size:13px;font-weight:700;color:var(--fm-text)}
+.rail a{display:flex;justify-content:space-between;padding:7px 8px;border-radius:6px;font-size:12px;color:var(--fm-muted);text-decoration:none}
+.rail a.on{background:rgba(127,127,127,.12);color:var(--fm-text)}
+.modal{border:1px solid var(--fm-line);border-radius:10px;padding:14px;background:var(--fm-card);max-width:360px}
+.chat{width:28px;height:28px;border-radius:50%;background:var(--fm-btn);color:var(--fm-btn-ink);display:grid;place-items:center;font-size:12px;font-weight:700}
 .stage{width:100%;aspect-ratio:840/560;position:relative}
 .stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
-.chip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
-.chip.on{color:var(--ink);border-color:var(--ink)}
-.fm-btn.is-hover{filter:brightness(1.12)}
-.fm-btn.is-active{transform:translateY(1px);filter:brightness(.92)}
+.navchip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
+.navchip.on{color:var(--ink);border-color:var(--ink)}
+.fm-btn.is-hover,.fm-btn:hover{filter:brightness(1.12)}
+.fm-btn.is-active,.fm-btn:active{transform:translateY(1px);filter:brightness(.92)}
 .fm-btn.is-disabled,.fm-btn:disabled{opacity:.38;pointer-events:none}
-.fm-chip.is-hover{color:var(--fm-text);border-color:var(--fm-text)}
-.fm-field.is-focus{outline:2px solid var(--fm-accent);outline-offset:1px;color:var(--fm-text)}
+.fm-chip{cursor:pointer}
+.fm-chip.is-hover,.fm-chip:hover{color:var(--fm-text);border-color:var(--fm-text)}
+.fm-field.is-focus,.fm-field:focus-within{outline:2px solid var(--fm-accent);outline-offset:1px;color:var(--fm-text)}
 .fm-field.is-error{border-color:var(--fm-bad);color:var(--fm-bad)}
 .fm-field.is-filled{color:var(--fm-text)}
+.fm-photo{cursor:pointer;transition:transform .2s}
+.fm-photo:hover{transform:translateY(-2px)}
 </style>
 </head>
 <body>
@@ -53,7 +66,7 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 </div>
 <div class="pg">
   <h1>Design system</h1>
-  <p class="lede">One list on this page. Each component: description + states. Theme is the site switch. Project changes tokens only.</p>
+  <p class="lede">Page list. Thin rules. Live hover / press / selected. Project only changes tokens.</p>
 </div>
 <div class="ptabs" id="projects"></div>
 <div class="list" id="list"></div>
@@ -92,52 +105,64 @@ function draw(){
     box.appendChild(b);
   });
   var chips='<div class="chips">';
-  (BEATS[skin]||[]).forEach(function(p){ chips+='<button class="chip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
+  (BEATS[skin]||[]).forEach(function(p){ chips+='<button class="navchip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
   chips+='</div>';
   document.getElementById('list').innerHTML=
-    item('Buttons','.fm-btn / .fm-btn.ghost','Primary fills. Ghost outlines. Same height.',
+    item('Buttons','.fm-btn .fm-btn.ghost','Hover and press are live. Disabled is a frozen state.',
       '<div class="states">'+
         st('Default','<button class="fm-btn" type="button">Get started</button>')+
-        st('Hover','<button class="fm-btn is-hover" type="button">Get started</button>')+
-        st('Pressed','<button class="fm-btn is-active" type="button">Get started</button>')+
-        st('Disabled','<button class="fm-btn is-disabled" type="button" disabled>Get started</button>')+
+        st('Disabled','<button class="fm-btn" type="button" disabled>Get started</button>')+
         st('Ghost','<button class="fm-btn ghost" type="button">View</button>')+
-        st('Ghost hover','<button class="fm-btn ghost is-hover" type="button">View</button>')+
-        st('Ghost disabled','<button class="fm-btn ghost is-disabled" type="button" disabled>View</button>')+
+        st('Ghost disabled','<button class="fm-btn ghost" type="button" disabled>View</button>')+
       '</div>')+
-    item('Chips','.fm-chip','Idle outline. On = selected. Used as filters and modal tabs.',
+    item('Offer card','.fm-offer','Marketplace product. Two actions in one row.',
+      '<div class="fm-offer" style="max-width:320px"><div class="kind">Services · Offerings</div><b>Workbench workspace</b><p class="desc" style="margin:6px 0 10px">Shared delivery for a team.</p><div class="row-btns"><button class="fm-btn ghost" type="button">View</button><button class="fm-btn" type="button">Get started</button></div></div>')+
+    item('Category tiles','.fm-photo','Catalog layers. Hover lifts. White type on the plate.',
+      '<div class="grid3"><div class="fm-photo"><b>Services</b><span>Compute</span></div><div class="fm-photo"><b>Licenses</b><span>Rights</span></div><div class="fm-photo"><b>Kits</b><span>Start</span></div></div>')+
+    item('Your order','.order','Right rail on the form. Lines + total.',
+      '<div class="order"><h4>Your order</h4><div class="ln"><span>Workbench</span><span>$0</span></div><div class="ln"><span>Region West 2</span><span>—</span></div><div class="ln"><span>Required service</span><span>None</span></div><div class="tot"><span>Total</span><span class="fm-total">$0 / mo</span></div></div>')+
+    item('Help / Requirements','.fm-notice','Sits under the order rail on requester.',
+      '<div class="fm-notice" style="max-width:320px">Name · required service · billing account</div>')+
+    item('Chips','.fm-chip','Click to select.',
+      '<div class="row-btns" id="chipRow"><span class="fm-chip on" data-chip>All</span><span class="fm-chip" data-chip>Services</span><span class="fm-chip" data-chip>Licenses</span><span class="fm-chip" data-chip>Kits</span></div>')+
+    item('Tags','.fm-tag','Status. Bad = drop-off.',
+      '<div class="row-btns"><span class="fm-tag ok">AI pass</span><span class="fm-tag warn">Pending</span><span class="fm-tag bad">Drop-off</span></div>')+
+    item('Search','.fm-field','Empty, typed, error.',
       '<div class="states">'+
-        st('Idle','<span class="fm-chip">Services</span>')+
-        st('Hover','<span class="fm-chip is-hover">Services</span>')+
-        st('Selected','<span class="fm-chip on">Services</span>')+
+        st('Empty','<div class="fm-field" style="width:210px">Search products</div>')+
+        st('Filled','<div class="fm-field is-filled" style="width:210px">Workbench</div>')+
+        st('Error','<div class="fm-field is-error" style="width:210px">Required</div>')+
       '</div>')+
-    item('Tags','.fm-tag','Status only. Bad = drop-off.',
-      '<div class="states">'+
-        st('Ok','<span class="fm-tag ok">AI pass</span>')+
-        st('Warn','<span class="fm-tag warn">Pending</span>')+
-        st('Bad','<span class="fm-tag bad">Drop-off</span>')+
-      '</div>')+
-    item('Search / field','.fm-field','Same chrome in nav and forms.',
-      '<div class="states">'+
-        st('Empty','<div class="fm-field" style="width:200px">Search products</div>')+
-        st('Focus','<div class="fm-field is-focus" style="width:200px">Search products</div>')+
-        st('Filled','<div class="fm-field is-filled" style="width:200px">Workbench</div>')+
-        st('Error','<div class="fm-field is-error" style="width:200px">Required</div>')+
-      '</div>')+
-    item('Bars','.fm-bbar .fm-nav','Browser chrome + app nav. Not a second window.',
+    item('Rail','.rail','Catalog counts. Click a row.',
+      '<div class="rail" style="max-width:240px"><a class="on" href="#" data-rail>All <span>284</span></a><a href="#" data-rail>Services <span>118</span></a><a href="#" data-rail>Licenses <span>19</span></a></div>')+
+    item('Modal','.modal','Description / Resources / Requirements + Get started.',
+      '<div class="modal"><h4 style="margin:0 0 8px;color:var(--fm-text)">Workbench workspace</h4><div class="row-btns" id="tabRow" style="margin-bottom:10px"><span class="fm-chip" data-tab>Description</span><span class="fm-chip" data-tab>Resources</span><span class="fm-chip on" data-tab>Requirements</span></div><p class="desc" id="tabBody">Workspace name. One required service. Billing account.</p><button class="fm-btn" type="button">Get started</button></div>')+
+    item('Bars','.fm-bbar .fm-nav','Browser + app nav.',
       '<div class="fm-bbar" style="border:1px solid var(--fm-line);border-radius:8px 8px 0 0"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr">platform / catalog</div></div><div class="fm-nav" style="border:1px solid var(--fm-line);border-top:0"><span class="on">Marketplace</span><span>Tools</span><span>Learn</span></div>')+
-    item('Hero / banner','.fm-hero .fm-banner','Photo plate = white type. Quiet banner = ink.',
-      '<div class="fm-hero" style="margin-bottom:10px"><b>Unlock technology at speed and scale</b><span>Catalog of services, kits and APIs.</span></div><div class="fm-banner"><b>Inline banner</b><span class="desc" style="display:block">Quiet surface.</span></div>')+
-    item('Cards','.fm-offer','View + Get started. Same two buttons.',
-      '<div class="fm-offer" style="max-width:280px"><div class="kind">Services · Offerings</div><b>Workbench workspace</b><div class="states" style="margin-top:10px">'+st('Actions','<button class="fm-btn ghost" type="button">View</button> <button class="fm-btn" type="button">Get started</button>')+'</div></div>')+
-    item('Forms','.fm-stepper .fm-field','Steps then fields.',
-      '<div class="fm-stepper" style="margin-bottom:10px"><b>1</b> Name &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Workspace</div><div class="fm-field" style="max-width:280px">Friendly instance name</div>')+
-    item('Table / KPI / alert','.fm-table .fm-kpi .fm-notice','Hub language.',
-      '<div class="fm-kpis" style="margin-bottom:10px"><div class="fm-kpi"><i>Request drop</i><b>22</b></div><div class="fm-kpi"><i>Onboard stall</i><b>3</b></div></div><div class="fm-notice" style="margin-bottom:10px">Required field. Workspace is missing.</div>')+
-    item('Beats','840×560 unit','Reference animation. Theme follows the site switch.',
+    item('Hero','.fm-hero','Photo plate. Always white type.',
+      '<div class="fm-hero"><b>Unlock technology at speed and scale</b><span>Catalog of services, kits and APIs.</span></div>')+
+    item('Stepper','.fm-stepper','Form chapters.',
+      '<div class="fm-stepper"><b>1</b> Name &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Workspace</div>')+
+    item('Chat','.chat','Help bubble on requester / publisher.',
+      '<div class="chat" title="Help">…</div>')+
+    item('KPI + table','.fm-kpi .fm-table','Hub overview.',
+      '<div class="fm-kpis" style="margin-bottom:10px"><div class="fm-kpi"><i>Request drop</i><b>22</b></div><div class="fm-kpi"><i>Onboard stall</i><b>3</b></div><div class="fm-kpi"><i>Help unused</i><b>4</b></div></div>')+
+    item('Beats','840×560','Reference animation.',
       chips+'<div class="stage"><iframe title="Beat" src="projects/'+beat+'?mode='+theme()+'&r='+Date.now()+'"></iframe></div>');
-  document.querySelectorAll('[data-b]').forEach(function(b){
-    b.onclick=function(){ beat=b.dataset.b; draw(); };
+  document.querySelectorAll('[data-b]').forEach(function(b){ b.onclick=function(){ beat=b.dataset.b; draw(); }; });
+  document.querySelectorAll('[data-chip]').forEach(function(c){
+    c.onclick=function(){ document.querySelectorAll('[data-chip]').forEach(function(x){ x.classList.remove('on'); }); c.classList.add('on'); };
+  });
+  document.querySelectorAll('[data-rail]').forEach(function(c){
+    c.onclick=function(e){ e.preventDefault(); document.querySelectorAll('[data-rail]').forEach(function(x){ x.classList.remove('on'); }); c.classList.add('on'); };
+  });
+  var copy={Description:'Shared delivery workspace for a team.',Resources:'Setup guide · Field glossary.',Requirements:'Workspace name. One required service. Billing account.'};
+  document.querySelectorAll('[data-tab]').forEach(function(c){
+    c.onclick=function(){
+      document.querySelectorAll('[data-tab]').forEach(function(x){ x.classList.remove('on'); });
+      c.classList.add('on');
+      document.getElementById('tabBody').textContent=copy[c.textContent]||'';
+    };
   });
 }
 draw();
