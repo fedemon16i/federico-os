@@ -1,33 +1,23 @@
 # EY checklist — 2026-08-31
 
-Other projects (DC / Chek / Customs / BC) are parked.
+Other projects parked.
 
 ## Done
 - [x] Product DS vs Showcase DS
-- [x] Beats inside `ds.html#beats` (`beats.html` redirects)
-- [x] Contrast invert on chips/buttons of the DS page
-- [x] Photo plate = white type
-- [x] Drop-off veil + flag = BAD red only
-- [x] User labels yellow / blue / orange
-- [x] Shared card `projects/ey-market.js` used by Analyze + Requester
-- [x] Brand marks on cards (Copilot, Azure, Factory, Postman, GitHub, Replit)
-- [x] Analyze form: short tooltip then drop-off; radios on location + service
-- [x] Requester: walkthrough → details → form; helper rail
-- [x] Publisher: stepper + AI review + Published
-- [x] Design: Figma layers + agents
-- [x] `EY.note` docks to the ring
-- [x] `ey-ds-plus.css` hover invert + radio/check + offer mark
+- [x] Beats in `ds.html#beats`
+- [x] Contrast invert + photo plate white
+- [x] Drop-off = BAD red; user labels yellow / blue / orange
+- [x] Shared card `ey-market.js` + brand marks on marketplace
+- [x] Analyze: 2-line tooltip → drop-off; radios; `?scene=form`
+- [x] Research replay = Analyze form only (`scene=form`)
+- [x] Requester: 3-step walkthrough → card → form + rail
+- [x] Publisher: stepper + field helper sheet → AI → Published
+- [x] Understand + Measure: brand chips (`EYMarket.chip`)
+- [x] Talk track `docs/EY-TALK.md` (no invented metrics)
+- [x] `ey-btn` aliased with `btn-w` on Analyze CTA
 
-## In this pass
-- [x] Library shows press state + 2-liner hint + radios
-- [x] Publisher guidance opens a field helper sheet (not a 1-word chip)
-
-## Still open (EY only)
-- [ ] Rename `.btn-w` → `.ey-btn` in beats
-- [ ] Strip leftover hex in Analyze hero/tiles (DS covers it)
-- [ ] Brand chips next to stack mentions in Measure / Understand / Design
-- [ ] Research replay = cropped Analyze form, not the whole beat
-- [ ] Walkthrough as 3 steps (not one sheet)
-- [ ] Formal light/dark field-by-field contrast pass
-- [ ] Spoken 5–10 min case (Context → Own → Evidence → Decision → Outcome)
-- [ ] Hub catalog using `EYMarket.grid()`
+## Still open
+- [ ] Strip remaining tile hex in Analyze catalog (photo plates, on purpose)
+- [ ] Design workshop chips via `EYMarket.chip` (still local tools row)
+- [ ] Formal light/dark pass field-by-field
+- [ ] Hub stays alarms dashboard (not a catalog) — do not force `EYMarket.grid()`
