@@ -6,11 +6,12 @@
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
 .banner{padding:12px;border-radius:8px;margin-bottom:12px;background:linear-gradient(110deg,#3a1a6a,#120820);color:#fff}
-.walk,.ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
-.sheet{width:70%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:16px}
-.sheet h4{margin:0 0 8px;font-size:16px}
+.ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
+.sheet{width:72%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:16px}
+.sheet h4{margin:0 0 8px;font-size:16px}.sheet p{margin:0 0 12px;color:var(--ey-muted);font-size:13px}
 .dots{display:flex;gap:6px;margin:10px 0}.dots i{width:7px;height:7px;border-radius:50%;background:var(--ey-line);display:block}.dots i.on{background:var(--ey-text)}
 .qtip{width:14px;height:14px;border-radius:50%;border:1px solid var(--ey-line);display:grid;place-items:center;font-size:9px}
+.onboard{position:absolute;right:16px;bottom:16px;z-index:6}
 .winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;align-items:center;justify-content:center;opacity:0;z-index:8;font-size:18px}.winok.on{opacity:1}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
 </style></head>
@@ -24,31 +25,48 @@
   var slot=document.getElementById('slot');
   EY.cursors(document.getElementById('unit'),1); EY.fit();
   var STEPS=[
-    ['1 · Requirements on the card','See details before Get started.'],
-    ['2 · Help stays open','Order and helper stay in the rail.'],
-    ['3 · Then the form','Same Workbench form. Helper on.']
+    ['Workspace','Do you already have a workspace for this team?'],
+    ['Team','Who owns the request after it is live?'],
+    ['Billing','A cost center is required before submit.']
   ];
   function walk(n){
-    return '<div class="app" style="position:relative">'+EYShell.nav()+'<div class="walk"><div class="sheet"><h4>'+STEPS[n][0]+'</h4><p>'+STEPS[n][1]+'</p><div class="dots"><i class="'+(n===0?'on':'')+'"></i><i class="'+(n===1?'on':'')+'"></i><i class="'+(n===2?'on':'')+'"></i></div><button class="ey-btn" id="wgo" type="button">'+(n<2?'Next':'See the catalog')+'</button></div></div></div>';
+    return '<div class="ov"><div class="sheet"><h4>'+STEPS[n][0]+'</h4><p>'+STEPS[n][1]+'</p><div class="dots"><i class="'+(n===0?'on':'')+'"></i><i class="'+(n===1?'on':'')+'"></i><i class="'+(n===2?'on':'')+'"></i></div><button class="ey-btn" id="wgo" type="button">'+(n<2?'Next':'Start the form')+'</button></div></div>';
   }
   function play(){
-    document.getElementById('addr').textContent='marketplace';
-    slot.innerHTML=walk(0);
-    EY.after(200,function(){ EY.note(document.getElementById('wgo'),'Walkthrough'); });
-    EY.after(1200,function(){ slot.innerHTML=walk(1); EY.note(document.getElementById('wgo'),'Help stays'); });
-    EY.after(2300,function(){ slot.innerHTML=walk(2); EY.note(document.getElementById('wgo'),'Then the form'); });
-    EY.after(3600,function(){
-      slot.innerHTML=EYShell.services({infoFirst:true});
-      EY.after(300,function(){ EY.note(document.getElementById('info'),'Details on the card'); });
-      EY.after(1800,function(){
-        document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench</h4><p>Same product. Helper stays on the right.</p><button class="ey-btn" id="go" type="button">Get started</button></div></div>');
-        EY.note(document.getElementById('go'),'Enter');
-        EY.after(1600, function(){
-          var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
-          slot.innerHTML='<div style="position:relative;flex:1;display:flex;flex-direction:column">'+EYShell.form({helper:true})+'<div class="winok" id="winok">Ready</div></div>';
-          EY.after(200,function(){ EY.move('u1', document.getElementById('f1')); });
-          EY.after(2800,function(){ var o=document.getElementById('winok'); if(o) o.classList.add('on'); });
-        });
+    document.getElementById('addr').textContent='marketplace / services';
+    slot.innerHTML=EYShell.services({infoFirst:true});
+    EY.after(400,function(){ EY.note(document.getElementById('info'),'See details first'); });
+    EY.after(1800,function(){
+      document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench</h4><p>Description, resources, requirements. Then Get started.</p><button class="ey-btn" id="go" type="button">Get started</button></div></div>');
+      EY.note(document.getElementById('go'),'Enter the product');
+    });
+    EY.after(3400,function(){
+      var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
+      slot.innerHTML='<div style="position:relative;flex:1;display:flex;flex-direction:column">'+EYShell.form({helper:true})+walk(0)+'<button class="ey-btn ghost onboard" id="ob" type="button">Onboarding</button></div>';
+      EY.note(document.getElementById('wgo'),'Onboarding after the product');
+    });
+    EY.after(4800,function(){
+      var ov=slot.querySelector('.ov');
+      if(ov) ov.outerHTML=walk(1);
+      EY.note(document.getElementById('wgo'),'Team');
+    });
+    EY.after(6200,function(){
+      var ov=slot.querySelector('.ov');
+      if(ov) ov.outerHTML=walk(2);
+      EY.note(document.getElementById('wgo'),'Billing');
+    });
+    EY.after(7600,function(){
+      var ov=slot.querySelector('.ov'); if(ov) ov.remove();
+      var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
+      EY.note(document.getElementById('ob'),'Onboarding stays available');
+      EY.after(1400,function(){
+        if(tip) tip.style.display='none';
+        EY.move('u1', document.getElementById('f1'));
+        EY.tip(document.getElementById('t1'),'Instance name','Helper text. Always reopen Onboarding.');
+      });
+      EY.after(3200,function(){
+        slot.insertAdjacentHTML('beforeend','<div class="winok" id="winok">Ready</div>');
+        document.getElementById('winok').classList.add('on');
       });
     });
   }
