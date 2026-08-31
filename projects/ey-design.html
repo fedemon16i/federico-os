@@ -23,8 +23,8 @@ html,body{background:transparent}
 .art.on{opacity:1}.art .h{height:6px;width:42%;background:#111;margin-bottom:5px}.art .p{height:3px;width:78%;background:#ddd;margin-bottom:3px}.art .cta{height:7px;width:30%;background:#0d99ff;margin-top:5px}
 .art.mini{width:60%;opacity:.55;box-shadow:0 0 0 1px #555}
 .tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;border-bottom:1px solid var(--ey-line);background:var(--ey-side)}
-.tools i{font-style:normal;font-size:8px;padding:2px 6px;border:1px solid var(--ey-line);color:var(--ey-muted);border-radius:100px}
-.tools i.on{color:var(--ey-bg);background:var(--ey-text);border-color:transparent}
+.tools .ey-brand{opacity:.4;transition:.25s}
+.tools .ey-brand.on{opacity:1;outline:1px solid var(--ey-text);outline-offset:1px}
 .body{display:grid;grid-template-columns:70px 1fr;flex:1;min-height:0}
 .tree{padding:6px;font-size:8px;color:var(--ey-muted);border-right:1px solid var(--ey-line);background:var(--ey-side)}
 .tree div{padding:2px 0}
@@ -33,7 +33,6 @@ html,body{background:transparent}
 .ready{margin-top:8px;border:1px solid var(--ey-line);border-radius:8px;background:var(--ey-card);padding:8px 10px;opacity:0;transform:translateY(6px);transition:.4s}
 .ready.on{opacity:1;transform:none}
 .ready .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.check{font-size:10px;font-weight:700;color:#0b6b38;background:#d8f3e4;padding:3px 8px;border-radius:100px}
 .screen{display:grid;grid-template-columns:80px 1fr 90px;gap:8px;background:var(--ey-surface);border:1px solid var(--ey-line);border-radius:6px;padding:8px}
 .ph{background:var(--ey-side);border-radius:4px;padding:6px}
 .ph .bar{height:5px;background:var(--ey-line);margin-bottom:4px;width:70%}
@@ -47,7 +46,7 @@ html,body{background:transparent}
       <div class="k">Same designer · two workshops</div>
       <div class="pair">
         <div class="br" id="fig">
-          <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma · by hand</div>
+          <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div><span id="figMark"></span> by hand</div>
           <div class="fig">
             <div class="lay"><b>Layers</b><div>Frame · home</div><div>Hero</div><div>Catalog</div><div>Card / Workbench</div></div>
             <div class="cv">
@@ -59,7 +58,7 @@ html,body{background:transparent}
         </div>
         <div class="br" id="ag">
           <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>agents · every tool</div>
-          <div class="tools"><i id="t0">Claude Code</i><i id="t1">Cursor</i><i id="t2">Factory.ai</i><i id="t3">Replit</i><i id="t4">CLI</i></div>
+          <div class="tools" id="tools"></div>
           <div class="body">
             <div class="tree"><div>repo/</div><div>  pub.yml</div><div>  form.md</div><div>  help/</div></div>
             <div class="cli">
@@ -71,7 +70,7 @@ html,body{background:transparent}
         </div>
       </div>
       <div class="ready" id="ready">
-        <div class="top"><div class="k" style="margin:0">A screen left both workshops</div><div class="check">Design ready</div></div>
+        <div class="top"><div class="k" style="margin:0">A screen left both workshops</div><span class="ey-tag ok">Design ready</span></div>
         <div class="screen">
           <div class="ph"><div class="bar"></div><div class="bar" style="width:40%"></div><div class="bar" style="width:55%"></div></div>
           <div class="tile">Publisher workspace<span>Queue · type · fields · guidance · onboard · review</span></div>
@@ -82,12 +81,16 @@ html,body{background:transparent}
   </div>
 </div>
 <script src="ey-engine.js"></script>
+<script src="ey-market.js"></script>
 <script>
+document.getElementById('figMark').innerHTML=EYMarket.chip('figma');
+document.getElementById('tools').innerHTML=['claude','cursor','factory','replit','grok','codex'].map(EYMarket.chip).join('');
 EY.after(80, function(){ document.getElementById('fig').classList.add('on'); });
 EY.after(240, function(){ document.getElementById('a0').classList.add('on'); });
 EY.after(360, function(){ document.getElementById('ag').classList.add('on'); });
-['t0','t1','t2','t3','t4'].forEach(function(id,i){ EY.after(480+i*110, function(){ document.getElementById(id).classList.add('on'); }); });
+var chips=document.querySelectorAll('#tools .ey-brand');
+chips.forEach(function(el,i){ EY.after(480+i*110, function(){ el.classList.add('on'); }); });
 ['l0','l1','l2'].forEach(function(id,i){ EY.after(800+i*220, function(){ document.getElementById(id).classList.add('on'); }); });
-EY.after(1700, function(){ document.getElementById('ready').classList.add('on'); });
+EY.after(1800, function(){ document.getElementById('ready').classList.add('on'); });
 </script>
 </body></html>
