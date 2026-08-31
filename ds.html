@@ -13,7 +13,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'D
 .top{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--bar);border-bottom:1px solid var(--border)}
 .top a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none}
 .top .logo{margin-right:auto;color:var(--text)}
-.wrap{max-width:980px;margin:0 auto;padding:24px 20px 80px}
+.wrap{max-width:980px;margin:0 auto;padding:24px 20px 12px}
 h1{font-family:'Space Grotesk',system-ui;font-size:clamp(1.6rem,5vw,2rem);letter-spacing:-.03em}
 .lede{color:var(--muted);max-width:64ch;margin:8px 0 20px;line-height:1.55;font-size:14px}
 .lbl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
@@ -22,15 +22,15 @@ h1{font-family:'Space Grotesk',system-ui;font-size:clamp(1.6rem,5vw,2rem);letter
 .chip.on,.dev.on{color:var(--bg);background:var(--chip-on);border-color:var(--chip-on)}
 html[data-theme="light"] .chip.on,html[data-theme="light"] .dev.on{color:#fff}
 .meta{font-size:12px;color:var(--muted);margin:0 0 10px}
-.stage{width:100%;aspect-ratio:840/560;position:relative;overflow:hidden;margin:0 0 8px;background:transparent}
-.stage iframe,.sheet iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.sheet{width:100%;height:min(920px,140vw);position:relative;border:1px solid var(--border);overflow:hidden;background:var(--bar)}
+.stage{width:100%;aspect-ratio:840/560;position:relative;overflow:visible;margin:0;background:transparent}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.catalog{border-top:1px solid var(--border);margin-top:28px;padding:20px 20px 80px;max-width:980px;margin-left:auto;margin-right:auto}
 .jump{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
-.jump button{border:0;background:transparent;color:#8a6a00;font:12px 'DM Sans',sans-serif;cursor:pointer}
-html[data-theme="dark"] .jump button{color:#e8d48a}
+.jump button{border:0;background:transparent;color:var(--muted);font:12px 'DM Sans',sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.sheet-host{width:100%;min-height:1100px;border:0;background:transparent}
+.sheet-host iframe{width:100%;height:1100px;border:0;background:transparent}
 @media (max-width:720px){
-  .wrap{padding:16px 0 64px}
-  .wrap > h1,.wrap > .lede,.wrap > .lbl,.wrap > .row,.wrap > .meta,.wrap > .jump,.wrap > .sheet{padding-left:16px;padding-right:16px}
+  .wrap,.catalog{padding-left:16px;padding-right:16px}
 }
 </style>
 </head>
@@ -42,7 +42,7 @@ html[data-theme="dark"] .jump button{color:#e8d48a}
 </div>
 <div class="wrap">
   <h1>Design system</h1>
-  <p class="lede">Unit 840×560. Scales as one piece to stage width. Light mode paints this page white so the beat sits on a real light ground.</p>
+  <p class="lede">One primary button. One ghost. Beat sits loose on this page — the window outline belongs to the beat.</p>
 
   <p class="lbl">Project</p>
   <div class="row" id="skins">
@@ -63,14 +63,16 @@ html[data-theme="dark"] .jump button{color:#e8d48a}
   <div class="row" id="beats"></div>
   <p class="meta">840 × 560 · uniform scale</p>
   <div class="stage"><iframe id="preview" title="Preview"></iframe></div>
+</div>
 
+<div class="catalog">
   <p class="lbl">Catalog</p>
   <div class="row">
     <button class="dev on" data-cat="lib" type="button">Library</button>
     <button class="dev" data-cat="diag" type="button">Diagrams</button>
   </div>
   <div class="jump" id="jumps"></div>
-  <div class="sheet"><iframe id="sheet" title="Library"></iframe></div>
+  <div class="sheet-host"><iframe id="sheet" title="Library"></iframe></div>
 </div>
 <script>
 var skin='ey', mode='light', cat='lib', beat='ey-02-analyze.html';
@@ -88,7 +90,7 @@ var BEATS={
   cus:[['ARIVU','customs.html']],
   bc:[['Map','blockchain-player.html']]
 };
-var JUMP=['tokens','type','buttons','bars','banners','chips','cards','forms','tables','kpis','alerts','icons','reference','extras'];
+var JUMP=['tokens','type','buttons','bars','banners','chips','cards','forms','tables','kpis','alerts','icons','logos','extras'];
 function isPhone(){ return PHONE.indexOf(skin)>=0; }
 function theme(){ document.documentElement.setAttribute('data-theme', mode); }
 function sheetUrl(hash){
