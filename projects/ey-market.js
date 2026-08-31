@@ -10,9 +10,11 @@
     pendo: { fill: '#c41a4a', label: 'Pendo' },
     figma: { fill: '#a259ff', label: 'Figma' },
     claude: { fill: '#d97757', label: 'Claude Code' },
-    cursor: { fill: '#888', label: 'Cursor' },
-    notion: { fill: '#111', label: 'Notion' },
-    ga4: { fill: '#c47f00', label: 'GA4' }
+    cursor: { fill: '#6b7280', label: 'Cursor' },
+    notion: { fill: '#111111', label: 'Notion' },
+    ga4: { fill: '#c47f00', label: 'GA4' },
+    grok: { fill: '#1a1a1a', label: 'Grok' },
+    codex: { fill: '#0b5cab', label: 'Codex' }
   };
   function mark(id) {
     var m = MARK[id] || { fill: '#5c5c66', label: '?' };
