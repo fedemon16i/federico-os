@@ -6,12 +6,8 @@
   var PAD = 16;
   var ro = null;
   var PTR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
-
   function after(ms, fn) { var id = setTimeout(fn, ms); T.push(id); return id; }
-  function stop() {
-    T.forEach(clearTimeout); T = [];
-    document.querySelectorAll('.ey-veil').forEach(function (el) { el.classList.remove('on'); });
-  }
+  function stop() { T.forEach(clearTimeout); T = []; document.querySelectorAll('.ey-veil').forEach(function (el) { el.classList.remove('on'); }); }
   function applyMode(m) {
     if (!m) { try { m = new URLSearchParams(location.search).get('mode'); } catch (err) { m = null; } }
     if (!m) m = 'dark';
@@ -23,7 +19,6 @@
     if (e.data.type === 'fm-stop') stop();
     if (e.data.type === 'fm-mode') applyMode(e.data.mode);
   });
-
   function fit() {
     var unit = document.querySelector('.ey-unit');
     var host = document.querySelector('.stage') || document.body;
@@ -37,7 +32,6 @@
     unit.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
     return s;
   }
-
   function link(name) {
     if (document.querySelector('link[href*="' + name + '"]')) return;
     var l = document.createElement('link');
@@ -45,7 +39,6 @@
     l.href = (location.pathname.indexOf('/projects/') >= 0 ? '' : 'projects/') + name;
     document.head.appendChild(l);
   }
-
   function veil(kind, label) {
     var host = document.querySelector('.stage') || document.body;
     var el = host.querySelector('.ey-veil');
@@ -55,7 +48,6 @@
     requestAnimationFrame(function () { el.classList.add('on'); });
     return el;
   }
-
   function move(id, el, ox, oy) {
     var n = typeof id === 'string' ? document.getElementById(id) : id;
     var unit = document.querySelector('.ey-unit');
@@ -66,7 +58,6 @@
     n.style.left = Math.max(8, Math.min(UNIT_W - 88, (r.left - b.left) / s + (ox || 6))) + 'px';
     n.style.top = Math.max(8, Math.min(UNIT_H - 36, (r.top - b.top) / s + (oy || 4))) + 'px';
   }
-
   function note(el, label) {
     var unit = document.querySelector('.ey-unit');
     if (!unit || !el) return;
@@ -82,36 +73,28 @@
     var x = (er.right - ur.left) / s + 10;
     var y = (er.top - ur.top) / s;
     tip.classList.remove('below');
-    if (x > UNIT_W - 196) {
-      x = (er.left - ur.left) / s;
-      y = (er.bottom - ur.top) / s + 8;
-      tip.classList.add('below');
-    }
+    if (x > UNIT_W - 196) { x = (er.left - ur.left) / s; y = (er.bottom - ur.top) / s + 8; tip.classList.add('below'); }
     tip.style.left = Math.max(8, Math.min(UNIT_W - 188, x)) + 'px';
     tip.style.top = Math.max(26, Math.min(UNIT_H - 52, y)) + 'px';
     move('u1', el);
   }
-
   function boot() {
     applyMode();
+    link('ey-ds.css');
+    link('ey-ds-plus.css');
     link('ey-motion.css');
     link('fm-show.css');
     fit();
     w.requestAnimationFrame(function () { fit(); w.requestAnimationFrame(fit); });
     var host = document.querySelector('.stage');
-    if (host && w.ResizeObserver) {
-      if (ro) ro.disconnect();
-      ro = new ResizeObserver(function () { fit(); });
-      ro.observe(host);
-    }
+    if (host && w.ResizeObserver) { if (ro) ro.disconnect(); ro = new ResizeObserver(function () { fit(); }); ro.observe(host); }
     var path = location.pathname || '';
     var scene = '';
     try { scene = new URLSearchParams(location.search).get('scene') || ''; } catch (e) {}
     if (/ey-02-analyze/.test(path)) after(8200, function () { veil('fail', 'Drop-off'); });
     if (/ey-funnel/.test(path)) after(1800, function () { veil('fail', 'Drop-off'); });
-    if (/ey-req/.test(path) && scene === 'pedir') after(5600, function () { veil('ok', 'Ready'); });
+    if (/ey-req/.test(path)) after(7000, function () { veil('ok', 'Ready'); });
   }
-
   function cursors(host, n) {
     host = host || document.querySelector('.ey-unit');
     n = n || 1;
@@ -129,11 +112,9 @@
     }
     return nodes;
   }
-
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
   w.addEventListener('load', fit);
   w.addEventListener('resize', fit);
-
   w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, mode: applyMode, veil: veil, note: note };
 })(window);
