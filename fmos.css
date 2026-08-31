@@ -112,6 +112,7 @@ html.eink-refresh #app{filter:invert(1) contrast(1.2)}
 .rail button.nav[aria-current="true"]{color:var(--ac);border-left-color:var(--ac)}
 .rail button.nav[aria-current="true"] .idx{color:var(--ac-dim)}
 .rail button.nav:focus-visible,.rail a.nav:focus-visible{outline:2px solid var(--ac);outline-offset:-2px}
+.rail-ext{border-top:1px solid var(--rule-2);margin-top:8px;padding-top:6px}
 
 /* shortcuts — the desktop-icon gesture. Live in both the rail (desktop) and
    the drawer (mobile), same markup, same class — unscoped on purpose so
@@ -423,11 +424,11 @@ blockquote cite{display:block;font-family:var(--f-data);font-size:10px;letter-sp
 .aw-b em{position:absolute;inset:0 auto 0 0;background:var(--ac);width:0;transition:width 260ms var(--ease)}
 .att-none{font-size:10.5px;color:var(--ink-4)}
 
-/* the read-back — one line, the punchline of the whole panel */
-.verdict{margin-top:auto;padding:11px 12px;border-top:1px solid var(--rule);
+/* the read-back — leads the panel now, before the numbers */
+.verdict{padding:11px 12px;border-bottom:1px solid var(--rule);
   font-size:10.5px;line-height:1.55;color:var(--ink-2)}
 .verdict b{color:var(--ac);font-weight:400}
-.disclaim{font-size:8.5px;line-height:1.5;color:var(--ink-4);padding:9px 12px;border-top:1px solid var(--rule-2)}
+.disclaim{margin-top:auto;font-size:8.5px;line-height:1.5;color:var(--ink-3);padding:9px 12px;border-top:1px solid var(--rule-2)}
 
 /* ── floating window — the OS gesture. A case opens here, titled and
    draggable, instead of navigating to a new tab. Depth uses the same

@@ -44,25 +44,18 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
 
   <nav class="rail" aria-label="Primary">
     <div class="rail-grp">
-      <p class="rail-lbl">Read in order</p>
-      <button class="nav" type="button" data-route="home" aria-current="true"><span class="idx">01</span>About</button>
-      <button class="nav" type="button" data-route="projects"><span class="idx">02</span>Cases</button>
-      <button class="nav" type="button" data-route="skills"><span class="idx">03</span>Capabilities</button>
+      <button class="nav" type="button" data-route="home" aria-current="true">About</button>
+      <button class="nav" type="button" data-route="projects">Work</button>
+      <button class="nav" type="button" data-route="skills">Skills</button>
+      <button class="nav" type="button" data-route="resume">Résumé</button>
+      <button class="nav" type="button" data-route="contact">Contact</button>
+      <button class="nav" type="button" data-route="system">System</button>
     </div>
-    <div class="rail-grp">
-      <p class="rail-lbl">Reference</p>
-      <button class="nav" type="button" data-route="resume"><span class="idx">04</span>Résumé</button>
-      <button class="nav" type="button" data-route="contact"><span class="idx">05</span>Contact</button>
-      <button class="nav" type="button" data-route="system"><span class="idx">06</span>Design system</button>
+    <div class="rail-grp rail-ext">
+      <a class="nav" href="beats.html" target="_blank" rel="noopener">Beats ↗</a>
+      <a class="nav" href="ds.html" target="_blank" rel="noopener">DS projects ↗</a>
     </div>
-    <div class="rail-grp">
-      <p class="rail-lbl">Preview</p>
-      <a class="nav" href="beats.html" target="_blank" rel="noopener"><span class="idx">•</span>Beats</a>
-      <a class="nav" href="ds.html" target="_blank" rel="noopener"><span class="idx">•</span>DS projects</a>
-    </div>
-    <div class="rail-grp" id="railShortcuts">
-      <p class="rail-lbl">Shortcuts</p>
-    </div>
+    <div class="rail-grp rail-ext" id="railShortcuts"></div>
   </nav>
 
   <main class="main" id="main" tabindex="-1">
@@ -75,11 +68,13 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
       <span class="src" id="src"><i></i><span id="srcLabel">local</span></span>
     </div>
 
+    <p class="verdict" id="verdict">This monitor tracks you. Scroll depth, dwell on cases, where you stop — the same signals I read for clients.</p>
+
     <div class="gauges">
       <div class="g"><b id="gTime">0s</b><span>Time</span></div>
-      <div class="g"><b id="gDepth">0%</b><span>Depth</span></div>
+      <div class="g"><b id="gDepth">—</b><span>Depth</span></div>
       <div class="g"><b id="gSec">1/6</b><span>Views</span></div>
-      <div class="g"><b id="gEvt">0</b><span>Events</span></div>
+      <div class="g"><b id="gEvt">—</b><span>Events</span></div>
     </div>
 
     <div class="trace">
@@ -92,14 +87,10 @@ posthog.init('phc_xxUUfAJdgBf3cC3282BZcUR99aS7ybbgVYxevRUy9w4y',{
       <div id="att"><p class="att-none">No dwell recorded</p></div>
     </div>
 
-    <p class="verdict" id="verdict">Idle. The funnel starts when you scroll.</p>
-
     <p class="disclaim">
-      This monitor runs on PostHog — the same event tracking and session
-      replay stack I set up for clients. It's also how I work day to day:
-      I query this exact project through PostHog's MCP server from inside
-      Claude to analyze it conversationally, the way I'd analyze yours.
-      No forms, no personal data, no third-party ad tracking.
+      I query this monitor through PostHog's MCP server inside Claude —
+      the same way I'd analyze a client's product. The same stack I set
+      up for them. No forms, no personal data, no third-party ad tracking.
     </p>
   </aside>
 

@@ -185,7 +185,7 @@ var PHASES=[
 ];
 
 var ORDER=['home','projects','skills','resume','contact','system'];
-var LABEL={home:'About',projects:'Cases',skills:'Capabilities',resume:'Résumé',contact:'Contact',system:'Design system'};
+var LABEL={home:'About',projects:'Work',skills:'Skills',resume:'Résumé',contact:'Contact',system:'System'};
 var PATH ={home:'about',projects:'cases',skills:'capabilities',resume:'resume',contact:'contact',system:'design-system'};
 
 /* ── monitor state ───────────────────────────────────────────── */
@@ -251,9 +251,9 @@ function renderMonitor(){
   if(el) el.textContent=s.label;
 
   el=document.getElementById('gTime');  if(el) el.textContent=fmtTime(Date.now()-T.start);
-  el=document.getElementById('gDepth'); if(el){ el.textContent=T.depth+'%'; el.className=T.depth>75?'hot':''; }
+  el=document.getElementById('gDepth'); if(el){ el.textContent=T.depth===0?'—':T.depth+'%'; el.className=T.depth>75?'hot':''; }
   el=document.getElementById('gSec');   if(el) el.textContent=Object.keys(T.seen).length+'/'+ORDER.length;
-  el=document.getElementById('gEvt');   if(el) el.textContent=T.events>999?'999+':T.events;
+  el=document.getElementById('gEvt');   if(el) el.textContent=T.events===0?'—':T.events>999?'999+':T.events;
 
   /* activity trace */
   el=document.getElementById('spark');
@@ -309,7 +309,7 @@ function verdict(){
   if(seen>=3)             return seen+' sections in '+fmtTime(Date.now()-T.start)+'. Exploring, not scanning.';
   if(secs>34&&T.depth<22) return 'Half a minute, barely scrolled. Either the opening isn\'t landing, or you\'re reading closely.';
   if(T.depth>18)          return 'On step '+(T.depth>60?'three':'two')+' of a four-step page.';
-  return 'Idle. The funnel starts when you scroll.';
+  return '<b>This monitor tracks you.</b> Scroll depth, dwell on cases, where you stop — the same signals I read for clients.';
 }
 
 /* ── views ───────────────────────────────────────────────────── */
