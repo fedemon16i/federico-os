@@ -1,4 +1,4 @@
-/* Shared EY marketplace card. Marks are tokens, not official lockups. */
+/* Shared EY marketplace card + brand chips. Marks are tokens, not lockups. */
 (function (w) {
   var MARK = {
     copilot: { fill: '#5b6abf', label: 'Copilot' },
@@ -7,11 +7,20 @@
     postman: { fill: '#c44a1a', label: 'Postman' },
     azure: { fill: '#0b5cab', label: 'Azure' },
     github: { fill: '#24292f', label: 'GitHub' },
-    pendo: { fill: '#c41a4a', label: 'Pendo' }
+    pendo: { fill: '#c41a4a', label: 'Pendo' },
+    figma: { fill: '#a259ff', label: 'Figma' },
+    claude: { fill: '#d97757', label: 'Claude Code' },
+    cursor: { fill: '#888', label: 'Cursor' },
+    notion: { fill: '#111', label: 'Notion' },
+    ga4: { fill: '#c47f00', label: 'GA4' }
   };
   function mark(id) {
     var m = MARK[id] || { fill: '#5c5c66', label: '?' };
     return '<span class="ey-m" title="'+m.label+'" style="background:'+m.fill+'"></span>';
+  }
+  function chip(id) {
+    var m = MARK[id] || { fill: '#5c5c66', label: id };
+    return '<span class="ey-brand">'+mark(id)+m.label+'</span>';
   }
   function card(o) {
     o = o || {};
@@ -39,5 +48,5 @@
       return card(o);
     }).join('')+'</div>';
   }
-  w.EYMarket = { mark: mark, card: card, grid: grid, LIST: LIST };
+  w.EYMarket = { mark: mark, chip: chip, card: card, grid: grid, LIST: LIST, MARK: MARK };
 })(window);
