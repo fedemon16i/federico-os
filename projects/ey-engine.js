@@ -97,6 +97,7 @@
     applyMode();
     link('ey-ds.css');
     link('ey-ds-plus.css');
+    link('ey-layout.css');
     link('ey-motion.css');
     link('fm-show.css');
     fit();
