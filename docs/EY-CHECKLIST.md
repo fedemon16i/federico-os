@@ -7,17 +7,19 @@ Other projects parked.
 - [x] Beats in `ds.html#beats`
 - [x] Contrast invert + photo plate white
 - [x] Drop-off = BAD red; user labels yellow / blue / orange
-- [x] Shared card `ey-market.js` + brand marks on marketplace
-- [x] Analyze: 2-line tooltip → drop-off; radios; `?scene=form`
-- [x] Research replay = Analyze form only (`scene=form`)
-- [x] Requester: 3-step walkthrough → card → form + rail
-- [x] Publisher: stepper + field helper sheet → AI → Published
-- [x] Understand + Measure: brand chips (`EYMarket.chip`)
-- [x] Talk track `docs/EY-TALK.md` (no invented metrics)
-- [x] `ey-btn` aliased with `btn-w` on Analyze CTA
+- [x] Shared card `ey-market.js` + brand marks
+- [x] Analyze: tooltip → drop-off; radios; `?scene=form`
+- [x] Research replay = Analyze form only
+- [x] Requester 3-step walk + rail
+- [x] Publisher field helper sheet → AI → Published
+- [x] Understand / Measure / Design: `EYMarket.chip`
+- [x] Talk track `docs/EY-TALK.md`
+- [x] `ey-btn` aliased with `btn-w`
+
+## Left on purpose
+- Analyze catalog tiles keep photo hex (white type on photo plate)
+- Design Figma canvas stays #1e1e1e + white artboard (that is Figma, not our surface)
+- Hub stays alarms dashboard, not a marketplace
 
 ## Still open
-- [ ] Strip remaining tile hex in Analyze catalog (photo plates, on purpose)
-- [ ] Design workshop chips via `EYMarket.chip` (still local tools row)
-- [ ] Formal light/dark pass field-by-field
-- [ ] Hub stays alarms dashboard (not a catalog) — do not force `EYMarket.grid()`
+- [ ] Click-through of every beat in light mode on a real phone (human)
