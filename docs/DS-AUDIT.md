@@ -1,34 +1,52 @@
-# DS + contrast audit — 2026-08-30
+# EY audit — DS applied vs missing
 
-Law: quiet surface = ink. Photo plate = white type. No light-on-light. No dark-on-dark. Beats consume `ey-ds.css` / `fm-ds.css`.
+Beats load `ey-ds.css`. The library page loads `fm-ds.css`.
+Same tokens in spirit. **Not the same class names.**
+`btn-w` / `pri` / `svc` are aliased in `ey-ds.css` to the button/chip rules.
+They do not use `.fm-btn` in the HTML.
 
-## EY Fabric (in contract)
+## Applied (beat → library)
 
-| Beat | Links DS | Engine | Uses DS chrome | Local overrides that break contrast |
-|---|---|---|---|---|
-| Measure | ey-ds | ey-engine | unit + tokens | `.node.arm` `#fff` on `#171717` (ok in dark; light is patched by DS). `.row2` `#c8c4bc` — faint on light if DS miss. |
-| Analyze | ey-ds | ey-engine | window, nav, hero | **Fail if local wins:** `.nav .mark` `#fff`, `.side .sh/.on` `#fff`, `.svc .acts button` `#d8dbe4`, `.pri` `#fff` on 8% white, `.flag` `#FFE600`. Hero `#fff` is correct (photo). |
-| Funnel | ey-ds | ey-engine | board | Clean. Dead bar uses yellow + `#111`. |
-| Research | ey-ds | ey-engine | board | Clean. |
-| Understand | ey-ds | ey-engine | board | `.tools span` leftover muted hex; DS light rule covers it. |
-| Design | ey-ds | ey-engine | board | Figma art `#fff/#111` is a mock canvas (ask if we treat as photo). |
-| Hub | ey-ds | ey-engine | window | **Fail local:** `.kpi b` `#fff`, `.side a.on` `#fff`, `.filters i.on` `#f0de5a`, `.feat em` `#f0de5a`, `.badge` `#fff` on red. |
-| Requester | ey-ds | ey-engine | window | **Fail local:** `.side .sh` `#fff`, `.acts` gray/white, `.tabs i.on` `#fff`, `.sec b` `#fff`, `.info` `#ffb4b4`. |
-| Publisher | ey-ds | ey-engine | window | **Fail local:** `.side .sh/.on` `#fff`, `.kpi b` `#fff`, `.pill.warn` `#f0de5a`, `.cat .e` `#f0de5a`, `.box b` `#fff`. |
-
-DS `!important` on buttons/chips now covers most of Analyze/Req/Hub **if** cache is fresh. Local hex still exists and will win any rule without `!important`.
-
-## Not on EY DS yet (next projects)
-
-| Beat | DS | Note |
+| Beat UI | Beat class | Library |
 |---|---|---|
-| DollarCity player | own CSS | Many `#fff` on green — valid on brand fill. Not tokenized. |
-| Chek player | own CSS | Phone UI. White on purple chips. Not `ey-ds`. |
-| Customs | own / ARIVU | No ey-ds. |
-| Blockchain player | own CSS | Map/sheets with `#fff`. Not tokenized. |
+| Window chrome | `.ey-unit.window .ey-bbar` | Bars |
+| App nav + search + AI + avatar | `.nav .search .ai .av` | Bars / Search |
+| Hero + Explore | `.hero .btn-w .btn-o` | Hero + Buttons |
+| Catalog rail | `.side .sh` | Rail |
+| Category tiles | `.tile.t1–t6` | Category tiles |
+| Product card + View / Get started | `.svc .acts` | Offer card |
+| Banner on Services | `.banner` | Hero/banner |
+| Form fields + drop flag | `.box .flag` | Field + Tag bad |
+| Order rail | `.order` | Your order |
+| Disclaimer | `.disc` | Help/notice (same family) |
+| Modal + tabs | `.sheet .tabs` | Modal |
+| Chat bubble | `.chat` | Chat |
+| Hub KPI / alarm / filter | `.kpi .badge .filters` | KPI + Tags + Chips |
+| Publisher pills / type grid | `.pill .cats` | Tags + category (partial) |
+
+## In beats, not in the library list
+
+- Cursor `.uc` + user label
+- Callout + `.ring` (new-feature mark)
+- Success overlay `.winok`
+- Onboarding card `.ob`
+- Publisher tooltip `.tip` (“What is this?”)
+- Publisher AI review box `.ai`
+- Analyze `.band` (developer workflow strip)
+- Analyze `.prog` stepper (not `.fm-stepper`)
+- Hub mini funnel `.bars`
+- Research replay chrome (Pendo-style player)
+- Research interview / score cards
+- Understand finding rows + tool chips
+- Design Figma canvas + agent/CLI column + Design ready
+- Measure sitemap nodes
+- Funnel chart rows
+
+Diagrams (Measure, Funnel, Research, Understand, Design workshop) are **not** `fm-*` components. They should stay a Diagrams group, not be forced into buttons/cards.
 
 ## Verdict
 
-- Diagrams (Measure, Funnel, Research, Understand): **using DS**. Contrast mostly ok.
-- Windows (Analyze, Hub, Req, Pub): **linked to DS** but still carry a local palette. That is why light/dark still slips.
-- Next surgical pass: delete those local color lines so only tokens remain. Ask before treating Design Figma canvas or Publisher extras as custom.
+Windows (Analyze, Hub, Req, Pub) consume EY tokens and button/chip aliases.
+Library shows the same ideas under `fm-*`.
+Gap: two class systems. Next close is either map `.fm-*` onto beats or list the beat names next to each library item.
+Missing specimens worth adding: cursor, callout, success, tooltip, AI review, onboarding, replay chrome, sitemap node, funnel row.
