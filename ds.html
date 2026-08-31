@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Design system — Federico Monroy</title>
+<title>Projects DS — Federico Monroy</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=Inter:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="projects/fm-ds.css"/>
 <style>
@@ -19,7 +19,7 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 .pg .lede{margin:8px 0 0;color:var(--dim);max-width:62ch;line-height:1.55}
 .ptabs{display:flex;gap:6px;padding:16px 24px 0;max-width:920px;margin:0 auto;flex-wrap:wrap}
 .ptab{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);cursor:pointer}
-.ptab.on{color:var(--ink);border-color:var(--ink)}
+.ptab:hover,.ptab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .list{max-width:920px;margin:0 auto;padding:12px 24px 96px;font-family:'DM Sans',system-ui,sans-serif}
 .item{padding:22px 0;border-top:1px solid var(--border)}
 .item h2{margin:0 0 4px;font-family:'Space Grotesk',system-ui;font-size:1.05rem;color:var(--ink)}
@@ -35,24 +35,20 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 .order .ln{display:flex;justify-content:space-between;font-size:12px;color:var(--fm-muted);padding:4px 0;border-bottom:1px solid var(--fm-line)}
 .order .tot{display:flex;justify-content:space-between;padding-top:8px;font-size:13px;font-weight:700;color:var(--fm-text)}
 .rail a{display:flex;justify-content:space-between;padding:7px 8px;border-radius:6px;font-size:12px;color:var(--fm-muted);text-decoration:none}
-.rail a.on{background:rgba(127,127,127,.12);color:var(--fm-text)}
+.rail a:hover,.rail a.on{background:var(--fm-text);color:var(--fm-bg)}
 .modal{border:1px solid var(--fm-line);border-radius:10px;padding:14px;background:var(--fm-card);max-width:360px}
 .chat{width:28px;height:28px;border-radius:50%;background:var(--fm-btn);color:var(--fm-btn-ink);display:grid;place-items:center;font-size:12px;font-weight:700}
-.stage{width:100%;aspect-ratio:840/560;position:relative}
-.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
-.navchip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
-.navchip.on{color:var(--ink);border-color:var(--ink)}
-.fm-btn.is-hover,.fm-btn:hover{filter:brightness(1.12)}
-.fm-btn.is-active,.fm-btn:active{transform:translateY(1px);filter:brightness(.92)}
-.fm-btn.is-disabled,.fm-btn:disabled{opacity:.38;pointer-events:none}
-.fm-chip{cursor:pointer}
-.fm-chip.is-hover,.fm-chip:hover{color:var(--fm-text);border-color:var(--fm-text)}
-.fm-field.is-focus,.fm-field:focus-within{outline:2px solid var(--fm-accent);outline-offset:1px;color:var(--fm-text)}
+.fm-btn{transition:transform .15s,background .15s,color .15s,box-shadow .15s}
+.fm-btn:hover{background:var(--fm-text)!important;color:var(--fm-bg)!important;transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.fm-btn.ghost:hover{background:var(--fm-text)!important;color:var(--fm-bg)!important}
+.fm-btn:active{transform:scale(.98)}
+.fm-btn:disabled{opacity:.38;pointer-events:none;transform:none;box-shadow:none}
+.fm-chip{cursor:pointer;transition:background .15s,color .15s}
+.fm-chip:hover,.fm-chip.on{background:var(--fm-text)!important;color:var(--fm-bg)!important;border-color:transparent!important}
+.fm-photo,.fm-offer{cursor:pointer;transition:transform .2s,box-shadow .2s,outline-color .2s}
+.fm-photo:hover,.fm-offer:hover{transform:scale(1.04) translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.35);outline:2px solid var(--fm-text);outline-offset:2px}
 .fm-field.is-error{border-color:var(--fm-bad);color:var(--fm-bad)}
 .fm-field.is-filled{color:var(--fm-text)}
-.fm-photo{cursor:pointer;transition:transform .2s}
-.fm-photo:hover{transform:translateY(-2px)}
 </style>
 </head>
 <body>
@@ -60,21 +56,21 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
   <a class="logo" href="index.html">FM.OS</a>
   <a href="gallery.html">Gallery</a>
   <a href="beats.html">Beats</a>
-  <a href="ds.html">DS</a>
+  <a href="ds.html">Projects DS</a>
+  <a href="show.html">Showcase</a>
   <a href="#" id="themeBtn">Light</a>
   <a href="index.html">Back</a>
 </div>
 <div class="pg">
-  <h1>Design system</h1>
-  <p class="lede">Page list. Thin rules. Live hover / press / selected. Project only changes tokens.</p>
+  <h1>Projects DS</h1>
+  <p class="lede">Product components only. Beats live on the Beats page. Hover inverts ink/plate so contrast holds.</p>
 </div>
 <div class="ptabs" id="projects"></div>
 <div class="list" id="list"></div>
 <script src="projects/fm-engine.js"></script>
 <script>
 var SKINS=[{id:'ey',name:'EY Fabric'},{id:'dc',name:'DollarCity'},{id:'chek',name:'Chek'},{id:'cus',name:'Customs'},{id:'bc',name:'Blockchain'}];
-var BEATS={ey:[['Measure','ey-01-measure.html'],['Analyze','ey-02-analyze.html'],['Funnel','ey-funnel.html'],['Research','ey-research.html'],['Understand','ey-understand.html'],['Design','ey-design.html'],['Hub','ey-hub.html'],['Requester','ey-req.html'],['Publisher','ey-pub.html']],dc:[['POS','dollarcity-player.html']],chek:[['Card','chek-player.html']],cus:[['ARIVU','customs.html']],bc:[['Map','blockchain-player.html']]};
-var skin='ey', beat='ey-02-analyze.html';
+var skin='ey';
 function theme(){ return document.documentElement.getAttribute('data-theme')||'dark'; }
 function applyTheme(th){
   document.documentElement.setAttribute('data-theme', th);
@@ -101,55 +97,44 @@ function draw(){
     var b=document.createElement('button');
     b.className='ptab'+(s.id===skin?' on':'');
     b.textContent=s.name;
-    b.onclick=function(){ skin=s.id; beat=(BEATS[skin][0]||[])[1]; draw(); };
+    b.onclick=function(){ skin=s.id; draw(); };
     box.appendChild(b);
   });
-  var chips='<div class="chips">';
-  (BEATS[skin]||[]).forEach(function(p){ chips+='<button class="navchip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
-  chips+='</div>';
   document.getElementById('list').innerHTML=
-    item('Buttons','.fm-btn .fm-btn.ghost','Hover and press are live. Disabled is a frozen state.',
+    item('Buttons','.fm-btn .fm-btn.ghost','Hover inverts. Press scales down.',
       '<div class="states">'+
         st('Default','<button class="fm-btn" type="button">Get started</button>')+
         st('Disabled','<button class="fm-btn" type="button" disabled>Get started</button>')+
         st('Ghost','<button class="fm-btn ghost" type="button">View</button>')+
-        st('Ghost disabled','<button class="fm-btn ghost" type="button" disabled>View</button>')+
       '</div>')+
-    item('Offer card','.fm-offer','Marketplace product. Two actions in one row.',
+    item('Offer card','.fm-offer','Two actions in one row. Whole card lifts on hover.',
       '<div class="fm-offer" style="max-width:320px"><div class="kind">Services · Offerings</div><b>Workbench workspace</b><p class="desc" style="margin:6px 0 10px">Shared delivery for a team.</p><div class="row-btns"><button class="fm-btn ghost" type="button">View</button><button class="fm-btn" type="button">Get started</button></div></div>')+
-    item('Category tiles','.fm-photo','Catalog layers. Hover lifts. White type on the plate.',
+    item('Category tiles','.fm-photo','Large hit. Scale + shadow, not a 2px nudge.',
       '<div class="grid3"><div class="fm-photo"><b>Services</b><span>Compute</span></div><div class="fm-photo"><b>Licenses</b><span>Rights</span></div><div class="fm-photo"><b>Kits</b><span>Start</span></div></div>')+
-    item('Your order','.order','Right rail on the form. Lines + total.',
+    item('Your order','.order','Lines + total.',
       '<div class="order"><h4>Your order</h4><div class="ln"><span>Workbench</span><span>$0</span></div><div class="ln"><span>Region West 2</span><span>—</span></div><div class="ln"><span>Required service</span><span>None</span></div><div class="tot"><span>Total</span><span class="fm-total">$0 / mo</span></div></div>')+
-    item('Help / Requirements','.fm-notice','Sits under the order rail on requester.',
+    item('Help / Requirements','.fm-notice','Under the order rail.',
       '<div class="fm-notice" style="max-width:320px">Name · required service · billing account</div>')+
-    item('Chips','.fm-chip','Click to select.',
-      '<div class="row-btns" id="chipRow"><span class="fm-chip on" data-chip>All</span><span class="fm-chip" data-chip>Services</span><span class="fm-chip" data-chip>Licenses</span><span class="fm-chip" data-chip>Kits</span></div>')+
-    item('Tags','.fm-tag','Status. Bad = drop-off.',
+    item('Chips','.fm-chip','Idle outline. Hover and selected invert ink/plate.',
+      '<div class="row-btns"><span class="fm-chip on" data-chip>All</span><span class="fm-chip" data-chip>Services</span><span class="fm-chip" data-chip>Licenses</span><span class="fm-chip" data-chip>Kits</span></div>')+
+    item('Tags','.fm-tag','Status only.',
       '<div class="row-btns"><span class="fm-tag ok">AI pass</span><span class="fm-tag warn">Pending</span><span class="fm-tag bad">Drop-off</span></div>')+
-    item('Search','.fm-field','Empty, typed, error.',
-      '<div class="states">'+
-        st('Empty','<div class="fm-field" style="width:210px">Search products</div>')+
-        st('Filled','<div class="fm-field is-filled" style="width:210px">Workbench</div>')+
-        st('Error','<div class="fm-field is-error" style="width:210px">Required</div>')+
-      '</div>')+
-    item('Rail','.rail','Catalog counts. Click a row.',
+    item('Search','.fm-field','Empty, filled, error.',
+      '<div class="states">'+st('Empty','<div class="fm-field" style="width:210px">Search products</div>')+st('Filled','<div class="fm-field is-filled" style="width:210px">Workbench</div>')+st('Error','<div class="fm-field is-error" style="width:210px">Required</div>')+'</div>')+
+    item('Rail','.rail','Click a row. Selected inverts.',
       '<div class="rail" style="max-width:240px"><a class="on" href="#" data-rail>All <span>284</span></a><a href="#" data-rail>Services <span>118</span></a><a href="#" data-rail>Licenses <span>19</span></a></div>')+
-    item('Modal','.modal','Description / Resources / Requirements + Get started.',
-      '<div class="modal"><h4 style="margin:0 0 8px;color:var(--fm-text)">Workbench workspace</h4><div class="row-btns" id="tabRow" style="margin-bottom:10px"><span class="fm-chip" data-tab>Description</span><span class="fm-chip" data-tab>Resources</span><span class="fm-chip on" data-tab>Requirements</span></div><p class="desc" id="tabBody">Workspace name. One required service. Billing account.</p><button class="fm-btn" type="button">Get started</button></div>')+
+    item('Modal','.modal','Tabs invert when selected.',
+      '<div class="modal"><h4 style="margin:0 0 8px;color:var(--fm-text)">Workbench workspace</h4><div class="row-btns" style="margin-bottom:10px"><span class="fm-chip" data-tab>Description</span><span class="fm-chip" data-tab>Resources</span><span class="fm-chip on" data-tab>Requirements</span></div><p class="desc" id="tabBody">Workspace name. One required service. Billing account.</p><button class="fm-btn" type="button">Get started</button></div>')+
     item('Bars','.fm-bbar .fm-nav','Browser + app nav.',
       '<div class="fm-bbar" style="border:1px solid var(--fm-line);border-radius:8px 8px 0 0"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr">platform / catalog</div></div><div class="fm-nav" style="border:1px solid var(--fm-line);border-top:0"><span class="on">Marketplace</span><span>Tools</span><span>Learn</span></div>')+
-    item('Hero','.fm-hero','Photo plate. Always white type.',
+    item('Hero','.fm-hero','Photo plate. White type.',
       '<div class="fm-hero"><b>Unlock technology at speed and scale</b><span>Catalog of services, kits and APIs.</span></div>')+
     item('Stepper','.fm-stepper','Form chapters.',
       '<div class="fm-stepper"><b>1</b> Name &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Workspace</div>')+
-    item('Chat','.chat','Help bubble on requester / publisher.',
-      '<div class="chat" title="Help">…</div>')+
-    item('KPI + table','.fm-kpi .fm-table','Hub overview.',
-      '<div class="fm-kpis" style="margin-bottom:10px"><div class="fm-kpi"><i>Request drop</i><b>22</b></div><div class="fm-kpi"><i>Onboard stall</i><b>3</b></div><div class="fm-kpi"><i>Help unused</i><b>4</b></div></div>')+
-    item('Beats','840×560','Reference animation.',
-      chips+'<div class="stage"><iframe title="Beat" src="projects/'+beat+'?mode='+theme()+'&r='+Date.now()+'"></iframe></div>');
-  document.querySelectorAll('[data-b]').forEach(function(b){ b.onclick=function(){ beat=b.dataset.b; draw(); }; });
+    item('Chat','.chat','Help bubble.',
+      '<div class="chat">…</div>')+
+    item('KPI','.fm-kpi','Hub overview.',
+      '<div class="fm-kpis"><div class="fm-kpi"><i>Request drop</i><b>22</b></div><div class="fm-kpi"><i>Onboard stall</i><b>3</b></div><div class="fm-kpi"><i>Help unused</i><b>4</b></div></div>');
   document.querySelectorAll('[data-chip]').forEach(function(c){
     c.onclick=function(){ document.querySelectorAll('[data-chip]').forEach(function(x){ x.classList.remove('on'); }); c.classList.add('on'); };
   });
