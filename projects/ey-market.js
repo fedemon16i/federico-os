@@ -1,4 +1,4 @@
-/* Shared EY marketplace card + brand chips. Marks are tokens, not lockups. */
+/* Shared catalog card. Invented offerings. Marks are tokens, not lockups. */
 (function (w) {
   var MARK = {
     copilot: { fill: '#5b6abf', label: 'Copilot' },
@@ -27,17 +27,24 @@
   function card(o) {
     o = o || {};
     var id = o.id ? ' id="'+o.id+'"' : '';
-    var brand = o.brand ? mark(o.brand) : '<span class="ey-m" style="background:#5c5c66"></span>';
-    var extra = o.btn || '<button type="button">View</button><button class="pri" type="button">Get started</button>';
-    return '<div class="svc ey-offer"'+id+'>'+brand+'<div><div class="t">'+ (o.name||'') +'</div><div class="desc">'+(o.desc||'')+'</div><div class="meta">'+(o.meta||'Services · Offerings')+(o.brand?' · '+(MARK[o.brand]||{}).label:'')+'</div><div class="acts">'+extra+'</div></div></div>';
+    var tags = (o.tags || ['shared','team']).map(function(t){ return '<i>'+t+'</i>'; }).join('');
+    var extra = o.btn || '<button type="button">View More</button><button class="pri" type="button">Get Started</button>';
+    return '<div class="svc ey-offer"'+id+'>'
+      +'<span class="ey-ico" aria-hidden="true"></span>'
+      +'<div class="t">'+(o.name||'')+'</div>'
+      +'<div class="crumb meta">Services · Offerings'+(o.brand?' · '+(MARK[o.brand]||{}).label:'')+'</div>'
+      +'<div class="desc">'+(o.desc||'')+'</div>'
+      +'<div class="tags">'+tags+'</div>'
+      +'<div class="acts">'+extra+'</div>'
+      +'</div>';
   }
   var LIST = [
-    { name:'Workbench', desc:'Shared delivery workspace for a team.', brand:'copilot', id:'go' },
-    { name:'Cluster service', desc:'Compute for a shared team.', brand:'azure' },
-    { name:'Automation seat', desc:'A named right to run jobs.', brand:'factory' },
-    { name:'Workflow · Prod', desc:'Production path for a service.', brand:'postman' },
-    { name:'Observability pack', desc:'Logs and traces for a service.', brand:'github' },
-    { name:'Identity broker', desc:'Sign-in for the workspace.', brand:'replit' }
+    { name:'Shared workbench', desc:'A workspace a team requests and runs together.', brand:'copilot', tags:['workspace','shared'], id:'go' },
+    { name:'Team cluster', desc:'Compute reserved for one delivery team.', brand:'azure', tags:['compute','shared'] },
+    { name:'Automation seat', desc:'A named right to run jobs on a path.', brand:'factory', tags:['seat','jobs'] },
+    { name:'Production workflow', desc:'The live path for a service after review.', brand:'postman', tags:['prod','path'] },
+    { name:'Observability pack', desc:'Logs and traces attached to a service.', brand:'github', tags:['logs','traces'] },
+    { name:'Identity broker', desc:'Sign-in for the workspace and the team.', brand:'replit', tags:['sign-in','team'] }
   ];
   function grid(opts) {
     opts = opts || {};
@@ -45,7 +52,7 @@
       var o = Object.assign({}, c);
       if (opts.infoFirst && i===0) {
         o.id = 'info';
-        o.btn = '<button class="info" id="info" type="button">See details</button><button class="pri" type="button">Get started</button>';
+        o.btn = '<button class="info" id="info" type="button">See details</button><button class="pri" type="button">Get Started</button>';
       } else if (i===0) o.id = 'go';
       return card(o);
     }).join('')+'</div>';
