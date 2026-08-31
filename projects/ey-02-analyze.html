@@ -25,17 +25,17 @@
   var scene=new URLSearchParams(location.search).get('scene');
   EY.cursors(document.getElementById('unit'),3); EY.fit();
   function pack(el){ if(!el) return; EY.move('u1',el,8,4); EY.after(120,function(){ EY.move('u2',el,26,18); }); EY.after(240,function(){ EY.move('u3',el,-8,22); }); }
-  function set(html,url){ document.getElementById('addr').textContent=url; slot.innerHTML=html; document.querySelectorAll('.ey-drop').forEach(function(n){ n.remove(); }); }
+  function set(html,url){ document.getElementById('addr').textContent=url; slot.innerHTML=html; document.querySelectorAll('.ey-drop,.ey-tip').forEach(function(n){ n.remove(); }); }
   function playForm(){
     set(EYShell.form(),'workbench');
     EY.after(80,function(){
       EY.move('u1', document.getElementById('t1'));
-      EY.after(500,function(){ var h=document.getElementById('h1'); if(h) h.style.display='block'; });
-      EY.after(1100,function(){ EY.drop(document.getElementById('f1'),'user 1 · drop-off'); EY.move('u2', document.getElementById('t2')); });
-      EY.after(1600,function(){ var h=document.getElementById('h2'); if(h) h.style.display='block'; });
-      EY.after(2200,function(){ EY.drop(document.getElementById('f2'),'user 2 · drop-off'); EY.move('u3', document.getElementById('t3')); });
-      EY.after(2700,function(){ var h=document.getElementById('h3'); if(h) h.style.display='block'; });
-      EY.after(3300,function(){ EY.drop(document.getElementById('f3'),'user 3 · drop-off'); });
+      EY.after(400,function(){ EY.tip(document.getElementById('t1'),'Instance name','Need a unique name. 2–40 characters.'); });
+      EY.after(1200,function(){ EY.drop(document.getElementById('f1'),'user 1 · drop-off'); EY.move('u2', document.getElementById('t2')); });
+      EY.after(1700,function(){ EY.tip(document.getElementById('t2'),'Location','Region cannot change later.'); });
+      EY.after(2500,function(){ EY.drop(document.getElementById('f2'),'user 2 · drop-off'); EY.move('u3', document.getElementById('t3')); });
+      EY.after(3000,function(){ EY.tip(document.getElementById('t3'),'Required service','At least one service. No default.'); });
+      EY.after(3800,function(){ EY.drop(document.getElementById('f3'),'user 3 · drop-off'); });
     });
   }
   if(scene==='form'){ playForm(); return; }
