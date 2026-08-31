@@ -17,3 +17,18 @@ Overlay: `.fm-modal` `.fm-tip` `.fm-cap` `.fm-veil` `.fm-drop-flag`
 Analytics: `.fm-funnel` `.fm-node` `.fm-bars`
 
 Si no está en `kit.html`, no existe.
+
+## Mode
+
+1. `?mode=`  2. `FM.beat({mode})`  3. postMessage `fm-mode`  4. prefers  5. dark
+`data-mode` always set. Host must postMessage, never remount iframe.
+
+## Live files
+`projects/fm-ds.css` `projects/fm-engine.js` `projects/kit.html` `projects/ey-screens.js` `projects/ey-beats.js`
+
+## Delete / deleted
+`ds.html` `projects/ey-engine.js` `projects/ey-ds.css`
+Still to drop when nothing links them:
+`ey-ds-plus.css` `ey-layout.css` `ey-motion.css` `ey-lite.css` `ey-shell.js` `ey-market.js`
+`ey-01-measure.html` `ey-02-analyze.html` `ey-funnel.html` `ey-research.html` `ey-understand.html` `ey-design.html` `ey-hub.html` `ey-req.html` `ey-pub.html`
+Keep `ey-fabric.html` (case writeup) and `index.html`.
