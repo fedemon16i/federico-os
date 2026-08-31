@@ -11,15 +11,15 @@ Other projects parked.
 - [x] Analyze: tooltip → drop-off; radios; `?scene=form`
 - [x] Research replay = Analyze form only
 - [x] Requester 3-step walk + rail
-- [x] Publisher field helper sheet → AI → Published
-- [x] Understand / Measure / Design: `EYMarket.chip`
+- [x] Publisher field helper → AI → Published
+- [x] Understand / Measure / Design / Funnel / Hub: brand chips or ey-chip
+- [x] Funnel bars use tokens (dead bar stays yellow + black ink)
 - [x] Talk track `docs/EY-TALK.md`
-- [x] `ey-btn` aliased with `btn-w`
 
 ## Left on purpose
-- Analyze catalog tiles keep photo hex (white type on photo plate)
-- Design Figma canvas stays #1e1e1e + white artboard (that is Figma, not our surface)
-- Hub stays alarms dashboard, not a marketplace
+- Analyze catalog tiles = photo plate
+- Design Figma canvas = Figma chrome
+- Hub = alarms, not marketplace
 
-## Still open
-- [ ] Click-through of every beat in light mode on a real phone (human)
+## Your pass
+- Light mode on a phone, every EY beat
