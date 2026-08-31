@@ -36,38 +36,34 @@
     document.getElementById('addr').textContent='marketplace / services';
     slot.innerHTML=EYShell.services({infoFirst:true});
     EY.after(400,function(){ EY.note(document.getElementById('info'),'See details first'); });
-    EY.after(1800,function(){
-      document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench</h4><p>Description, resources, requirements. Then Get started.</p><button class="ey-btn" id="go" type="button">Get started</button></div></div>');
-      EY.note(document.getElementById('go'),'Enter the product');
+    EY.after(1600,function(){
+      document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench</h4><p>Description, resources, requirements.</p><button class="ey-btn" id="go" type="button">Get started</button></div></div>');
+      EY.note(document.getElementById('go'),'Enter');
     });
-    EY.after(3400,function(){
+    EY.after(3000,function(){
       var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
       slot.innerHTML='<div style="position:relative;flex:1;display:flex;flex-direction:column">'+EYShell.form({helper:true})+walk(0)+'<button class="ey-btn ghost onboard" id="ob" type="button">Onboarding</button></div>';
       EY.note(document.getElementById('wgo'),'Onboarding after the product');
     });
-    EY.after(4800,function(){
-      var ov=slot.querySelector('.ov');
-      if(ov) ov.outerHTML=walk(1);
-      EY.note(document.getElementById('wgo'),'Team');
-    });
-    EY.after(6200,function(){
-      var ov=slot.querySelector('.ov');
-      if(ov) ov.outerHTML=walk(2);
-      EY.note(document.getElementById('wgo'),'Billing');
-    });
-    EY.after(7600,function(){
+    EY.after(4200,function(){ var ov=slot.querySelector('.ov'); if(ov) ov.outerHTML=walk(1); EY.note(document.getElementById('wgo'),'Team'); });
+    EY.after(5400,function(){ var ov=slot.querySelector('.ov'); if(ov) ov.outerHTML=walk(2); EY.note(document.getElementById('wgo'),'Billing'); });
+    EY.after(6600,function(){
       var ov=slot.querySelector('.ov'); if(ov) ov.remove();
       var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
-      EY.note(document.getElementById('ob'),'Onboarding stays available');
-      EY.after(1400,function(){
-        if(tip) tip.style.display='none';
-        EY.move('u1', document.getElementById('f1'));
-        EY.tip(document.getElementById('t1'),'Instance name','Helper text. Always reopen Onboarding.');
-      });
-      EY.after(3200,function(){
-        slot.insertAdjacentHTML('beforeend','<div class="winok" id="winok">Ready</div>');
-        document.getElementById('winok').classList.add('on');
-      });
+      EY.move('u1', document.getElementById('f1'));
+    });
+    EY.after(8200,function(){
+      document.getElementById('addr').textContent='workbench / billing';
+      slot.innerHTML=EYShell.billing();
+      EY.move('u1', document.getElementById('f1'));
+    });
+    EY.after(9800,function(){
+      document.getElementById('addr').textContent='workbench / confirm';
+      slot.innerHTML=EYShell.confirm();
+      EY.move('u1', document.getElementById('f1'));
+    });
+    EY.after(11200,function(){
+      slot.insertAdjacentHTML('beforeend','<div class="winok on">Ready</div>');
     });
   }
   play();
