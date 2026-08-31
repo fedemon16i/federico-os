@@ -15,6 +15,7 @@
   function stop() {
     T.forEach(clearTimeout);
     T = [];
+    document.querySelectorAll('.ey-veil').forEach(function (el) { el.classList.remove('on'); });
   }
   function applyMode(m) {
     if (!m) {
@@ -46,6 +47,12 @@
 
   function boot() {
     applyMode();
+    if (!document.querySelector('link[href*="ey-motion.css"]')) {
+      var l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = (location.pathname.indexOf('/projects/') >= 0 ? '' : 'projects/') + 'ey-motion.css';
+      document.head.appendChild(l);
+    }
     fit();
     w.requestAnimationFrame(function () {
       fit();
@@ -91,10 +98,23 @@
     n.style.top = Math.max(8, Math.min(UNIT_H - 36, y)) + 'px';
   }
 
+  function veil(kind, label) {
+    var host = document.querySelector('.stage') || document.body;
+    var el = host.querySelector('.ey-veil');
+    if (!el) {
+      el = document.createElement('div');
+      host.appendChild(el);
+    }
+    el.className = 'ey-veil ' + (kind === 'ok' ? 'ok' : 'fail');
+    el.innerHTML = '<div class="mk">' + (kind === 'ok' ? '✓' : '↓') + '</div><b>' + (label || (kind === 'ok' ? 'Ready' : 'Drop-off')) + '</b>';
+    requestAnimationFrame(function () { el.classList.add('on'); });
+    return el;
+  }
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
   w.addEventListener('load', fit);
   w.addEventListener('resize', fit);
 
-  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, mode: applyMode };
+  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, mode: applyMode, veil: veil };
 })(window);
