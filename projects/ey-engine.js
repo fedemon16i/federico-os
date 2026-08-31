@@ -1,4 +1,4 @@
-/* EY engine. Unit 840×560 — Hub proportion. */
+/* EY engine. Unit 840×560. */
 (function (w) {
   var T = [];
   var UNIT_W = 840;
@@ -45,6 +45,19 @@
     return s;
   }
 
+  function veil(kind, label) {
+    var host = document.querySelector('.stage') || document.body;
+    var el = host.querySelector('.ey-veil');
+    if (!el) {
+      el = document.createElement('div');
+      host.appendChild(el);
+    }
+    el.className = 'ey-veil ' + (kind === 'ok' ? 'ok' : 'fail');
+    el.innerHTML = '<div class="mk">' + (kind === 'ok' ? '✓' : '↓') + '</div><b>' + (label || (kind === 'ok' ? 'Ready' : 'Drop-off')) + '</b>';
+    requestAnimationFrame(function () { el.classList.add('on'); });
+    return el;
+  }
+
   function boot() {
     applyMode();
     if (!document.querySelector('link[href*="ey-motion.css"]')) {
@@ -64,6 +77,12 @@
       ro = new ResizeObserver(function () { fit(); });
       ro.observe(host);
     }
+    var path = location.pathname || '';
+    var scene = '';
+    try { scene = new URLSearchParams(location.search).get('scene') || ''; } catch (e) {}
+    if (/ey-02-analyze/.test(path)) after(8200, function () { veil('fail', 'Drop-off'); });
+    if (/ey-funnel/.test(path)) after(1800, function () { veil('fail', 'Drop-off'); });
+    if (/ey-req/.test(path) && scene === 'pedir') after(4300, function () { veil('ok', 'Ready'); });
   }
 
   function cursors(host, n) {
@@ -96,19 +115,6 @@
     var y = (r.top - b.top) / s + (oy || 4);
     n.style.left = Math.max(8, Math.min(UNIT_W - 88, x)) + 'px';
     n.style.top = Math.max(8, Math.min(UNIT_H - 36, y)) + 'px';
-  }
-
-  function veil(kind, label) {
-    var host = document.querySelector('.stage') || document.body;
-    var el = host.querySelector('.ey-veil');
-    if (!el) {
-      el = document.createElement('div');
-      host.appendChild(el);
-    }
-    el.className = 'ey-veil ' + (kind === 'ok' ? 'ok' : 'fail');
-    el.innerHTML = '<div class="mk">' + (kind === 'ok' ? '✓' : '↓') + '</div><b>' + (label || (kind === 'ok' ? 'Ready' : 'Drop-off')) + '</b>';
-    requestAnimationFrame(function () { el.classList.add('on'); });
-    return el;
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
