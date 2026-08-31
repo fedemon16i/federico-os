@@ -1,41 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-skin="ey" data-mode="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Design system — Federico Monroy</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=Inter:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="projects/fm-ds.css"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#08080b;--border:rgba(255,255,255,.1);--text:#f0eee9;--muted:#8a8580;--bar:#0c0c10;--row:#101014}
-html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--text:#1c1b18;--muted:#5c5c66;--bar:#fff;--row:#fff}
-html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif}
+html,body{height:auto!important;overflow:auto!important;min-height:100vh;background:var(--bg,#08080b)}
+*{box-sizing:border-box}
+:root{--bg:#08080b;--border:rgba(255,255,255,.1);--ink:#f0eee9;--dim:#8a8580;--bar:#0c0c10}
+html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c66;--bar:#fff}
 .topbar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bar);border-bottom:1px solid var(--border)}
-.topbar a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none}
-.topbar a.logo{margin-right:auto;color:var(--text)}
-.pg{padding:28px 24px 12px;max-width:1180px;margin:0 auto}
-.pg h1{font-family:'Space Grotesk',system-ui;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.03em}
-.pg p{margin-top:8px;color:var(--muted);max-width:62ch;line-height:1.55}
-.ptabs{display:flex;gap:6px;padding:16px 24px 0;max-width:1180px;margin:0 auto;flex-wrap:wrap}
-.ptab{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer}
-.ptab.on{color:var(--text);border-color:var(--text)}
-.shell{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;max-width:1180px;margin:0 auto;padding:20px 24px 80px}
-.side a{display:block;padding:8px 10px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:13px}
-.side a.on{background:var(--row);color:var(--text);border:1px solid var(--border)}
-.main h2{font-family:'Space Grotesk',system-ui;font-size:1.2rem;margin:0 0 8px}
-.main .lede{color:var(--muted);font-size:13px;margin-bottom:16px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border)}
-th{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
-code{font-family:'Share Tech Mono',monospace;font-size:11px}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-.chip{border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
-.chip.on{color:var(--text);border-color:var(--text)}
-.stage{width:100%;aspect-ratio:840/560;position:relative;overflow:visible;background:transparent}
-.stage iframe,.live{border:0;background:transparent}
-.stage iframe{position:absolute;inset:0;width:100%;height:100%}
-.live{width:100%;min-height:720px}
-@media(max-width:800px){.shell{grid-template-columns:1fr}}
+.topbar a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none}
+.topbar a.logo{margin-right:auto;color:var(--ink)}
+.pg{padding:28px 24px 8px;max-width:920px;margin:0 auto;color:var(--ink);font-family:'DM Sans',system-ui,sans-serif}
+.pg h1{font-family:'Space Grotesk',system-ui;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.03em;margin:0}
+.pg .lede{margin:8px 0 0;color:var(--dim);max-width:62ch;line-height:1.55}
+.ptabs{display:flex;gap:6px;padding:16px 24px 0;max-width:920px;margin:0 auto;flex-wrap:wrap}
+.ptab{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);cursor:pointer}
+.ptab.on{color:var(--ink);border-color:var(--ink)}
+.list{max-width:920px;margin:0 auto;padding:12px 24px 96px;font-family:'DM Sans',system-ui,sans-serif}
+.item{padding:22px 0;border-top:1px solid var(--border)}
+.item h2{margin:0 0 4px;font-family:'Space Grotesk',system-ui;font-size:1.05rem;color:var(--ink)}
+.item .desc{margin:0 0 12px;color:var(--dim);font-size:13px;line-height:1.5}
+.item code{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim)}
+.states{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-end}
+.state{display:flex;flex-direction:column;gap:6px}
+.state span{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.stage{width:100%;aspect-ratio:840/560;position:relative}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.chip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
+.chip.on{color:var(--ink);border-color:var(--ink)}
+.fm-btn.is-hover{filter:brightness(1.12)}
+.fm-btn.is-active{transform:translateY(1px);filter:brightness(.92)}
+.fm-btn.is-disabled,.fm-btn:disabled{opacity:.38;pointer-events:none}
+.fm-chip.is-hover{color:var(--fm-text);border-color:var(--fm-text)}
+.fm-field.is-focus{outline:2px solid var(--fm-accent);outline-offset:1px;color:var(--fm-text)}
+.fm-field.is-error{border-color:var(--fm-bad);color:var(--fm-bad)}
+.fm-field.is-filled{color:var(--fm-text)}
 </style>
 </head>
 <body>
@@ -49,37 +53,19 @@ code{font-family:'Share Tech Mono',monospace;font-size:11px}
 </div>
 <div class="pg">
   <h1>Design system</h1>
-  <p>Same categories as the sheet. Project, then library. Beats are the last item.</p>
+  <p class="lede">One list on this page. Each component: description + states. Theme is the site switch. Project changes tokens only.</p>
 </div>
 <div class="ptabs" id="projects"></div>
-<div class="shell">
-  <nav class="side" id="side"></nav>
-  <div class="main" id="main"></div>
-</div>
+<div class="list" id="list"></div>
+<script src="projects/fm-engine.js"></script>
 <script>
 var SKINS=[{id:'ey',name:'EY Fabric'},{id:'dc',name:'DollarCity'},{id:'chek',name:'Chek'},{id:'cus',name:'Customs'},{id:'bc',name:'Blockchain'}];
 var BEATS={ey:[['Measure','ey-01-measure.html'],['Analyze','ey-02-analyze.html'],['Funnel','ey-funnel.html'],['Research','ey-research.html'],['Understand','ey-understand.html'],['Design','ey-design.html'],['Hub','ey-hub.html'],['Requester','ey-req.html'],['Publisher','ey-pub.html']],dc:[['POS','dollarcity-player.html']],chek:[['Card','chek-player.html']],cus:[['ARIVU','customs.html']],bc:[['Map','blockchain-player.html']]};
-var NAV=[
-  ['index','Index'],
-  ['tokens','Tokens'],
-  ['type','Type'],
-  ['buttons','Buttons'],
-  ['bars','Bars'],
-  ['banners','Banners'],
-  ['chips','Chips'],
-  ['cards','Cards'],
-  ['forms','Forms'],
-  ['tables','Tables'],
-  ['kpis','KPIs'],
-  ['alerts','Alerts'],
-  ['icons','Icons'],
-  ['extras','Extras'],
-  ['beats','Beats']
-];
-var skin='ey', beat='ey-02-analyze.html', section='index';
+var skin='ey', beat='ey-02-analyze.html';
 function theme(){ return document.documentElement.getAttribute('data-theme')||'dark'; }
 function applyTheme(th){
   document.documentElement.setAttribute('data-theme', th);
+  document.documentElement.setAttribute('data-mode', th);
   try{ localStorage.setItem('fm-theme', th); }catch(e){}
   var btn=document.getElementById('themeBtn');
   if(btn) btn.textContent = th==='light' ? 'Dark' : 'Light';
@@ -89,8 +75,14 @@ function applyTheme(th){
   applyTheme(saved==='light'?'light':'dark');
   document.getElementById('themeBtn').onclick=function(e){ e.preventDefault(); applyTheme(theme()==='light'?'dark':'light'); draw(); };
 })();
-function modeQ(){ return '?mode='+theme()+'&skin='+skin+'&r='+Date.now(); }
+function st(label, html){ return '<div class="state"><span>'+label+'</span>'+html+'</div>'; }
+function item(title, cls, desc, body){
+  return '<article class="item"><h2>'+title+'</h2><p class="desc"><code>'+cls+'</code> — '+desc+'</p>'+body+'</article>';
+}
 function draw(){
+  document.documentElement.setAttribute('data-skin', skin);
+  document.documentElement.setAttribute('data-mode', theme());
+  if(window.FM){ FM.skin(skin); FM.mode(theme()); }
   var box=document.getElementById('projects'); box.innerHTML='';
   SKINS.forEach(function(s){
     var b=document.createElement('button');
@@ -99,34 +91,54 @@ function draw(){
     b.onclick=function(){ skin=s.id; beat=(BEATS[skin][0]||[])[1]; draw(); };
     box.appendChild(b);
   });
-  var side=document.getElementById('side'); side.innerHTML='';
-  NAV.forEach(function(pair){
-    var a=document.createElement('a'); a.href='#'; a.className=section===pair[0]?'on':''; a.textContent=pair[1];
-    a.onclick=function(e){ e.preventDefault(); section=pair[0]; draw(); };
-    side.appendChild(a);
+  var chips='<div class="chips">';
+  (BEATS[skin]||[]).forEach(function(p){ chips+='<button class="chip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
+  chips+='</div>';
+  document.getElementById('list').innerHTML=
+    item('Buttons','.fm-btn / .fm-btn.ghost','Primary fills. Ghost outlines. Same height.',
+      '<div class="states">'+
+        st('Default','<button class="fm-btn" type="button">Get started</button>')+
+        st('Hover','<button class="fm-btn is-hover" type="button">Get started</button>')+
+        st('Pressed','<button class="fm-btn is-active" type="button">Get started</button>')+
+        st('Disabled','<button class="fm-btn is-disabled" type="button" disabled>Get started</button>')+
+        st('Ghost','<button class="fm-btn ghost" type="button">View</button>')+
+        st('Ghost hover','<button class="fm-btn ghost is-hover" type="button">View</button>')+
+        st('Ghost disabled','<button class="fm-btn ghost is-disabled" type="button" disabled>View</button>')+
+      '</div>')+
+    item('Chips','.fm-chip','Idle outline. On = selected. Used as filters and modal tabs.',
+      '<div class="states">'+
+        st('Idle','<span class="fm-chip">Services</span>')+
+        st('Hover','<span class="fm-chip is-hover">Services</span>')+
+        st('Selected','<span class="fm-chip on">Services</span>')+
+      '</div>')+
+    item('Tags','.fm-tag','Status only. Bad = drop-off.',
+      '<div class="states">'+
+        st('Ok','<span class="fm-tag ok">AI pass</span>')+
+        st('Warn','<span class="fm-tag warn">Pending</span>')+
+        st('Bad','<span class="fm-tag bad">Drop-off</span>')+
+      '</div>')+
+    item('Search / field','.fm-field','Same chrome in nav and forms.',
+      '<div class="states">'+
+        st('Empty','<div class="fm-field" style="width:200px">Search products</div>')+
+        st('Focus','<div class="fm-field is-focus" style="width:200px">Search products</div>')+
+        st('Filled','<div class="fm-field is-filled" style="width:200px">Workbench</div>')+
+        st('Error','<div class="fm-field is-error" style="width:200px">Required</div>')+
+      '</div>')+
+    item('Bars','.fm-bbar .fm-nav','Browser chrome + app nav. Not a second window.',
+      '<div class="fm-bbar" style="border:1px solid var(--fm-line);border-radius:8px 8px 0 0"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr">platform / catalog</div></div><div class="fm-nav" style="border:1px solid var(--fm-line);border-top:0"><span class="on">Marketplace</span><span>Tools</span><span>Learn</span></div>')+
+    item('Hero / banner','.fm-hero .fm-banner','Photo plate = white type. Quiet banner = ink.',
+      '<div class="fm-hero" style="margin-bottom:10px"><b>Unlock technology at speed and scale</b><span>Catalog of services, kits and APIs.</span></div><div class="fm-banner"><b>Inline banner</b><span class="desc" style="display:block">Quiet surface.</span></div>')+
+    item('Cards','.fm-offer','View + Get started. Same two buttons.',
+      '<div class="fm-offer" style="max-width:280px"><div class="kind">Services · Offerings</div><b>Workbench workspace</b><div class="states" style="margin-top:10px">'+st('Actions','<button class="fm-btn ghost" type="button">View</button> <button class="fm-btn" type="button">Get started</button>')+'</div></div>')+
+    item('Forms','.fm-stepper .fm-field','Steps then fields.',
+      '<div class="fm-stepper" style="margin-bottom:10px"><b>1</b> Name &nbsp;<b>2</b> Configure &nbsp;<b>3</b> Workspace</div><div class="fm-field" style="max-width:280px">Friendly instance name</div>')+
+    item('Table / KPI / alert','.fm-table .fm-kpi .fm-notice','Hub language.',
+      '<div class="fm-kpis" style="margin-bottom:10px"><div class="fm-kpi"><i>Request drop</i><b>22</b></div><div class="fm-kpi"><i>Onboard stall</i><b>3</b></div></div><div class="fm-notice" style="margin-bottom:10px">Required field. Workspace is missing.</div>')+
+    item('Beats','840×560 unit','Reference animation. Theme follows the site switch.',
+      chips+'<div class="stage"><iframe title="Beat" src="projects/'+beat+'?mode='+theme()+'&r='+Date.now()+'"></iframe></div>');
+  document.querySelectorAll('[data-b]').forEach(function(b){
+    b.onclick=function(){ beat=b.dataset.b; draw(); };
   });
-  var main=document.getElementById('main');
-  if(section==='index'){
-    main.innerHTML='<h2>Index</h2><p class="lede">'+SKINS.filter(function(s){return s.id===skin})[0].name+'</p><table><thead><tr><th>Category</th><th>Class</th></tr></thead><tbody>'+
-      '<tr><td>Buttons</td><td><code>.fm-btn .fm-btn.ghost</code></td></tr>'+
-      '<tr><td>Bars</td><td><code>.ey-bbar .nav .search</code></td></tr>'+
-      '<tr><td>Banners</td><td><code>.hero .fm-hero</code></td></tr>'+
-      '<tr><td>Chips</td><td><code>.ey-chip .tabs i</code></td></tr>'+
-      '<tr><td>Cards</td><td><code>.svc .fm-offer</code></td></tr>'+
-      '<tr><td>Forms</td><td><code>.box .fm-field</code></td></tr>'+
-      '<tr><td>Tags</td><td><code>.fm-tag.ok .warn .bad</code></td></tr>'+
-      '</tbody></table>';
-    return;
-  }
-  if(section==='beats'){
-    var chips='<div class="chips">';
-    (BEATS[skin]||[]).forEach(function(p){ chips+='<button class="chip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
-    chips+='</div>';
-    main.innerHTML='<h2>Beats</h2><p class="lede">840×560. Theme follows the site switch.</p>'+chips+'<div class="stage"><iframe title="Beat" src="projects/'+beat+modeQ()+'"></iframe></div>';
-    main.querySelectorAll('[data-b]').forEach(function(b){ b.onclick=function(){ beat=b.dataset.b; draw(); }; });
-    return;
-  }
-  main.innerHTML='<h2>'+(NAV.filter(function(x){return x[0]===section})[0]||['',section])[1]+'</h2><iframe class="live" title="Specimen" src="projects/fm-ds-sheet.html'+modeQ()+'#'+section+'"></iframe>';
 }
 draw();
 </script>
