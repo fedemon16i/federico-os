@@ -1,14 +1,78 @@
+/* Hover / press */
 .acts button:hover,.svc .acts button:hover,.ey-btn:hover,.btn-w:hover,.sheet .go:hover,.btn:hover{
   background:var(--ey-text)!important;color:var(--ey-bg)!important;border-color:transparent!important;
 }
 .acts button:active,.ey-btn:active,.btn-w:active,.btn:active{transform:scale(.97)}
-.ey-radio,.choice{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--ey-text);margin:3px 0}
-.ey-radio i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ey-line);flex-shrink:0;box-sizing:border-box}
+
+/* Form controls */
+.ey-radio,.choice{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ey-text);margin:4px 0}
+.ey-radio i{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--ey-line);flex-shrink:0;box-sizing:border-box}
 .ey-radio.on i{border-color:var(--ey-text);box-shadow:inset 0 0 0 3px var(--ey-bg),inset 0 0 0 6px var(--ey-text)}
-.ey-check i{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ey-line);flex-shrink:0}
+.ey-check i{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--ey-line);flex-shrink:0}
 .ey-check.on i{background:var(--ey-text);border-color:var(--ey-text)}
+
+/* Brand mark (partner) */
 .ey-m{width:14px;height:14px;border-radius:4px;display:inline-block;flex-shrink:0;vertical-align:middle}
-.ey-offer .ey-m{width:22px;height:22px;border-radius:5px;display:block}
-.ey-offer,.svc{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start}
-.ey-offers,.svcs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .ey-brand{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--ey-text);border:1px solid var(--ey-line);border-radius:100px;padding:2px 8px 2px 5px}
+
+/* Category ico — tree mark, not a photo */
+.ey-ico{
+  width:22px;height:22px;display:block;margin-bottom:8px;
+  background:currentColor;
+  color:#e08a2a;
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 3l7 6h-3v4h-8V9H5l7-6zm-4 12h8v2H8v-2zm0 4h8v2H8v-2z'/></svg>") center/contain no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 3l7 6h-3v4h-8V9H5l7-6zm-4 12h8v2H8v-2zm0 4h8v2H8v-2z'/></svg>") center/contain no-repeat;
+}
+.ey-logo{
+  width:28px;height:18px;display:inline-block;background:var(--ey-yellow);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'><text x='0' y='20' font-size='20' font-weight='700' font-family='Arial'>EY</text></svg>") left/contain no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 24'><text x='0' y='20' font-size='20' font-weight='700' font-family='Arial'>EY</text></svg>") left/contain no-repeat;
+}
+
+/* Product card — vertical, like the catalog */
+.ey-offers,.svcs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ey-offer,.svc{
+  display:flex;flex-direction:column;align-items:stretch;
+  background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;
+  padding:12px;min-height:148px;color:var(--ey-text);
+}
+.ey-offer .t,.svc .t{font-size:13px;font-weight:700;line-height:1.25;margin:0 0 2px}
+.ey-offer .crumb,.svc .meta{font-size:10px;color:var(--ey-muted);margin-bottom:6px}
+.ey-offer .desc,.svc .desc{font-size:11px;color:var(--ey-muted);line-height:1.35;flex:1}
+.ey-offer .tags{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0}
+.ey-offer .tags i{font-style:normal;font-size:9px;padding:2px 7px;border:1px solid var(--ey-line);border-radius:100px;color:var(--ey-muted)}
+.ey-offer .acts,.svc .acts{display:flex;gap:6px;margin-top:10px}
+.ey-offer .acts button{flex:1}
+
+/* Photo tiles */
+.ey-tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ey-tile{height:88px;border-radius:8px;padding:10px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.ey-tile b{font-size:13px}.ey-tile span{font-size:10px;opacity:.85}
+.ey-tile.t1{background:linear-gradient(160deg,#3a1a6a,#1a0a30)}
+.ey-tile.t2{background:linear-gradient(160deg,#1a3a7a,#0a1a40)}
+.ey-tile.t3{background:linear-gradient(160deg,#0a3a4a,#061820)}
+.ey-tile.t4{background:linear-gradient(160deg,#1a2a5a,#0a1020)}
+.ey-tile.t5{background:linear-gradient(160deg,#2a1a5a,#100820)}
+.ey-tile.t6{background:linear-gradient(160deg,#4a1a5a,#180820)}
+
+/* Stepper + order + disclaimer */
+.ey-steps{display:flex;align-items:center;gap:8px;font-size:9px;color:var(--ey-muted);margin-bottom:10px}
+.ey-steps i{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ey-line);display:block}
+.ey-steps i.on{background:var(--ey-text);border-color:var(--ey-text)}
+.ey-steps i.ok{background:#2ecc71;border-color:#2ecc71}
+.ey-order{border:1px solid var(--ey-line);border-radius:8px;padding:12px;background:var(--ey-card)}
+.ey-order h4{margin:0 0 8px;font-size:13px;color:var(--ey-text)}
+.ey-order .tot{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--ey-line);font-weight:700}
+.ey-order .tot em{font-style:normal;color:var(--ey-yellow)}
+.ey-disc{border:1px solid var(--ey-line);border-radius:8px;padding:8px 10px;font-size:10px;color:var(--ey-muted);margin-bottom:8px;background:var(--ey-card)}
+
+/* Drop-off is SHOWCASE overlay — never in the form flow */
+.ey-drop{
+  position:absolute;z-index:36;pointer-events:none;
+  font-size:10px;font-weight:700;line-height:1.2;
+  padding:4px 8px;border-radius:4px;white-space:nowrap;
+  background:#fde8e8;color:#8b1e1e;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+[data-mode="dark"] .ey-drop{background:#3a1518;color:#f2b4b0}
+.hint{font-size:11px;color:var(--ey-muted);margin-top:4px;padding:6px 8px;border:1px solid var(--ey-line);border-radius:4px;background:var(--ey-card)}
