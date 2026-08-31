@@ -1,30 +1,21 @@
-/* Showcase DS — portfolio chrome. Not product UI. */
+/* Showcase — cursor, note, veil. Not product UI. */
 .uc{position:absolute;z-index:30;pointer-events:none;width:22px;height:22px;margin:0;padding:0;line-height:0;overflow:visible;transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1)}
 .uc svg{display:block;width:22px !important;height:22px !important}
-.uc em{position:absolute;left:20px;top:-6px;font-style:normal;font-size:11px;font-weight:700;line-height:1.25;padding:3px 7px;border-radius:4px;color:#fff;white-space:nowrap;background:#8b1e1e}
+.uc em{position:absolute;left:20px;top:-6px;font-style:normal;font-size:11px;font-weight:700;line-height:1.25;padding:3px 7px;border-radius:4px;color:#111;white-space:nowrap;background:#FFE600}
+.u2 em{background:#7dc4ff;color:#111}
+.u3 em{background:#e8943a;color:#111}
 .callout,.fm-note{position:absolute;z-index:45;max-width:180px;font-size:11px;font-weight:700;line-height:1.3;color:#fff;background:#8b1e1e;padding:6px 8px;border-radius:4px;pointer-events:none}
 .callout::before,.fm-note::before{content:"";position:absolute;left:-6px;top:8px;border:6px solid transparent;border-right-color:#8b1e1e;border-left:0}
 .callout.below::before,.fm-note.below::before{left:12px;top:-6px;border:6px solid transparent;border-bottom-color:#8b1e1e;border-top:0}
 .ring{outline:2px solid #8b1e1e;outline-offset:2px}
 .ey-veil,.fm-veil{position:absolute;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,8,12,.55);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .35s}
-.ey-veil.on,.fm-veil.on{opacity:1}
-.ey-veil .mk,.fm-veil .mk{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:32px;font-weight:700;margin-bottom:12px;transform:scale(.7);opacity:0}
-.ey-veil.on .mk,.fm-veil.on .mk{animation:fmVeilPop .55s cubic-bezier(.2,1.4,.4,1) forwards}
-.ey-veil.on b,.fm-veil.on b{animation:fmVeilPop .55s .08s cubic-bezier(.2,1.4,.4,1) forwards;opacity:0}
+.ey-veil.on{opacity:1}
+.ey-veil .mk{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:32px;font-weight:700;margin-bottom:12px}
+.ey-veil.on .mk{animation:fmVeilPop .55s cubic-bezier(.2,1.4,.4,1) both}
 @keyframes fmVeilPop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
-.ey-veil.fail .mk,.fm-veil.fail .mk{background:#8b1e1e;color:#fde8e8}
-.ey-veil.ok .mk,.fm-veil.ok .mk{background:#0b6b38;color:#d8f3e4}
-.ey-veil b,.fm-veil b{color:#fff;font-size:18px}
-[data-mode="light"] .ey-veil,[data-mode="light"] .fm-veil{background:rgba(244,244,241,.62)}
-[data-mode="light"] .ey-veil.fail b,[data-mode="light"] .fm-veil.fail b{color:#8b1e1e}
-[data-mode="light"] .ey-veil.ok b,[data-mode="light"] .fm-veil.ok b{color:#0b6b38}
-.ey-brand{display:inline-flex;align-items:center;gap:5px}
-.ey-brand i{width:12px;height:12px;border-radius:3px;display:inline-block}
-.ey-brand.pendo i{background:#ec2059}
-.ey-brand.ga4 i{background:#c47f00}
-.ey-brand.maze i{background:#1a1a1a}
-.ey-brand.figma i{background:linear-gradient(180deg,#f24e1e,#a259ff,#0acf83)}
-.ey-brand.claude i{background:#d97757}
-.ey-brand.cursor i{background:#f4f4f1;border:1px solid #111}
-.ey-brand.factory i{background:#111}
-.ey-brand.replit i{background:#c44e06}
+.ey-veil.fail .mk{background:#8b1e1e;color:#fde8e8}
+.ey-veil.ok .mk{background:#0b6b38;color:#d8f3e4}
+.ey-veil b{color:#fff;font-size:18px}
+[data-mode="light"] .ey-veil{background:rgba(244,244,241,.62)}
+[data-mode="light"] .ey-veil.fail b{color:#8b1e1e}
+[data-mode="light"] .ey-veil.ok b{color:#0b6b38}
