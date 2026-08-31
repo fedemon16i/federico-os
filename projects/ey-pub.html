@@ -5,38 +5,35 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
-.app{display:grid;grid-template-columns:96px 1fr;grid-template-rows:1fr auto;flex:1;min-height:0}
-.side{grid-row:1/3;padding:8px 6px;border-right:1px solid var(--ey-line);font-size:8px;color:var(--ey-muted);background:var(--ey-side)}
-.side .sh{font-weight:700;margin-bottom:6px;font-size:10px;color:var(--ey-text)}
-.side a{display:block;padding:4px 6px;border-radius:5px;margin-bottom:2px;color:inherit;text-decoration:none}
+.lay-pub{display:grid;grid-template-columns:120px 1fr;grid-template-rows:1fr auto;flex:1;min-height:0}
+.side{grid-row:1/3;padding:16px 12px;border-right:1px solid var(--ey-line);font-size:12px;color:var(--ey-muted);background:var(--ey-side)}
+.side .sh{font-weight:700;margin-bottom:12px;font-size:13px;color:var(--ey-text)}
+.side a{display:block;padding:6px 8px;border-radius:5px;margin-bottom:4px;color:inherit;text-decoration:none}
 .side a.on{background:var(--ey-text);color:var(--ey-bg)}
-.main{padding:8px 10px;overflow:hidden;position:relative}
-.helpbar{grid-column:2;border-top:1px solid var(--ey-line);padding:6px 10px;font-size:9px;color:var(--ey-muted);background:var(--ey-card)}
-.helpbar b{color:var(--ey-text);margin-right:6px}
-.steps{display:flex;gap:6px;font-size:8px;color:var(--ey-muted);margin-bottom:6px;flex-wrap:wrap}
-.steps b{color:var(--ey-bg);background:var(--ey-text);width:14px;height:14px;border-radius:50%;display:inline-grid;place-items:center;margin-right:3px}
+.main{padding:16px;overflow:hidden;position:relative}
+.helpbar{grid-column:2;border-top:1px solid var(--ey-line);padding:10px 16px;font-size:12px;color:var(--ey-muted);background:var(--ey-card)}
+.helpbar b{color:var(--ey-text);margin-right:8px}
+.steps{display:flex;gap:8px;font-size:11px;color:var(--ey-muted);margin-bottom:10px;flex-wrap:wrap}
+.steps b{color:var(--ey-bg);background:var(--ey-text);width:16px;height:16px;border-radius:50%;display:inline-grid;place-items:center;margin-right:4px;font-size:10px}
 .steps span.on{color:var(--ey-text);font-weight:700}
-.why{font-size:10px;color:var(--ey-muted);margin:0 0 8px}
-h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
-.btn{display:inline-block;font-size:8px;padding:5px 10px;background:var(--ey-btn);color:var(--ey-btn-ink);border-radius:6px}
-.kpis{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;margin-bottom:7px}
-.kpi{border:1px solid var(--ey-line);padding:6px;font-size:7px;color:var(--ey-muted);background:var(--ey-card)}
-.kpi b{display:block;font-size:12px;margin-top:1px;color:var(--ey-text)}
-.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:6px;padding:6px 7px;margin-bottom:4px;font-size:9px;color:var(--ey-text)}
-.pill.warn{background:#fff1c2;color:#6B5200;font-size:7px;padding:1px 5px;border-radius:100px}
-.pill.ok{background:#d8f3e4;color:#0b6b38;font-size:7px;padding:1px 5px;border-radius:100px}
-.cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
-.cat{border:1px solid var(--ey-line);background:var(--ey-card);padding:6px 7px;border-radius:6px}
+.why{font-size:13px;color:var(--ey-muted);margin:0 0 12px}
+h3{margin:0 0 12px;font-size:16px;color:var(--ey-text)}
+.kpis{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.kpi{border:1px solid var(--ey-line);padding:12px;font-size:11px;color:var(--ey-muted);background:var(--ey-card);border-radius:8px}
+.kpi b{display:block;font-size:18px;margin-top:4px;color:var(--ey-text)}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:13px;color:var(--ey-text)}
+.cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cat{border:1px solid var(--ey-line);background:var(--ey-card);padding:12px;border-radius:8px}
 .cat.sel{outline:2px solid var(--ey-text);outline-offset:1px}
-.cat .t{font-size:9px;font-weight:650;color:var(--ey-text)}.cat .d{font-size:7px;color:var(--ey-muted);margin:2px 0}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.box{border:1px solid var(--ey-line);background:var(--ey-card);padding:7px;border-radius:6px;font-size:8px;color:var(--ey-muted)}
-.box b{display:block;margin-bottom:4px;color:var(--ey-text)}
-.item{font-size:9px;color:var(--ey-muted);padding:4px 0;border-bottom:1px solid var(--ey-line)}
-.tip{font-size:7px;padding:1px 5px;border:1px solid var(--ey-line);border-radius:100px;margin-left:4px;color:var(--ey-text)}
-.sheet{position:absolute;right:12px;top:48px;width:220px;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px;font-size:9px;color:var(--ey-muted);z-index:4}
-.sheet h4{margin:0 0 6px;color:var(--ey-text);font-size:11px}
-.ai{border:1px solid var(--ey-line);padding:7px;font-size:8px;color:var(--ey-muted);margin-top:5px;background:var(--ey-card)}
+.cat .t{font-size:13px;font-weight:650}.cat .d{font-size:11px;color:var(--ey-muted);margin-top:4px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{border:1px solid var(--ey-line);background:var(--ey-card);padding:12px;border-radius:8px;font-size:12px;color:var(--ey-muted)}
+.box b{display:block;margin-bottom:6px;color:var(--ey-text);font-size:13px}
+.item{font-size:13px;color:var(--ey-muted);padding:8px 0;border-bottom:1px solid var(--ey-line)}
+.tip{font-size:11px;padding:2px 8px;border:1px solid var(--ey-line);border-radius:100px;margin-left:8px;color:var(--ey-text)}
+.sheet{position:absolute;right:16px;top:56px;width:240px;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px;font-size:12px;color:var(--ey-muted);z-index:4}
+.sheet h4{margin:0 0 8px;color:var(--ey-text);font-size:13px}
+.ai{border:1px solid var(--ey-line);padding:12px;font-size:12px;color:var(--ey-muted);margin-top:8px;background:var(--ey-card);border-radius:8px}
 .ai b{color:#0b6b38}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
@@ -50,18 +47,15 @@ h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
 <script src="ey-engine.js"></script>
 <script>
 (function(){
-  var slot=document.getElementById('slot'), win=document.getElementById('unit'), timers=[];
-  function after(ms,fn){timers.push(setTimeout(fn,ms))}
+  var slot=document.getElementById('slot'), win=document.getElementById('unit');
   EY.cursors(win,1); EY.fit();
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function move(el){ EY.move('u1', el); }
   var WHY=['Queue of live work.','Pick the kind of offering.','Load a file or type fields.','Mark fields that need a helper.','Optional first-run guide.','AI checks labels, then a human signs.','Live in the catalog.'];
   function steps(n){
     var lab=['Queue','Type','Fields','Guidance','Onboard','Review','Live'];
     return '<div class="steps">'+lab.map(function(l,i){ return '<span class="'+(i===n?'on':'')+'"><b>'+(i+1)+'</b>'+l+'</span>'; }).join('')+'</div><p class="why">'+WHY[n]+'</p>';
   }
   function shell(on,n,html){
-    slot.innerHTML='<div class="app"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Keys</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div><div class="helpbar"><b>Helper</b> '+WHY[n]+'</div></div>';
+    slot.innerHTML='<div class="app lay-pub"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Keys</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div><div class="helpbar"><b>Helper</b> '+WHY[n]+'</div></div>';
   }
   var CATS=[['Service','A requestable offering.'],['License','A right a team can hold.'],['Artifact','A reusable file.'],['Starter kit','A packaged first run.'],['API','A callable block.'],['Package','A bundle.'],['Dataset','Governed data.'],['Playbook','A guided run.'],['Seat','Named access.']];
   function catGrid(sel){
@@ -71,43 +65,43 @@ h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
   }
   function playWorkspace(){
     document.getElementById('addr').textContent='workspace / home';
-    shell('q',0,steps(0)+'<h3>Workspace</h3><div class="kpis"><div class="kpi">Pending<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">AI pass<b>4</b></div><div class="kpi">Live<b>11</b></div></div><div class="row">Cluster service<span class="pill warn">Pending</span></div><div class="row">Starter kit<span class="pill warn">Correction</span></div><span class="btn" id="hit">Publish new item</span>');
-    after(400,function(){ move(document.getElementById('hit')); });
-    after(1500,function(){
+    shell('q',0,steps(0)+'<h3>Workspace</h3><div class="kpis"><div class="kpi">Pending<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">AI pass<b>4</b></div><div class="kpi">Live<b>11</b></div></div><div class="row">Cluster service<span class="ey-tag warn">Pending</span></div><div class="row">Starter kit<span class="ey-tag warn">Correction</span></div><button class="ey-btn" id="hit" type="button">Publish new item</button>');
+    EY.after(400,function(){ EY.move('u1', document.getElementById('hit')); });
+    EY.after(1600,function(){
       document.getElementById('addr').textContent='workspace / type';
       shell('n',1,steps(1)+'<h3>What are you publishing?</h3>'+catGrid(-1));
-      after(200,function(){ move(document.getElementById('c0')); });
-      after(1100,function(){ document.getElementById('c0').classList.add('sel'); });
+      EY.after(200,function(){ EY.move('u1', document.getElementById('c0')); });
+      EY.after(1100,function(){ document.getElementById('c0').classList.add('sel'); });
     });
   }
   function playArmar(){
     document.getElementById('addr').textContent='workspace / type';
     shell('n',1,steps(1)+'<h3>What are you publishing?</h3>'+catGrid(0));
-    after(400,function(){ move(document.getElementById('c0')); });
-    after(1400,function(){
+    EY.after(400,function(){ EY.move('u1', document.getElementById('c0')); });
+    EY.after(1500,function(){
       shell('n',2,steps(2)+'<h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml</div><div class="box"><b>Add by hand</b>Name · service · owner</div></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
     });
-    after(2800,function(){
+    EY.after(3000,function(){
       shell('n',3,steps(3)+'<h3>Which fields need help?</h3><div class="item" id="hit">Billing account <span class="tip" id="tip">What is this?</span></div><div class="item">License key <span class="tip">What is this?</span></div>');
-      after(80,function(){ move(document.getElementById('tip')); });
-      after(700,function(){
+      EY.after(80,function(){ EY.move('u1', document.getElementById('tip')); });
+      EY.after(700,function(){
         var main=slot.querySelector('.main');
-        if(main) main.insertAdjacentHTML('beforeend','<div class="sheet" id="helpSheet"><h4>Billing account</h4>The cost center on the invoice. Teams without one cannot submit. This helper stays with the field — not a two-line hint.</div>');
-        move(document.getElementById('helpSheet'));
+        if(main) main.insertAdjacentHTML('beforeend','<div class="sheet" id="helpSheet"><h4>Billing account</h4>The cost center on the invoice. Teams without one cannot submit.</div>');
+        EY.move('u1', document.getElementById('helpSheet'));
       });
     });
-    after(4600,function(){
+    EY.after(4800,function(){
       shell('n',4,steps(4)+'<h3>Add a guide?</h3><div class="split"><div class="box">No</div><div class="box" id="hit"><b>Yes — builder</b>Workspace · Team · Billing</div></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
     });
-    after(6000,function(){
+    EY.after(6200,function(){
       shell('n',5,steps(5)+'<h3>AI review before a human</h3><div class="ai" id="hit"><b>AI reviewer</b> Labels are short. Billing helper attached. Ready for human.</div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
     });
-    after(7600,function(){
-      shell('n',6,steps(6)+'<h3>Live in the catalog</h3><div class="row" id="hit">Workbench workspace<span class="pill ok">Published</span></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+    EY.after(7800,function(){
+      shell('n',6,steps(6)+'<h3>Live in the catalog</h3><div class="row" id="hit">Workbench workspace<span class="ey-tag ok">Published</span></div>');
+      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
     });
   }
   var scene=new URLSearchParams(location.search).get('scene');
