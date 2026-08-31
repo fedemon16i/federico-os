@@ -1,0 +1,17 @@
+.ey-veil{position:absolute;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,8,12,.55);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .35s}
+.ey-veil.on{opacity:1;pointer-events:none}
+.ey-veil .mk{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;margin-bottom:10px}
+.ey-veil.fail .mk{background:#8b1e1e;color:#fde8e8}
+.ey-veil.ok .mk{background:#0b6b38;color:#d8f3e4}
+.ey-veil b{color:#fff;font-size:16px;letter-spacing:.04em}
+.ey-brand{display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.ey-brand i{width:12px;height:12px;border-radius:3px;display:inline-block;flex-shrink:0}
+.ey-brand.pendo i{background:#ec2059}
+.ey-brand.ga4 i{background:#f9ab00}
+.ey-brand.maze i{background:#000}
+.ey-brand.figma i{background:linear-gradient(180deg,#f24e1e,#a259ff,#0acf83)}
+.ey-brand.figjam i{background:#a259ff}
+.ey-brand.claude i{background:#d97757}
+.ey-brand.cursor i{background:#fff;border:1px solid #111}
+.ey-brand.factory i{background:#111}
+.ey-brand.replit i{background:#f26207}
