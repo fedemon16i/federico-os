@@ -5,65 +5,54 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
-.side a{display:flex;justify-content:space-between;padding:6px;border-radius:5px;color:var(--ey-muted);text-decoration:none}
-.side a.on{background:rgba(127,127,127,.12);color:var(--ey-text)}
 .banner{padding:12px;border-radius:8px;margin-bottom:12px;background:linear-gradient(110deg,#3a1a6a,#120820);color:#fff}
 .walk,.ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
 .sheet{width:70%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:16px}
 .sheet h4{margin:0 0 8px;font-size:16px}
-.dots{display:flex;gap:6px;margin:10px 0}
-.dots i{width:7px;height:7px;border-radius:50%;background:var(--ey-line);display:block}
-.dots i.on{background:var(--ey-text)}
-.wb-r{padding:16px;background:var(--ey-side);border-left:1px solid var(--ey-line)}
-.panel{border:1px solid var(--ey-line);background:var(--ey-card);border-radius:8px;padding:12px;font-size:12px;color:var(--ey-muted);margin-bottom:12px}
-.panel h4{margin:0 0 6px;color:var(--ey-text);font-size:13px}
-.winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;align-items:center;justify-content:center;opacity:0;z-index:8;font-size:18px}
-.winok.on{opacity:1}
+.dots{display:flex;gap:6px;margin:10px 0}.dots i{width:7px;height:7px;border-radius:50%;background:var(--ey-line);display:block}.dots i.on{background:var(--ey-text)}
+.qtip{width:14px;height:14px;border-radius:50%;border:1px solid var(--ey-line);display:grid;place-items:center;font-size:9px}
+.winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;align-items:center;justify-content:center;opacity:0;z-index:8;font-size:18px}.winok.on{opacity:1}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
 </style></head>
 <body>
 <div class="stage"><div class="ey-unit window" id="unit"><div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div><div id="slot"></div></div></div>
 <script src="ey-engine.js"></script>
 <script src="ey-market.js"></script>
+<script src="ey-shell.js"></script>
 <script>
 (function(){
   var slot=document.getElementById('slot');
   EY.cursors(document.getElementById('unit'),1); EY.fit();
-  var NAV='<div class="nav"><span class="ey-logo"></span><span class="on">Marketplace</span><span>Tools</span><div class="right" style="margin-left:auto;display:flex;gap:8px"><div class="ey-search">Search products</div><span class="ey-ai">AI</span></div></div>';
   var STEPS=[
-    ['1 · Requirements live on the card','See details before Get started.'],
-    ['2 · Help stays open','Order, requirements and chat stay in the rail.'],
-    ['3 · Then the form','Name, service, workspace — with a helper.']
+    ['1 · Requirements on the card','See details before Get started.'],
+    ['2 · Help stays open','Order and helper stay in the rail.'],
+    ['3 · Then the form','Same Workbench form. Helper on.']
   ];
   function walk(n){
-    return '<div class="app" style="position:relative">'+NAV+'<div class="walk"><div class="sheet"><h4>'+STEPS[n][0]+'</h4><p>'+STEPS[n][1]+'</p><div class="dots"><i class="'+(n===0?'on':'')+'"></i><i class="'+(n===1?'on':'')+'"></i><i class="'+(n===2?'on':'')+'"></i></div><button class="ey-btn" id="wgo" type="button">'+(n<2?'Next':'See the catalog')+'</button></div></div></div>';
+    return '<div class="app" style="position:relative">'+EYShell.nav()+'<div class="walk"><div class="sheet"><h4>'+STEPS[n][0]+'</h4><p>'+STEPS[n][1]+'</p><div class="dots"><i class="'+(n===0?'on':'')+'"></i><i class="'+(n===1?'on':'')+'"></i><i class="'+(n===2?'on':'')+'"></i></div><button class="ey-btn" id="wgo" type="button">'+(n<2?'Next':'See the catalog')+'</button></div></div></div>';
   }
-  function market(){
-    return '<div class="app">'+NAV+'<div class="lay-cat"><div class="side"><div class="sh" style="font-weight:700;margin-bottom:8px">Catalog</div><a class="on" href="#">All 284</a><a href="#">Services 118</a><a href="#">Licenses 21</a></div><div class="main" id="main"><div class="banner"><b>Services</b><div>Shared infrastructure a team can request.</div></div><div class="ey-search" style="margin-bottom:12px">Filter offerings</div>'+EYMarket.grid({infoFirst:true})+'</div></div></div>';
-  }
-  function playEnter(){
+  function play(){
     document.getElementById('addr').textContent='marketplace';
     slot.innerHTML=walk(0);
     EY.after(200,function(){ EY.note(document.getElementById('wgo'),'Walkthrough'); });
     EY.after(1200,function(){ slot.innerHTML=walk(1); EY.note(document.getElementById('wgo'),'Help stays'); });
     EY.after(2300,function(){ slot.innerHTML=walk(2); EY.note(document.getElementById('wgo'),'Then the form'); });
     EY.after(3600,function(){
-      slot.innerHTML=market();
+      slot.innerHTML=EYShell.services({infoFirst:true});
       EY.after(300,function(){ EY.note(document.getElementById('info'),'Details on the card'); });
       EY.after(1800,function(){
-        document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench</h4><p>Name, one service, billing. Helper stays on the right.</p><button class="ey-btn" id="go" type="button">Get started</button></div></div>');
-        EY.note(document.getElementById('go'),'Enter the product');
-        EY.after(1600, runForm);
+        document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench</h4><p>Same product. Helper stays on the right.</p><button class="ey-btn" id="go" type="button">Get started</button></div></div>');
+        EY.note(document.getElementById('go'),'Enter');
+        EY.after(1600, function(){
+          var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
+          slot.innerHTML='<div style="position:relative;flex:1;display:flex;flex-direction:column">'+EYShell.form({helper:true})+'<div class="winok" id="winok">Ready</div></div>';
+          EY.after(200,function(){ EY.move('u1', document.getElementById('f1')); });
+          EY.after(2800,function(){ var o=document.getElementById('winok'); if(o) o.classList.add('on'); });
+        });
       });
     });
   }
-  function runForm(){
-    var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
-    slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="lay-form"><div class="lay-pad"><div class="ey-steps"><i class="on"></i>Custom <i></i>Billing <i></i>Confirm</div><h3>Configure</h3><div class="box" id="hit" style="margin-bottom:12px">North studio</div><div class="ey-radio on"><i></i> Workbench</div><div class="ey-radio"><i></i> Cluster</div></div><div class="wb-r"><div class="ey-disc">Costs are estimates.</div><div class="ey-order"><h4>Your order</h4>Workbench · Copilot<div class="tot">Total <em>$0 / mo</em></div></div><div class="panel"><h4>Helper</h4>Billing is the cost center. Always here.</div></div></div><div class="winok" id="winok">Ready</div></div>';
-    EY.after(200,function(){ EY.move('u1', document.getElementById('hit')); });
-    EY.after(2800,function(){ var o=document.getElementById('winok'); if(o) o.classList.add('on'); });
-  }
-  playEnter();
+  play();
 })();
 </script>
 </body></html>
