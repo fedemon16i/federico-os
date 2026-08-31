@@ -6,29 +6,39 @@
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
 html,body{background:transparent}
-.pad{padding:24px 28px;height:100%;box-sizing:border-box;display:flex;flex-direction:column}
-.k{font-family:var(--ey-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8a8580;margin:0 0 10px}
+.pad{padding:16px 18px;height:100%;box-sizing:border-box;display:flex;flex-direction:column}
+.k{font-family:var(--ey-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ey-muted);margin:0 0 8px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-height:0}
-.br{display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid var(--ey-line);opacity:0;transform:translateY(6px);transition:.4s;min-height:0}
+.br{display:flex;flex-direction:column;border-radius:8px;overflow:hidden;border:1px solid var(--ey-line);opacity:0;transform:translateY(6px);transition:.4s;min-height:0;background:var(--ey-card)}
 .br.on{opacity:1;transform:none}
-.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:9px;color:#9aa0b0;background:#14151c;border-bottom:1px solid var(--ey-line);flex-shrink:0}
+.bb{height:22px;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:9px;color:var(--ey-muted);background:var(--ey-bar);border-bottom:1px solid var(--ey-line);flex-shrink:0}
 .d{display:flex;gap:4px}.d i{width:6px;height:6px;border-radius:50%;display:block}
 .d .r{background:#ff5f57}.d .y{background:#febc2e}.d .g{background:#28c840}
-.cv{flex:1;background:#1e1e1e;background-image:radial-gradient(#333 1px,transparent 1px);background-size:10px 10px;padding:16px}
-.art{background:#fff;color:#111;width:74%;margin:0 auto;padding:10px;box-shadow:0 0 0 1px #0d99ff;opacity:0;transition:.35s}
-.art.on{opacity:1}.art .h{height:7px;width:42%;background:#111;margin-bottom:6px}.art .p{height:4px;width:78%;background:#ddd;margin-bottom:4px}.art .cta{height:8px;width:30%;background:#0d99ff;margin-top:6px}
-.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;border-bottom:1px solid #1c2333;background:#0d1017}
-.tools i{font-style:normal;font-size:8px;padding:2px 6px;border:1px solid #2a3344;color:#6d7384;border-radius:100px}
-.tools i.on{color:#98c379;border-color:#2b8a3e}
-.cli{flex:1;padding:10px;font-family:var(--ey-mono);font-size:10px;line-height:1.45;color:#c5d0e6;background:#0d1017}
-.cli div{opacity:0;transition:.3s}.cli div.on{opacity:1}.cli .c{color:#5c6370}.cli .g{color:#98c379}
-.ready{margin-top:10px;border:1px solid var(--ey-line);border-radius:8px;background:#12141c;padding:10px 12px;opacity:0;transform:translateY(6px);transition:.4s}
+.fig{display:grid;grid-template-columns:72px 1fr 56px;flex:1;min-height:0}
+.lay,.prop{background:var(--ey-side);padding:6px;font-size:8px;color:var(--ey-muted)}
+.lay b,.prop b{display:block;color:var(--ey-text);margin-bottom:4px;font-size:9px}
+.lay div{padding:3px 0;border-bottom:1px solid var(--ey-line)}
+.cv{background:#1e1e1e;background-image:radial-gradient(#333 1px,transparent 1px);background-size:10px 10px;padding:10px;overflow:hidden}
+.art{background:#fff;color:#111;width:86%;margin:0 auto 8px;padding:8px;box-shadow:0 0 0 1px #0d99ff;opacity:0;transition:.35s}
+.art.on{opacity:1}.art .h{height:6px;width:42%;background:#111;margin-bottom:5px}.art .p{height:3px;width:78%;background:#ddd;margin-bottom:3px}.art .cta{height:7px;width:30%;background:#0d99ff;margin-top:5px}
+.art.mini{width:60%;opacity:.55;box-shadow:0 0 0 1px #555}
+.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;border-bottom:1px solid var(--ey-line);background:var(--ey-side)}
+.tools i{font-style:normal;font-size:8px;padding:2px 6px;border:1px solid var(--ey-line);color:var(--ey-muted);border-radius:100px}
+.tools i.on{color:var(--ey-bg);background:var(--ey-text);border-color:transparent}
+.body{display:grid;grid-template-columns:70px 1fr;flex:1;min-height:0}
+.tree{padding:6px;font-size:8px;color:var(--ey-muted);border-right:1px solid var(--ey-line);background:var(--ey-side)}
+.tree div{padding:2px 0}
+.cli{padding:8px;font-family:var(--ey-mono);font-size:10px;line-height:1.45;color:var(--ey-text);background:var(--ey-nav)}
+.cli div{opacity:0;transition:.3s}.cli div.on{opacity:1}.cli .c{color:var(--ey-faint)}.cli .g{color:var(--ey-ok)}
+.ready{margin-top:8px;border:1px solid var(--ey-line);border-radius:8px;background:var(--ey-card);padding:8px 10px;opacity:0;transform:translateY(6px);transition:.4s}
 .ready.on{opacity:1;transform:none}
-.ready .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.check{font-size:10px;font-weight:700;color:#111;background:#7dcea0;padding:3px 8px;border-radius:100px}
-.screen{display:grid;grid-template-columns:72px 1fr;gap:8px;background:#1c1e28;border:1px solid var(--ey-line);border-radius:6px;padding:8px}
-.ph{background:#161821;border-radius:4px}.ph .bar{height:6px;background:#2a2c36;margin:6px;width:70%}
-.tile{font-size:12px}.tile span{display:block;font-size:10px;color:#6d7384;margin-top:3px}
+.ready .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.check{font-size:10px;font-weight:700;color:#0b6b38;background:#d8f3e4;padding:3px 8px;border-radius:100px}
+.screen{display:grid;grid-template-columns:80px 1fr 90px;gap:8px;background:var(--ey-surface);border:1px solid var(--ey-line);border-radius:6px;padding:8px}
+.ph{background:var(--ey-side);border-radius:4px;padding:6px}
+.ph .bar{height:5px;background:var(--ey-line);margin-bottom:4px;width:70%}
+.tile{font-size:11px;color:var(--ey-text)}.tile span{display:block;font-size:9px;color:var(--ey-muted);margin-top:3px}
+.bits{font-size:8px;color:var(--ey-muted)}.bits b{display:block;color:var(--ey-text);margin-bottom:3px}
 </style></head>
 <body>
 <div class="stage">
@@ -38,21 +48,35 @@ html,body{background:transparent}
       <div class="pair">
         <div class="br" id="fig">
           <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>figma · by hand</div>
-          <div class="cv"><div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div></div>
+          <div class="fig">
+            <div class="lay"><b>Layers</b><div>Frame · home</div><div>Hero</div><div>Catalog</div><div>Card / Workbench</div></div>
+            <div class="cv">
+              <div class="art mini"><div class="h"></div><div class="p"></div></div>
+              <div class="art" id="a0"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div>
+            </div>
+            <div class="prop"><b>Inspect</b><div>Fill #fff</div><div>Radius 8</div><div>Type 13/650</div></div>
+          </div>
         </div>
         <div class="br" id="ag">
-          <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>agents · I can use all of them</div>
+          <div class="bb"><div class="d"><i class="r"></i><i class="y"></i><i class="g"></i></div>agents · every tool</div>
           <div class="tools"><i id="t0">Claude Code</i><i id="t1">Cursor</i><i id="t2">Factory.ai</i><i id="t3">Replit</i><i id="t4">CLI</i></div>
-          <div class="cli">
-            <div id="l0" class="c">$ agent design --surface publisher</div>
-            <div id="l1">same constraint as the Figma file</div>
-            <div id="l2" class="g">ok · screen drafted</div>
+          <div class="body">
+            <div class="tree"><div>repo/</div><div>  pub.yml</div><div>  form.md</div><div>  help/</div></div>
+            <div class="cli">
+              <div id="l0" class="c">$ agent design --surface publisher</div>
+              <div id="l1">same constraint as the Figma file</div>
+              <div id="l2" class="g">ok · screen drafted</div>
+            </div>
           </div>
         </div>
       </div>
       <div class="ready" id="ready">
         <div class="top"><div class="k" style="margin:0">A screen left both workshops</div><div class="check">Design ready</div></div>
-        <div class="screen"><div class="ph"><div class="bar"></div><div class="bar" style="width:40%"></div></div><div class="tile">Publisher workspace<span>Select a live offering · then set onboarding, checklist, help, form.</span></div></div>
+        <div class="screen">
+          <div class="ph"><div class="bar"></div><div class="bar" style="width:40%"></div><div class="bar" style="width:55%"></div></div>
+          <div class="tile">Publisher workspace<span>Queue · type · fields · guidance · onboard · review</span></div>
+          <div class="bits"><b>Always on</b>Help<br>Requirements<br>Chat</div>
+        </div>
       </div>
     </div>
   </div>
