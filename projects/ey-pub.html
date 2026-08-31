@@ -17,11 +17,11 @@
 .steps b{color:var(--ey-bg);background:var(--ey-text);width:16px;height:16px;border-radius:50%;display:inline-grid;place-items:center;margin-right:4px;font-size:10px}
 .steps span.on{color:var(--ey-text);font-weight:700}
 .why{font-size:13px;color:var(--ey-muted);margin:0 0 12px}
-h3{margin:0 0 12px;font-size:16px;color:var(--ey-text)}
+h3{margin:0 0 12px;font-size:16px}
 .kpis{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px}
 .kpi{border:1px solid var(--ey-line);padding:12px;font-size:11px;color:var(--ey-muted);background:var(--ey-card);border-radius:8px}
 .kpi b{display:block;font-size:18px;margin-top:4px;color:var(--ey-text)}
-.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:13px;color:var(--ey-text)}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:13px}
 .cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .cat{border:1px solid var(--ey-line);background:var(--ey-card);padding:12px;border-radius:8px}
 .cat.sel{outline:2px solid var(--ey-text);outline-offset:1px}
@@ -30,7 +30,7 @@ h3{margin:0 0 12px;font-size:16px;color:var(--ey-text)}
 .box{border:1px solid var(--ey-line);background:var(--ey-card);padding:12px;border-radius:8px;font-size:12px;color:var(--ey-muted)}
 .box b{display:block;margin-bottom:6px;color:var(--ey-text);font-size:13px}
 .item{font-size:13px;color:var(--ey-muted);padding:8px 0;border-bottom:1px solid var(--ey-line)}
-.tip{font-size:11px;padding:2px 8px;border:1px solid var(--ey-line);border-radius:100px;margin-left:8px;color:var(--ey-text)}
+.tip{font-size:11px;padding:2px 8px;border:1px solid var(--ey-line);border-radius:100px;margin-left:8px}
 .sheet{position:absolute;right:16px;top:56px;width:240px;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px;font-size:12px;color:var(--ey-muted);z-index:4}
 .sheet h4{margin:0 0 8px;color:var(--ey-text);font-size:13px}
 .ai{border:1px solid var(--ey-line);padding:12px;font-size:12px;color:var(--ey-muted);margin-top:8px;background:var(--ey-card);border-radius:8px}
@@ -63,7 +63,7 @@ h3{margin:0 0 12px;font-size:16px;color:var(--ey-text)}
       return '<div class="cat'+(i===sel?' sel':'')+'" id="c'+i+'"><div class="t">'+c[0]+'</div><div class="d">'+c[1]+'</div></div>';
     }).join('')+'</div>';
   }
-  function playWorkspace(){
+  function play(){
     document.getElementById('addr').textContent='workspace / home';
     shell('q',0,steps(0)+'<h3>Workspace</h3><div class="kpis"><div class="kpi">Pending<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">AI pass<b>4</b></div><div class="kpi">Live<b>11</b></div></div><div class="row">Cluster service<span class="ey-tag warn">Pending</span></div><div class="row">Starter kit<span class="ey-tag warn">Correction</span></div><button class="ey-btn" id="hit" type="button">Publish new item</button>');
     EY.after(400,function(){ EY.move('u1', document.getElementById('hit')); });
@@ -71,41 +71,35 @@ h3{margin:0 0 12px;font-size:16px;color:var(--ey-text)}
       document.getElementById('addr').textContent='workspace / type';
       shell('n',1,steps(1)+'<h3>What are you publishing?</h3>'+catGrid(-1));
       EY.after(200,function(){ EY.move('u1', document.getElementById('c0')); });
-      EY.after(1100,function(){ document.getElementById('c0').classList.add('sel'); });
+      EY.after(900,function(){ document.getElementById('c0').classList.add('sel'); });
     });
-  }
-  function playArmar(){
-    document.getElementById('addr').textContent='workspace / type';
-    shell('n',1,steps(1)+'<h3>What are you publishing?</h3>'+catGrid(0));
-    EY.after(400,function(){ EY.move('u1', document.getElementById('c0')); });
-    EY.after(1500,function(){
+    EY.after(3200,function(){
       shell('n',2,steps(2)+'<h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml</div><div class="box"><b>Add by hand</b>Name · service · owner</div></div>');
-      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
+      EY.move('u1', document.getElementById('hit'));
     });
-    EY.after(3000,function(){
+    EY.after(4800,function(){
       shell('n',3,steps(3)+'<h3>Which fields need help?</h3><div class="item" id="hit">Billing account <span class="tip" id="tip">What is this?</span></div><div class="item">License key <span class="tip">What is this?</span></div>');
-      EY.after(80,function(){ EY.move('u1', document.getElementById('tip')); });
+      EY.move('u1', document.getElementById('tip'));
       EY.after(700,function(){
         var main=slot.querySelector('.main');
         if(main) main.insertAdjacentHTML('beforeend','<div class="sheet" id="helpSheet"><h4>Billing account</h4>The cost center on the invoice. Teams without one cannot submit.</div>');
         EY.move('u1', document.getElementById('helpSheet'));
       });
     });
-    EY.after(4800,function(){
+    EY.after(6800,function(){
       shell('n',4,steps(4)+'<h3>Add a guide?</h3><div class="split"><div class="box">No</div><div class="box" id="hit"><b>Yes — builder</b>Workspace · Team · Billing</div></div>');
-      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
+      EY.move('u1', document.getElementById('hit'));
     });
-    EY.after(6200,function(){
+    EY.after(8400,function(){
       shell('n',5,steps(5)+'<h3>AI review before a human</h3><div class="ai" id="hit"><b>AI reviewer</b> Labels are short. Billing helper attached. Ready for human.</div>');
-      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
+      EY.move('u1', document.getElementById('hit'));
     });
-    EY.after(7800,function(){
+    EY.after(10000,function(){
       shell('n',6,steps(6)+'<h3>Live in the catalog</h3><div class="row" id="hit">Workbench workspace<span class="ey-tag ok">Published</span></div>');
-      EY.after(80,function(){ EY.move('u1', document.getElementById('hit')); });
+      EY.move('u1', document.getElementById('hit'));
     });
   }
-  var scene=new URLSearchParams(location.search).get('scene');
-  if(scene==='armar') playArmar(); else playWorkspace();
+  play();
 })();
 </script>
 </body></html>
