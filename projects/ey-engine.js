@@ -1,4 +1,4 @@
-/* Product unit + showcase cursor/note/veil/drop. */
+/* Product unit + showcase cursor/note/veil/drop/tip. */
 (function (w) {
   var T = [];
   var UNIT_W = 840;
@@ -7,7 +7,11 @@
   var ro = null;
   var PTR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
   function after(ms, fn) { var id = setTimeout(fn, ms); T.push(id); return id; }
-  function stop() { T.forEach(clearTimeout); T = []; document.querySelectorAll('.ey-veil').forEach(function (el) { el.classList.remove('on'); }); document.querySelectorAll('.ey-drop').forEach(function (el) { el.remove(); }); }
+  function stop() {
+    T.forEach(clearTimeout); T = [];
+    document.querySelectorAll('.ey-veil').forEach(function (el) { el.classList.remove('on'); });
+    document.querySelectorAll('.ey-drop,.ey-tip').forEach(function (el) { el.remove(); });
+  }
   function applyMode(m) {
     if (!m) { try { m = new URLSearchParams(location.search).get('mode'); } catch (err) { m = null; } }
     if (!m) m = 'dark';
@@ -35,8 +39,7 @@
   function link(name) {
     if (document.querySelector('link[href*="' + name + '"]')) return;
     var l = document.createElement('link');
-    l.rel = 'stylesheet';
-    l.href = (location.pathname.indexOf('/projects/') >= 0 ? '' : 'projects/') + name;
+    l.rel = 'stylesheet'; l.href = (location.pathname.indexOf('/projects/') >= 0 ? '' : 'projects/') + name;
     document.head.appendChild(l);
   }
   function unitPos(el, ox, oy) {
@@ -46,8 +49,8 @@
     var b = unit.getBoundingClientRect();
     var s = b.width / UNIT_W || 1;
     return {
-      x: Math.max(8, Math.min(UNIT_W - 120, (r.left - b.left) / s + (ox || 8))),
-      y: Math.max(26, Math.min(UNIT_H - 28, (r.top - b.top) / s + (oy || 0)))
+      x: Math.max(8, Math.min(UNIT_W - 210, (r.left - b.left) / s + (ox || 8))),
+      y: Math.max(26, Math.min(UNIT_H - 48, (r.top - b.top) / s + (oy || 0)))
     };
   }
   function veil(kind, label) {
@@ -63,19 +66,28 @@
     var n = typeof id === 'string' ? document.getElementById(id) : id;
     if (!n || !el) return;
     var p = unitPos(el, ox, oy);
-    n.style.left = p.x + 'px';
-    n.style.top = p.y + 'px';
+    n.style.left = p.x + 'px'; n.style.top = p.y + 'px';
   }
   function drop(el, label) {
     var unit = document.querySelector('.ey-unit');
     if (!unit || !el) return;
     var d = document.createElement('div');
-    d.className = 'ey-drop';
-    d.textContent = label || 'drop-off';
+    d.className = 'ey-drop'; d.textContent = label || 'drop-off';
     unit.appendChild(d);
     var p = unitPos(el, 28, -18);
-    d.style.left = p.x + 'px';
-    d.style.top = p.y + 'px';
+    d.style.left = p.x + 'px'; d.style.top = p.y + 'px';
+    return d;
+  }
+  function tip(el, title, body) {
+    var unit = document.querySelector('.ey-unit');
+    if (!unit || !el) return;
+    unit.querySelectorAll('.ey-tip').forEach(function (n) { n.remove(); });
+    var d = document.createElement('div');
+    d.className = 'ey-tip';
+    d.innerHTML = '<b>'+(title||'')+'</b>'+(body||'');
+    unit.appendChild(d);
+    var p = unitPos(el, 22, 18);
+    d.style.left = p.x + 'px'; d.style.top = p.y + 'px';
     return d;
   }
   function note(el, label) {
@@ -83,23 +95,17 @@
     if (!unit || !el) return;
     unit.querySelectorAll('.ring').forEach(function (n) { n.classList.remove('ring'); });
     el.classList.add('ring');
-    var tip = unit.querySelector('.fm-note');
-    if (!tip) { tip = document.createElement('div'); tip.className = 'fm-note'; unit.appendChild(tip); }
-    tip.textContent = label || '';
-    tip.style.display = 'block';
+    var t = unit.querySelector('.fm-note');
+    if (!t) { t = document.createElement('div'); t.className = 'fm-note'; unit.appendChild(t); }
+    t.textContent = label || ''; t.style.display = 'block';
     var p = unitPos(el, 36, 0);
     if (p.x > UNIT_W - 200) p = unitPos(el, 0, 22);
-    tip.style.left = p.x + 'px';
-    tip.style.top = p.y + 'px';
+    t.style.left = p.x + 'px'; t.style.top = p.y + 'px';
     move('u1', el);
   }
   function boot() {
     applyMode();
-    link('ey-ds.css');
-    link('ey-ds-plus.css');
-    link('ey-layout.css');
-    link('ey-motion.css');
-    link('fm-show.css');
+    ['ey-ds.css','ey-ds-plus.css','ey-layout.css','ey-motion.css','fm-show.css'].forEach(link);
     fit();
     w.requestAnimationFrame(function () { fit(); w.requestAnimationFrame(fit); });
     var host = document.querySelector('.stage');
@@ -112,13 +118,10 @@
     var nodes = [];
     for (var i = 0; i < n; i++) {
       var d = document.createElement('div');
-      d.className = 'uc u' + (i + 1);
-      d.id = 'u' + (i + 1);
+      d.className = 'uc u' + (i + 1); d.id = 'u' + (i + 1);
       d.innerHTML = (n > 1 ? '<em>user ' + (i + 1) + '</em>' : '') + PTR;
-      d.style.left = 28 + i * 22 + 'px';
-      d.style.top = 42 + i * 20 + 'px';
-      host.appendChild(d);
-      nodes.push(d);
+      d.style.left = 28 + i * 22 + 'px'; d.style.top = 42 + i * 20 + 'px';
+      host.appendChild(d); nodes.push(d);
     }
     return nodes;
   }
@@ -126,5 +129,5 @@
   else boot();
   w.addEventListener('load', fit);
   w.addEventListener('resize', fit);
-  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, mode: applyMode, veil: veil, note: note, drop: drop };
+  w.EY = { UNIT_W: UNIT_W, UNIT_H: UNIT_H, after: after, stop: stop, fit: fit, boot: boot, cursors: cursors, move: move, mode: applyMode, veil: veil, note: note, drop: drop, tip: tip };
 })(window);
