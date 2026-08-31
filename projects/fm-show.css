@@ -1,18 +1,22 @@
-/* Showcase DS — portfolio chrome. Not product UI.
-   Cursor, tooltip, ring, callout, veil, brand marks.
-*/
+/* Showcase DS — portfolio chrome. Not product UI. */
 .uc{position:absolute;z-index:30;pointer-events:none;width:22px;height:22px;margin:0;padding:0;line-height:0;overflow:visible;transition:left .8s cubic-bezier(.34,1.32,.64,1),top .8s cubic-bezier(.34,1.32,.64,1)}
 .uc svg{display:block;width:22px !important;height:22px !important}
-.uc em{position:absolute;left:20px;top:-6px;font-style:normal;font-size:11px;font-weight:700;line-height:1.25;padding:3px 7px;border-radius:4px;color:#111;white-space:nowrap;background:#FFE600}
-.u2 em{background:#7dc4ff}.u3 em{background:#e8943a}
+.uc em{position:absolute;left:20px;top:-6px;font-style:normal;font-size:11px;font-weight:700;line-height:1.25;padding:3px 7px;border-radius:4px;color:#fff;white-space:nowrap;background:#8b1e1e}
+[data-mode="dark"] .uc em{background:#8b1e1e;color:#fde8e8}
 .callout{position:absolute;z-index:40;font-size:11px;font-weight:700;color:#fff;background:#8b1e1e;padding:4px 8px;border-radius:3px;white-space:nowrap;pointer-events:none}
 .ring{outline:2px solid #8b1e1e;outline-offset:2px}
-.ey-veil,.fm-veil{position:absolute;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,8,12,.55);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .35s}
+.ey-veil,.fm-veil{position:absolute;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(8,8,12,.55);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .35s}
 .ey-veil.on,.fm-veil.on{opacity:1}
-.ey-veil .mk,.fm-veil .mk{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:700;margin-bottom:10px}
+.ey-veil .mk,.fm-veil .mk{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:32px;font-weight:700;margin-bottom:12px;transform:scale(.7);opacity:0}
+.ey-veil.on .mk,.fm-veil.on .mk{animation:fmVeilPop .55s cubic-bezier(.2,1.4,.4,1) forwards}
+.ey-veil.on b,.fm-veil.on b{animation:fmVeilPop .55s .08s cubic-bezier(.2,1.4,.4,1) forwards;opacity:0}
+@keyframes fmVeilPop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
 .ey-veil.fail .mk,.fm-veil.fail .mk{background:#8b1e1e;color:#fde8e8}
 .ey-veil.ok .mk,.fm-veil.ok .mk{background:#0b6b38;color:#d8f3e4}
-.ey-veil b,.fm-veil b{color:#fff;font-size:16px}
+.ey-veil b,.fm-veil b{color:#fff;font-size:18px}
+[data-mode="light"] .ey-veil,[data-mode="light"] .fm-veil{background:rgba(244,244,241,.62)}
+[data-mode="light"] .ey-veil b,[data-mode="light"] .fm-veil b{color:#8b1e1e}
+[data-mode="light"] .ey-veil.ok b,[data-mode="light"] .fm-veil.ok b{color:#0b6b38}
 .ey-brand{display:inline-flex;align-items:center;gap:5px}
 .ey-brand i{width:12px;height:12px;border-radius:3px;display:inline-block}
 .ey-brand.pendo i{background:#ec2059}
