@@ -5,13 +5,13 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
-.app{display:grid;grid-template-columns:96px 1fr;grid-template-rows:1fr 28px;flex:1;min-height:0}
+.app{display:grid;grid-template-columns:96px 1fr;grid-template-rows:1fr auto;flex:1;min-height:0}
 .side{grid-row:1/3;padding:8px 6px;border-right:1px solid var(--ey-line);font-size:8px;color:var(--ey-muted);background:var(--ey-side)}
 .side .sh{font-weight:700;margin-bottom:6px;font-size:10px;color:var(--ey-text)}
 .side a{display:block;padding:4px 6px;border-radius:5px;margin-bottom:2px;color:inherit;text-decoration:none}
 .side a.on{background:var(--ey-text);color:var(--ey-bg)}
-.main{padding:8px 10px;overflow:hidden}
-.helpbar{grid-column:2;border-top:1px solid var(--ey-line);padding:0 10px;display:flex;align-items:center;font-size:9px;color:var(--ey-muted);background:var(--ey-card)}
+.main{padding:8px 10px;overflow:hidden;position:relative}
+.helpbar{grid-column:2;border-top:1px solid var(--ey-line);padding:6px 10px;font-size:9px;color:var(--ey-muted);background:var(--ey-card)}
 .helpbar b{color:var(--ey-text);margin-right:6px}
 .steps{display:flex;gap:6px;font-size:8px;color:var(--ey-muted);margin-bottom:6px;flex-wrap:wrap}
 .steps b{color:var(--ey-bg);background:var(--ey-text);width:14px;height:14px;border-radius:50%;display:inline-grid;place-items:center;margin-right:3px}
@@ -34,6 +34,8 @@ h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
 .box b{display:block;margin-bottom:4px;color:var(--ey-text)}
 .item{font-size:9px;color:var(--ey-muted);padding:4px 0;border-bottom:1px solid var(--ey-line)}
 .tip{font-size:7px;padding:1px 5px;border:1px solid var(--ey-line);border-radius:100px;margin-left:4px;color:var(--ey-text)}
+.sheet{position:absolute;right:12px;top:48px;width:220px;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px;font-size:9px;color:var(--ey-muted);z-index:4}
+.sheet h4{margin:0 0 6px;color:var(--ey-text);font-size:11px}
 .ai{border:1px solid var(--ey-line);padding:7px;font-size:8px;color:var(--ey-muted);margin-top:5px;background:var(--ey-card)}
 .ai b{color:#0b6b38}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -53,7 +55,7 @@ h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
   EY.cursors(win,1); EY.fit();
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
   function move(el){ EY.move('u1', el); }
-  var WHY=['Queue of live work.','Pick the kind of offering.','Load a file or type fields.','Mark fields that need a tooltip.','Optional first-run guide.','AI checks labels, then a human signs.','Live in the catalog.'];
+  var WHY=['Queue of live work.','Pick the kind of offering.','Load a file or type fields.','Mark fields that need a helper.','Optional first-run guide.','AI checks labels, then a human signs.','Live in the catalog.'];
   function steps(n){
     var lab=['Queue','Type','Fields','Guidance','Onboard','Review','Live'];
     return '<div class="steps">'+lab.map(function(l,i){ return '<span class="'+(i===n?'on':'')+'"><b>'+(i+1)+'</b>'+l+'</span>'; }).join('')+'</div><p class="why">'+WHY[n]+'</p>';
@@ -87,18 +89,23 @@ h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
       after(80,function(){ move(document.getElementById('hit')); });
     });
     after(2800,function(){
-      shell('n',3,steps(3)+'<h3>Which fields need help?</h3><div class="item" id="hit">Billing account <span class="tip">What is this?</span></div><div class="item">License key <span class="tip">What is this?</span></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      shell('n',3,steps(3)+'<h3>Which fields need help?</h3><div class="item" id="hit">Billing account <span class="tip" id="tip">What is this?</span></div><div class="item">License key <span class="tip">What is this?</span></div>');
+      after(80,function(){ move(document.getElementById('tip')); });
+      after(700,function(){
+        var main=slot.querySelector('.main');
+        if(main) main.insertAdjacentHTML('beforeend','<div class="sheet" id="helpSheet"><h4>Billing account</h4>The cost center on the invoice. Teams without one cannot submit. This helper stays with the field — not a two-line hint.</div>');
+        move(document.getElementById('helpSheet'));
+      });
     });
-    after(4200,function(){
+    after(4600,function(){
       shell('n',4,steps(4)+'<h3>Add a guide?</h3><div class="split"><div class="box">No</div><div class="box" id="hit"><b>Yes — builder</b>Workspace · Team · Billing</div></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
-    after(5600,function(){
-      shell('n',5,steps(5)+'<h3>AI review before a human</h3><div class="ai" id="hit"><b>AI reviewer</b> Labels are short. Add a tooltip on billing. Ready for human.</div>');
+    after(6000,function(){
+      shell('n',5,steps(5)+'<h3>AI review before a human</h3><div class="ai" id="hit"><b>AI reviewer</b> Labels are short. Billing helper attached. Ready for human.</div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
-    after(7200,function(){
+    after(7600,function(){
       shell('n',6,steps(6)+'<h3>Live in the catalog</h3><div class="row" id="hit">Workbench workspace<span class="pill ok">Published</span></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
