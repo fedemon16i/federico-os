@@ -14,6 +14,10 @@
 .svc .t{font-size:10px;font-weight:650}.svc .desc{font-size:8px;color:var(--ey-muted)}.svc .meta{font-size:7.5px;color:var(--ey-faint)}
 .ov,.walk{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
 .sheet{width:82%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px}
+.sheet h4{margin:0 0 6px;color:var(--ey-text)}
+.dots{display:flex;gap:4px;margin:8px 0}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--ey-line);display:block}
+.dots i.on{background:var(--ey-text)}
 .go{margin-top:10px;background:var(--ey-btn);color:var(--ey-btn-ink);border:0;border-radius:4px;padding:6px 10px}
 .wb{display:grid;grid-template-columns:1fr 220px;flex:1}
 .wb-r{padding:8px;background:var(--ey-side);border-left:1px solid var(--ey-line)}
@@ -35,14 +39,24 @@
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
   function mark(el,label){ if(EY.note) EY.note(el,label); }
   var NAV='<div class="nav"><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search</div><span class="ai">AI</span></div></div>';
+  var STEPS=[
+    ['Requirements on the card','See details before you start.'],
+    ['Help stays open','Order, requirements and chat stay in the rail.'],
+    ['Then the form','Name · service · workspace.']
+  ];
+  function walk(n){
+    return '<div class="app" style="position:relative">'+NAV+'<div class="walk"><div class="sheet"><h4 id="wt">'+STEPS[n][0]+'</h4><p id="wb">'+STEPS[n][1]+'</p><div class="dots"><i class="'+(n===0?'on':'')+'"></i><i class="'+(n===1?'on':'')+'"></i><i class="'+(n===2?'on':'')+'"></i></div><button class="go" id="wgo" type="button">'+(n<2?'Next':'Continue')+'</button></div></div></div>';
+  }
   function market(){
     return '<div class="app">'+NAV+'<div class="cat"><div class="side"><div class="sh">Catalog</div><div>All 284</div><div>Services 118</div></div><div class="main" id="main"><div class="banner">Services · shared infrastructure</div>'+EYMarket.grid({infoFirst:true})+'</div></div></div>';
   }
   function playEnter(){
     document.getElementById('addr').textContent='marketplace';
-    slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="walk"><div class="sheet"><h4>Before you request</h4><p>Requirements live on the card. Help stays open once you start.</p><button class="go" id="wgo" type="button">Continue</button></div></div></div>';
-    after(300,function(){ mark(document.getElementById('wgo'),'Walkthrough first'); });
-    after(1600,function(){
+    slot.innerHTML=walk(0);
+    after(200,function(){ mark(document.getElementById('wgo'),'Step 1 · requirements'); });
+    after(1100,function(){ slot.innerHTML=walk(1); mark(document.getElementById('wgo'),'Step 2 · help stays'); });
+    after(2200,function(){ slot.innerHTML=walk(2); mark(document.getElementById('wgo'),'Step 3 · then the form'); });
+    after(3400,function(){
       slot.innerHTML=market();
       after(300,function(){ mark(document.getElementById('info'),'Details + brand on the card'); });
       after(1600,function(){
