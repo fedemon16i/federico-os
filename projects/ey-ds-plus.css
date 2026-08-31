@@ -7,3 +7,6 @@
 .ey-radio.on i{border-color:var(--ey-text);box-shadow:inset 0 0 0 3px var(--ey-bg),inset 0 0 0 6px var(--ey-text)}
 .ey-check i{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ey-line);flex-shrink:0}
 .ey-check.on i{background:var(--ey-text);border-color:var(--ey-text)}
+.ey-m{width:22px;height:22px;border-radius:5px;display:block;flex-shrink:0}
+.ey-offer,.svc{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:start}
+.ey-offers,.svcs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
