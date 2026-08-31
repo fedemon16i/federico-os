@@ -1,4 +1,4 @@
-/* EY engine. Unit 840×560. */
+/* EY engine. Product unit + showcase veil/cursor. */
 (function (w) {
   var T = [];
   var UNIT_W = 840;
@@ -45,6 +45,15 @@
     return s;
   }
 
+  function link(name) {
+    if (document.querySelector('link[href*="' + name + '"]')) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    var root = location.pathname.indexOf('/projects/') >= 0 ? '' : 'projects/';
+    l.href = root + name;
+    document.head.appendChild(l);
+  }
+
   function veil(kind, label) {
     var host = document.querySelector('.stage') || document.body;
     var el = host.querySelector('.ey-veil');
@@ -60,17 +69,10 @@
 
   function boot() {
     applyMode();
-    if (!document.querySelector('link[href*="ey-motion.css"]')) {
-      var l = document.createElement('link');
-      l.rel = 'stylesheet';
-      l.href = (location.pathname.indexOf('/projects/') >= 0 ? '' : 'projects/') + 'ey-motion.css';
-      document.head.appendChild(l);
-    }
+    link('ey-motion.css');
+    link('fm-show.css');
     fit();
-    w.requestAnimationFrame(function () {
-      fit();
-      w.requestAnimationFrame(fit);
-    });
+    w.requestAnimationFrame(function () { fit(); w.requestAnimationFrame(fit); });
     var host = document.querySelector('.stage');
     if (host && w.ResizeObserver) {
       if (ro) ro.disconnect();
@@ -111,10 +113,8 @@
     var b = unit.getBoundingClientRect();
     var s = b.width / UNIT_W;
     if (!s) s = 1;
-    var x = (r.left - b.left) / s + (ox || 6);
-    var y = (r.top - b.top) / s + (oy || 4);
-    n.style.left = Math.max(8, Math.min(UNIT_W - 88, x)) + 'px';
-    n.style.top = Math.max(8, Math.min(UNIT_H - 36, y)) + 'px';
+    n.style.left = Math.max(8, Math.min(UNIT_W - 88, (r.left - b.left) / s + (ox || 6))) + 'px';
+    n.style.top = Math.max(8, Math.min(UNIT_H - 36, (r.top - b.top) / s + (oy || 4))) + 'px';
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
