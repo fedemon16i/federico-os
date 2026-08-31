@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="ey" data-mode="light" data-device="desktop">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>FM kit</title>
+<link rel="stylesheet" href="fm-ds.css"/>
+<style>
+body{overflow:auto;background:var(--fm-bg);padding:16px}
+.kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.kit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.stage-host{height:70vh;min-height:360px;border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);position:relative;background:var(--fm-side)}
+</style>
+</head>
+<body>
+<div class="kit-bar">
+  <select id="skin"><option>ey</option><option>dc</option><option>chek</option><option>cus</option><option>bc</option></select>
+  <select id="mode"><option>light</option><option>dark</option></select>
+  <select id="beat"><option>kit</option><option>measure</option><option>analyze</option><option>funnel</option><option>research</option><option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option></select>
+  <button class="fm-btn" type="button" id="replay">Replay</button>
+</div>
+<div id="kit">
+  <div class="kit-grid">
+    <div><button class="fm-btn" type="button">Primary</button> <button class="fm-btn ghost" type="button">Ghost</button></div>
+    <div><span class="fm-chip on">Chip on</span> <span class="fm-chip">Chip</span></div>
+    <div><span class="fm-tag ok">ok</span> <span class="fm-tag warn">warn</span> <span class="fm-tag bad">bad</span></div>
+    <div class="fm-field">Field</div>
+    <div class="fm-select">Select</div>
+    <div class="fm-radio on"><i></i> Radio</div>
+    <div class="fm-check on"><i></i> Check</div>
+    <div class="fm-drop">File drop</div>
+    <div class="fm-offer"><div class="t">Offer</div><div class="acts"><button class="fm-btn secondary" type="button">Details</button><button class="fm-btn" type="button">Start</button></div></div>
+    <div class="fm-kpi"><i>KPI</i><b>12</b></div>
+    <div class="fm-banner"><b>Banner</b></div>
+    <div class="fm-notice">Notice</div>
+    <div class="fm-funnel"><div class="bar dead">Funnel bar</div></div>
+  </div>
+</div>
+<div class="stage-host" id="player" hidden>
+  <div class="stage"><div class="fm-unit" id="unit"><div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div></div></div>
+</div>
+<script src="fm-engine.js"></script>
+<script src="ey-screens.js"></script>
+<script src="ey-beats.js"></script>
+<script>
+(function(){
+  var skin=document.getElementById('skin');
+  var mode=document.getElementById('mode');
+  var beat=document.getElementById('beat');
+  function applyChrome(){
+    document.documentElement.setAttribute('data-skin', skin.value);
+    document.documentElement.setAttribute('data-mode', mode.value);
+    document.querySelectorAll('iframe').forEach(function(f){
+      try{ f.contentWindow.postMessage({type:'fm-mode', mode:mode.value}, '*'); }catch(e){}
+    });
+  }
+  function play(){
+    var name=beat.value;
+    document.getElementById('kit').hidden = name!=='kit';
+    document.getElementById('player').hidden = name==='kit';
+    applyChrome();
+    if(name!=='kit') EYBeats.run(name);
+  }
+  skin.onchange=applyChrome;
+  mode.onchange=applyChrome;
+  beat.onchange=play;
+  document.getElementById('replay').onclick=play;
+  var q=new URLSearchParams(location.search);
+  if(q.get('skin')) skin.value=q.get('skin');
+  if(q.get('mode')) mode.value=q.get('mode');
+  if(q.get('beat')) beat.value=q.get('beat');
+  applyChrome();
+  play();
+})();
+</script>
+</body>
+</html>
