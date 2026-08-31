@@ -6,38 +6,37 @@
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
 .nav .right{margin-left:auto}
-.nav .search{width:188px;height:22px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid var(--ey-line);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 10px}
+.nav .search{width:188px;height:22px;border-radius:6px;background:var(--ey-card);border:1px solid var(--ey-line);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 10px}
 .cat{display:grid;grid-template-columns:110px 1fr;flex:1;min-height:0}
 .side{background:var(--ey-side);border-right:1px solid var(--ey-line);padding:10px 8px;font-size:9px;color:var(--ey-muted)}
-.side .sh{font-weight:700;color:#fff;margin-bottom:8px}
+.side .sh{font-weight:700;color:var(--ey-text);margin-bottom:8px}
 .main{padding:10px 12px;position:relative;overflow:hidden}
 .tools .q{height:20px;border:1px solid var(--ey-line);background:var(--ey-surface);border-radius:5px;font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 8px;margin:6px 0}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .card{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px}
-.card .t{font-size:11px;font-weight:650}.card .m{font-size:8px;color:var(--ey-faint);margin:3px 0 6px}
+.card .t{font-size:11px;font-weight:650;color:var(--ey-text)}.card .m{font-size:8px;color:var(--ey-faint);margin:3px 0 6px}
 .acts{display:flex;gap:5px}
-.acts button{flex:1;height:18px;border-radius:4px;font-size:7.5px;border:1px solid var(--ey-line);background:transparent;color:#d8dbe4}
-.acts button.pri{background:rgba(255,255,255,.08);color:#fff}
-.acts button.info{border-color:var(--ey-new);color:#ffb4b4}
 .ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
 .sheet{width:82%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px;position:relative}
 .x{position:absolute;top:8px;right:10px;font-size:11px;color:var(--ey-muted)}
-.sheet h4{margin:0 0 8px;font-size:13px}
+.sheet h4{margin:0 0 8px;font-size:13px;color:var(--ey-text)}
 .tabs{display:flex;gap:6px;margin-bottom:8px}
 .tabs i{font-style:normal;font-size:8px;padding:3px 8px;border:1px solid var(--ey-line);border-radius:100px;color:var(--ey-muted)}
-.tabs i.on{color:#fff;border-color:#e8943a}
-.sec{font-size:9px;color:var(--ey-muted);line-height:1.45;min-height:48px}.sec b{color:#fff;display:block;margin:6px 0 2px}
-.sheet .go{margin-top:10px;background:#fff;color:#111;border:0;border-radius:4px;padding:6px 10px;font-size:9px;font-weight:650}
-.wb{display:grid;grid-template-columns:1.1fr .9fr;flex:1;min-height:0}
-.wb-l{padding:10px 12px}.wb-r{padding:10px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column;gap:7px}
+.tabs i.on{background:var(--ey-text);color:var(--ey-bg);border-color:transparent}
+.sec{font-size:9px;color:var(--ey-muted);line-height:1.45;min-height:48px}.sec b{color:var(--ey-text);display:block;margin:6px 0 2px}
+.sheet .go{margin-top:10px;background:var(--ey-btn);color:var(--ey-btn-ink);border:0;border-radius:4px;padding:6px 10px;font-size:9px;font-weight:650}
+.wb{display:grid;grid-template-columns:1.05fr .95fr;flex:1;min-height:0}
+.wb-l{padding:10px 12px}.wb-r{padding:8px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column;gap:6px;overflow:hidden}
 .fld label{display:block;font-size:8px;color:var(--ey-muted);margin:5px 0 2px}
-.box{height:20px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9px}
-.order,.help,.ob{border:1px solid var(--ey-line);background:var(--ey-card);border-radius:8px;padding:8px;font-size:8px}
-.order h4,.help h4,.ob h4{margin:0 0 5px;font-size:10px}
-.ln{display:flex;justify-content:space-between;margin:3px 0;color:var(--ey-muted)}
-.chat{position:absolute;right:18px;bottom:16px;width:22px;height:22px;border-radius:50%;background:#e8943a;color:#111;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:6}
+.box{height:20px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9px;color:var(--ey-text)}
+.order,.help,.ob,.talk{border:1px solid var(--ey-line);background:var(--ey-card);border-radius:8px;padding:7px;font-size:8px;color:var(--ey-muted)}
+.order h4,.help h4,.ob h4,.talk h4{margin:0 0 4px;font-size:10px;color:var(--ey-text)}
+.ln{display:flex;justify-content:space-between;margin:2px 0}
+.prog{display:flex;gap:8px;font-size:8px;color:var(--ey-muted);margin-bottom:8px}
+.prog b{color:var(--ey-bg);background:var(--ey-text);width:14px;height:14px;border-radius:50%;display:inline-grid;place-items:center;margin-right:3px}
+.chat{position:absolute;right:14px;bottom:12px;width:22px;height:22px;border-radius:50%;background:var(--ey-text);color:var(--ey-bg);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:6}
 .winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;z-index:8}
-.winok.on{opacity:1}.winok .mk{width:30px;height:30px;border-radius:50%;background:var(--ey-ok);color:#111;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:6px}
+.winok.on{opacity:1}.winok .mk{width:30px;height:30px;border-radius:50%;background:#d8f3e4;color:#0b6b38;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:6px}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
@@ -97,26 +96,29 @@
     after(300,function(){ mark(document.getElementById('go'),'Get started · opens the form','right'); });
     after(1400,function(){ runForm(); });
   }
+  function rail(){
+    return '<div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="ln"><span>Region</span><span>West 2</span></div><div class="ln"><span>Total</span><span>$0 / mo</span></div></div><div class="help ring"><h4>Help / Requirements</h4>Name required.<br>One service required.<br>Billing account required.</div><div class="ob"><h4>Onboarding</h4>Requirements seen · Workspace next · Team later</div><div class="talk"><h4>Chat</h4>Billing account is the cost center on the invoice.</div>';
+  }
   function runForm(){
     co.style.display='none';
-    function form(step,left){
-      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div style="font-size:8px;color:#6d7384;margin-bottom:6px">Step <b style="color:#fff">'+step+'</b></div>'+left+'</div><div class="wb-r"><div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div></div><div class="help ring"><h4>Help / Requirements</h4>Name · required service · billing</div><div class="ob"><h4>Onboarding</h4>Requirements seen</div></div></div><div class="chat ring" id="chat">…</div><div class="winok" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
+    function form(step,n,left){
+      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div class="prog"><span><b>1</b>Name</span><span><b>2</b>Configure</span><span><b>3</b>Workspace</span></div><div style="font-size:8px;color:var(--ey-muted);margin-bottom:6px">'+step+'</div>'+left+'</div><div class="wb-r">'+rail()+'</div></div><div class="chat ring" id="chat">…</div><div class="winok" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
     }
-    form('Onboarding','<h3 style="margin:0 0 8px;font-size:14px">Before the form</h3><div class="box" id="q1">Did you read the requirements?</div>');
+    form('Onboarding','0','<h3 style="margin:0 0 8px;font-size:14px">Before the form</h3><div class="box" id="q1">Did you read the requirements?</div><div class="box">Do you have a workspace?</div><div class="box">Do you have a team?</div>');
     after(200,function(){ mark(document.getElementById('q1'),'Onboard check','left'); });
     after(1400,function(){
-      form('1 · Identify','<h3 style="margin:0 0 8px;font-size:14px">Name the instance</h3><div class="fld"><label>Display name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div><div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>');
+      form('1 · Identify','1','<h3 style="margin:0 0 8px;font-size:14px">Name the instance</h3><div class="fld"><label>Display name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div><div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>');
       after(80,function(){ move(document.getElementById('hit')); co.style.display='none'; });
     });
     after(2800,function(){
-      form('2 · Technical','<h3 style="margin:0 0 8px;font-size:14px">Customize technically</h3><div class="fld"><label>Repo</label><div class="box" id="hit">platform/north</div></div><div class="fld"><label>License</label><div class="box">Shared compute</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>');
+      form('2 · Technical','2','<h3 style="margin:0 0 8px;font-size:14px">Customize technically</h3><div class="fld"><label>Repo</label><div class="box" id="hit">platform/north</div></div><div class="fld"><label>License</label><div class="box">Shared compute</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
     after(4200,function(){
       document.getElementById('winok').classList.add('on');
       after(1100,function(){
         document.getElementById('winok').classList.remove('on');
-        form('3 · Workspace','<h3 style="margin:0 0 8px;font-size:14px">Workspace and terms</h3><div class="fld"><label>Workspace</label><div class="box">Create North studio</div></div><div class="fld"><label>Team</label><div class="box">Platform</div></div><div class="fld"><label>Billing</label><div class="box">AC-4412</div></div><div class="box">Accept terms</div>');
+        form('3 · Workspace','3','<h3 style="margin:0 0 8px;font-size:14px">Workspace and terms</h3><div class="fld"><label>Workspace</label><div class="box">Create North studio</div></div><div class="fld"><label>Team</label><div class="box">Platform</div></div><div class="fld"><label>Billing</label><div class="box">AC-4412</div></div><div class="box">Accept terms</div>');
       });
     });
   }
