@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Showcase DS — Federico Monroy</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="projects/fm-show.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#08080b;--border:rgba(255,255,255,.1);--ink:#f0eee9;--dim:#8a8580;--bar:#0c0c10}
+html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c66;--bar:#fff}
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif}
+.topbar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bar);border-bottom:1px solid var(--border)}
+.topbar a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none}
+.topbar a.logo{margin-right:auto;color:var(--ink)}
+.wrap{max-width:720px;margin:0 auto;padding:28px 24px 80px}
+h1{font-family:'Space Grotesk',system-ui;font-size:1.8rem;letter-spacing:-.03em}
+.lede{color:var(--dim);margin:8px 0 24px;line-height:1.55}
+.item{padding:20px 0;border-top:1px solid var(--border)}
+.item h2{font-size:1rem;margin:0 0 4px}
+.item p{color:var(--dim);font-size:13px;margin:0 0 12px}
+code{font-family:'Share Tech Mono',monospace;font-size:11px}
+.stage-demo{position:relative;height:120px;border:1px dashed var(--border);border-radius:10px;overflow:hidden}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="logo" href="index.html">FM.OS</a>
+  <a href="ds.html">Product DS</a>
+  <a href="beats.html">Beats</a>
+  <a href="show.html">Showcase</a>
+  <a href="#" id="themeBtn">Light</a>
+</div>
+<div class="wrap">
+  <h1>Showcase</h1>
+  <p class="lede">Chrome of the portfolio — how a beat is <em>shown</em>. Not EY Fabric. Not DollarCity. Cursor, tooltip, veil, brands.</p>
+
+  <article class="item">
+    <h2>Cursor</h2>
+    <p><code>.uc</code> — pointer SVG + optional user label. Lives inside the unit. Never outside.</p>
+    <div class="stage-demo"><div class="uc" style="left:24px;top:36px"><em>user 1</em><svg width="22" height="22" viewBox="0 0 24 24"><path fill="#fff" stroke="#111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg></div></div>
+  </article>
+
+  <article class="item">
+    <h2>Callout + ring</h2>
+    <p><code>.callout .ring</code> — marks a new control. Ink on red plate (4.5:1).</p>
+    <div class="row"><span class="ring" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px">See details</span><span class="callout" style="position:static">NEW · details</span></div>
+  </article>
+
+  <article class="item">
+    <h2>Veil</h2>
+    <p><code>.ey-veil.fail / .ok</code> — full stage, blur behind, drop-off or ready.</p>
+    <div class="row">
+      <div class="ey-veil fail on" style="position:relative;inset:auto;width:160px;height:100px;border-radius:10px"><div class="mk">↓</div><b>Drop-off</b></div>
+      <div class="ey-veil ok on" style="position:relative;inset:auto;width:160px;height:100px;border-radius:10px"><div class="mk">✓</div><b>Ready</b></div>
+    </div>
+  </article>
+
+  <article class="item">
+    <h2>Brand marks</h2>
+    <p><code>.ey-brand</code> — always next to a stack name. Marks are tokens, not official lockups.</p>
+    <div class="row">
+      <span class="ey-brand pendo"><i></i> Pendo</span>
+      <span class="ey-brand ga4"><i></i> GA4</span>
+      <span class="ey-brand maze"><i></i> Maze</span>
+      <span class="ey-brand figma"><i></i> Figma</span>
+      <span class="ey-brand claude"><i></i> Claude</span>
+      <span class="ey-brand cursor"><i></i> Cursor</span>
+      <span class="ey-brand factory"><i></i> Factory</span>
+      <span class="ey-brand replit"><i></i> Replit</span>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  function apply(th){
+    document.documentElement.setAttribute('data-theme', th);
+    try{ localStorage.setItem('fm-theme', th); }catch(e){}
+    document.getElementById('themeBtn').textContent = th==='light' ? 'Dark' : 'Light';
+  }
+  var saved=null; try{ saved=localStorage.getItem('fm-theme'); }catch(e){}
+  apply(saved==='light'?'light':'dark');
+  document.getElementById('themeBtn').onclick=function(e){ e.preventDefault(); apply(document.documentElement.getAttribute('data-theme')==='light'?'dark':'light'); };
+})();
+</script>
+</body>
+</html>
