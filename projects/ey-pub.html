@@ -7,28 +7,33 @@
 <style>
 .app{display:grid;grid-template-columns:96px 1fr;flex:1;min-height:0}
 .side{padding:8px 6px;border-right:1px solid var(--ey-line);font-size:8px;color:var(--ey-muted);background:var(--ey-side)}
-.side .sh{font-weight:700;margin-bottom:6px;font-size:10px}
+.side .sh{font-weight:700;margin-bottom:6px;font-size:10px;color:var(--ey-text)}
 .side a{display:block;padding:4px 6px;border-radius:5px;margin-bottom:2px;color:inherit;text-decoration:none}
-.side a.on{background:rgba(127,127,127,.12)}
+.side a.on{background:var(--ey-text);color:var(--ey-bg)}
 .main{padding:8px 10px;overflow:hidden}
-h3{margin:0 0 6px;font-size:13px}
-.btn{display:inline-block;font-size:8px;padding:4px 8px}
+.steps{display:flex;gap:6px;font-size:8px;color:var(--ey-muted);margin-bottom:8px;flex-wrap:wrap}
+.steps b{color:var(--ey-bg);background:var(--ey-text);width:14px;height:14px;border-radius:50%;display:inline-grid;place-items:center;margin-right:3px;font-size:8px}
+.steps span.on{color:var(--ey-text);font-weight:700}
+h3{margin:0 0 6px;font-size:13px;color:var(--ey-text)}
+.btn{display:inline-block;font-size:8px;padding:5px 10px;background:var(--ey-btn);color:var(--ey-btn-ink);border-radius:6px}
 .kpis{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;margin-bottom:7px}
-.kpi{border:1px solid var(--ey-line);padding:6px;font-size:7px;color:var(--ey-faint)}
-.kpi b{display:block;font-size:12px;margin-top:1px}
-.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:6px;padding:6px 7px;margin-bottom:4px;font-size:9px}
-.pill{font-size:7px;padding:1px 5px;border:1px solid var(--ey-line);border-radius:100px}
+.kpi{border:1px solid var(--ey-line);padding:6px;font-size:7px;color:var(--ey-muted);background:var(--ey-card)}
+.kpi b{display:block;font-size:12px;margin-top:1px;color:var(--ey-text)}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:6px;padding:6px 7px;margin-bottom:4px;font-size:9px;color:var(--ey-text)}
+.pill{font-size:7px;padding:1px 5px;border-radius:100px}
+.pill.warn{background:#fff1c2;color:#6B5200}
+.pill.bad{background:#fde8e8;color:#8b1e1e}
 .cats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
 .cat{border:1px solid var(--ey-line);background:var(--ey-card);padding:6px 7px;border-radius:6px}
 .cat.sel{outline:2px solid var(--ey-bad);outline-offset:1px}
-.cat .t{font-size:9px;font-weight:650}.cat .d{font-size:7px;color:var(--ey-muted);margin:2px 0}.cat .e{font-size:7px}
+.cat .t{font-size:9px;font-weight:650;color:var(--ey-text)}.cat .d{font-size:7px;color:var(--ey-muted);margin:2px 0}.cat .e{font-size:7px;color:var(--ey-faint)}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .box{border:1px solid var(--ey-line);background:var(--ey-card);padding:7px;border-radius:6px;font-size:8px;color:var(--ey-muted)}
-.box b{display:block;margin-bottom:4px}
-.item{font-size:9px;color:var(--ey-muted);padding:3px 0;border-bottom:1px solid var(--ey-line)}
-.tip{font-size:7px;padding:1px 5px;border:1px solid var(--ey-line);border-radius:100px;margin-left:4px}
-.ai{border:1px solid var(--ey-line);padding:7px;font-size:8px;color:var(--ey-muted);margin-top:5px}
-.ai b{color:var(--ey-ok)}
+.box b{display:block;margin-bottom:4px;color:var(--ey-text)}
+.item{font-size:9px;color:var(--ey-muted);padding:4px 0;border-bottom:1px solid var(--ey-line)}
+.tip{font-size:7px;padding:1px 5px;border:1px solid var(--ey-line);border-radius:100px;margin-left:4px;color:var(--ey-text)}
+.ai{border:1px solid var(--ey-line);padding:7px;font-size:8px;color:var(--ey-muted);margin-top:5px;background:var(--ey-card)}
+.ai b{color:#0b6b38}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
@@ -46,8 +51,12 @@ h3{margin:0 0 6px;font-size:13px}
   EY.cursors(win,1); EY.fit();
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
   function move(el){ EY.move('u1', el); }
+  function steps(n){
+    var lab=['Queue','Type','Fields','Guidance','Onboard','Review'];
+    return '<div class="steps">'+lab.map(function(l,i){ return '<span class="'+(i===n?'on':'')+'"><b>'+(i+1)+'</b>'+l+'</span>'; }).join('')+'</div>';
+  }
   function shell(on,html){
-    slot.innerHTML='<div class="app"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Artifacts</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div></div>';
+    slot.innerHTML='<div class="app"><div class="side"><div class="sh">Publish</div><a class="'+(on==='q'?'on':'')+'" href="#">Queue</a><a href="#">Teams</a><a href="#">Licenses</a><a href="#">Keys</a><a href="#">Docs</a><a class="'+(on==='n'?'on':'')+'" href="#">New item</a></div><div class="main">'+html+'</div></div>';
   }
   var CATS=[['Service','A requestable offering.','Cluster compute'],['License','A right a team can hold.','Automation seat'],['Artifact','A reusable file or image.','Base container'],['Starter kit','A packaged first run.','Team workspace kit'],['API','A callable platform block.','Billing API'],['Package','A bundle of offerings.','Delivery pack'],['Dataset','A governed data source.','Usage ledger'],['Playbook','A guided runbook.','Incident path'],['Seat','A named access unit.','Editor seat']];
   function catGrid(sel){
@@ -57,37 +66,37 @@ h3{margin:0 0 6px;font-size:13px}
   }
   function playWorkspace(){
     document.getElementById('addr').textContent='workspace / home';
-    shell('q','<h3>Workspace</h3><div class="kpis"><div class="kpi">Pending<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">AI pass<b>4</b></div><div class="kpi">Live<b>11</b></div></div><div class="row">Cluster service<span class="pill warn">Pending</span></div><div class="row">Starter kit<span class="pill bad">Correction</span></div><span class="btn" id="hit">Publish new item</span>');
+    shell('q',steps(0)+'<h3>Workspace</h3><div class="kpis"><div class="kpi">Pending<b>3</b></div><div class="kpi">Corrections<b>2</b></div><div class="kpi">AI pass<b>4</b></div><div class="kpi">Live<b>11</b></div></div><div class="row">Cluster service<span class="pill warn">Pending</span></div><div class="row">Starter kit<span class="pill bad">Correction</span></div><div class="row">Billing API<span class="pill warn">Pending</span></div><span class="btn" id="hit">Publish new item</span>');
     after(400,function(){ move(document.getElementById('hit')); });
     after(1500,function(){
       document.getElementById('addr').textContent='workspace / type';
-      shell('n','<h3>What are you publishing?</h3>'+catGrid(-1));
+      shell('n',steps(1)+'<h3>What are you publishing?</h3>'+catGrid(-1));
       after(200,function(){ move(document.getElementById('c0')); });
       after(1100,function(){ document.getElementById('c0').classList.add('sel'); });
     });
   }
   function playArmar(){
     document.getElementById('addr').textContent='workspace / type';
-    shell('n','<h3>What are you publishing?</h3>'+catGrid(0));
+    shell('n',steps(1)+'<h3>What are you publishing?</h3>'+catGrid(0));
     after(400,function(){ move(document.getElementById('c0')); });
     after(1500,function(){
       document.getElementById('addr').textContent='offering / fields';
-      shell('n','<h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml</div><div class="box"><b>Add by hand</b>Name · service · owner</div></div>');
+      shell('n',steps(2)+'<h3>Load or type</h3><div class="split"><div class="box" id="hit"><b>From product file</b>offering.yml<br>owner · service line · keys</div><div class="box"><b>Add by hand</b>Name · service · owner · region</div></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
     after(3000,function(){
       document.getElementById('addr').textContent='offering / guidance';
-      shell('n','<h3>Which fields need help?</h3><div class="item">Workspace name</div><div class="item on" id="hit">Billing account <span class="tip">What is this?</span></div><div class="item on">License key <span class="tip">What is this?</span></div>');
+      shell('n',steps(3)+'<h3>Which fields need help?</h3><div class="item">Workspace name</div><div class="item on" id="hit">Billing account <span class="tip">What is this?</span></div><div class="item on">License key <span class="tip">What is this?</span></div><div class="item">Region</div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
     after(4500,function(){
       document.getElementById('addr').textContent='offering / onboard';
-      shell('n','<h3>Add a guide?</h3><div class="split"><div class="box">No</div><div class="box" id="hit"><b>Yes — builder</b>Workspace · Team · Billing</div></div>');
+      shell('n',steps(4)+'<h3>Add a guide?</h3><div class="split"><div class="box">No guide</div><div class="box" id="hit"><b>Yes — builder</b>Workspace · Team · Billing · first run</div></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
     after(6000,function(){
       document.getElementById('addr').textContent='offering / review';
-      shell('n','<h3>AI passed. Human next.</h3><div class="ai"><b>AI review</b> Fields labeled. Tooltips short.</div><div class="row" id="hit" style="margin-top:6px">Workbench workspace<span class="pill warn">Human review</span></div>');
+      shell('n',steps(5)+'<h3>AI passed. Human next.</h3><div class="ai"><b>AI review</b> Fields labeled. Tooltips short. Onboard attached.</div><div class="row" id="hit" style="margin-top:6px">Workbench workspace<span class="pill warn">Human review</span></div>');
       after(80,function(){ move(document.getElementById('hit')); });
     });
   }
