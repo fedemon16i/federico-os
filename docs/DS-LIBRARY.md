@@ -1,31 +1,23 @@
-# Design system library — handoff
+# Design system library
 
-Page: `ds.html`. Sheet: `projects/fm-ds-sheet.html`.
-Tokens: `projects/fm-ds.css` + `projects/ey-ds.css`.
-
-## Process
-
-A visual fix is a **token or class in the DS**, then every beat that links that file inherits it.
-Do not patch a single HTML beat and leave Hub / Req / Pub / Research / preview / sheet behind.
-If a beat still hardcodes `#fff` / `#FFE600`, ask before stripping — then strip **all** copies.
-
-Analyze is the reference window. Research embeds it. Preview hosts it. Req / Hub / Pub reuse the same nav + marketplace language.
+Beats consume `ey-ds.css` / `fm-ds.css`. Do not invent a local button, chip, or search.
+Custom exception: ask first.
 
 ## Contrast law
 
-- Photo / colored plate (`.hero` `.banner` `.tile.t1–t6` `.fm-hero` `.fm-photo`): dark fill + **white** type, both modes.
-- Quiet surface (nav, rail, card, field, band in light): **ink** on plate. No white type on white. No ink on navy.
-- `#FFE600` is fill only (flag, root node). Text on light = `#6B5200` or `#2E2E38`.
-- Yellow fill always carries `#111` ink.
+1. Quiet surface (`--ey-bg` `--ey-card` `--ey-nav` `--ey-side`) → ink `--ey-text` / `--ey-muted`.
+   No white type, white icon, or light graph on a light plate.
+   No dark type on a dark plate.
+2. Photo plate (`.hero` `.banner` `.tile.t*` `.fm-hero` `.fm-photo`) → **white** type, both modes.
+3. Primary button → `--ey-btn` fill + `--ey-btn-ink`.
+4. Chip on → `--ey-chip-on` + `--ey-chip-ink` (dark plate stays dark in dark mode).
+5. `#FFE600` is fill only. Text on yellow = `#111`. Text on light page = `#6B5200`.
+6. Status bad = `#8b1e1e` on `#fde8e8` (light) or `#f2b4b0` on `#3a1518` (dark).
 
-## Reference beat
+## Categories that exist
 
-| Project | File |
-|---|---|
-| EY Fabric | `projects/ey-02-analyze.html` |
-| DollarCity | `projects/dollarcity-player.html` |
-| Chek | `projects/chek-player.html` |
-| Customs | `projects/customs.html` |
-| Blockchain | `projects/blockchain-player.html` |
+Tokens · Type · Buttons · Bars · Banners · Chips · Cards · Forms · Tables · KPIs · Alerts · Icons · Extras · Beats
 
-Preview: Web = window beat. Mobile = phone beat in iPhone chrome. Never shrink a desktop UI.
+## Reference
+
+EY `ey-02-analyze.html` · DC `dollarcity-player.html` · Chek `chek-player.html` · Customs `customs.html` · BC `blockchain-player.html`
