@@ -5,115 +5,81 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
-.nav .right{margin-left:auto}
-.nav .search{width:188px;height:22px;border-radius:6px;background:var(--ey-card);border:1px solid var(--ey-line);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 10px}
+.nav .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.nav .search{width:160px;height:22px;border-radius:6px;border:1px solid var(--ey-line);background:var(--ey-card);font-size:11px;color:var(--ey-muted);display:flex;align-items:center;padding:0 8px}
 .cat{display:grid;grid-template-columns:110px 1fr;flex:1;min-height:0}
 .side{background:var(--ey-side);border-right:1px solid var(--ey-line);padding:10px 8px;font-size:9px;color:var(--ey-muted)}
 .side .sh{font-weight:700;color:var(--ey-text);margin-bottom:8px}
 .main{padding:10px 12px;position:relative;overflow:hidden}
-.tools .q{height:20px;border:1px solid var(--ey-line);background:var(--ey-surface);border-radius:5px;font-size:8px;color:var(--ey-faint);display:flex;align-items:center;padding:0 8px;margin:6px 0}
+.banner{height:42px;border-radius:7px;margin-bottom:7px;padding:8px 10px;background:linear-gradient(110deg,#6b2bb8,#2a1048);color:#fff;font-size:11px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.card{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px}
-.card .t{font-size:11px;font-weight:650;color:var(--ey-text)}.card .m{font-size:8px;color:var(--ey-faint);margin:3px 0 6px}
-.acts{display:flex;gap:5px}
-.ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
-.sheet{width:82%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px;position:relative}
-.sheet h4{margin:0 0 8px;font-size:13px;color:var(--ey-text)}
-.tabs{display:flex;gap:6px;margin-bottom:8px}
-.tabs i{font-style:normal;font-size:8px;padding:3px 8px;border:1px solid var(--ey-line);border-radius:100px;color:var(--ey-muted)}
+.svc{background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:8px;display:grid;grid-template-columns:22px 1fr;gap:6px}
+.svc .ico{width:22px;height:22px;border-radius:5px;background:var(--ey-side);display:grid;place-items:center}
+.svc .t{font-size:10px;font-weight:650;color:var(--ey-text)}
+.svc .desc{font-size:8px;color:var(--ey-muted);margin:2px 0}
+.acts{display:flex;gap:5px;margin-top:4px}
+.ov,.walk{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
+.sheet{width:82%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px}
+.sheet h4{margin:0 0 8px;color:var(--ey-text)}
+.tabs i{font-style:normal;font-size:8px;padding:3px 8px;border:1px solid var(--ey-line);border-radius:100px;color:var(--ey-muted);margin-right:4px}
 .tabs i.on{background:var(--ey-text);color:var(--ey-bg);border-color:transparent}
-.sec{font-size:9px;color:var(--ey-muted);line-height:1.45;min-height:48px}.sec b{color:var(--ey-text);display:block;margin:6px 0 2px}
-.sheet .go{margin-top:10px;background:var(--ey-btn);color:var(--ey-btn-ink);border:0;border-radius:4px;padding:6px 10px;font-size:9px;font-weight:650}
-.wb{display:grid;grid-template-columns:1.05fr .95fr;flex:1;min-height:0}
-.wb-l{padding:10px 12px}.wb-r{padding:8px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column;gap:6px;overflow:hidden}
-.fld label{display:block;font-size:8px;color:var(--ey-muted);margin:5px 0 2px}
+.sec{font-size:9px;color:var(--ey-muted);min-height:40px}.sec b{display:block;color:var(--ey-text);margin:6px 0 2px}
+.go{margin-top:10px;background:var(--ey-btn);color:var(--ey-btn-ink);border:0;border-radius:4px;padding:6px 10px}
+.wb{display:grid;grid-template-columns:1fr 220px;flex:1;min-height:0}
+.wb-l{padding:10px}.wb-r{padding:8px;background:var(--ey-side);border-left:1px solid var(--ey-line);display:flex;flex-direction:column;gap:6px}
 .box{height:20px;border:1px solid var(--ey-line);background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:9px;color:var(--ey-text)}
-.order,.help,.ob,.talk{border:1px solid var(--ey-line);background:var(--ey-card);border-radius:8px;padding:7px;font-size:8px;color:var(--ey-muted)}
-.order h4,.help h4,.ob h4,.talk h4{margin:0 0 4px;font-size:10px;color:var(--ey-text)}
-.ln{display:flex;justify-content:space-between;margin:2px 0}
-.prog{display:flex;gap:8px;font-size:8px;color:var(--ey-muted);margin-bottom:8px}
-.prog b{color:var(--ey-bg);background:var(--ey-text);width:14px;height:14px;border-radius:50%;display:inline-grid;place-items:center;margin-right:3px}
-.chat{position:absolute;right:14px;bottom:12px;width:22px;height:22px;border-radius:50%;background:var(--ey-text);color:var(--ey-bg);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:6}
-.winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .45s;z-index:8}
-.winok.on{opacity:1}.winok .mk{width:30px;height:30px;border-radius:50%;background:#d8f3e4;color:#0b6b38;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:6px}
+.panel{border:1px solid var(--ey-line);background:var(--ey-card);border-radius:8px;padding:7px;font-size:8px;color:var(--ey-muted)}
+.panel h4{margin:0 0 4px;font-size:10px;color:var(--ey-text)}
+.winok{position:absolute;inset:0;background:rgba(12,14,20,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;z-index:8}
+.winok.on{opacity:1}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
-<div class="stage" id="stage">
-  <div class="ey-unit window" id="unit">
-    <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div>
-    <div id="slot"></div>
-  </div>
-</div>
+<div class="stage"><div class="ey-unit window" id="unit"><div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div><div id="slot"></div></div></div>
 <script src="ey-engine.js"></script>
 <script>
 (function(){
   var slot=document.getElementById('slot'), win=document.getElementById('unit'), timers=[];
   EY.cursors(win,1); EY.fit();
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
-  window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function mark(el,label){ if(EY.note) EY.note(el,label); else EY.move('u1',el); }
-  var NAV='<div class="nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search</div></div></div>';
-  var SIDE='<div class="side"><div class="sh">Catalog</div><div>All</div><div>Services</div><div>Licenses</div><div>Kits</div></div>';
+  function mark(el,label){ if(EY.note) EY.note(el,label); }
+  var NAV='<div class="nav"><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search</div><span class="ai">AI</span></div></div>';
+  function card(n,d,id){ return '<div class="svc" '+(id?'id="'+id+'"':'')+'><div class="ico">▣</div><div><div class="t">'+n+'</div><div class="desc">'+d+'</div><div class="acts"><button class="info" '+(id==='info'?'id="info"':'')+' type="button">See details</button><button class="pri" type="button">Get started</button></div></div></div>'; }
   function market(){
-    return '<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main" id="main"><div class="tools"><div class="q">Filter by layer…</div></div><div class="grid"><div class="card"><div class="t">Workbench workspace</div><div class="m">Shared delivery</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" id="info" type="button">See details</button></div></div><div class="card"><div class="t">Cluster service</div><div class="m">Compute</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div><div class="card"><div class="t">Automation seat</div><div class="m">License</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div><div class="card"><div class="t">Starter kit</div><div class="m">Enablement</div><div class="acts"><button class="pri" type="button">Get started</button><button class="info" type="button">See details</button></div></div></div></div></div></div>';
-  }
-  function overlay(){
-    var main=document.getElementById('main'); if(!main) return;
-    main.insertAdjacentHTML('beforeend','<div class="ov" id="ov"><div class="sheet"><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i id="tabR">Requirements</i></div><div class="sec" id="sec"><b>Description</b>Shared delivery workspace for a team.</div><button class="go" id="go" type="button">Get started</button></div></div>');
+    return '<div class="app">'+NAV+'<div class="cat"><div class="side"><div class="sh">Catalog</div><div>All 284</div><div>Services 118</div></div><div class="main" id="main"><div class="banner">Services · shared infrastructure</div><div class="grid">'+card('Workbench','Shared delivery workspace for a team.','info')+card('Cluster service','Compute for a shared team')+card('Automation seat','A named right to run jobs')+card('Workflow · Prod','Production path')+card('Observability pack','Logs and traces')+card('Identity broker','Sign-in for the workspace')+'</div></div></div></div>';
   }
   function playEnter(){
     document.getElementById('addr').textContent='marketplace';
-    slot.innerHTML=market();
-    after(400,function(){ mark(document.getElementById('info'),'I added details + requirements on the card'); });
+    slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="walk" id="walk"><div class="sheet"><h4>Before you request</h4><p class="sec">Requirements live on the card. Help and a guide stay open once you start.</p><button class="go" id="wgo" type="button">Continue</button></div></div></div>';
+    after(300,function(){ mark(document.getElementById('wgo'),'Walkthrough first'); });
     after(1600,function(){
-      overlay();
-      after(200,function(){ mark(document.getElementById('tabR'),'Requirements before they start'); });
-      after(1400,function(){
+      slot.innerHTML=market();
+      after(300,function(){ mark(document.getElementById('info'),'Details + requirements on the card'); });
+      after(1600,function(){
+        document.getElementById('main').insertAdjacentHTML('beforeend','<div class="ov"><div class="sheet"><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i id="tabR">Requirements</i></div><div class="sec" id="sec"></div><button class="go" id="go" type="button">Get started</button></div></div>');
         document.getElementById('tabR').classList.add('on');
-        document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.';
+        document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One service. Billing account.';
         mark(document.getElementById('go'),'Then they enter the product');
-        after(1600,function(){ runForm(); });
+        after(1600, runForm);
       });
     });
   }
-  function playPedir(){
-    document.getElementById('addr').textContent='marketplace / details';
-    slot.innerHTML=market();
-    overlay();
-    document.getElementById('tabR').classList.add('on');
-    document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.';
-    after(300,function(){ mark(document.getElementById('go'),'Get started opens the form'); });
-    after(1400,function(){ runForm(); });
-  }
+  function playPedir(){ playEnter(); }
   function rail(){
-    return '<div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="ln"><span>Region</span><span>West 2</span></div><div class="ln"><span>Total</span><span>$0 / mo</span></div></div><div class="help"><h4>Help / Requirements</h4>Name required.<br>One service required.<br>Billing account required.</div><div class="ob"><h4>Onboarding</h4>Requirements seen · Workspace next</div><div class="talk"><h4>Chat</h4>Billing account is the cost center on the invoice.</div>';
+    return '<div class="panel"><h4>Your order</h4>Workbench · West 2 · $0</div><div class="panel"><h4>Helper</h4>Billing account is the cost center on the invoice. Always here — not a 2-line hint.</div><div class="panel"><h4>Onboarding</h4>Requirements seen. Workspace next.</div>';
   }
   function runForm(){
     var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
-    function form(step,left){
-      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div class="prog"><span><b>1</b>Name</span><span><b>2</b>Configure</span><span><b>3</b>Workspace</span></div><div style="font-size:8px;color:var(--ey-muted);margin-bottom:6px">'+step+'</div>'+left+'</div><div class="wb-r">'+rail()+'</div></div><div class="chat" id="chat">…</div><div class="winok" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
-    }
-    form('Onboarding','<h3 style="margin:0 0 8px;font-size:14px">Before the form</h3><div class="box" id="q1">Did you read the requirements?</div><div class="box">Do you have a workspace?</div><div class="box">Do you have a team?</div>');
-    after(200,function(){ mark(document.getElementById('q1'),'Onboard before the form'); });
-    after(1400,function(){
-      form('1 · Identify','<h3 style="margin:0 0 8px;font-size:14px">Name the instance</h3><div class="fld"><label>Display name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div><div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>');
-      after(80,function(){ EY.move('u1', document.getElementById('hit')); });
+    slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><h3>Name the instance</h3><div class="box" id="hit">North studio</div><div class="box">Shared delivery</div></div><div class="wb-r">'+rail()+'</div></div><div class="winok" id="winok"><div>Ready</div></div></div>';
+    after(200,function(){ EY.move('u1', document.getElementById('hit')); });
+    after(1800,function(){
+      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><h3>Configure</h3><div class="box" id="hit">platform/north</div><div class="box">West 2</div></div><div class="wb-r">'+rail()+'</div></div><div class="winok" id="winok"></div></div>';
+      EY.move('u1', document.getElementById('hit'));
     });
-    after(2800,function(){
-      form('2 · Technical','<h3 style="margin:0 0 8px;font-size:14px">Customize technically</h3><div class="fld"><label>Repo</label><div class="box" id="hit">platform/north</div></div><div class="fld"><label>License</label><div class="box">Shared compute</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>');
-      after(80,function(){ EY.move('u1', document.getElementById('hit')); });
-    });
-    after(4200,function(){
-      var ok=document.getElementById('winok'); if(ok) ok.classList.add('on');
-      after(1100,function(){
-        if(ok) ok.classList.remove('on');
-        form('3 · Workspace','<h3 style="margin:0 0 8px;font-size:14px">Workspace and terms</h3><div class="fld"><label>Workspace</label><div class="box">Create North studio</div></div><div class="fld"><label>Team</label><div class="box">Platform</div></div><div class="fld"><label>Billing</label><div class="box">AC-4412</div></div><div class="box">Accept terms</div>');
-      });
-    });
+    after(3400,function(){ var o=document.getElementById('winok'); if(o){ o.classList.add('on'); o.textContent='Ready for workspace'; } });
   }
   var scene=new URLSearchParams(location.search).get('scene');
-  if(scene==='pedir') playPedir(); else playEnter();
+  playEnter();
 })();
 </script>
 </body></html>
