@@ -18,7 +18,6 @@
 .acts{display:flex;gap:5px}
 .ov{position:absolute;inset:0;background:rgba(8,10,16,.72);display:flex;align-items:center;justify-content:center;z-index:5}
 .sheet{width:82%;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:12px;position:relative}
-.x{position:absolute;top:8px;right:10px;font-size:11px;color:var(--ey-muted)}
 .sheet h4{margin:0 0 8px;font-size:13px;color:var(--ey-text)}
 .tabs{display:flex;gap:6px;margin-bottom:8px}
 .tabs i{font-style:normal;font-size:8px;padding:3px 8px;border:1px solid var(--ey-line);border-radius:100px;color:var(--ey-muted)}
@@ -45,25 +44,15 @@
     <div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div>
     <div id="slot"></div>
   </div>
-  <div class="callout left" id="co" style="display:none"></div>
 </div>
 <script src="ey-engine.js"></script>
 <script>
 (function(){
-  var slot=document.getElementById('slot'), win=document.getElementById('unit'), co=document.getElementById('co'), timers=[];
+  var slot=document.getElementById('slot'), win=document.getElementById('unit'), timers=[];
   EY.cursors(win,1); EY.fit();
   function after(ms,fn){timers.push(setTimeout(fn,ms))}
   window.addEventListener('message',function(e){if(e.data&&e.data.type==='fm-stop')timers.forEach(clearTimeout)});
-  function move(el){ EY.move('u1', el); }
-  function mark(el,label,side){
-    if(el) el.classList.add('ring');
-    var st=document.getElementById('stage').getBoundingClientRect();
-    co.style.display='block'; co.textContent=label;
-    if(side==='left'){ co.className='callout left'; co.style.left='4px'; }
-    else { co.className='callout right'; co.style.right='4px'; co.style.left='auto'; }
-    if(el){ var r=el.getBoundingClientRect(); co.style.top=Math.max(4,r.top-st.top-2)+'px'; }
-    move(el);
-  }
+  function mark(el,label){ if(EY.note) EY.note(el,label); else EY.move('u1',el); }
   var NAV='<div class="nav"><span>Overview</span><span class="on">Marketplace</span><span>Tools</span><div class="right"><div class="search">Search</div></div></div>';
   var SIDE='<div class="side"><div class="sh">Catalog</div><div>All</div><div>Services</div><div>Licenses</div><div>Kits</div></div>';
   function market(){
@@ -71,19 +60,20 @@
   }
   function overlay(){
     var main=document.getElementById('main'); if(!main) return;
-    main.insertAdjacentHTML('beforeend','<div class="ov" id="ov"><div class="sheet"><div class="x" id="x">×</div><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i id="tabR">Requirements</i></div><div class="sec" id="sec"><b>Description</b>Shared delivery workspace for a team.</div><button class="go" id="go" type="button">Get started</button></div></div>');
+    main.insertAdjacentHTML('beforeend','<div class="ov" id="ov"><div class="sheet"><h4>Workbench workspace</h4><div class="tabs"><i>Description</i><i>Resources</i><i id="tabR">Requirements</i></div><div class="sec" id="sec"><b>Description</b>Shared delivery workspace for a team.</div><button class="go" id="go" type="button">Get started</button></div></div>');
   }
   function playEnter(){
     document.getElementById('addr').textContent='marketplace';
     slot.innerHTML=market();
-    after(400,function(){ mark(document.getElementById('info'),'NEW · details + requirements','left'); });
+    after(400,function(){ mark(document.getElementById('info'),'I added details + requirements on the card'); });
     after(1600,function(){
       overlay();
-      after(200,function(){ mark(document.getElementById('tabR'),'Tabs: Description · Resources · Requirements','left'); });
+      after(200,function(){ mark(document.getElementById('tabR'),'Requirements before they start'); });
       after(1400,function(){
         document.getElementById('tabR').classList.add('on');
-        document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.<b>Links</b>Setup guide · Field glossary';
-        mark(document.getElementById('go'),'NEW · Get started from here','right');
+        document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.';
+        mark(document.getElementById('go'),'Then they enter the product');
+        after(1600,function(){ runForm(); });
       });
     });
   }
@@ -93,32 +83,32 @@
     overlay();
     document.getElementById('tabR').classList.add('on');
     document.getElementById('sec').innerHTML='<b>Requirements</b>Workspace name. One required service. Billing account.';
-    after(300,function(){ mark(document.getElementById('go'),'Get started · opens the form','right'); });
+    after(300,function(){ mark(document.getElementById('go'),'Get started opens the form'); });
     after(1400,function(){ runForm(); });
   }
   function rail(){
-    return '<div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="ln"><span>Region</span><span>West 2</span></div><div class="ln"><span>Total</span><span>$0 / mo</span></div></div><div class="help ring"><h4>Help / Requirements</h4>Name required.<br>One service required.<br>Billing account required.</div><div class="ob"><h4>Onboarding</h4>Requirements seen · Workspace next · Team later</div><div class="talk"><h4>Chat</h4>Billing account is the cost center on the invoice.</div>';
+    return '<div class="order"><h4>Your order</h4><div class="ln"><span>Item</span><span>Workbench</span></div><div class="ln"><span>Region</span><span>West 2</span></div><div class="ln"><span>Total</span><span>$0 / mo</span></div></div><div class="help"><h4>Help / Requirements</h4>Name required.<br>One service required.<br>Billing account required.</div><div class="ob"><h4>Onboarding</h4>Requirements seen · Workspace next</div><div class="talk"><h4>Chat</h4>Billing account is the cost center on the invoice.</div>';
   }
   function runForm(){
-    co.style.display='none';
-    function form(step,n,left){
-      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div class="prog"><span><b>1</b>Name</span><span><b>2</b>Configure</span><span><b>3</b>Workspace</span></div><div style="font-size:8px;color:var(--ey-muted);margin-bottom:6px">'+step+'</div>'+left+'</div><div class="wb-r">'+rail()+'</div></div><div class="chat ring" id="chat">…</div><div class="winok" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
+    var tip=document.querySelector('.fm-note'); if(tip) tip.style.display='none';
+    function form(step,left){
+      slot.innerHTML='<div class="app" style="position:relative">'+NAV+'<div class="wb"><div class="wb-l"><div class="prog"><span><b>1</b>Name</span><span><b>2</b>Configure</span><span><b>3</b>Workspace</span></div><div style="font-size:8px;color:var(--ey-muted);margin-bottom:6px">'+step+'</div>'+left+'</div><div class="wb-r">'+rail()+'</div></div><div class="chat" id="chat">…</div><div class="winok" id="winok"><div class="mk">✓</div><div>Ready for workspace</div></div></div>';
     }
-    form('Onboarding','0','<h3 style="margin:0 0 8px;font-size:14px">Before the form</h3><div class="box" id="q1">Did you read the requirements?</div><div class="box">Do you have a workspace?</div><div class="box">Do you have a team?</div>');
-    after(200,function(){ mark(document.getElementById('q1'),'Onboard check','left'); });
+    form('Onboarding','<h3 style="margin:0 0 8px;font-size:14px">Before the form</h3><div class="box" id="q1">Did you read the requirements?</div><div class="box">Do you have a workspace?</div><div class="box">Do you have a team?</div>');
+    after(200,function(){ mark(document.getElementById('q1'),'Onboard before the form'); });
     after(1400,function(){
-      form('1 · Identify','1','<h3 style="margin:0 0 8px;font-size:14px">Name the instance</h3><div class="fld"><label>Display name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div><div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>');
-      after(80,function(){ move(document.getElementById('hit')); co.style.display='none'; });
+      form('1 · Identify','<h3 style="margin:0 0 8px;font-size:14px">Name the instance</h3><div class="fld"><label>Display name</label><div class="box" id="hit">North studio</div></div><div class="fld"><label>Purpose</label><div class="box">Shared delivery</div></div><div class="fld"><label>Owner</label><div class="box">a.rivas</div></div>');
+      after(80,function(){ EY.move('u1', document.getElementById('hit')); });
     });
     after(2800,function(){
-      form('2 · Technical','2','<h3 style="margin:0 0 8px;font-size:14px">Customize technically</h3><div class="fld"><label>Repo</label><div class="box" id="hit">platform/north</div></div><div class="fld"><label>License</label><div class="box">Shared compute</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>');
-      after(80,function(){ move(document.getElementById('hit')); });
+      form('2 · Technical','<h3 style="margin:0 0 8px;font-size:14px">Customize technically</h3><div class="fld"><label>Repo</label><div class="box" id="hit">platform/north</div></div><div class="fld"><label>License</label><div class="box">Shared compute</div></div><div class="fld"><label>Region</label><div class="box">West 2</div></div>');
+      after(80,function(){ EY.move('u1', document.getElementById('hit')); });
     });
     after(4200,function(){
-      document.getElementById('winok').classList.add('on');
+      var ok=document.getElementById('winok'); if(ok) ok.classList.add('on');
       after(1100,function(){
-        document.getElementById('winok').classList.remove('on');
-        form('3 · Workspace','3','<h3 style="margin:0 0 8px;font-size:14px">Workspace and terms</h3><div class="fld"><label>Workspace</label><div class="box">Create North studio</div></div><div class="fld"><label>Team</label><div class="box">Platform</div></div><div class="fld"><label>Billing</label><div class="box">AC-4412</div></div><div class="box">Accept terms</div>');
+        if(ok) ok.classList.remove('on');
+        form('3 · Workspace','<h3 style="margin:0 0 8px;font-size:14px">Workspace and terms</h3><div class="fld"><label>Workspace</label><div class="box">Create North studio</div></div><div class="fld"><label>Team</label><div class="box">Platform</div></div><div class="fld"><label>Billing</label><div class="box">AC-4412</div></div><div class="box">Accept terms</div>');
       });
     });
   }
