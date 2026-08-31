@@ -7,27 +7,26 @@
 <style>
 .app{display:grid;grid-template-columns:160px 1fr;flex:1;min-height:0}
 .side{padding:16px 12px;border-right:1px solid var(--ey-line);font-size:12px;background:var(--ey-side)}
-.sh{font-size:13px;font-weight:700;margin-bottom:12px}
+.sh{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--ey-text)}
 .side a{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;margin-bottom:4px;color:var(--ey-muted);text-decoration:none}
-.side a.on{background:rgba(127,127,127,.12)}
-.badge{font-size:9px;padding:1px 7px}
+.side a.on{background:rgba(127,127,127,.12);color:var(--ey-text)}
 .main{padding:18px 20px;overflow:hidden}
-h3{margin:0 0 12px;font-size:20px}
+h3{margin:0 0 12px;font-size:20px;color:var(--ey-text)}
 .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
-.kpi{border:1px solid var(--ey-line);padding:12px;font-size:11px;color:var(--ey-faint)}
-.kpi b{display:block;font-size:20px;margin-top:4px}
-.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:13px}
+.kpi{border:1px solid var(--ey-line);padding:12px;font-size:11px;color:var(--ey-faint);background:var(--ey-card)}
+.kpi b{display:block;font-size:20px;margin-top:4px;color:var(--ey-text)}
+.row{display:flex;justify-content:space-between;align-items:center;background:var(--ey-card);border:1px solid var(--ey-line);border-radius:8px;padding:10px 12px;margin-bottom:6px;font-size:13px;color:var(--ey-text)}
 .filters{display:flex;gap:8px;margin-bottom:14px}
 .funs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.fn{border:1px solid var(--ey-line);padding:12px}
-.fn .l{font-size:10px;font-family:var(--ey-mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.fn{border:1px solid var(--ey-line);padding:12px;background:var(--ey-card)}
+.fn .l{font-size:10px;font-family:var(--ey-mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;color:var(--ey-muted)}
 .bars{display:flex;align-items:flex-end;gap:4px;height:40px}
 .bars b{flex:1;background:var(--ey-line);display:block}
 .bars.hot b:last-child{background:var(--ey-bad)}
-.feat .l{font-size:10px;font-family:var(--ey-mono);letter-spacing:.08em;text-transform:uppercase;margin:10px 0 8px}
-.feat div{font-size:13px;padding:5px 0;border-bottom:1px solid var(--ey-line)}
-.feat em{font-style:normal}
+.feat .l{font-size:10px;font-family:var(--ey-mono);letter-spacing:.08em;text-transform:uppercase;margin:10px 0 8px;color:var(--ey-muted)}
+.feat div{font-size:13px;padding:5px 0;border-bottom:1px solid var(--ey-line);color:var(--ey-text)}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
+.stack{margin-top:10px}
 </style></head>
 <body>
 <div class="stage">
@@ -37,24 +36,26 @@ h3{margin:0 0 12px;font-size:20px}
   </div>
 </div>
 <script src="ey-engine.js"></script>
+<script src="ey-market.js"></script>
 <script>
 (function(){
   var unit=document.getElementById('unit'), slot=document.getElementById('slot');
   EY.cursors(unit, 1);
   EY.fit();
   function shell(on, html){
-    slot.innerHTML='<div class="app"><div class="side"><div class="sh">Hub</div><a class="'+(on==='o'?'on':'')+'" href="#">Overview</a><a class="'+(on==='a'?'on':'')+'" href="#" id="al">Alarms <span class="badge">3</span></a><a href="#">Paths</a><a href="#">Guides</a></div><div class="main">'+html+'</div></div>';
+    slot.innerHTML='<div class="app"><div class="side"><div class="sh">Hub</div><a class="'+(on==='o'?'on':'')+'" href="#">Overview</a><a class="'+(on==='a'?'on':'')+'" href="#" id="al">Alarms <span class="ey-tag bad">3</span></a><a href="#">Paths</a><a href="#">Guides</a></div><div class="main">'+html+'</div></div>';
   }
-  shell('o','<h3>Signals</h3><div class="kpis"><div class="kpi">Request drop<b>78%</b></div><div class="kpi">Onboard stall<b>41%</b></div><div class="kpi">Help unused<b>12%</b></div></div><div class="row">Workbench required field<div class="badge">hot</div></div><div class="row">Catalog → form path<div class="badge">3</div></div>');
+  shell('o','<h3>Signals</h3><div class="kpis"><div class="kpi">Request drop<b>78%</b></div><div class="kpi">Onboard stall<b>41%</b></div><div class="kpi">Help unused<b>12%</b></div></div><div class="row">Workbench required field<span class="ey-tag bad">hot</span></div><div class="row">Catalog → form path<span class="ey-tag warn">3</span></div><div class="stack" id="stk"></div>');
+  var s=document.getElementById('stk'); if(s) s.innerHTML=EYMarket.chip('pendo')+EYMarket.chip('factory');
   EY.after(400, function(){ EY.move('u1', document.getElementById('al')); });
   EY.after(1500, function(){
     document.getElementById('addr').textContent='hub / alarms';
-    shell('a','<h3>Alarms</h3><div class="filters"><i>All</i><i>Catalog</i><i id="f2">Workbench</i><i>Reports</i></div><div class="row">Workbench required field</div><div class="row">Help unused on request</div>');
+    shell('a','<h3>Alarms</h3><div class="filters"><i class="ey-chip">All</i><i class="ey-chip">Catalog</i><i class="ey-chip" id="f2">Workbench</i><i class="ey-chip">Reports</i></div><div class="row">Workbench required field</div><div class="row">Help unused on request</div>');
     EY.after(80, function(){ EY.move('u1', document.getElementById('f2')); });
   });
   EY.after(3000, function(){
     document.getElementById('addr').textContent='hub / workbench';
-    shell('a','<h3>Workbench</h3><div class="filters"><i>All</i><i>Catalog</i><i class="on">Workbench</i></div><div class="funs"><div class="fn"><div class="l">Request funnel</div><div class="bars hot"><b style="height:100%"></b><b style="height:88%"></b><b style="height:54%"></b><b style="height:22%"></b></div></div><div class="fn"><div class="l">Onboard funnel</div><div class="bars"><b style="height:90%"></b><b style="height:70%"></b><b style="height:62%"></b><b style="height:58%"></b></div></div></div><div class="feat"><div class="l">Features in this area</div><div>Required service <em>field</em></div><div>Order rail</div><div>Onboarding guide</div></div>');
+    shell('a','<h3>Workbench</h3><div class="filters"><i class="ey-chip">All</i><i class="ey-chip">Catalog</i><i class="ey-chip on">Workbench</i></div><div class="funs"><div class="fn"><div class="l">Request funnel</div><div class="bars hot"><b style="height:100%"></b><b style="height:88%"></b><b style="height:54%"></b><b style="height:22%"></b></div></div><div class="fn"><div class="l">Onboard funnel</div><div class="bars"><b style="height:90%"></b><b style="height:70%"></b><b style="height:62%"></b><b style="height:58%"></b></div></div></div><div class="feat"><div class="l">Features in this area</div><div>Required service field</div><div>Order rail</div><div>Onboarding guide</div></div>');
   });
 })();
 </script>
