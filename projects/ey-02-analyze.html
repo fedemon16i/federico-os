@@ -5,65 +5,44 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="ey-ds.css"/>
 <style>
-.nav .right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.hero{padding:18px 20px 22px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.45),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.35),transparent 42%),#07070a;color:#fff}
-.hero .k{font-size:11px;opacity:.8;margin:0 0 6px}
-.hero h2{margin:0 0 8px;font-size:22px;letter-spacing:-.03em}
-.hero p{margin:0 0 12px;font-size:12px;max-width:52ch;opacity:.86}
+.hero{padding:24px;background:radial-gradient(ellipse at 88% 40%,rgba(255,170,40,.45),transparent 36%),radial-gradient(ellipse at 78% 70%,rgba(70,90,255,.35),transparent 42%),#07070a;color:#fff}
+.hero .k{font-size:11px;opacity:.8;margin:0 0 6px}.hero h2{margin:0 0 8px;font-size:22px}.hero p{margin:0 0 12px;font-size:13px;max-width:52ch;opacity:.86}
 .hero .row-btns{display:flex;gap:8px}
-.band{margin:12px 16px;padding:12px 14px;border:1px solid var(--ey-line);border-radius:8px;background:var(--ey-card)}
-.band b{display:block;margin-bottom:4px}
-.band p{margin:0;font-size:11px;color:var(--ey-muted)}
-.cat{display:grid;grid-template-columns:132px 1fr;flex:1;min-height:0}
-.side{background:var(--ey-side);padding:12px 10px;font-size:11px;border-right:1px solid var(--ey-line);color:var(--ey-muted)}
-.side .sh{font-weight:700;color:var(--ey-text);margin-bottom:8px}
-.side a{display:flex;justify-content:space-between;padding:5px 6px;border-radius:5px;color:inherit;text-decoration:none}
-.side a.on{background:rgba(127,127,127,.12);color:var(--ey-text)}
-.main{padding:12px 14px;overflow:hidden}
-.banner{padding:10px 12px;border-radius:8px;margin-bottom:10px;background:linear-gradient(110deg,#3a1a6a,#120820);color:#fff}
+.band{margin:16px;padding:12px 16px;border:1px solid var(--ey-line);border-radius:8px;background:var(--ey-card)}
+.banner{padding:12px;border-radius:8px;margin-bottom:12px;background:linear-gradient(110deg,#3a1a6a,#120820);color:#fff}
 .banner b{display:block;font-size:14px}.banner span{font-size:11px;opacity:.8}
-.wb{display:grid;grid-template-columns:1.15fr .85fr;flex:1;min-height:0}
-.wb-l{padding:12px 14px;overflow:hidden}.wb-r{padding:12px;background:var(--ey-side);border-left:1px solid var(--ey-line)}
-.fld{margin-bottom:10px}
-.fld label{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--ey-muted);margin-bottom:4px}
 .qtip{width:14px;height:14px;border-radius:50%;border:1px solid var(--ey-line);display:grid;place-items:center;font-size:9px}
-.box{height:26px;border:1px solid var(--ey-line);border-radius:5px;background:var(--ey-surface);padding:0 8px;display:flex;align-items:center;font-size:11px}
 #slot{flex:1;min-height:0;display:flex;flex-direction:column}
 </style></head>
 <body>
 <div class="stage"><div class="ey-unit window" id="unit"><div class="ey-bbar"><div class="ey-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="ey-addr" id="addr"></div></div><div id="slot"></div></div></div>
 <script src="ey-engine.js"></script>
 <script src="ey-market.js"></script>
+<script src="ey-shell.js"></script>
 <script>
 (function(){
   var slot=document.getElementById('slot');
   var scene=new URLSearchParams(location.search).get('scene');
   EY.cursors(document.getElementById('unit'),3); EY.fit();
   function pack(el){ if(!el) return; EY.move('u1',el,8,4); EY.after(120,function(){ EY.move('u2',el,26,18); }); EY.after(240,function(){ EY.move('u3',el,-8,22); }); }
-  var NAV='<div class="nav"><span class="ey-logo"></span><span class="on">Marketplace</span><span>Tools</span><span>Learn</span><div class="right"><div class="ey-search">Search products</div><span class="ey-ai">AI</span><span class="av">FM</span></div></div>';
-  var SIDE='<div class="side"><div class="sh">Catalog</div><a class="on" href="#">All <b>284</b></a><a href="#">Services 118</a><a href="#">Licenses 21</a><a href="#">Kits 17</a><a href="#">Packages 11</a><a href="#">APIs 41</a></div>';
-  var home='<div class="app">'+NAV+'<div class="hero"><div class="k">The platform to unlock technology at speed and scale</div><h2>Unlocking technology at speed and scale</h2><p>Reusable components and a request path that should be obvious.</p><div class="row-btns"><button class="ey-btn" id="go" type="button">Explore Catalog</button><button class="ey-btn ghost" type="button">Contact us</button></div></div><div class="band"><b>Developer workflow</b><p>Create, build and deploy into the shared path.</p></div></div>';
-  var catalog='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="banner"><b>Make a request from the catalog</b><span>Services, licenses, kits, packages, APIs.</span></div><div class="ey-tiles"><div class="ey-tile t1" id="go"><b>Services</b><span>Compute and shared tools</span></div><div class="ey-tile t2"><b>Licenses</b><span>Named rights</span></div><div class="ey-tile t3"><b>Starter kits</b><span>A first run</span></div><div class="ey-tile t4"><b>Packages</b><span>Reusable files</span></div><div class="ey-tile t5"><b>APIs</b><span>Callable blocks</span></div><div class="ey-tile t6"><b>Explore</b><span>The rest of the catalog</span></div></div></div></div></div>';
-  var services='<div class="app">'+NAV+'<div class="cat">'+SIDE+'<div class="main"><div class="banner"><b>Services</b><span>Shared infrastructure a team can request.</span></div><div class="ey-search" style="margin-bottom:8px">Filter offerings</div>'+EYMarket.grid()+'</div></div></div>';
-  var form='<div class="app">'+NAV+'<div class="wb"><div class="wb-l"><div class="ey-steps"><i class="on"></i>Custom <i></i>Billing <i></i>Confirm</div><h3>Workbench</h3><div class="fld"><label>Instance name <i class="qtip" id="t1">?</i></label><div class="box" id="f1">Enter a name…</div><div class="hint" id="h1" style="display:none">Need a unique name. 2–40 characters.</div></div><div class="fld"><label>Location <i class="qtip" id="t2">?</i></label><div class="box" id="f2">West 2</div><div class="hint" id="h2" style="display:none">Region cannot change later.</div></div><div class="fld"><label>Required service <i class="qtip" id="t3">?</i></label><div class="ey-radio" id="f3"><i></i> Cluster</div><div class="ey-radio"><i></i> Workbench</div><div class="hint" id="h3" style="display:none">At least one service. No default is selected.</div></div><div class="fld"><label>Add admins</label><div class="ey-radio on"><i></i> No</div><div class="ey-radio"><i></i> Yes</div></div></div><div class="wb-r"><div class="ey-disc">Costs are estimates. A formal request covers platform fees.</div><div class="ey-order"><h4>Your order</h4><div>Workbench · pending</div><div class="tot">Total <em>$0 / mo</em></div></div></div></div></div>';
   function set(html,url){ document.getElementById('addr').textContent=url; slot.innerHTML=html; document.querySelectorAll('.ey-drop').forEach(function(n){ n.remove(); }); }
   function playForm(){
-    set(form,'workbench');
+    set(EYShell.form(),'workbench');
     EY.after(80,function(){
       EY.move('u1', document.getElementById('t1'));
-      EY.after(500,function(){ document.getElementById('h1').style.display='block'; });
+      EY.after(500,function(){ var h=document.getElementById('h1'); if(h) h.style.display='block'; });
       EY.after(1100,function(){ EY.drop(document.getElementById('f1'),'user 1 · drop-off'); EY.move('u2', document.getElementById('t2')); });
-      EY.after(1600,function(){ document.getElementById('h2').style.display='block'; });
+      EY.after(1600,function(){ var h=document.getElementById('h2'); if(h) h.style.display='block'; });
       EY.after(2200,function(){ EY.drop(document.getElementById('f2'),'user 2 · drop-off'); EY.move('u3', document.getElementById('t3')); });
-      EY.after(2700,function(){ document.getElementById('h3').style.display='block'; });
+      EY.after(2700,function(){ var h=document.getElementById('h3'); if(h) h.style.display='block'; });
       EY.after(3300,function(){ EY.drop(document.getElementById('f3'),'user 3 · drop-off'); });
     });
   }
   if(scene==='form'){ playForm(); return; }
-  set(home,'overview');
+  set(EYShell.home(),'overview');
   EY.after(300,function(){ pack(document.getElementById('go')); });
-  EY.after(1600,function(){ set(catalog,'catalog'); EY.after(80,function(){ pack(document.getElementById('go')); }); });
-  EY.after(3200,function(){ set(services,'services'); EY.after(80,function(){ pack(document.getElementById('go')); }); });
+  EY.after(1600,function(){ set(EYShell.catalog(),'catalog'); EY.after(80,function(){ pack(document.getElementById('go')); }); });
+  EY.after(3200,function(){ set(EYShell.services(),'services'); EY.after(80,function(){ pack(document.getElementById('go')); }); });
   EY.after(5000, playForm);
 })();
 </script>
