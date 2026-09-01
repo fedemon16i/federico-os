@@ -1,37 +1,29 @@
 # Component inventory 2
 
-Device matrix (locked with Federico)
+Device matrix
 
-| Project | Device | Cursor |
-| EY | desktop | pointer |
-| Chek | phone end-to-end | touch `.uc.touch` |
+| Project | Device | Status |
+| EY | desktop | hecho — denso en screens |
+| Chek | phone + touch | hecho |
 | DollarCity | pending | |
 | Customs | pending | |
 | Blockchain | pending | |
 
-## Product vs showcase
+## EY beats (9)
+measure · analyze · funnel · research · understand · design · hub · requester · publisher
 
-Product lives in `*-screens.js` with kit classes only.
-Showcase lives in `fm-engine.js`: cursor, tip, cap, veil, drop.
-`.fm-cap` sits on `.fm-unit`, not inside the iPhone body — Chek content does not fight the caption.
+Used in real screens now:
+- `.fm-table` — hub.overview / hub.alarms / pub.queue
+- `.fm-modal` / `.fm-sheet` — catalog.details + form.walk 1–3
+- `.fm-check` — form storage + pub.guide
+- `.fm-select` — form.custom → form.loc (panel of options)
+- Cards still have See details + Get started
 
-## EY — hecho
-`ey-screens.js` + `ey-beats.js`. Kit selector group EY.
+## Chek beats (6)
+chek-hub · chek-pay · chek-credit · chek-moves · chek-security · chek-onboard
 
-## Chek — hecho (2026-09-01)
-Source: `chek-player.html` flows hub / payment / credit / movements / security / onboarding.
-Tour order kept: hub → pay 0-1-2 → credit → moves 0-1 → security 0-1. Onboard added as its own beat (flow 6).
+## kit.html
+Landing shows two labeled groups as `.fm-tile` rows. Select stays as fine control.
 
-Files: `projects/chek-screens.js` `projects/chek-beats.js`
-Beats: `chek-hub` `chek-pay` `chek-credit` `chek-moves` `chek-security` `chek-onboard`
-Each beat: `device:'phone'`, `touch:true`, ≥2 `say` steps, `.fm-rv` on blocks.
-
-New kit pieces (`projects/fm-ds-fintech.css`, shown on `kit.html`):
-- `.fm-cardface` — gradient from `--fm-accent` → `--fm-nav`, masked PAN
-- `.fm-actions` / `.fm-action` / `.hot`
-- `.fm-row.tx`
-- `.fm-radio-card`
-- `.fm-rv` + `fm-rise`
-
-## Pendiente
-DollarCity, Customs, Blockchain — same pattern: `x-screens.js` + `x-beats.js`, no new engine primitives unless the kit is missing a class.
+## Known fix
+`catalog.details` must call `EYScreens['catalog.services']()`, not `this[...]` — `FM.beat` invokes screens as loose functions.
