@@ -1,5 +1,5 @@
-/* Portfolio annotations. Not EY / Chek / DC chrome. */
-.fm-ring{outline:2px solid var(--fm-accent);outline-offset:3px;border-radius:var(--fm-r-sm)}
+/* Portfolio annotations. Not project chrome. */
+.fm-ring{outline:2px solid var(--fm-bad);outline-offset:3px;border-radius:var(--fm-r-sm)}
 .fm-callout{
   position:absolute;z-index:46;max-width:220px;padding:8px 10px;
   background:var(--fm-text);color:var(--fm-bg);font-size:var(--fm-fs-sm);line-height:1.35;
@@ -7,3 +7,6 @@
 }
 .fm-ico{display:inline-flex;align-items:center;gap:6px}
 .fm-ico i{width:14px;height:14px;border-radius:3px;background:var(--fm-accent);display:inline-block;flex-shrink:0}
+.fm-gap{display:grid;grid-template-columns:1.2fr 28px 1fr;gap:10px;align-items:stretch;margin-bottom:10px}
+.fm-gap .arr{display:flex;align-items:center;justify-content:center;color:var(--fm-muted);font-weight:700}
+.uc{transition:left .7s cubic-bezier(.22,.7,.2,1), top .7s cubic-bezier(.22,.7,.2,1)}
