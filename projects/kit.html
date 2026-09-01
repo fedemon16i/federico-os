@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="fm-ds.css"/>
 <link rel="stylesheet" href="fm-ds-fintech.css"/>
 <link rel="stylesheet" href="fm-ds-eyui.css"/>
+<link rel="stylesheet" href="fm-ds-layout.css"/>
 <style>
 body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
@@ -15,7 +16,6 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
 html.embed,html.embed body{margin:0;padding:0;height:100%;overflow:hidden;background:transparent}
 html.embed .kit-bar,html.embed #kit{display:none!important}
 html.embed .stage-host{height:100vh;min-height:100%;border:0}
-.fm-unit>.fm-app,.fm-unit>.fm-board{position:absolute;inset:0;border-radius:0;outline:none}
 </style>
 </head>
 <body>
@@ -35,7 +35,7 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0}
   </select>
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
-<div id="kit"><div class="fm-crumb">Sandbox. Use ds.html.</div><div class="kit-row" id="ey-row"></div><div class="kit-row" id="chek-row"></div></div>
+<div id="kit"><div class="kit-row" id="ey-row"></div><div class="kit-row" id="chek-row"></div></div>
 <div class="stage-host" id="player" hidden>
   <div class="stage"><div class="fm-unit" id="unit"></div></div>
 </div>
@@ -72,7 +72,7 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0}
       unit.innerHTML='<div class="fm-board" id="slot"></div>';
     }else{
       document.documentElement.setAttribute('data-device','desktop');
-      unit.innerHTML='<div id="slot" class="fm-app"></div>';
+      unit.innerHTML='<div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div>';
     }
   }
   function applyChrome(){
