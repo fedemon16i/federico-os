@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="fm-ds-fintech.css"/>
 <link rel="stylesheet" href="fm-ds-eyui.css"/>
 <link rel="stylesheet" href="fm-ds-layout.css"/>
+<link rel="stylesheet" href="fm-ds-annot.css"/>
 <style>
 body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
@@ -24,25 +25,19 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0}
   <select id="mode"><option>light</option><option>dark</option></select>
   <select id="beat">
     <option>kit</option>
-    <optgroup label="EY">
-      <option>measure</option><option>analyze</option><option>funnel</option><option>research</option>
-      <option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option>
-    </optgroup>
-    <optgroup label="Chek · phone">
-      <option>chek-hub</option><option>chek-pay</option><option>chek-credit</option>
-      <option>chek-moves</option><option>chek-security</option><option>chek-onboard</option>
-    </optgroup>
+    <optgroup label="EY"><option>measure</option><option>analyze</option><option>funnel</option><option>research</option><option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option></optgroup>
+    <optgroup label="Chek · phone"><option>chek-hub</option><option>chek-pay</option><option>chek-credit</option><option>chek-moves</option><option>chek-security</option><option>chek-onboard</option></optgroup>
   </select>
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
 <div id="kit"><div class="kit-row" id="ey-row"></div><div class="kit-row" id="chek-row"></div></div>
-<div class="stage-host" id="player" hidden>
-  <div class="stage"><div class="fm-unit" id="unit"></div></div>
-</div>
+<div class="stage-host" id="player" hidden><div class="stage"><div class="fm-unit" id="unit"></div></div></div>
 <script src="fm-engine.js"></script>
+<script src="fm-tip-stable.js"></script>
 <script src="ey-screens.js"></script>
 <script src="ey-boards.js"></script>
 <script src="ey-fabric-ui.js"></script>
+<script src="ey-pub-ui.js"></script>
 <script src="ey-fix.js"></script>
 <script src="ey-beats.js"></script>
 <script src="chek-screens.js"></script>
