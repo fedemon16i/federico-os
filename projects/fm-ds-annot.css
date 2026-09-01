@@ -1,0 +1,9 @@
+/* Portfolio annotations. Not EY / Chek / DC chrome. */
+.fm-ring{outline:2px solid var(--fm-accent);outline-offset:3px;border-radius:var(--fm-r-sm)}
+.fm-callout{
+  position:absolute;z-index:46;max-width:220px;padding:8px 10px;
+  background:var(--fm-text);color:var(--fm-bg);font-size:var(--fm-fs-sm);line-height:1.35;
+  border-radius:var(--fm-r-sm);pointer-events:none;
+}
+.fm-ico{display:inline-flex;align-items:center;gap:6px}
+.fm-ico i{width:14px;height:14px;border-radius:3px;background:var(--fm-accent);display:inline-block;flex-shrink:0}
