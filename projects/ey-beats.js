@@ -12,48 +12,48 @@
       analyze: {
         skin: 'ey', device: 'desktop', cursors: 3, screens: S,
         steps: [
-          { screen: 'catalog.home', say: 'Three people land on the same catalog home.' },
+          { screen: 'catalog.home', say: 'People could browse a catalog. Three sessions start on the same home.' },
           { tap: 1, to: '#go', say: 'Explore Catalog is obvious. The rest of the path is not.' },
-          { screen: 'catalog.grid', say: 'Domain tiles plus All items. Services is where requests start.' },
+          { screen: 'catalog.grid', say: 'Domain tiles. Services is where a request actually starts.' },
           { tap: 1, to: '#go' },
-          { screen: 'catalog.services', say: 'Two actions on the card: See details and Get started.' },
+          { screen: 'catalog.services', say: 'Two actions on the card. Help is still a two-line tooltip later.' },
           { tap: 1, to: '#go' },
           { screen: 'form.custom', say: 'The form looks complete. The required field does not look required.' },
-          { tap: 1, to: '#f2', say: 'Location is a real select — region cannot change later.' },
-          { screen: 'form.loc' },
+          { tip: 1, to: '#t1', text: 'Need a unique name. 2–40 characters.', say: 'User 1 opens the name hint and leaves.' },
+          { drop: 1, to: '#f1', text: 'user 1 · drop-off' },
+          { move: 1, to: '#t2', id: 'u2' },
           { tip: 1, to: '#t2', text: 'Region cannot change later.' },
-          { drop: 1, to: '#f1', text: 'Drop-off', say: 'User 1 leaves on instance name.' },
-          { move: 1, to: '#f3', id: 'u2' },
-          { drop: 1, to: '#f3', text: 'Drop-off' },
-          { move: 1, to: '#f4', id: 'u3' },
-          { drop: 1, to: '#f4', text: 'Drop-off', say: 'Same cliff, three places. Contact has no hint.' }
+          { drop: 1, to: '#f2', text: 'user 2 · drop-off' },
+          { move: 1, to: '#f3', id: 'u3' },
+          { tip: 1, to: '#f3', text: 'At least one service. No default.' },
+          { drop: 1, to: '#f3', text: 'user 3 · drop-off', say: 'Same cliff, three places. A tooltip is not a path.' }
         ]
       },
       funnel: {
         skin: 'ey', device: 'desktop', cursors: 0, screens: S,
         steps: [
-          { screen: 'board.funnel', say: 'The funnel looks healthy until the required field.' },
-          { say: 'That last bar is the cliff product assumed was billing.' }
+          { screen: 'board.funnel', say: 'Analytics showed the stall on the form — not on billing.' },
+          { say: 'The last bar is the cliff. Product assumed the field was obvious.' }
         ]
       },
       research: {
         skin: 'ey', device: 'desktop', cursors: 0, screens: S,
         steps: [
-          { screen: 'board.research', say: 'CSAT, NPS, CES and replay all point at the same pause.' },
+          { screen: 'board.research', say: 'Interviews, scores and replay all point at the same pause.' },
           { say: 'People thought the field was optional.' }
         ]
       },
       understand: {
         skin: 'ey', device: 'desktop', cursors: 0, screens: S,
         steps: [
-          { screen: 'board.understand', say: 'Guidance + analytics + design in the same path.' },
+          { screen: 'board.understand', say: 'Guidance, analytics and design had to live in the same path.' },
           { say: 'Not a missing widget.' }
         ]
       },
       design: {
         skin: 'ey', device: 'desktop', cursors: 0, screens: S,
         steps: [
-          { screen: 'board.design', say: 'Figma on one side. An agent on the other.' },
+          { screen: 'board.design', say: 'Figma on one side. An agent on the other. Same designer.' },
           { say: 'Both produce a screen. No magic merge.' }
         ]
       },
@@ -69,9 +69,9 @@
       requester: {
         skin: 'ey', device: 'desktop', cursors: 1, screens: S,
         steps: [
-          { screen: 'catalog.services', say: 'See details first. Requirements live on the card.' },
+          { screen: 'catalog.services', say: 'Requirements live on the card — before Get started.' },
           { tap: 1, to: '#info' },
-          { screen: 'catalog.details', say: 'Description, resources, requirements — then Get started.' },
+          { screen: 'catalog.details', say: 'Description, resources, requirements. Then Get started.' },
           { tap: 1, to: '#go' },
           { screen: 'form.walk', say: 'Walkthrough after the product: workspace.' },
           { tap: 1, to: '#go' },
@@ -79,7 +79,7 @@
           { tap: 1, to: '#go' },
           { screen: 'form.walk3', say: 'Billing is a step, not a surprise.' },
           { tap: 1, to: '#go' },
-          { screen: 'form.help', say: 'Same form as Analyze, with helper on the rail.' },
+          { screen: 'form.help', say: 'Same form as Analyze, with a helper that stays open.' },
           { tap: 1, to: '#go' },
           { screen: 'form.billing' },
           { tap: 1, to: '#go' },
@@ -97,7 +97,7 @@
           { tap: 1, to: '#go' },
           { screen: 'pub.fields', say: 'Load a file or add fields by hand.' },
           { tap: 1, to: '#go' },
-          { screen: 'pub.guide', say: 'Mark “what is this”. Onboarding is a check, not a hidden page.' },
+          { screen: 'pub.guide', say: 'Mark “what is this”. Onboarding is a check.' },
           { tap: 1, to: '#go' },
           { screen: 'pub.live', say: 'AI first. Then a human. Then it is live.' }
         ]
