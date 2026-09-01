@@ -1,15 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-skin="ey" data-mode="dark">
 <head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>DS Projects</title>
+<title>Projects DS — Federico Monroy</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="projects/fm-ds.css"/>
+<link rel="stylesheet" href="projects/fm-ds-fintech.css"/>
 <style>
-html,body{margin:0;height:100%;background:#0c0c10}
-iframe{border:0;width:100%;height:100%;display:block}
+html,body{height:auto!important;overflow:auto!important;min-height:100vh;background:var(--bg,#08080b)}
+*{box-sizing:border-box}
+:root{--bg:#08080b;--border:rgba(255,255,255,.1);--ink:#f0eee9;--dim:#8a8580;--bar:#0c0c10}
+html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c66;--bar:#fff}
+.topbar{position:sticky;top:0;z-index:20;height:48px;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bar);border-bottom:1px solid var(--border)}
+.topbar a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);text-decoration:none}
+.topbar a.logo{margin-right:auto;color:var(--ink)}
+.pg{padding:28px 24px 8px;max-width:920px;margin:0 auto;color:var(--ink);font-family:'DM Sans',system-ui,sans-serif}
+.pg h1{font-family:'Space Grotesk',system-ui;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.03em;margin:0}
+.pg .lede{margin:8px 0 0;color:var(--dim);max-width:62ch;line-height:1.55}
+.ptabs{display:flex;gap:6px;padding:16px 24px 0;max-width:920px;margin:0 auto;flex-wrap:wrap}
+.ptab{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:transparent;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--dim);cursor:pointer}
+.ptab:hover,.ptab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.list{max-width:920px;margin:0 auto;padding:12px 24px 96px;font-family:'DM Sans',system-ui,sans-serif}
+.item{padding:22px 0;border-top:1px solid var(--border)}
+.item h2{margin:0 0 4px;font-family:'Space Grotesk',system-ui;font-size:1.05rem;color:var(--ink)}
+.item .desc{margin:0 0 12px;color:var(--dim);font-size:13px;line-height:1.5}
+.row-btns{display:flex;flex-direction:row;gap:8px;align-items:center;flex-wrap:wrap}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.navchip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
+.navchip:hover,.navchip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stage{width:100%;aspect-ratio:960/600;position:relative;overflow:hidden;border:1px solid var(--border);border-radius:12px}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
 </style>
 </head>
 <body>
-<iframe src="projects/kit.html" title="FM kit"></iframe>
+<div class="topbar">
+  <a class="logo" href="index.html">FM.OS</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="#beats">Beats</a>
+  <a href="ds.html">Projects DS</a>
+  <a href="#" id="themeBtn">Light</a>
+</div>
+<div class="pg">
+  <h1>Projects DS</h1>
+  <p class="lede">Pick a project. Library first. Nine EY beats at the bottom — same storytelling as before, same kit tokens. Theme posts into the iframe; it does not remount.</p>
+</div>
+<div class="ptabs" id="projects"></div>
+<div class="list" id="list"></div>
+<script src="projects/fm-engine.js"></script>
+<script>
+var SKINS=[{id:'ey',name:'EY Fabric'},{id:'dc',name:'DollarCity'},{id:'chek',name:'Chek'},{id:'cus',name:'Customs'},{id:'bc',name:'Blockchain'}];
+var BEATS={
+  ey:[['Measure','measure'],['Analyze','analyze'],['Funnel','funnel'],['Research','research'],['Understand','understand'],['Design','design'],['Hub','hub'],['Requester','requester'],['Publisher','publisher']],
+  chek:[['Hub','chek-hub'],['Pay','chek-pay'],['Limit','chek-credit'],['Moves','chek-moves'],['Security','chek-security'],['Onboard','chek-onboard']],
+  dc:[['POS','kit']], chek_ok:1, cus:[['Gate','kit']], bc:[['Map','kit']]
+};
+var skin='ey', beat='analyze';
+function theme(){ return document.documentElement.getAttribute('data-theme')||'dark'; }
+function applyTheme(th){
+  document.documentElement.setAttribute('data-theme', th);
+  document.documentElement.setAttribute('data-mode', th);
+  try{ localStorage.setItem('fm-theme', th); }catch(e){}
+  document.getElementById('themeBtn').textContent = th==='light' ? 'Dark' : 'Light';
+  document.querySelectorAll('iframe').forEach(function(f){
+    try{ f.contentWindow.postMessage({type:'fm-mode', mode:th}, '*'); }catch(e){}
+  });
+}
+(function(){
+  var saved=null; try{ saved=localStorage.getItem('fm-theme'); }catch(e){}
+  applyTheme(saved==='light'?'light':'dark');
+  document.getElementById('themeBtn').onclick=function(e){ e.preventDefault(); applyTheme(theme()==='light'?'dark':'light'); };
+})();
+function item(title, cls, desc, body){
+  return '<article class="item"><h2>'+title+'</h2><p class="desc"><code>'+cls+'</code> — '+desc+'</p>'+body+'</article>';
+}
+function srcFor(id){
+  return 'projects/kit.html?beat='+encodeURIComponent(id)+'&skin='+skin+'&mode='+theme();
+}
+function draw(){
+  document.documentElement.setAttribute('data-skin', skin);
+  document.documentElement.setAttribute('data-mode', theme());
+  var box=document.getElementById('projects'); box.innerHTML='';
+  SKINS.forEach(function(s){
+    var b=document.createElement('button');
+    b.className='ptab'+(s.id===skin?' on':'');
+    b.textContent=s.name;
+    b.onclick=function(){ skin=s.id; beat=(BEATS[skin][0]||[])[1]; draw(); };
+    box.appendChild(b);
+  });
+  var list=BEATS[skin]||[];
+  if(!list.some(function(p){ return p[1]===beat; })) beat=(list[0]||[])[1];
+  var chips='<div class="row-btns" style="margin-bottom:12px">';
+  list.forEach(function(p){ chips+='<button class="navchip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
+  chips+='</div>';
+  document.getElementById('list').innerHTML=
+    item('Buttons','.fm-btn', 'Primary / ghost. Hover inverts on this page.', '<div class="row-btns"><button class="fm-btn" type="button">Get started</button><button class="fm-btn ghost" type="button">See details</button></div>')+
+    item('Offer card','.fm-offer', 'Two actions. Never a single View.', '<div class="fm-offer" style="max-width:320px"><div class="crumb">Services · Offerings</div><div class="t">Workbench</div><div class="acts"><button class="fm-btn secondary" type="button">See details</button><button class="fm-btn" type="button">Get started</button></div></div>')+
+    item('Category tiles','.fm-photo', 'Catalog domains.', '<div class="grid3"><div class="fm-photo"><b>Services</b><span>Compute</span></div><div class="fm-photo"><b>Licenses</b><span>Rights</span></div><div class="fm-photo"><b>Kits</b><span>Start</span></div></div>')+
+    item('Form','.fm-field .fm-select .fm-check', 'Name, location, required service.', '<div class="fm-field">Instance name</div><div class="fm-select" style="margin-top:8px">West 2</div><div class="fm-check on" style="margin-top:8px"><i></i> Attach storage</div>')+
+    item('Table','.fm-table', 'Hub hot requests.', '<table class="fm-table"><thead><tr><th>Request</th><th>State</th></tr></thead><tbody><tr><td>Workbench</td><td><span class="fm-tag bad">hot</span></td></tr></tbody></table>')+
+    item('Tags','.fm-tag', 'Bad = drop-off.', '<div class="row-btns"><span class="fm-tag ok">AI pass</span><span class="fm-tag bad">Drop-off</span></div>')+
+    item('Beats','#beats', 'EY: 9. Chek: 6 phone. Same kit.', chips+'<div class="stage" id="beats"><iframe title="Beat" src="'+srcFor(beat)+'"></iframe></div>');
+  document.querySelectorAll('[data-b]').forEach(function(c){
+    c.onclick=function(){ beat=c.dataset.b; draw(); location.hash='beats'; };
+  });
+  if(location.hash==='#beats') {
+    var el=document.getElementById('beats');
+    if(el) el.scrollIntoView({block:'start'});
+  }
+}
+draw();
+</script>
 </body>
 </html>
