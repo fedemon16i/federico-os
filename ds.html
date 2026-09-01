@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="projects/fm-ds-fintech.css"/>
 <link rel="stylesheet" href="projects/fm-ds-eyui.css"/>
 <link rel="stylesheet" href="projects/fm-ds-layout.css"/>
+<link rel="stylesheet" href="projects/fm-ds-annot.css"/>
 <style>
 html,body{height:auto!important;overflow:auto!important;min-height:100vh;background:var(--bg,#08080b)}
 *{box-sizing:border-box}
@@ -28,9 +29,9 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 .item h2{margin:0 0 4px;font-family:'Space Grotesk',system-ui;font-size:1.05rem;color:var(--ink)}
 .item .desc{margin:0 0 12px;color:var(--dim);font-size:13px;line-height:1.5}
 .row-btns{display:flex;flex-direction:row;gap:8px;align-items:center;flex-wrap:wrap}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .navchip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
 .navchip:hover,.navchip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sw{width:28px;height:28px;border-radius:4px;border:1px solid var(--border)}
 .stage{width:100%;aspect-ratio:960/600;position:relative;overflow:hidden;border:0;background:transparent}
 .stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
 </style>
@@ -45,18 +46,13 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 </div>
 <div class="pg">
   <h1>Projects DS</h1>
-  <p class="lede">Library first. Product UI sits in a window. Diagrams are free. Narration is the caption under the beat.</p>
+  <p class="lede">Project tokens in fm-ds.css. Portfolio annotations (ring, caption, cursor) in fm-ds-annot.css. Beats only consume both.</p>
 </div>
 <div class="ptabs" id="projects"></div>
 <div class="list" id="list"></div>
-<script src="projects/fm-engine.js"></script>
 <script>
 var SKINS=[{id:'ey',name:'EY Fabric'},{id:'dc',name:'DollarCity'},{id:'chek',name:'Chek'},{id:'cus',name:'Customs'},{id:'bc',name:'Blockchain'}];
-var BEATS={
-  ey:[['Measure','measure'],['Analyze','analyze'],['Funnel','funnel'],['Research','research'],['Understand','understand'],['Design','design'],['Hub','hub'],['Requester','requester'],['Publisher','publisher']],
-  chek:[['Hub','chek-hub'],['Pay','chek-pay'],['Limit','chek-credit'],['Moves','chek-moves'],['Security','chek-security'],['Onboard','chek-onboard']],
-  dc:[['POS','kit']], cus:[['Gate','kit']], bc:[['Map','kit']]
-};
+var BEATS={ey:[['Measure','measure'],['Analyze','analyze'],['Funnel','funnel'],['Research','research'],['Understand','understand'],['Design','design'],['Hub','hub'],['Requester','requester'],['Publisher','publisher']],chek:[['Hub','chek-hub'],['Pay','chek-pay'],['Limit','chek-credit'],['Moves','chek-moves'],['Security','chek-security'],['Onboard','chek-onboard']],dc:[['POS','kit']],cus:[['Gate','kit']],bc:[['Map','kit']]};
 var skin='ey', beat='analyze';
 function theme(){ return document.documentElement.getAttribute('data-theme')||'dark'; }
 function applyTheme(th){
@@ -64,47 +60,29 @@ function applyTheme(th){
   document.documentElement.setAttribute('data-mode', th);
   try{ localStorage.setItem('fm-theme', th); }catch(e){}
   document.getElementById('themeBtn').textContent = th==='light' ? 'Dark' : 'Light';
-  document.querySelectorAll('iframe').forEach(function(f){
-    try{ f.contentWindow.postMessage({type:'fm-mode', mode:th}, '*'); }catch(e){}
-  });
+  document.querySelectorAll('iframe').forEach(function(f){ try{ f.contentWindow.postMessage({type:'fm-mode', mode:th}, '*'); }catch(e){} });
 }
-(function(){
-  var saved=null; try{ saved=localStorage.getItem('fm-theme'); }catch(e){}
-  applyTheme(saved==='light'?'light':'dark');
-  document.getElementById('themeBtn').onclick=function(e){ e.preventDefault(); applyTheme(theme()==='light'?'dark':'light'); };
-})();
-function item(title, cls, desc, body){
-  return '<article class="item"><h2>'+title+'</h2><p class="desc"><code>'+cls+'</code> — '+desc+'</p>'+body+'</article>';
-}
-function srcFor(id){
-  return 'projects/kit.html?beat='+encodeURIComponent(id)+'&skin='+skin+'&mode='+theme()+'&v=4';
-}
+(function(){ var saved=null; try{ saved=localStorage.getItem('fm-theme'); }catch(e){} applyTheme(saved==='light'?'light':'dark');
+  document.getElementById('themeBtn').onclick=function(e){ e.preventDefault(); applyTheme(theme()==='light'?'dark':'light'); }; })();
+function item(title, cls, desc, body){ return '<article class="item"><h2>'+title+'</h2><p class="desc"><code>'+cls+'</code> — '+desc+'</p>'+body+'</article>'; }
+function srcFor(id){ return 'projects/kit.html?beat='+encodeURIComponent(id)+'&skin='+skin+'&mode='+theme()+'&v=5'; }
 function draw(){
   document.documentElement.setAttribute('data-skin', skin);
   document.documentElement.setAttribute('data-mode', theme());
   var box=document.getElementById('projects'); box.innerHTML='';
-  SKINS.forEach(function(s){
-    var b=document.createElement('button');
-    b.className='ptab'+(s.id===skin?' on':'');
-    b.textContent=s.name;
-    b.onclick=function(){ skin=s.id; beat=(BEATS[skin][0]||[])[1]; draw(); };
-    box.appendChild(b);
-  });
+  SKINS.forEach(function(s){ var b=document.createElement('button'); b.className='ptab'+(s.id===skin?' on':''); b.textContent=s.name; b.onclick=function(){ skin=s.id; beat=(BEATS[skin][0]||[])[1]; draw(); }; box.appendChild(b); });
   var list=BEATS[skin]||[];
   if(!list.some(function(p){ return p[1]===beat; })) beat=(list[0]||[])[1];
   var chips='<div class="row-btns" style="margin-bottom:12px">';
   list.forEach(function(p){ chips+='<button class="navchip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
   chips+='</div>';
   document.getElementById('list').innerHTML=
-    item('Buttons','.fm-btn', 'Primary / ghost.', '<div class="row-btns"><button class="fm-btn" type="button">Get started</button><button class="fm-btn ghost" type="button">See details</button></div>')+
-    item('Beats','#beats', 'Caption = the talk track from the case.', chips+'<div class="stage" id="beats"><iframe title="Beat" src="'+srcFor(beat)+'"></iframe></div>');
-  document.querySelectorAll('[data-b]').forEach(function(c){
-    c.onclick=function(){ beat=c.dataset.b; draw(); location.hash='beats'; };
-  });
-  if(location.hash==='#beats') {
-    var el=document.getElementById('beats');
-    if(el) el.scrollIntoView({block:'start'});
-  }
+    item('Tokens','fm-ds.css', 'Live values for this skin + mode.', '<div class="row-btns"><i class="sw" style="background:var(--fm-bg)"></i><i class="sw" style="background:var(--fm-card)"></i><i class="sw" style="background:var(--fm-accent)"></i><i class="sw" style="background:var(--fm-text)"></i><i class="sw" style="background:var(--fm-bad)"></i></div>')+
+    item('Buttons','.fm-btn', 'Project component.', '<div class="row-btns"><button class="fm-btn" type="button">Get started</button><button class="fm-btn ghost" type="button">View More</button></div>')+
+    item('Annotation','.fm-ring', 'Portfolio DS — marks what is new in a beat.', '<button class="fm-btn fm-ring" type="button">View More</button>')+
+    item('Beats','#beats', 'Caption = talk. Ring = new.', chips+'<div class="stage" id="beats"><iframe title="Beat" src="'+srcFor(beat)+'"></iframe></div>');
+  document.querySelectorAll('[data-b]').forEach(function(c){ c.onclick=function(){ beat=c.dataset.b; draw(); location.hash='beats'; }; });
+  if(location.hash==='#beats'){ var el=document.getElementById('beats'); if(el) el.scrollIntoView({block:'start'}); }
 }
 draw();
 </script>
