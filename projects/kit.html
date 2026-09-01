@@ -9,7 +9,6 @@
 <style>
 body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.kit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .stage-host{height:70vh;min-height:360px;border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);position:relative;background:var(--fm-side)}
 .kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0 18px}
 html.embed,html.embed body{margin:0;padding:0;height:100%;overflow:hidden;background:transparent}
@@ -40,6 +39,7 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
 </div>
 <script src="fm-engine.js"></script>
 <script src="ey-screens.js"></script>
+<script src="ey-boards.js"></script>
 <script src="ey-fix.js"></script>
 <script src="ey-beats.js"></script>
 <script src="chek-screens.js"></script>
@@ -51,7 +51,7 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
   var beat=document.getElementById('beat');
   var CHEK=/^chek-/;
   var BOARD=/^(measure|funnel|research|understand|design)$/;
-  var EY_BEATS=[['measure','Event map'],['analyze','3 users'],['funnel','Cliff'],['research','Studies'],['understand','Gap'],['design','Two surfaces'],['hub','Alarms'],['requester','After'],['publisher','Queue']];
+  var EY_BEATS=[['measure','IA tree'],['analyze','3 users'],['funnel','Cliff'],['research','Studies'],['understand','Gap'],['design','Workshops'],['hub','Alarms'],['requester','After'],['publisher','Queue']];
   var CK_BEATS=[['chek-hub','Hub'],['chek-pay','Pay'],['chek-credit','Limit'],['chek-moves','Moves'],['chek-security','Block'],['chek-onboard','Activate']];
   function tiles(host, rows){
     host.innerHTML=rows.map(function(r){ return '<div class="fm-tile" data-beat="'+r[0]+'"><b>'+r[0].replace('chek-','')+'</b><span>'+r[1]+'</span></div>'; }).join('');
