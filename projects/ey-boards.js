@@ -27,34 +27,25 @@
   };
   EYScreens['board.research'] = function () {
     return '<div class="fm-diag-k">Several studies · same friction</div><div class="fm-quad">'
-      +'<div class="fm-card '+rv(0)+'"><div class="fm-diag-k">Interviews</div><b>I did not know which service to attach.</b><div class="fm-crumb">Second voice: the field does not look required.</div></div>'
-      +'<div class="fm-card '+rv(1)+'"><div class="fm-diag-k">Scores · after the same request</div><div class="fm-score"><i><b>CSAT</b>low</i><i><b>NPS</b>detractor</i><i><b>CES</b>too much effort</i></div></div>'
-      +'<div class="fm-replay '+rv(2)+'"><div class="ph"><b>Replay</b><span>u1 · u2 · u3 · 0:18</span></div><div class="frame"><div class="fm-art" style="width:70%;margin-top:16px"><div class="h"></div><div class="p"></div><div class="cta"></div></div></div></div>'
-      +'<div class="fm-card '+rv(3)+'"><div class="fm-diag-k">Task study</div><div class="fm-crumb">Request a workspace — stall on the unlabeled field.</div><div class="fm-path"><i class="on">start</i><i class="on">name</i><i class="on">required</i><i>leave</i></div></div>'
+      +'<div class="fm-card '+rv(0)+'"><div class="fm-diag-k">Interviews · 2 voices</div><b>“I did not know which service to attach.”</b><div class="fm-crumb" style="margin-top:8px">“The field does not look required.”</div><div class="fm-crumb">Same request path. Different words.</div></div>'
+      +'<div class="fm-card '+rv(1)+'"><div class="fm-diag-k">Scores · after the attempt</div><div class="fm-score"><i><b>CSAT</b>low</i><i><b>NPS</b>detractor</i><i><b>CES</b>high effort</i></div><div class="fm-crumb" style="margin-top:8px">Scores after a failed request — not vanity NPS.</div></div>'
+      +'<div class="fm-replay '+rv(2)+'"><div class="ph"><b>Session replay</b><span>u1 · u2 · u3 · 0:18</span></div><div class="frame"><div class="fm-art" style="width:70%;margin-top:16px"><div class="h"></div><div class="p"></div><div class="cta"></div></div></div></div>'
+      +'<div class="fm-card '+rv(3)+'"><div class="fm-diag-k">Task study</div><div class="fm-crumb">Request a workspace — stall on the unlabeled field.</div><div class="fm-path" style="margin-top:10px"><i class="on">start</i><i class="on">name</i><i class="on">required</i><i>leave</i></div></div>'
       +'</div>';
   };
   EYScreens['board.understand'] = function () {
-    return '<div class="fm-diag-k">The gap</div><div class="fm-diag-h '+rv(0)+'">Guidance, analytics and design had to live in the same path.</div>'
+    return '<div class="fm-diag-k">The gap</div><div class="fm-diag-h '+rv(0)+'">A tooltip is not a path. Three crafts had to sit on the same request.</div>'
       +'<div class="fm-tiles">'
-      +'<div class="fm-tile '+rv(1)+'"><b>Design</b><span>Figma + coding agents</span></div>'
-      +'<div class="fm-tile '+rv(2)+'"><b>Content + product</b><span>Catalog copy and requirements</span></div>'
-      +'<div class="fm-tile '+rv(3)+'"><b>Analytics</b><span>Pendo + session replay</span></div>'
+      +'<div class="fm-tile '+rv(1)+'"><span class="fm-ico"><i></i>Design</span><b>Figma + agents</b><span>Frames and a drafted screen</span></div>'
+      +'<div class="fm-tile '+rv(2)+'"><span class="fm-ico"><i></i>Content</span><b>Catalog copy</b><span>Requirements before Get started</span></div>'
+      +'<div class="fm-tile '+rv(3)+'"><span class="fm-ico"><i></i>Analytics</span><b>Pendo + replay</b><span>The same three users on the ?</span></div>'
       +'</div>';
   };
   EYScreens['board.design'] = function () {
     return '<div class="fm-diag-k">Same designer · two workshops</div>'
       +'<div class="fm-pair">'
-      +'<div class="fm-shop '+rv(0)+'">'
-      +'<div class="bb">Figma · by hand</div>'
-      +'<div class="fig">'
-      +'<div class="lay"><b>Layers</b><div>Frame · home</div><div>Hero</div><div>Catalog</div><div>Card</div></div>'
-      +'<div class="cv"><div class="fm-art"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div></div>'
-      +'<div class="lay"><b>Inspect</b><div>Fill token</div><div>Radius 8</div><div>Type 13</div></div>'
-      +'</div></div>'
-      +'<div class="fm-shop '+rv(1)+'">'
-      +'<div class="bb">Agent · repo + prompt</div>'
-      +'<div class="fm-cli">$ agent design --surface publisher<br>same constraint as the Figma file<br>ok · screen drafted</div>'
-      +'</div></div>'
-      +'<div class="fm-row '+rv(4)+'" style="margin-top:10px">A screen left both workshops <span class="fm-tag ok">Design ready</span></div>';
+      +'<div class="fm-shop '+rv(0)+'"><div class="bb">Figma · by hand</div><div class="fig"><div class="lay"><b>Layers</b><div>Frame · home</div><div>Hero</div><div>Catalog</div><div>Card</div></div><div class="cv"><div class="fm-art"><div class="h"></div><div class="p"></div><div class="p"></div><div class="cta"></div></div></div><div class="lay"><b>Inspect</b><div>Fill token</div><div>Radius 8</div><div>Type 13</div></div></div></div>'
+      +'<div class="fm-shop '+rv(1)+'"><div class="bb">Agent · repo + prompt</div><div class="fm-cli">$ agent design --surface publisher<br>same constraint as the Figma file<br>ok · screen drafted</div></div>'
+      +'</div><div class="fm-row '+rv(4)+'" style="margin-top:10px">A screen left both workshops <span class="fm-tag ok">Design ready</span></div>';
   };
 })();
