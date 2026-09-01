@@ -13,24 +13,19 @@
 body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .stage-host{height:70vh;min-height:360px;position:relative;background:transparent}
-.kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0 18px}
 html.embed,html.embed body{margin:0;padding:0;height:100%;overflow:hidden;background:transparent}
 html.embed .kit-bar,html.embed #kit{display:none!important}
-html.embed .stage-host{height:100vh;min-height:100%;border:0}
+html.embed .stage-host{height:100vh;min-height:100%}
 </style>
 </head>
 <body>
 <div class="kit-bar">
   <select id="skin"><option>ey</option><option>dc</option><option>chek</option><option>cus</option><option>bc</option></select>
   <select id="mode"><option>light</option><option>dark</option></select>
-  <select id="beat">
-    <option>kit</option>
-    <optgroup label="EY"><option>measure</option><option>analyze</option><option>funnel</option><option>research</option><option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option></optgroup>
-    <optgroup label="Chek · phone"><option>chek-hub</option><option>chek-pay</option><option>chek-credit</option><option>chek-moves</option><option>chek-security</option><option>chek-onboard</option></optgroup>
-  </select>
+  <select id="beat"><option>kit</option><optgroup label="EY"><option>measure</option><option>analyze</option><option>funnel</option><option>research</option><option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option></optgroup><optgroup label="Chek"><option>chek-hub</option><option>chek-pay</option><option>chek-credit</option><option>chek-moves</option><option>chek-security</option><option>chek-onboard</option></optgroup></select>
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
-<div id="kit"><div class="kit-row" id="ey-row"></div><div class="kit-row" id="chek-row"></div></div>
+<div id="kit"></div>
 <div class="stage-host" id="player" hidden><div class="stage"><div class="fm-unit" id="unit"></div></div></div>
 <script src="fm-engine.js"></script>
 <script src="fm-tip-stable.js"></script>
@@ -38,46 +33,24 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0}
 <script src="ey-boards.js"></script>
 <script src="ey-fabric-ui.js"></script>
 <script src="ey-pub-ui.js"></script>
+<script src="ey-hub-ui.js"></script>
 <script src="ey-fix.js"></script>
 <script src="ey-beats.js"></script>
 <script src="chek-screens.js"></script>
 <script src="chek-beats.js"></script>
 <script>
 (function(){
-  var skin=document.getElementById('skin');
-  var mode=document.getElementById('mode');
-  var beat=document.getElementById('beat');
-  var CHEK=/^chek-/;
-  var BOARD=/^(measure|funnel|research|understand|design)$/;
-  var EY_BEATS=[['measure','IA'],['analyze','3 users'],['funnel','Cliff'],['research','Studies'],['understand','Gap'],['design','Workshops'],['hub','Alarms'],['requester','After'],['publisher','Queue']];
-  var CK_BEATS=[['chek-hub','Hub'],['chek-pay','Pay'],['chek-credit','Limit'],['chek-moves','Moves'],['chek-security','Block'],['chek-onboard','Activate']];
-  function tiles(host, rows){
-    host.innerHTML=rows.map(function(r){ return '<div class="fm-tile" data-beat="'+r[0]+'"><b>'+r[0].replace('chek-','')+'</b><span>'+r[1]+'</span></div>'; }).join('');
-    host.querySelectorAll('[data-beat]').forEach(function(el){ el.onclick=function(){ beat.value=el.getAttribute('data-beat'); play(); }; });
-  }
-  tiles(document.getElementById('ey-row'), EY_BEATS);
-  tiles(document.getElementById('chek-row'), CK_BEATS);
+  var skin=document.getElementById('skin'), mode=document.getElementById('mode'), beat=document.getElementById('beat');
+  var CHEK=/^chek-/, BOARD=/^(measure|funnel|research|understand|design)$/;
+  function applyChrome(){ document.documentElement.setAttribute('data-skin', skin.value); document.documentElement.setAttribute('data-mode', mode.value); }
   function mount(phone, board){
     var unit=document.getElementById('unit');
-    if(phone){
-      document.documentElement.setAttribute('data-device','phone');
-      unit.innerHTML='<div class="phone-slot"><div class="iphone"><div class="sb"><span>9:41</span><span class="island"></span><span>5G</span></div><div class="body" id="slot"></div></div></div>';
-    }else if(board){
-      document.documentElement.setAttribute('data-device','desktop');
-      unit.innerHTML='<div class="fm-diag-free" id="slot"></div>';
-    }else{
-      document.documentElement.setAttribute('data-device','desktop');
-      unit.innerHTML='<div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div>';
-    }
-  }
-  function applyChrome(){
-    document.documentElement.setAttribute('data-skin', skin.value);
-    document.documentElement.setAttribute('data-mode', mode.value);
+    if(phone){ document.documentElement.setAttribute('data-device','phone'); unit.innerHTML='<div class="phone-slot"><div class="iphone"><div class="sb"><span>9:41</span><span class="island"></span><span>5G</span></div><div class="body" id="slot"></div></div></div>'; }
+    else if(board){ document.documentElement.setAttribute('data-device','desktop'); unit.innerHTML='<div class="fm-diag-free" id="slot"></div>'; }
+    else { document.documentElement.setAttribute('data-device','desktop'); unit.innerHTML='<div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div>'; }
   }
   function play(){
-    var name=beat.value;
-    var isChek=CHEK.test(name);
-    var embed=name!=='kit';
+    var name=beat.value, isChek=CHEK.test(name), embed=name!=='kit';
     document.documentElement.classList.toggle('embed', embed);
     document.getElementById('kit').hidden = embed;
     document.getElementById('player').hidden = !embed;
@@ -86,19 +59,15 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0}
     if(!embed) return;
     mount(isChek, BOARD.test(name));
     FM.fit();
-    if(isChek) ChekBeats.run(name);
-    else EYBeats.run(name);
+    if(isChek) ChekBeats.run(name); else EYBeats.run(name);
   }
-  skin.onchange=applyChrome;
-  mode.onchange=applyChrome;
-  beat.onchange=play;
+  skin.onchange=applyChrome; mode.onchange=applyChrome; beat.onchange=play;
   document.getElementById('replay').onclick=play;
   var q=new URLSearchParams(location.search);
   if(q.get('skin')) skin.value=q.get('skin');
   if(q.get('mode')) mode.value=q.get('mode');
   if(q.get('beat')) beat.value=q.get('beat');
-  applyChrome();
-  play();
+  applyChrome(); play();
 })();
 </script>
 </body>
