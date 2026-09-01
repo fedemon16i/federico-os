@@ -23,7 +23,7 @@
           { drop: 1, to: '#f1', text: 'Drop-off', say: '3 of 4 leave on the first unlabeled required field.' },
           { move: 1, to: '#f3', id: 'u2' },
           { drop: 1, to: '#f3', text: 'Drop-off' },
-          { move: 1, to: '#f4', id: 'u4' },
+          { move: 1, to: '#f4', id: 'u3' },
           { drop: 1, to: '#f4', text: 'Drop-off', say: 'Contact search has no hint. Same cliff, three places.' }
         ]
       },

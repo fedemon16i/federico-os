@@ -206,7 +206,7 @@
     var addr = document.getElementById('addr');
     if (addr) addr.textContent = name;
   }
-  function sayMs(text) { return Math.max(1200, String(text || '').length * 34); }
+  function sayMs(text) { return Math.max(500, String(text || '').length * 9); }
   function reduced() {
     return w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
@@ -246,7 +246,7 @@
         });
         later(SETTLE, function () {
           var el = q(st.to || '#go') || q('#f1');
-          if (nCur && el) pack(el, nCur);
+          if (nCur > 1 && el) pack(el, nCur);
         });
         if (st.say) later(sayMs(st.say), function () {});
         return;

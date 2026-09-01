@@ -18,4 +18,4 @@
   background:var(--fm-accent);color:var(--fm-on-accent);border-radius:var(--fm-r-sm);
 }
 .fm-tip{line-height:1.35;white-space:normal;max-width:220px}
-.fm-cap{line-height:1.45}
+.fm-cap{line-height:1.45;display:none}
