@@ -7,7 +7,7 @@
   var inheritedMode = null;
   var lastCfg = null;
   var MOVE = 800, HOVER = 140, CLICK = 230, SETTLE = 180;
-  var PTR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.35" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
+  var PTR = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.4" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
   var TOUCH = '<i></i>';
 
   function unitEl() { return document.querySelector('.fm-unit'); }
@@ -78,9 +78,9 @@
       var d = document.createElement('div');
       d.className = 'uc u' + (i + 1) + (kind === 'touch' ? ' touch' : '');
       d.id = 'u' + (i + 1);
-      d.innerHTML = kind === 'touch' ? TOUCH : ((n > 1 ? '<em>user ' + (i + 1) + '</em>' : '') + PTR);
-      d.style.left = (28 + i * 18) + 'px';
-      d.style.top = (48 + i * 16) + 'px';
+      d.innerHTML = kind === 'touch' ? TOUCH : (PTR + (n > 1 ? '<em class="fm-who">user ' + (i + 1) + '</em>' : ''));
+      d.style.left = (40 + i * 22) + 'px';
+      d.style.top = (56 + i * 20) + 'px';
       host.appendChild(d);
       nodes.push(d);
     }
@@ -97,9 +97,9 @@
     var touch = n.classList.contains('touch');
     var x = (r.left - b.left) / s + (ox != null ? ox : (touch ? 8 : 6));
     var y = (r.top - b.top) / s + (oy != null ? oy : (touch ? 8 : 4));
-    var pad = touch ? 44 : 28;
-    n.style.left = Math.max(6, Math.min(UNIT_W - pad, x)) + 'px';
-    n.style.top = Math.max(6, Math.min(UNIT_H - pad, y)) + 'px';
+    var pad = touch ? 44 : 36;
+    n.style.left = Math.max(8, Math.min(UNIT_W - pad, x)) + 'px';
+    n.style.top = Math.max(8, Math.min(UNIT_H - pad, y)) + 'px';
   }
   function move(id, el, ox, oy) { place(id, el, ox, oy); }
   function warp(id, el, ox, oy) {
@@ -110,6 +110,11 @@
     place(n, el, ox, oy);
     void n.offsetWidth;
     n.style.transition = prev || '';
+  }
+  function pack(el, n) {
+    if (!el) return;
+    n = n || 3;
+    for (var i = 1; i <= n; i++) warp('u' + i, el, 4 + (i - 1) * 20, 2 + (i - 1) * 16);
   }
 
   function click(id) {
@@ -139,8 +144,8 @@
     var r = el.getBoundingClientRect();
     var b = unit.getBoundingClientRect();
     var s = b.width / UNIT_W || 1;
-    t.style.left = Math.max(8, Math.min(UNIT_W - 220, (r.left - b.left) / s)) + 'px';
-    t.style.top = Math.max(8, Math.min(UNIT_H - 40, (r.top - b.top) / s - 36)) + 'px';
+    t.style.left = Math.max(8, Math.min(UNIT_W - 240, (r.left - b.left) / s)) + 'px';
+    t.style.top = Math.max(8, Math.min(UNIT_H - 48, (r.top - b.top) / s - 40)) + 'px';
     return t;
   }
   function note(el, label) { return tip(el, label); }
@@ -240,7 +245,8 @@
           if (st.say) say(st.say);
         });
         later(SETTLE, function () {
-          if (nCur && q(st.to || '#go')) warp('u1', q(st.to || '#go'));
+          var el = q(st.to || '#go') || q('#f1');
+          if (nCur && el) pack(el, nCur);
         });
         if (st.say) later(sayMs(st.say), function () {});
         return;
@@ -259,7 +265,10 @@
       if (st.tap) {
         later(0, function () {
           var el = q(st.to);
-          if (el) move(st.id || 'u1', el);
+          if (el) {
+            if (nCur > 1) pack(el, nCur);
+            else move(st.id || 'u1', el);
+          }
           if (st.say) say(st.say);
         });
         later(MOVE + HOVER, function () { click(st.id || 'u1'); });
@@ -307,7 +316,7 @@
   w.FM = {
     UNIT_W: UNIT_W, UNIT_H: UNIT_H,
     after: after, stop: stop, fit: fit, boot: boot,
-    cursors: cursors, move: move, warp: warp, click: click,
+    cursors: cursors, move: move, warp: warp, pack: pack, click: click,
     tip: tip, note: note, drop: drop, veil: veil, say: say, ring: ring,
     skin: skin, mode: mode, resolveMode: resolveMode, beat: beat
   };
