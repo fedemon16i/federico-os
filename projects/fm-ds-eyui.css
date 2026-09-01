@@ -1,16 +1,23 @@
-/* EY product surfaces from Fabric photos. Tokens only. */
+/* EY product + diagram surfaces. Tokens only. */
 .fm-hero{min-height:148px;display:flex;flex-direction:column;justify-content:flex-end}
-.fm-hero .k{font-size:var(--fm-fs-xs);opacity:.7;margin-bottom:6px}
-.fm-photo{min-height:88px;height:88px}
+.fm-hero .k{font-size:var(--fm-fs-xs);opacity:.72;margin-bottom:6px}
+.fm-photo{min-height:92px;height:92px}
 .fm-photo b{font-size:var(--fm-fs-sm)}
 .fm-photo span{font-size:var(--fm-fs-xs);opacity:.75}
 .fm-tiles.six{grid-template-columns:1fr 1fr 1fr;gap:8px}
 .fm-offers{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fm-filters{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-.fm-steps{display:flex;gap:16px;font-size:var(--fm-fs-xs);color:var(--fm-muted);margin-bottom:10px}
-.fm-steps b{width:14px;height:14px;border-radius:50%;background:var(--fm-line);display:inline-block;margin-right:4px;vertical-align:middle}
+.fm-steps{display:flex;gap:14px;font-size:var(--fm-fs-xs);color:var(--fm-muted);margin-bottom:10px}
+.fm-steps b{width:12px;height:12px;border-radius:50%;background:var(--fm-line);display:inline-block;margin-right:4px;vertical-align:middle}
 .fm-steps .on b{background:var(--fm-accent)}
 .fm-disc{border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);padding:8px 10px;font-size:var(--fm-fs-xs);color:var(--fm-muted);margin-bottom:8px;background:var(--fm-side)}
 .fm-done{border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);padding:10px;background:var(--fm-card);margin-bottom:8px}
 .fm-done .ok{color:var(--fm-ok);font-size:var(--fm-fs-xs);font-weight:700}
 .fm-nav .brand{font-weight:700;color:var(--fm-text);margin-right:4px}
+.fm-main label.fm-crumb{display:block;margin-top:8px}
+.fm-shop .fig{display:grid;grid-template-columns:72px 1fr 64px;flex:1;min-height:140px}
+.fm-shop .lay{background:var(--fm-side);padding:6px;font-size:8px;color:var(--fm-muted)}
+.fm-shop .lay b{display:block;color:var(--fm-text);margin-bottom:4px;font-size:9px}
+.fm-shop .lay div{padding:3px 0;border-bottom:var(--fm-border) solid var(--fm-line)}
+.fm-funnel .bar{transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.fm-tile{min-height:84px}
