@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>FM kit</title>
 <link rel="stylesheet" href="fm-ds.css"/>
+<link rel="stylesheet" href="fm-ds-fintech.css"/>
 <style>
 body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
@@ -16,7 +17,17 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
 <div class="kit-bar">
   <select id="skin"><option>ey</option><option>dc</option><option>chek</option><option>cus</option><option>bc</option></select>
   <select id="mode"><option>light</option><option>dark</option></select>
-  <select id="beat"><option>kit</option><option>measure</option><option>analyze</option><option>funnel</option><option>research</option><option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option></select>
+  <select id="beat">
+    <option>kit</option>
+    <optgroup label="EY">
+      <option>measure</option><option>analyze</option><option>funnel</option><option>research</option>
+      <option>understand</option><option>design</option><option>hub</option><option>requester</option><option>publisher</option>
+    </optgroup>
+    <optgroup label="Chek · phone">
+      <option>chek-hub</option><option>chek-pay</option><option>chek-credit</option>
+      <option>chek-moves</option><option>chek-security</option><option>chek-onboard</option>
+    </optgroup>
+  </select>
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
 <div id="kit">
@@ -34,32 +45,52 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
     <div class="fm-banner"><b>Banner</b></div>
     <div class="fm-notice">Notice</div>
     <div class="fm-funnel"><div class="bar dead">Funnel bar</div></div>
+    <div class="fm-cardface"><div class="who">Hello</div><div class="brand">cheK</div><div class="pan">•••• •••• •••• 7355</div></div>
+    <div class="fm-actions"><div class="fm-action hot"><i></i><span>Pay</span><b>hot</b></div><div class="fm-action"><i></i><span>Block</span></div><div class="fm-action"><i></i><span>Show</span></div><div class="fm-action"><i></i><span>More</span></div></div>
+    <div class="fm-radio-card on"><div class="fm-radio on"><i></i></div><div><b>Block card</b><span>Temporary</span></div></div>
+    <div class="fm-row tx"><span>Unimarc</span><span>-$45,200</span></div>
   </div>
 </div>
 <div class="stage-host" id="player" hidden>
-  <div class="stage"><div class="fm-unit" id="unit"><div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div></div></div>
+  <div class="stage"><div class="fm-unit" id="unit"></div></div>
 </div>
 <script src="fm-engine.js"></script>
 <script src="ey-screens.js"></script>
 <script src="ey-beats.js"></script>
+<script src="chek-screens.js"></script>
+<script src="chek-beats.js"></script>
 <script>
 (function(){
   var skin=document.getElementById('skin');
   var mode=document.getElementById('mode');
   var beat=document.getElementById('beat');
+  var CHEK=/^chek-/;
+  function mount(phone){
+    var unit=document.getElementById('unit');
+    if(phone){
+      document.documentElement.setAttribute('data-device','phone');
+      unit.innerHTML='<div class="phone-slot"><div class="iphone"><div class="sb"><span>9:41</span><span class="island"></span><span>5G</span></div><div class="body" id="slot"></div></div></div>';
+    }else{
+      document.documentElement.setAttribute('data-device','desktop');
+      unit.innerHTML='<div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div>';
+    }
+  }
   function applyChrome(){
     document.documentElement.setAttribute('data-skin', skin.value);
     document.documentElement.setAttribute('data-mode', mode.value);
-    document.querySelectorAll('iframe').forEach(function(f){
-      try{ f.contentWindow.postMessage({type:'fm-mode', mode:mode.value}, '*'); }catch(e){}
-    });
   }
   function play(){
     var name=beat.value;
+    var isChek=CHEK.test(name);
     document.getElementById('kit').hidden = name!=='kit';
     document.getElementById('player').hidden = name==='kit';
+    if(isChek) skin.value='chek';
     applyChrome();
-    if(name!=='kit') EYBeats.run(name);
+    if(name==='kit') return;
+    mount(isChek);
+    FM.fit();
+    if(isChek) ChekBeats.run(name);
+    else EYBeats.run(name);
   }
   skin.onchange=applyChrome;
   mode.onchange=applyChrome;
