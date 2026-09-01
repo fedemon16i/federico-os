@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="projects/fm-ds.css"/>
 <link rel="stylesheet" href="projects/fm-ds-fintech.css"/>
+<link rel="stylesheet" href="projects/fm-ds-eyui.css"/>
 <style>
 html,body{height:auto!important;overflow:auto!important;min-height:100vh;background:var(--bg,#08080b)}
 *{box-sizing:border-box}
@@ -29,7 +30,7 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .navchip{border:1px solid var(--border);background:transparent;color:var(--dim);border-radius:100px;padding:6px 12px;font-size:12px;cursor:pointer}
 .navchip:hover,.navchip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.stage{width:100%;aspect-ratio:960/600;position:relative;overflow:hidden;border:1px solid var(--border);border-radius:12px}
+.stage{width:100%;aspect-ratio:960/600;position:relative;overflow:hidden;border:0;background:transparent}
 .stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
 </style>
 </head>
@@ -43,7 +44,7 @@ html[data-theme="light"]{--bg:#f4f4f1;--border:#d4d0c8;--ink:#1c1b18;--dim:#5c5c
 </div>
 <div class="pg">
   <h1>Projects DS</h1>
-  <p class="lede">Pick a project. Library first. Nine EY beats at the bottom — same storytelling as before, same kit tokens. Theme posts into the iframe; it does not remount.</p>
+  <p class="lede">Library first. Beats are pure product UI — no second frame around them.</p>
 </div>
 <div class="ptabs" id="projects"></div>
 <div class="list" id="list"></div>
@@ -53,7 +54,7 @@ var SKINS=[{id:'ey',name:'EY Fabric'},{id:'dc',name:'DollarCity'},{id:'chek',nam
 var BEATS={
   ey:[['Measure','measure'],['Analyze','analyze'],['Funnel','funnel'],['Research','research'],['Understand','understand'],['Design','design'],['Hub','hub'],['Requester','requester'],['Publisher','publisher']],
   chek:[['Hub','chek-hub'],['Pay','chek-pay'],['Limit','chek-credit'],['Moves','chek-moves'],['Security','chek-security'],['Onboard','chek-onboard']],
-  dc:[['POS','kit']], chek_ok:1, cus:[['Gate','kit']], bc:[['Map','kit']]
+  dc:[['POS','kit']], cus:[['Gate','kit']], bc:[['Map','kit']]
 };
 var skin='ey', beat='analyze';
 function theme(){ return document.documentElement.getAttribute('data-theme')||'dark'; }
@@ -94,13 +95,11 @@ function draw(){
   list.forEach(function(p){ chips+='<button class="navchip'+(beat===p[1]?' on':'')+'" data-b="'+p[1]+'">'+p[0]+'</button>'; });
   chips+='</div>';
   document.getElementById('list').innerHTML=
-    item('Buttons','.fm-btn', 'Primary / ghost. Hover inverts on this page.', '<div class="row-btns"><button class="fm-btn" type="button">Get started</button><button class="fm-btn ghost" type="button">See details</button></div>')+
-    item('Offer card','.fm-offer', 'Two actions. Never a single View.', '<div class="fm-offer" style="max-width:320px"><div class="crumb">Services · Offerings</div><div class="t">Workbench</div><div class="acts"><button class="fm-btn secondary" type="button">See details</button><button class="fm-btn" type="button">Get started</button></div></div>')+
+    item('Buttons','.fm-btn', 'Primary / ghost.', '<div class="row-btns"><button class="fm-btn" type="button">Get started</button><button class="fm-btn ghost" type="button">See details</button></div>')+
+    item('Offer card','.fm-offer', 'View More + Get Started.', '<div class="fm-offer" style="max-width:320px"><div class="crumb">Services · Offerings</div><div class="t">Workbench</div><div class="acts"><button class="fm-btn secondary" type="button">View More</button><button class="fm-btn" type="button">Get Started</button></div></div>')+
     item('Category tiles','.fm-photo', 'Catalog domains.', '<div class="grid3"><div class="fm-photo"><b>Services</b><span>Compute</span></div><div class="fm-photo"><b>Licenses</b><span>Rights</span></div><div class="fm-photo"><b>Kits</b><span>Start</span></div></div>')+
-    item('Form','.fm-field .fm-select .fm-check', 'Name, location, required service.', '<div class="fm-field">Instance name</div><div class="fm-select" style="margin-top:8px">West 2</div><div class="fm-check on" style="margin-top:8px"><i></i> Attach storage</div>')+
-    item('Table','.fm-table', 'Hub hot requests.', '<table class="fm-table"><thead><tr><th>Request</th><th>State</th></tr></thead><tbody><tr><td>Workbench</td><td><span class="fm-tag bad">hot</span></td></tr></tbody></table>')+
-    item('Tags','.fm-tag', 'Bad = drop-off.', '<div class="row-btns"><span class="fm-tag ok">AI pass</span><span class="fm-tag bad">Drop-off</span></div>')+
-    item('Beats','#beats', 'EY: 9. Chek: 6 phone. Same kit.', chips+'<div class="stage" id="beats"><iframe title="Beat" src="'+srcFor(beat)+'"></iframe></div>');
+    item('Form','.fm-field', 'Name, location, contact.', '<div class="fm-field">Instance name</div>')+
+    item('Beats','#beats', 'Pure UI. No laptop chrome.', chips+'<div class="stage" id="beats"><iframe title="Beat" src="'+srcFor(beat)+'"></iframe></div>');
   document.querySelectorAll('[data-b]').forEach(function(c){
     c.onclick=function(){ beat=c.dataset.b; draw(); location.hash='beats'; };
   });
