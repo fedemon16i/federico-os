@@ -11,6 +11,8 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .kit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .stage-host{height:70vh;min-height:360px;border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);position:relative;background:var(--fm-side)}
+.kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0 18px}
+.kit-row .fm-tile{cursor:pointer;min-height:64px}
 </style>
 </head>
 <body>
@@ -31,6 +33,12 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
 <div id="kit">
+  <div class="fm-banner"><b>2 projects</b><div class="fm-crumb">EY Fabric · 9 beats · desktop — Chek · 6 beats · phone</div></div>
+  <div class="fm-crumb" style="margin-top:14px">EY Fabric — 9 beats</div>
+  <div class="kit-row" id="ey-row"></div>
+  <div class="fm-crumb">Chek — 6 beats, mobile</div>
+  <div class="kit-row" id="chek-row"></div>
+  <div class="fm-crumb">Components</div>
   <div class="kit-grid">
     <div><button class="fm-btn" type="button">Primary</button> <button class="fm-btn ghost" type="button">Ghost</button></div>
     <div><span class="fm-chip on">Chip on</span> <span class="fm-chip">Chip</span></div>
@@ -46,9 +54,10 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
     <div class="fm-notice">Notice</div>
     <div class="fm-funnel"><div class="bar dead">Funnel bar</div></div>
     <div class="fm-cardface"><div class="who">Hello</div><div class="brand">cheK</div><div class="pan">•••• •••• •••• 7355</div></div>
-    <div class="fm-actions"><div class="fm-action hot"><i></i><span>Pay</span><b>hot</b></div><div class="fm-action"><i></i><span>Block</span></div><div class="fm-action"><i></i><span>Show</span></div><div class="fm-action"><i></i><span>More</span></div></div>
+    <div class="fm-actions"><div class="fm-action hot"><i></i><span>Pay</span><b>hot</b></div><div class="fm-action"><i></i><span>Block</span></div></div>
     <div class="fm-radio-card on"><div class="fm-radio on"><i></i></div><div><b>Block card</b><span>Temporary</span></div></div>
     <div class="fm-row tx"><span>Unimarc</span><span>-$45,200</span></div>
+    <table class="fm-table"><thead><tr><th>Col</th><th>State</th></tr></thead><tbody><tr><td>Workbench</td><td><span class="fm-tag bad">hot</span></td></tr></tbody></table>
   </div>
 </div>
 <div class="stage-host" id="player" hidden>
@@ -65,6 +74,18 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
   var mode=document.getElementById('mode');
   var beat=document.getElementById('beat');
   var CHEK=/^chek-/;
+  var EY_BEATS=[['measure','Event map'],['analyze','3 users drop'],['funnel','The cliff'],['research','CSAT NPS CES'],['understand','The gap'],['design','Figma | agent'],['hub','Alarms'],['requester','After'],['publisher','Queue → live']];
+  var CK_BEATS=[['chek-hub','Hub'],['chek-pay','Pay'],['chek-credit','Limit'],['chek-moves','Moves'],['chek-security','Block'],['chek-onboard','Activate']];
+  function tiles(host, rows){
+    host.innerHTML=rows.map(function(r){
+      return '<div class="fm-tile" data-beat="'+r[0]+'"><b>'+r[0].replace('chek-','')+'</b><span>'+r[1]+'</span></div>';
+    }).join('');
+    host.querySelectorAll('[data-beat]').forEach(function(el){
+      el.onclick=function(){ beat.value=el.getAttribute('data-beat'); play(); };
+    });
+  }
+  tiles(document.getElementById('ey-row'), EY_BEATS);
+  tiles(document.getElementById('chek-row'), CK_BEATS);
   function mount(phone){
     var unit=document.getElementById('unit');
     if(phone){
