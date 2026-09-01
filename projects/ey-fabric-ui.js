@@ -11,7 +11,7 @@
     }).join('')+'</div>';
   }
   function offer(id, title, extra, desc) {
-    return '<div class="fm-offer" id="'+id+'"><div class="crumb">Services · Offerings</div><div class="t">'+title+'</div><div class="desc">'+desc+'</div><div class="acts"><button class="fm-btn secondary" type="button"'+(extra?' id="'+extra+'"':'')+'>View More</button><button class="fm-btn" type="button" id="go">Get Started</button></div></div>';
+    return '<div class="fm-offer" id="'+id+'"><div class="crumb">Services · Offerings</div><div class="t">'+title+'</div><div class="desc">'+desc+'</div><div class="acts"><button class="fm-btn secondary" type="button"'+(extra?' id="'+extra+'"':'')+'>View More</button><button class="fm-btn" type="button"'+(extra?'':' id="go"')+'>Get Started</button></div></div>';
   }
   function railOrder(cta) {
     return '<div class="fm-steps"><span class="on"><b></b>Customization</span><span><b></b>Billing</span><span><b></b>Confirmation</span></div>'
@@ -24,13 +24,13 @@
       : '<div class="fm-select" id="f2">US West 2</div>';
     var helper = help ? '<div class="fm-notice" style="margin-top:8px"><b>Help / requirements</b><div class="fm-crumb">Workspace, team, billing stay visible.</div></div>' : '';
     return nav()+'<div class="fm-split"><div class="fm-main">'
-      +'<div class="fm-crumb">Catalog › Workbench</div><div class="fm-crumb">Offering Customization</div>'
-      +'<div class="t" style="font-size:18px;font-weight:700;margin-bottom:8px">Workbench</div>'
+      +'<div class="fm-crumb">Catalog › Workbench</div>'
+      +'<div class="t" style="font-size:18px;font-weight:700;margin:4px 0 8px">Workbench</div>'
       +'<b>1 Configure your instance</b>'
       +'<label class="fm-crumb">Friendly instance name (required) <i class="fm-chip" id="t1">?</i></label><div class="fm-field" id="f1">Enter a name</div>'
       +'<label class="fm-crumb">Location (required) <i class="fm-chip" id="t2">?</i></label>'+loc
       +'<label class="fm-crumb">Point of contact (required) <i class="fm-chip" id="t4">?</i></label><div class="fm-field" id="f4">Search people</div>'
-      +'<div class="fm-notice" id="f3">Please choose at least one service required for your workbench instance.</div>'
+      +'<div class="fm-notice" id="f3">Please choose at least one service required for this instance.</div>'
       +'<div class="fm-crumb">Add admin users</div><div class="fm-radio"><i></i> Yes</div><div class="fm-radio on"><i></i> No</div>'
       +'</div><div class="fm-main">'+railOrder('<button class="fm-btn ghost" type="button">Cancel</button><button class="fm-btn" id="go" type="button">Continue to Billing</button>')+helper+'</div></div>';
   }
@@ -41,7 +41,12 @@
     return nav()+'<div class="fm-body">'+rail('All')+'<div class="fm-main"><div class="fm-hero" style="min-height:72px"><b>Make your vision a reality with Fabric solutions.</b><span>Services, kits, APIs.</span></div><div style="display:flex;gap:6px;margin:8px 0"><div class="fm-search">Filter by Services, Kits, APIs</div><span class="fm-chip on">Recently Updated</span></div><div class="fm-tiles six"><div class="fm-photo" id="go"><b>Services</b><span>Compute resources</span></div><div class="fm-photo"><b>Licenses</b><span>Alongside offerings</span></div><div class="fm-photo"><b>Starter Kits</b><span>Onboard and start</span></div><div class="fm-photo"><b>Code Packages</b><span>Reusable across projects</span></div><div class="fm-photo"><b>APIs</b><span>Building blocks</span></div><div class="fm-photo"><b>Explore Fabric</b><span>Cloud, data, intel</span></div></div></div></div>';
   };
   S['catalog.services'] = function () {
-    return nav()+'<div class="fm-body">'+rail('Services')+'<div class="fm-main"><div class="fm-photo" style="height:64px;margin-bottom:8px"><b>Services</b><span>Compute, networking, tools</span></div><div style="display:flex;gap:6px"><div class="fm-search">Filter by Service Offerings</div><span class="fm-chip on">Recently Updated</span></div><div class="fm-filters"><span class="fm-chip on">All Services</span><span class="fm-chip">Offerings</span><span class="fm-chip">Add-ons</span></div><div class="fm-offers">'+offer('card1','Workbench workspace','info','Shared workbench a team can request.')+offer('card2','Cluster compute',null,'Reserved compute for a project.')+'</div></div></div>';
+    return nav()+'<div class="fm-body">'+rail('Services')+'<div class="fm-main"><div class="fm-photo" style="height:56px;min-height:56px;margin-bottom:8px"><b>Services</b><span>Compute, networking, tools</span></div><div style="display:flex;gap:6px"><div class="fm-search">Filter by Service Offerings</div><span class="fm-chip on">Recently Updated</span></div><div class="fm-filters"><span class="fm-chip on">All Services</span><span class="fm-chip">Offerings</span><span class="fm-chip">Add-ons</span></div><div class="fm-offers">'
+      +offer('card1','Workbench workspace','info','Shared workbench a team can request.')
+      +offer('card2','Cluster compute',null,'Reserved compute for a project.')
+      +offer('card3','Sandbox environment',null,'A short-lived space to try the path.')
+      +offer('card4','Platform kit',null,'Starter modules a team can attach.')
+      +'</div></div></div>';
   };
   S['catalog.details'] = function () {
     return S['catalog.services']()+'<div class="fm-modal"><div class="fm-sheet"><div class="fm-crumb">Description · Resources · Requirements</div><b>Workbench workspace</b><p class="fm-crumb">Need a workspace, a team, and a billing account before submit.</p><div class="fm-notice">Required: instance name, location, point of contact, one service.</div><div style="display:flex;gap:8px;margin-top:10px"><button class="fm-btn ghost" type="button">Close</button><button class="fm-btn" id="go" type="button">Get Started</button></div></div></div>';
