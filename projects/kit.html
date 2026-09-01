@@ -13,6 +13,9 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
 .stage-host{height:70vh;min-height:360px;border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);position:relative;background:var(--fm-side)}
 .kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0 18px}
 .kit-row .fm-tile{cursor:pointer;min-height:64px}
+html.embed,html.embed body{margin:0;padding:0;height:100%;overflow:hidden;background:transparent}
+html.embed .kit-bar,html.embed #kit{display:none!important}
+html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
 </style>
 </head>
 <body>
@@ -33,38 +36,18 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
 <div id="kit">
-  <div class="fm-banner"><b>2 projects</b><div class="fm-crumb">EY Fabric · 9 beats · desktop — Chek · 6 beats · phone</div></div>
+  <div class="fm-banner"><b>Open ds.html for the Projects DS page.</b><div class="fm-crumb">This file is the engine + library sandbox.</div></div>
   <div class="fm-crumb" style="margin-top:14px">EY Fabric — 9 beats</div>
   <div class="kit-row" id="ey-row"></div>
   <div class="fm-crumb">Chek — 6 beats, mobile</div>
   <div class="kit-row" id="chek-row"></div>
-  <div class="fm-crumb">Components</div>
-  <div class="kit-grid">
-    <div><button class="fm-btn" type="button">Primary</button> <button class="fm-btn ghost" type="button">Ghost</button></div>
-    <div><span class="fm-chip on">Chip on</span> <span class="fm-chip">Chip</span></div>
-    <div><span class="fm-tag ok">ok</span> <span class="fm-tag warn">warn</span> <span class="fm-tag bad">bad</span></div>
-    <div class="fm-field">Field</div>
-    <div class="fm-select">Select</div>
-    <div class="fm-radio on"><i></i> Radio</div>
-    <div class="fm-check on"><i></i> Check</div>
-    <div class="fm-drop">File drop</div>
-    <div class="fm-offer"><div class="t">Offer</div><div class="acts"><button class="fm-btn secondary" type="button">Details</button><button class="fm-btn" type="button">Start</button></div></div>
-    <div class="fm-kpi"><i>KPI</i><b>12</b></div>
-    <div class="fm-banner"><b>Banner</b></div>
-    <div class="fm-notice">Notice</div>
-    <div class="fm-funnel"><div class="bar dead">Funnel bar</div></div>
-    <div class="fm-cardface"><div class="who">Hello</div><div class="brand">cheK</div><div class="pan">•••• •••• •••• 7355</div></div>
-    <div class="fm-actions"><div class="fm-action hot"><i></i><span>Pay</span><b>hot</b></div><div class="fm-action"><i></i><span>Block</span></div></div>
-    <div class="fm-radio-card on"><div class="fm-radio on"><i></i></div><div><b>Block card</b><span>Temporary</span></div></div>
-    <div class="fm-row tx"><span>Unimarc</span><span>-$45,200</span></div>
-    <table class="fm-table"><thead><tr><th>Col</th><th>State</th></tr></thead><tbody><tr><td>Workbench</td><td><span class="fm-tag bad">hot</span></td></tr></tbody></table>
-  </div>
 </div>
 <div class="stage-host" id="player" hidden>
   <div class="stage"><div class="fm-unit" id="unit"></div></div>
 </div>
 <script src="fm-engine.js"></script>
 <script src="ey-screens.js"></script>
+<script src="ey-fix.js"></script>
 <script src="ey-beats.js"></script>
 <script src="chek-screens.js"></script>
 <script src="chek-beats.js"></script>
@@ -103,11 +86,13 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
   function play(){
     var name=beat.value;
     var isChek=CHEK.test(name);
-    document.getElementById('kit').hidden = name!=='kit';
-    document.getElementById('player').hidden = name==='kit';
+    var embed=name!=='kit';
+    document.documentElement.classList.toggle('embed', embed);
+    document.getElementById('kit').hidden = embed;
+    document.getElementById('player').hidden = !embed;
     if(isChek) skin.value='chek';
     applyChrome();
-    if(name==='kit') return;
+    if(!embed) return;
     mount(isChek);
     FM.fit();
     if(isChek) ChekBeats.run(name);
