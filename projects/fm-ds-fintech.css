@@ -1,0 +1,26 @@
+/* Fintech kit pieces. Tokens only. Linked from kit.html + fm-ds.css contract. */
+.fm-cardface{
+  position:relative;border-radius:12px;padding:14px 14px 16px;margin-bottom:10px;
+  color:var(--fm-photo);
+  background:linear-gradient(135deg,var(--fm-accent),var(--fm-nav));
+  min-height:96px;
+}
+.fm-cardface .who{font-size:var(--fm-fs-xs);opacity:.75}
+.fm-cardface .brand{font-size:var(--fm-fs-lg);font-weight:800;letter-spacing:-.02em;margin:2px 0 8px}
+.fm-cardface .pan{font-size:var(--fm-fs-sm);letter-spacing:.12em;font-family:ui-monospace,monospace;opacity:.8}
+.fm-cardface .meta{font-size:var(--fm-fs-xs);opacity:.7;margin-top:8px}
+.fm-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0 10px}
+.fm-action{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:var(--fm-fs-xs);color:var(--fm-muted);position:relative}
+.fm-action i{width:28px;height:28px;border-radius:50%;background:var(--fm-side);border:var(--fm-border) solid var(--fm-line);display:block}
+.fm-action.hot i{border-color:var(--fm-accent);background:var(--fm-mark)}
+.fm-action b{position:absolute;top:-6px;right:4px;font-size:8px;font-weight:700;color:var(--fm-on-accent);background:var(--fm-accent);border-radius:var(--fm-r-pill);padding:0 4px}
+.fm-row.tx{gap:8px}
+.fm-row.tx span:first-child{display:flex;align-items:center;gap:8px}
+.fm-radio-card{display:flex;align-items:flex-start;gap:8px;border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);padding:10px;background:var(--fm-card);margin-bottom:8px}
+.fm-radio-card b{display:block;font-size:var(--fm-fs-sm)}
+.fm-radio-card span{display:block;font-size:var(--fm-fs-xs);color:var(--fm-muted)}
+.fm-radio-card.on{border-color:var(--fm-accent);background:var(--fm-mark)}
+.fm-rv{animation:fm-rise .42s var(--fm-spring) both}
+@keyframes fm-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.fm-rv{animation:none}}
+.iphone .body{padding-bottom:8px}
