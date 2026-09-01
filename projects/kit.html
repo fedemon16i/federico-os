@@ -12,7 +12,6 @@ body{overflow:auto;background:var(--fm-bg);padding:16px}
 .kit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .stage-host{height:70vh;min-height:360px;border:var(--fm-border) solid var(--fm-line);border-radius:var(--fm-r);position:relative;background:var(--fm-side)}
 .kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:8px 0 18px}
-.kit-row .fm-tile{cursor:pointer;min-height:64px}
 html.embed,html.embed body{margin:0;padding:0;height:100%;overflow:hidden;background:transparent}
 html.embed .kit-bar,html.embed #kit{display:none!important}
 html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
@@ -35,13 +34,7 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
   </select>
   <button class="fm-btn" type="button" id="replay">Replay</button>
 </div>
-<div id="kit">
-  <div class="fm-banner"><b>Open ds.html for the Projects DS page.</b><div class="fm-crumb">This file is the engine + library sandbox.</div></div>
-  <div class="fm-crumb" style="margin-top:14px">EY Fabric — 9 beats</div>
-  <div class="kit-row" id="ey-row"></div>
-  <div class="fm-crumb">Chek — 6 beats, mobile</div>
-  <div class="kit-row" id="chek-row"></div>
-</div>
+<div id="kit"><div class="fm-crumb">Sandbox. Use ds.html for Projects DS.</div><div class="kit-row" id="ey-row"></div><div class="kit-row" id="chek-row"></div></div>
 <div class="stage-host" id="player" hidden>
   <div class="stage"><div class="fm-unit" id="unit"></div></div>
 </div>
@@ -57,23 +50,23 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
   var mode=document.getElementById('mode');
   var beat=document.getElementById('beat');
   var CHEK=/^chek-/;
-  var EY_BEATS=[['measure','Event map'],['analyze','3 users drop'],['funnel','The cliff'],['research','CSAT NPS CES'],['understand','The gap'],['design','Figma | agent'],['hub','Alarms'],['requester','After'],['publisher','Queue → live']];
+  var BOARD=/^(measure|funnel|research|understand|design)$/;
+  var EY_BEATS=[['measure','Event map'],['analyze','3 users'],['funnel','Cliff'],['research','Studies'],['understand','Gap'],['design','Two surfaces'],['hub','Alarms'],['requester','After'],['publisher','Queue']];
   var CK_BEATS=[['chek-hub','Hub'],['chek-pay','Pay'],['chek-credit','Limit'],['chek-moves','Moves'],['chek-security','Block'],['chek-onboard','Activate']];
   function tiles(host, rows){
-    host.innerHTML=rows.map(function(r){
-      return '<div class="fm-tile" data-beat="'+r[0]+'"><b>'+r[0].replace('chek-','')+'</b><span>'+r[1]+'</span></div>';
-    }).join('');
-    host.querySelectorAll('[data-beat]').forEach(function(el){
-      el.onclick=function(){ beat.value=el.getAttribute('data-beat'); play(); };
-    });
+    host.innerHTML=rows.map(function(r){ return '<div class="fm-tile" data-beat="'+r[0]+'"><b>'+r[0].replace('chek-','')+'</b><span>'+r[1]+'</span></div>'; }).join('');
+    host.querySelectorAll('[data-beat]').forEach(function(el){ el.onclick=function(){ beat.value=el.getAttribute('data-beat'); play(); }; });
   }
   tiles(document.getElementById('ey-row'), EY_BEATS);
   tiles(document.getElementById('chek-row'), CK_BEATS);
-  function mount(phone){
+  function mount(phone, board){
     var unit=document.getElementById('unit');
     if(phone){
       document.documentElement.setAttribute('data-device','phone');
       unit.innerHTML='<div class="phone-slot"><div class="iphone"><div class="sb"><span>9:41</span><span class="island"></span><span>5G</span></div><div class="body" id="slot"></div></div></div>';
+    }else if(board){
+      document.documentElement.setAttribute('data-device','desktop');
+      unit.innerHTML='<div class="fm-board" id="slot"></div>';
     }else{
       document.documentElement.setAttribute('data-device','desktop');
       unit.innerHTML='<div class="fm-shell"><div class="fm-bbar"><div class="fm-dots"><i class="r"></i><i class="y"></i><i class="g"></i></div><div class="fm-addr" id="addr"></div></div><div id="slot" class="fm-app"></div></div>';
@@ -93,7 +86,7 @@ html.embed .stage-host{height:100vh;min-height:100%;border:0;border-radius:0}
     if(isChek) skin.value='chek';
     applyChrome();
     if(!embed) return;
-    mount(isChek);
+    mount(isChek, BOARD.test(name));
     FM.fit();
     if(isChek) ChekBeats.run(name);
     else EYBeats.run(name);
