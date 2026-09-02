@@ -7,6 +7,14 @@
   var inheritedMode = null;
   var lastCfg = null;
   var MOVE = 800, HOVER = 140, CLICK = 230, SETTLE = 180;
+  var _hoverEl = null;
+  function clearHover() {
+    if (_hoverEl) { _hoverEl.classList.remove('fm-hover', 'fm-active'); _hoverEl = null; }
+  }
+  function setHover(el) {
+    clearHover();
+    if (el) { el.classList.add('fm-hover'); _hoverEl = el; }
+  }
   var PTR = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ffffff" stroke="#111111" stroke-width="1.4" stroke-linejoin="round" d="M5 3.2 L5.2 19.3 L9.6 14.8 L12.8 21.7 L15.5 20.5 L12.3 13.5 L18.4 13.4 Z"/></svg>';
   var TOUCH = '<i></i>';
 
@@ -14,6 +22,7 @@
   function after(ms, fn) { var id = setTimeout(fn, ms); T.push(id); return id; }
   function stop() {
     T.forEach(clearTimeout); T = [];
+    clearHover();
     var u = unitEl();
     if (!u) return;
     u.querySelectorAll('.fm-tip,.fm-drop-flag,.fm-click-ripple,.fm-veil,.fm-cap').forEach(function (n) { n.remove(); });
@@ -101,7 +110,7 @@
     n.style.left = Math.max(8, Math.min(UNIT_W - pad, x)) + 'px';
     n.style.top = Math.max(8, Math.min(UNIT_H - pad, y)) + 'px';
   }
-  function move(id, el, ox, oy) { place(id, el, ox, oy); }
+  function move(id, el, ox, oy) { place(id, el, ox, oy); setHover(el); }
   function warp(id, el, ox, oy) {
     var n = typeof id === 'string' ? document.getElementById(id) : id;
     if (!n) return;
@@ -127,6 +136,11 @@
     rip.style.left = n.style.left;
     rip.style.top = n.style.top;
     unit.appendChild(rip);
+    if (_hoverEl) {
+      _hoverEl.classList.add('fm-active');
+      var _act = _hoverEl;
+      after(CLICK, function () { _act.classList.remove('fm-active'); });
+    }
     after(CLICK, function () {
       n.classList.remove('press');
       if (rip.parentNode) rip.parentNode.removeChild(rip);
@@ -200,9 +214,13 @@
   }
   function renderScreen(screens, name) {
     if (!screens || !name || !screens[name]) return;
+    clearHover();
     var host = slot();
     if (!host) return;
     host.innerHTML = screens[name]();
+    host.classList.remove('fm-in');
+    void host.offsetWidth;
+    host.classList.add('fm-in');
     var addr = document.getElementById('addr');
     if (addr) addr.textContent = name;
   }
@@ -266,7 +284,7 @@
         later(0, function () {
           var el = q(st.to);
           if (el) {
-            if (nCur > 1) pack(el, nCur);
+            if (nCur > 1) { pack(el, nCur); setHover(el); }
             else move(st.id || 'u1', el);
           }
           if (st.say) say(st.say);
@@ -318,6 +336,7 @@
     after: after, stop: stop, fit: fit, boot: boot,
     cursors: cursors, move: move, warp: warp, pack: pack, click: click,
     tip: tip, note: note, drop: drop, veil: veil, say: say, ring: ring,
-    skin: skin, mode: mode, resolveMode: resolveMode, beat: beat
+    skin: skin, mode: mode, resolveMode: resolveMode, beat: beat,
+    setHover: setHover, clearHover: clearHover
   };
 })(window);

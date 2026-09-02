@@ -19,3 +19,43 @@
 }
 .fm-tip{line-height:1.35;white-space:normal;max-width:220px}
 .fm-cap{line-height:1.45;display:none}
+
+/* ── Screen entrance ─────────────────── */
+@keyframes fm-in { from { opacity:0; translate:10px 0; } }
+.fm-in { animation: fm-in .22s ease-out both; }
+
+/* ── Reactive elements: need their own transitions ── */
+.fm-btn, button { transition: filter .12s ease, translate .1s ease, box-shadow .12s ease; }
+.fm-field, .fm-select { transition: border-color .12s ease, box-shadow .12s ease; }
+.fm-photo, .fm-tile { transition: border-color .12s ease, background .12s ease; }
+.fm-offer { transition: border-color .15s ease, box-shadow .15s ease; }
+.fm-radio, .fm-check { transition: background .1s ease; }
+
+/* ── Hover states (cursor arrives) ── */
+.fm-btn.fm-hover, button.fm-hover {
+  filter: brightness(1.18);
+  translate: 0 -1px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.4);
+}
+.fm-field.fm-hover, .fm-select.fm-hover {
+  border-color: var(--fm-accent) !important;
+  box-shadow: 0 0 0 2px rgba(255,230,0,.15) !important;
+}
+.fm-photo.fm-hover {
+  border-color: var(--fm-accent) !important;
+  background: var(--fm-side) !important;
+}
+.fm-offer.fm-hover {
+  border-color: var(--fm-line) !important;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.06) !important;
+}
+.fm-radio.fm-hover { background: var(--fm-side) !important; border-radius: 4px; }
+
+/* ── Active states (click moment) ── */
+.fm-btn.fm-active, button.fm-active {
+  filter: brightness(.82) !important;
+  translate: 0 1px !important;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion:reduce) { .fm-in { animation:none; } }

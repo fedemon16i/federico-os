@@ -439,25 +439,64 @@
         + '</div></div>';
     })(),
 
-    /* ── legacy screen for analyze beat ── */
-    'form.custom': nav()
-      + '<div class="fm-split">'
-      + '<div class="fm-main">'
-      +   '<div class="crumb">Marketplace / Services / Workbench</div>'
-      +   '<div class="fm-stepper"><b>1</b> Customization <b>2</b> Billing <b>3</b> Confirm</div>'
-      +   '<label class="crumb">Friendly instance name</label>'
-      +   '<div class="fm-field" id="f1">Enter a name…</div>'
-      +   '<label class="crumb">Location</label>'
-      +   '<div class="fm-select" id="f2">West 2</div>'
-      +   '<label class="crumb">Point of contact</label>'
-      +   '<div class="fm-field" id="f4">Search people…</div>'
-      +   '<div class="fm-notice" style="margin:8px 0">Choose at least one required service.</div>'
-      +   '<div class="fm-radio" id="f3"><i></i> Cluster</div>'
-      +   '<div class="fm-radio on"><i></i> Workbench</div>'
-      + '</div>'
-      + '<div class="fm-main">'
-      +   '<div class="fm-order"><b>Your order</b><div class="crumb">Workbench \xb7 1 instance</div><div class="tot"><span>Total</span><span>$0 / mo</span></div><div style="display:flex;gap:6px;margin-top:8px"><button class="fm-btn ghost" type="button">Cancel</button><button class="fm-btn" id="go" type="button">Continue</button></div></div>'
-      + '</div></div>'
+    /* ── form: analyze beat — UX problem visible: no required markers, no guidance ── */
+    'form.custom': (function(){
+      function fg(label, el, hint) {
+        return '<div style="margin-bottom:10px">'
+          + '<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">'
+          +   '<label style="font-size:10px;font-weight:600;color:var(--fm-muted);letter-spacing:.06em;text-transform:uppercase">' + label + '</label>'
+          +   (hint ? '<span style="font-size:9px;color:var(--fm-faint)">' + hint + '</span>' : '')
+          + '</div>'
+          + el
+          + '</div>';
+      }
+      return nav()
+        + '<div class="fm-split">'
+        + '<div class="fm-main" style="padding-right:4px">'
+        +   '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px">'
+        +     '<div class="crumb">Marketplace \xb7 Services \xb7 Workbench</div>'
+        +   '</div>'
+        +   '<div class="fm-stepper" style="margin-bottom:14px">'
+        +     '<span style="display:flex;align-items:center;gap:5px"><b>1</b> Customization</span>'
+        +     '<span style="color:var(--fm-faint)">——</span>'
+        +     '<span style="display:flex;align-items:center;gap:5px;opacity:.45"><b style="background:var(--fm-line);color:var(--fm-muted)">2</b> Billing</span>'
+        +     '<span style="color:var(--fm-faint)">——</span>'
+        +     '<span style="display:flex;align-items:center;gap:5px;opacity:.45"><b style="background:var(--fm-line);color:var(--fm-muted)">3</b> Confirm</span>'
+        +   '</div>'
+        /* f1: instance name — looks optional, no required badge */
+        +   fg('Instance name',
+              '<div class="fm-field" id="f1" style="color:var(--fm-faint)">e.g. my-workbench-01</div>')
+        /* f2: location — pre-filled */
+        +   fg('Location',
+              '<div class="fm-select" id="f2" style="color:var(--fm-text)">West 2 (us-west-2) <span style="margin-left:auto;opacity:.5">▾</span></div>')
+        /* f3: service type — cluster looks like just an option */
+        +   '<div style="margin-bottom:10px">'
+        +     '<label style="font-size:10px;font-weight:600;color:var(--fm-muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:6px">Service type</label>'
+        +     '<div class="fm-radio" id="f3" style="padding:6px 8px;border-radius:4px"><i></i><span>Cluster</span><span style="margin-left:auto;font-size:9px;color:var(--fm-faint)">8–64 nodes</span></div>'
+        +     '<div class="fm-radio on" style="padding:6px 8px;border-radius:4px"><i></i><span>Workbench</span><span style="margin-left:auto;font-size:9px;color:var(--fm-faint)">Shared \xb7 Default</span></div>'
+        +   '</div>'
+        /* f4: contact search — no format hint */
+        +   fg('Point of contact',
+              '<div class="fm-field" id="f4" style="color:var(--fm-faint)">Search people…</div>')
+        + '</div>'
+        /* sidebar */
+        + '<div style="min-width:200px">'
+        +   '<div class="fm-order">'
+        +     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><b style="font-size:12px">Your order</b><span class="fm-tag ok">Free tier</span></div>'
+        +     '<div style="font-size:10px;display:flex;flex-direction:column;gap:5px;padding-bottom:8px;border-bottom:1px solid var(--fm-line);margin-bottom:8px">'
+        +       '<div style="display:flex;justify-content:space-between"><span style="color:var(--fm-muted)">Service</span><span>Workbench</span></div>'
+        +       '<div style="display:flex;justify-content:space-between"><span style="color:var(--fm-muted)">Type</span><span>Shared compute</span></div>'
+        +       '<div style="display:flex;justify-content:space-between"><span style="color:var(--fm-muted)">Region</span><span>West 2</span></div>'
+        +       '<div style="display:flex;justify-content:space-between"><span style="color:var(--fm-muted)">Billing</span><span>Team account</span></div>'
+        +     '</div>'
+        +     '<div class="tot"><span>Total</span><span>$0 / mo</span></div>'
+        +     '<div style="font-size:9px;color:var(--fm-faint);margin:6px 0 10px">Billed to your team workspace.</div>'
+        +     '<button class="fm-btn" id="go" type="button" style="width:100%">Continue →</button>'
+        +     '<button class="fm-btn ghost" type="button" style="width:100%;margin-top:4px">Cancel</button>'
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    })()
   };
 
   w.EYScreens = S;
