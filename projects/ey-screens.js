@@ -34,46 +34,113 @@
       + '<div style="display:flex;gap:6px;margin-top:8px">'+cta+'</div></div>';
   }
 
+  /* ── catalog screen helpers ── */
+  var IC = {
+    server: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="10" width="16" height="5" rx="1.5" stroke="currentColor" stroke-width="1.4"/><circle cx="15" cy="5.5" r="1" fill="var(--fm-ok)"/><circle cx="15" cy="12.5" r="1" fill="var(--fm-ok)"/></svg>',
+    key:    '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="8" cy="9" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M11.5 11.5L17 17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M15 15l1.5 1.5M14 14l-1 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>',
+    wrench: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13.5 3.5a4 4 0 0 1 0 5.66l-7 7a2 2 0 0 1-2.83-2.83l7-7A4 4 0 0 1 13.5 3.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="5.5" cy="14.5" r="1.2" fill="currentColor"/></svg>',
+    box:    '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L17 6v8L10 18 3 14V6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M10 2v16M3 6l7 4 7-4" stroke="currentColor" stroke-width="1.2"/></svg>',
+    bolt:   '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M11 2L5 11h5l-1 7 8-10h-5l1.5-6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+    grid:   '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="2" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="11" y="11" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.4"/></svg>'
+  };
+  function catTile(icon, label, sub, id, accent) {
+    var bdr = accent ? 'border-color:rgba(255,230,0,.5);background:rgba(255,230,0,.04);' : '';
+    var ico = accent ? 'color:var(--fm-accent)' : 'color:var(--fm-muted)';
+    return '<div class="fm-photo" ' + (id ? 'id="'+id+'"' : '') + ' style="height:auto;min-height:80px;display:flex;flex-direction:column;gap:6px;padding:12px 10px;justify-content:flex-start;' + bdr + '">'
+      + '<span style="line-height:0;' + ico + '">' + icon + '</span>'
+      + '<div style="margin-top:auto">'
+      +   '<div style="font-size:11px;font-weight:700;color:var(--fm-text)">' + label + '</div>'
+      +   '<div style="font-size:9.5px;color:var(--fm-muted);margin-top:1px">' + sub + '</div>'
+      + '</div>'
+      + (accent ? '<div style="width:18px;height:2px;background:var(--fm-accent);border-radius:1px"></div>' : '')
+      + '</div>';
+  }
+  function offerCard(name, desc, tags, cta1, cta2, id) {
+    return '<div class="fm-offer">'
+      + '<div class="crumb" style="font-size:9px">Services \xb7 Offerings</div>'
+      + '<div class="t" style="margin-top:4px">' + name + '</div>'
+      + '<div class="desc">' + desc + '</div>'
+      + '<div style="display:flex;gap:4px;margin:6px 0;flex-wrap:wrap">' + tags + '</div>'
+      + '<div class="acts">'
+      +   '<button class="fm-btn secondary" type="button">' + cta1 + '</button>'
+      +   '<button class="fm-btn' + (cta2 === 'Waitlist' ? ' ghost' : '') + '"' + (id ? ' id="'+id+'"' : '') + ' type="button">' + cta2 + '</button>'
+      + '</div></div>';
+  }
+
   var S = {
     /* ── catalog ── */
-    'catalog.home': nav()
-      + '<div class="fm-main">'
-      + '<div class="fm-hero"><div style="font-size:10px;opacity:.7;margin-bottom:8px">Technology \xb7 EY Fabric Marketplace</div>'
-      + '<b>Unlocking technology<br>at speed and scale</b>'
-      + '<span style="display:block;margin-top:6px;opacity:.85">Reusable services, licenses, kits and APIs — discoverable in one place, requestable in minutes.</span>'
-      + '<div style="margin-top:12px;display:flex;gap:8px"><button class="fm-btn lg" id="go" type="button">Explore Catalog</button><button class="fm-btn ghost lg" type="button">Contact us</button></div></div>'
-      + '<div class="fm-kpis" style="margin-top:10px">'
-      + '<div class="fm-kpi"><i>Total offerings</i><b>284</b></div>'
-      + '<div class="fm-kpi"><i>Teams served</i><b>1.2k</b></div>'
-      + '<div class="fm-kpi"><i>Avg. fulfillment</i><b>4.1h</b></div>'
-      + '<div class="fm-kpi"><i>Uptime</i><b>99.9%</b></div></div>'
-      + '<div class="fm-banner" style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">'
-      + '<div><b>Developer workflow</b><span class="crumb" style="display:block;margin-top:2px">Create, build and deploy on shared infrastructure</span></div>'
-      + '<button class="fm-btn" type="button">Get started</button></div></div>',
+    'catalog.home': (function(){
+      return nav()
+        + '<div class="fm-main" style="padding-top:2px">'
+        + '<div class="fm-hero">'
+        +   '<div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fm-accent);margin-bottom:8px">Technology \xb7 EY Fabric Marketplace</div>'
+        +   '<b style="font-size:21px;line-height:1.2;display:block;letter-spacing:-.3px">Unlocking technology<br>at speed and scale</b>'
+        +   '<span style="display:block;margin-top:8px;font-size:11px;line-height:1.6;color:var(--fm-muted);max-width:400px">Reusable services, licenses, kits and APIs — discoverable in one place, requestable in minutes.</span>'
+        +   '<div style="margin-top:14px;display:flex;gap:8px;align-items:center">'
+        +     '<button class="fm-btn lg" id="go" type="button">Explore Catalog</button>'
+        +     '<button class="fm-btn ghost lg" type="button">Contact us</button>'
+        +   '</div>'
+        + '</div>'
+        + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px">'
+        +   '<div class="fm-kpi"><i>Total offerings</i><b style="color:var(--fm-accent)">284</b></div>'
+        +   '<div class="fm-kpi"><i>Teams served</i><b style="color:var(--fm-ok)">1.2k</b></div>'
+        +   '<div class="fm-kpi"><i>Avg. fulfillment</i><b>4.1h</b></div>'
+        +   '<div class="fm-kpi"><i>Uptime</i><b>99.9%</b></div>'
+        + '</div>'
+        + '<div style="margin-top:10px">'
+        +   '<div style="font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fm-muted);margin-bottom:6px">Recently added</div>'
+        +   '<div style="display:flex;gap:6px">'
+        +     '<span class="fm-chip">Snowflake Bundle</span>'
+        +     '<span class="fm-chip">Claude API</span>'
+        +     '<span class="fm-chip">Backstage Kit</span>'
+        +     '<span class="fm-chip">Datadog Agent</span>'
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    })(),
 
-    'catalog.grid': nav()
-      + '<div class="fm-body">'
-      + rail('All')
-      + '<div class="fm-main">'
-      + '<div class="fm-banner"><b>Make a request from the catalog</b><span class="crumb" style="display:block;margin-top:2px">Choose a category \xb7 284 offerings available</span></div>'
-      + '<div class="fm-tiles" style="margin-top:10px">'
-      + '<div class="fm-photo" id="go"><b>Services</b><span>Compute &amp; infra \xb7 118</span></div>'
-      + '<div class="fm-photo"><b>Licenses</b><span>Software \xb7 21</span></div>'
-      + '<div class="fm-photo"><b>Kits</b><span>Dev toolkits \xb7 17</span></div>'
-      + '<div class="fm-photo"><b>Packages</b><span>Bundles \xb7 11</span></div>'
-      + '<div class="fm-photo"><b>APIs</b><span>Endpoints \xb7 41</span></div>'
-      + '<div class="fm-photo"><b>Explore all</b><span>284 items</span></div></div></div></div>',
+    'catalog.grid': (function(){
+      return nav()
+        + '<div class="fm-body">'
+        + rail('All')
+        + '<div class="fm-main">'
+        + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">'
+        +   '<b style="font-size:12px">Make a request</b>'
+        +   '<span style="font-size:10px;color:var(--fm-muted)">284 offerings</span>'
+        + '</div>'
+        + '<div class="fm-tiles">'
+        +   catTile(IC.server, 'Services', 'Compute &amp; infra · 118', 'go', true)
+        +   catTile(IC.key,    'Licenses', 'Software · 21',            null, false)
+        +   catTile(IC.wrench, 'Kits',     'Dev toolkits · 17',        null, false)
+        +   catTile(IC.box,    'Packages', 'Bundles · 11',             null, false)
+        +   catTile(IC.bolt,   'APIs',     'Endpoints · 41',           null, false)
+        +   catTile(IC.grid,   'Explore all', '284 items',             null, false)
+        + '</div>'
+        + '</div></div>';
+    })(),
 
-    'catalog.services': nav()
-      + '<div class="fm-body">'
-      + rail('Services')
-      + '<div class="fm-main">'
-      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="font-size:13px">Services</b><span style="font-size:10px;color:var(--fm-muted)">118 offerings</span></div>'
-      + '<div style="display:flex;gap:6px;margin-bottom:8px"><div class="fm-search" style="flex:1">Filter offerings…</div><span class="fm-chip on">Recently updated</span><span class="fm-chip">Available</span></div>'
-      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-      + '<div class="fm-offer"><div class="crumb">Services \xb7 Offerings</div><div class="t">Workbench</div><div class="desc">Shared compute a team can provision and request on demand.</div><div style="display:flex;gap:4px;margin:6px 0"><span class="fm-tag ok">Available</span><span class="fm-tag">Compute</span></div><div class="acts"><button class="fm-btn secondary" type="button">See details</button><button class="fm-btn" id="go" type="button">Get started</button></div></div>'
-      + '<div class="fm-offer"><div class="crumb">Services \xb7 Offerings</div><div class="t">Data Cluster</div><div class="desc">Managed data layer for structured ingestion and query.</div><div style="display:flex;gap:4px;margin:6px 0"><span class="fm-tag warn">Limited</span><span class="fm-tag">Data</span></div><div class="acts"><button class="fm-btn secondary" type="button">See details</button><button class="fm-btn ghost" type="button">Waitlist</button></div></div>'
-      + '</div></div></div>',
+    'catalog.services': (function(){
+      var t = function(label, cls) { return '<span class="fm-tag' + (cls ? ' '+cls : '') + '">' + label + '</span>'; };
+      return nav()
+        + '<div class="fm-body">'
+        + rail('Services')
+        + '<div class="fm-main">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
+        +   '<b style="font-size:13px">Services</b><span style="font-size:10px;color:var(--fm-muted)">118 offerings</span>'
+        + '</div>'
+        + '<div style="display:flex;gap:6px;margin-bottom:10px">'
+        +   '<div class="fm-search" style="flex:1">Filter offerings…</div>'
+        +   '<span class="fm-chip on">Recently updated</span>'
+        +   '<span class="fm-chip">Available</span>'
+        + '</div>'
+        + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+        +   offerCard('Workbench',    'Shared compute a team can provision and request on demand.', t('Available','ok')+' '+t('Compute'),    'See details', 'Get started', 'go')
+        +   offerCard('Data Cluster', 'Managed data layer for structured ingestion and query.',     t('Limited','warn')+' '+t('Data'),        'See details', 'Waitlist',    null)
+        +   offerCard('ML Pipeline',  'End-to-end training and serving pipeline for model teams.',  t('Available','ok')+' '+t('AI'),          'See details', 'Get started', null)
+        +   offerCard('Vault Secret', 'Secrets management and key rotation for service accounts.', t('Available','ok')+' '+t('Security'),     'See details', 'Get started', null)
+        + '</div>'
+        + '</div></div>';
+    })(),
 
     /* ── requester flow (improved) ── */
     'req.services': nav()
